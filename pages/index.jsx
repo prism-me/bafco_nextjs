@@ -10,10 +10,11 @@ import TopCollection from '~/components/partials/home/top-collection';
 import BlogCollection from '~/components/partials/home/blog-collection';
 import NewsletterModal from "~/components/features/modals/newsletter-modal";
 import { rendererThree } from "~/components/features/count-down";
-
+import { connect } from 'react-redux';
 import withApollo from '~/server/apollo';
 import { GET_HOME_DATA } from '~/server/queries';
 import { attrFilter } from '~/utils';
+import { actions as demoAction } from '~/store/demo';
 
 import { homeData, introSlider, brandSlider, dealSlider, fadeInUpShorter, fadeInLeftShorter, fadeInRightShorter, fadeIn } from '~/utils/data';
 
@@ -36,7 +37,7 @@ function Home(props) {
     return (
         <div className="main home-page skeleton-body">
             <div className="intro-slider-container">
-                <div className="intro-slide slide1" style={{ backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/sliders/home-background-banner.jpg)' }}>
+                <div className="intro-slide slide1" style={{ backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/Magic7.jpg)' }}>
                     <div className="container intro-content">
                         <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
                             <>
@@ -204,7 +205,7 @@ function Home(props) {
 
                                     <LazyLoadImage
                                         alt="banner"
-                                        src="images/home/banners/workstation-collection.png"
+                                        src="images/home/banners/WorkstationCollections.jpg"
                                         threshold={200}
                                         width="100%"
                                         height="auto"
@@ -228,7 +229,7 @@ function Home(props) {
 
                                     <LazyLoadImage
                                         alt="banner"
-                                        src="images/home/banners/chair-collections.png"
+                                        src="images/home/banners/ChairCollections1.jpg"
                                         threshold={200}
                                         height="auto"
                                         width="100%"
@@ -254,7 +255,7 @@ function Home(props) {
 
                                             <LazyLoadImage
                                                 alt="banner"
-                                                src="images/home/banners/banner-3.jpg"
+                                                src="images/home/banners/DeskCollections.jpg"
                                                 threshold={200}
                                                 height="auto"
                                                 width="100%"
@@ -275,7 +276,7 @@ function Home(props) {
 
                                             <LazyLoadImage
                                                 alt="banner"
-                                                src="images/home/banners/banner-4.jpg"
+                                                src="images/home/banners/SofaCollections1.jpg"
                                                 threshold={200}
                                                 width="100%"
                                                 height="auto"
@@ -306,7 +307,7 @@ function Home(props) {
                 </div>
                 <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce>
                     <div className="projects-list">
-                        <img src="images/home/unsplash_hE0nmTffKtM.png" alt="slide" />
+                        <img src="images/home/001-13.jpg" alt="slide" />
 
                         {/* <ul>
                             <li className="icon-index1">
@@ -436,7 +437,7 @@ function Home(props) {
 
                                                 <LazyLoadImage
                                                     alt="deal-banner"
-                                                    src="images/home/deal/dealoftheday.png"
+                                                    src="images/home/deal/ESD61TW-grey.jpg"
                                                     threshold="300"
                                                     effect="blur"
                                                     width="100%"
@@ -508,7 +509,7 @@ function Home(props) {
 
                                                 <LazyLoadImage
                                                     alt="deal-banner"
-                                                    src="images/home/deal/dealoftheday.png"
+                                                    src="images/home/deal/ESD61TW-grey.jpg"
                                                     threshold="300"
                                                     effect="blur"
                                                     width="100%"
@@ -580,7 +581,7 @@ function Home(props) {
 
                                                 <LazyLoadImage
                                                     alt="deal-banner"
-                                                    src="images/home/deal/dealoftheday.png"
+                                                    src="images/home/deal/ESD61TW-grey.jpg"
                                                     threshold="300"
                                                     effect="blur"
                                                     width="100%"
@@ -623,15 +624,15 @@ function Home(props) {
 
             <div className="mb-6"></div>
 
-            <div className="video-banner video-banner-bg bg-image text-center" style={{ backgroundImage: 'url(images/home/unsplash_aWf7mjwwJJo.png)' }}>
+            <div className="video-banner video-banner-bg bg-image text-center" style={{ backgroundImage: 'url(images/home/VideoSectionBackgroundwithlayerblur.jpg)' }}>
                 <div className="container">
-                    <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce style={{ backgroundImage: 'url(images/home/Component-26.png)' }}>
+                    <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce style={{ backgroundImage: 'url(images/home/VideoImage.jpg)' }}>
                         <>
                             <h3 className="video-banner-title h1 text-white">
                                 {/* <span>New Collection</span> */}
                                 <strong>Visit Our Showroom</strong>
                             </h3>
-                            <a href="https://youtu.be/dp5zWq32CWo" className="btn-video btn-iframe" onClick={openVideoModal}><i className="icon-play"></i></a>
+                            <a href="https://bafco.b-cdn.net/videos/2020CIFF.mp4" className="btn-video btn-iframe" onClick={openVideoModal}><i className="icon-play"></i></a>
                         </>
                     </Reveal>
                 </div>
@@ -643,7 +644,7 @@ function Home(props) {
             <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
                 <div
                     className="footer-newsletter bg-image"
-                    style={{ backgroundImage: 'url(images/backgrounds/Rectangle-9.png)' }}
+                    style={{ backgroundImage: 'url(images/backgrounds/NewsletterBackground.jpg)' }}
                 >
                     <div className="container">
                         <div className="heading text-center">
@@ -686,4 +687,5 @@ function Home(props) {
     )
 }
 
-export default withApollo({ ssr: typeof window == 'undefined' })(Home);
+// export default withApollo({ ssr: typeof window == 'undefined' })(Home);
+export default withApollo({ ssr: typeof window == undefined })(connect(null, { ...demoAction })(Home));

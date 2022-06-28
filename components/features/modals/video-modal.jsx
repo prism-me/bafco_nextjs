@@ -45,7 +45,7 @@ function VideoModal ( props ) {
             <button type="button" className="close" onClick={ closeHandler }>
                 <span aria-hidden="true"><i className="icon-close"></i></span>
             </button>
-            <iframe className="mfp-iframe modal-content" src="//www.youtube.com/embed/vBPgmASQ1A0?autoplay=1" frameBorder="0" allowFullScreen="" title="youtube"></iframe>
+            <iframe className="mfp-iframe modal-content" src="https://bafco.b-cdn.net/videos/2020CIFF.mp4" frameBorder="0" allowFullScreen="" title="youtube"></iframe>
         </Modal>
     )
 }

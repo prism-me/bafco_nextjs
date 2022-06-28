@@ -88,7 +88,7 @@ function NewsletterModal () {
                                 <div className="lazy-overlay"></div>
                                 <LazyLoadImage
                                     alt="newsletter"
-                                    src="images/popup/newsletter/img-1.jpg"
+                                    src="images/popup/newsletter/ESD61TW-grey.jpg"
                                     threshold={ 0 }
                                     width={ 396 }
                                     height={ 420 }
