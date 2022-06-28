@@ -14,7 +14,7 @@ import { withApollo } from 'next-apollo';
 // import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 
-const API_URI = `${process.env.NEXT_PUBLIC_SERVER_URL}/graphql`;
+const API_URI = `https://young-escarpment-12734.herokuapp.com/graphql`;
 
 // const apolloClient = new ApolloClient( {
 //     uri: API_URI,
