@@ -16,7 +16,7 @@ function PostFour ( props ) {
 
                     <LazyLoadImage
                         alt="Post"
-                        src={ process.env.NEXT_PUBLIC_ASSET_URI + post.image[ 0 ].url }
+                        src={ post.image[ 0 ].url }
                         threshold={ 500 }
                         effect="blur"
                         height="auto"

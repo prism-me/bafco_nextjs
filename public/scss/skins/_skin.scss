@@ -1609,3 +1609,63 @@ a:focus {
 .top-management-application-tabs .nav.nav-pills .nav-link:focus {
     color: #008482;
 }
+
+
+
+.innovationvideo-slider {
+    .innovationvideo-img {
+        a.btn-video.btn-iframe {
+            position: relative;
+            top: -23rem;
+            left: 46%;
+        }
+    }
+
+    .owl-dots {
+        .owl-dot.active {
+            span {
+                border-color: #686868 !important;
+                background: #686868 !important;
+            }
+        }
+
+        .owl-dot {
+            span {
+                border: 0.1rem solid #686868;
+            }
+        }
+    }
+}
+
+.text-center-overlay {
+    position: absolute;
+    top: 46%;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    text-align: center;
+
+    h3 {
+        background: #fff;
+        display: inline-block;
+        padding: 10px 30px;
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+}
+
+.text-center-overlay.text-center-overlay-bottom {
+    bottom: 20%;
+    top: unset;
+}
+
+.text-center-overlay.text-center-overlay-top {
+    top: 20%;
+}
+
+.project-references {
+    .project-reference-slider-cont {
+        max-width: 500px;
+        margin-left: 50px;
+    }
+}

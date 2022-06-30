@@ -12,55 +12,55 @@ import { actions as demoAction } from '~/store/demo';
 
 import { isInWishlist, isInCompare } from '~/utils';
 
-function ProductTwelve ( props ) {
+function ProductTwelve(props) {
     const router = useRouter();
     const { product, wishlist } = props;
-    const [ maxPrice, setMaxPrice ] = useState( 0 );
-    const [ minPrice, setMinPrice ] = useState( 99999 );
+    const [maxPrice, setMaxPrice] = useState(0);
+    const [minPrice, setMinPrice] = useState(99999);
 
-    useEffect( () => {
+    useEffect(() => {
         let min = minPrice;
         let max = maxPrice;
-        product.variants.map( item => {
-            if ( min > item.price ) min = item.price;
-            if ( max < item.price ) max = item.price;
-        }, [] );
+        product.variants.map(item => {
+            if (min > item.price) min = item.price;
+            if (max < item.price) max = item.price;
+        }, []);
 
-        if ( product.variants.length == 0 ) {
+        if (product.variants.length == 0) {
             min = product.sale_price
                 ? product.sale_price
                 : product.price;
             max = product.price;
         }
 
-        setMinPrice( min );
-        setMaxPrice( max );
-    }, [] )
+        setMinPrice(min);
+        setMaxPrice(max);
+    }, [])
 
-    function onCartClick ( e ) {
+    function onCartClick(e) {
         e.preventDefault();
-        props.addToCart( product );
+        props.addToCart(product);
     }
 
-    function onWishlistClick ( e ) {
+    function onWishlistClick(e) {
         e.preventDefault();
-        if ( !isInWishlist( props.wishlist, product ) ) {
-            props.addToWishlist( product );
+        if (!isInWishlist(props.wishlist, product)) {
+            props.addToWishlist(product);
         } else {
-            router.push( '/pages/wishlist' );
+            router.push('/pages/wishlist');
         }
     }
 
-    function onCompareClick ( e ) {
+    function onCompareClick(e) {
         e.preventDefault();
-        if ( !isInCompare( props.comparelist, product ) ) {
-            props.addToCompare( product );
+        if (!isInCompare(props.comparelist, product)) {
+            props.addToCompare(product);
         }
     }
 
-    function onQuickView ( e ) {
+    function onQuickView(e) {
         e.preventDefault();
-        props.showQuickView( product.slug );
+        props.showQuickView(product.slug);
     }
 
     return (
@@ -90,11 +90,11 @@ function ProductTwelve ( props ) {
                         : ""
                 }
 
-                <ALink href={ `#` }>
+                <ALink href={`#`}>
                     <LazyLoadImage
                         alt="product"
-                        src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 0 ].url }
-                        threshold={ 500 }
+                        src={product.sm_pictures[0].url}
+                        threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
                     />
@@ -102,8 +102,9 @@ function ProductTwelve ( props ) {
                         product.sm_pictures.length >= 2 ?
                             <LazyLoadImage
                                 alt="product"
-                                src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 1 ].url }
-                                threshold={ 500 }
+                                // src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 1 ].url }
+                                src={product.sm_pictures[1].url}
+                                threshold={500}
                                 effect="black and white"
                                 wrapperClassName="product-image-hover"
                             />
@@ -114,58 +115,58 @@ function ProductTwelve ( props ) {
 
                 <div className="product-action-vertical">
                     {
-                        isInWishlist( wishlist, product ) ?
+                        isInWishlist(wishlist, product) ?
                             <ALink href="/shop/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist"><span>go to wishlist</span></ALink>
                             :
-                            <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={ onWishlistClick }><span>add to wishlist</span></a>
+                            <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={onWishlistClick}><span>add to wishlist</span></a>
 
                     }
-                    <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={ onQuickView }><span>quick view</span></a>
+                    <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={onQuickView}><span>quick view</span></a>
                 </div>
             </figure>
 
             <div className="product-body">
                 <div className="product-cat">
                     {
-                        product.category.map( ( item, index ) => (
-                            <React.Fragment key={ item.slug + '-' + index }>
-                                <ALink href={ { pathname: '/shop/sidebar/list', query: { category: item.slug } } }>
-                                    { item.name }
+                        product.category.map((item, index) => (
+                            <React.Fragment key={item.slug + '-' + index}>
+                                <ALink href={{ pathname: '/shop/sidebar/list', query: { category: item.slug } }}>
+                                    {item.name}
                                 </ALink>
-                                { index < product.category.length - 1 ? ', ' : "" }
+                                {index < product.category.length - 1 ? ', ' : ""}
                             </React.Fragment>
-                        ) )
+                        ))
                     }
                 </div>
 
                 <h3 className="product-title">
-                    <ALink href={ `#` }>{ product.name }</ALink>
+                    <ALink href={`#`}>{product.name}</ALink>
                 </h3>
 
                 {
                     !product.stock || product.stock == 0 ?
                         <div className="product-price">
-                            <span className="out-price">Dhs. { product.price.toFixed( 2 ) }</span>
+                            <span className="out-price">Dhs. {product.price.toFixed(2)}</span>
                         </div>
                         :
                         minPrice == maxPrice ?
-                            <div className="product-price">Dhs. { minPrice.toFixed( 2 ) }</div>
+                            <div className="product-price">Dhs. {minPrice.toFixed(2)}</div>
                             :
                             product.variants.length == 0 ?
                                 <div className="product-price">
-                                    <span className="new-price">Dhs. { minPrice.toFixed( 2 ) }</span>
-                                    <span className="old-price">Dhs. { maxPrice.toFixed( 2 ) }</span>
+                                    <span className="new-price">Dhs. {minPrice.toFixed(2)}</span>
+                                    <span className="old-price">Dhs. {maxPrice.toFixed(2)}</span>
                                 </div>
                                 :
-                                <div className="product-price">Dhs. { minPrice.toFixed( 2 ) }&ndash;Dhs. { maxPrice.toFixed( 2 ) }</div>
+                                <div className="product-price">Dhs. {minPrice.toFixed(2)}&ndash;Dhs. {maxPrice.toFixed(2)}</div>
                 }
 
                 <div className="ratings-container">
                     <div className="ratings">
-                        <div className="ratings-val" style={ { width: product.ratings * 20 + '%' } }></div>
-                        <span className="tooltip-text">{ product.ratings.toFixed( 2 ) }</span>
+                        <div className="ratings-val" style={{ width: product.ratings * 20 + '%' }}></div>
+                        <span className="tooltip-text">{product.ratings.toFixed(2)}</span>
                     </div>
-                    <span className="ratings-text">( { product.review } Reviews )</span>
+                    <span className="ratings-text">( {product.review} Reviews )</span>
                 </div>
 
                 {
@@ -173,9 +174,9 @@ function ProductTwelve ( props ) {
                         <div className="product-nav product-nav-dots">
                             <div className="row no-gutters">
                                 {
-                                    product.variants.map( ( item, index ) => (
-                                        <ALink href="#" style={ { backgroundColor: item.color } } key={ index }><span className="sr-only">Color Name</span></ALink>
-                                    ) )
+                                    product.variants.map((item, index) => (
+                                        <ALink href="#" style={{ backgroundColor: item.color }} key={index}><span className="sr-only">Color Name</span></ALink>
+                                    ))
                                 }
                             </div>
                         </div>
@@ -187,11 +188,11 @@ function ProductTwelve ( props ) {
                     <div className="product-action">
                         {
                             product.variants.length > 0 ?
-                                <ALink href={ `#` } className="btn-product btn-cart btn-select">
+                                <ALink href={`#`} className="btn-product btn-cart btn-select">
                                     <span>select options</span>
                                 </ALink>
                                 :
-                                <button className="btn-product btn-cart" onClick={ onCartClick }>
+                                <button className="btn-product btn-cart" onClick={onCartClick}>
                                     <span>add to cart</span>
                                 </button>
                         }
@@ -202,11 +203,11 @@ function ProductTwelve ( props ) {
     )
 }
 
-const mapStateToProps = ( state ) => {
+const mapStateToProps = (state) => {
     return {
         wishlist: state.wishlist.data,
         comparelist: state.comparelist.data
     }
 }
 
-export default connect( mapStateToProps, { ...wishlistAction, ...cartAction, ...compareAction, ...demoAction } )( ProductTwelve );
+export default connect(mapStateToProps, { ...wishlistAction, ...cartAction, ...compareAction, ...demoAction })(ProductTwelve);

@@ -1,6 +1,6 @@
 module.exports = {
-    // basePath: process.env.NODE_ENV === 'production' ? `/react/molla/demo-${process.env.NEXT_PUBLIC_DEMO}` : '',
-    basePath: process.env.NODE_ENV === 'production' ? '' : '',
+    basePath: process.env.NODE_ENV === 'production' ? `/react/molla/demo-${process.env.NEXT_PUBLIC_DEMO}` : '',
+    // basePath: process.env.NODE_ENV === 'production' ? '' : '',
     trailingSlash: true,
     env: {
         PUBLIC_URL: process.env.NODE_ENV === 'production' ? '/' : '/',

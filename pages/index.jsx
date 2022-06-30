@@ -15,15 +15,933 @@ import withApollo from '~/server/apollo';
 import { GET_HOME_DATA } from '~/server/queries';
 import { attrFilter } from '~/utils';
 import { actions as demoAction } from '~/store/demo';
-
+// import { productdata } from "../data";
 import { homeData, introSlider, brandSlider, dealSlider, fadeInUpShorter, fadeInLeftShorter, fadeInRightShorter, fadeIn } from '~/utils/data';
+
+const productdata = [
+    {
+        "id": 107,
+        "name": "2-Seater",
+        "slug": "2-seater",
+        "price": 248,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 5,
+        "until": null,
+        "stock": 0,
+        "top": null,
+        "featured": true,
+        "new": null,
+        "category": [
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_1_1_300x300_ec128f72cf.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_1_2_300x300_d265cc4cd6.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 108,
+        "name": "Block Side Table/Trolley",
+        "slug": "block-side-tabletrolley",
+        "price": 210,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 5,
+        "until": null,
+        "stock": 100,
+        "top": null,
+        "featured": true,
+        "new": null,
+        "category": [
+            {
+                "name": "Coffee & Tables",
+                "slug": "coffee-and-tables",
+                "__typename": "Category"
+            },
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            },
+            {
+                "name": "Tables",
+                "slug": "tables",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_2_1_300x300_1cbb2b1986.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_2_2_300x300_798eabaee1.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [
+            {
+                "color": "#669933",
+                "color_name": "Green",
+                "price": 210,
+                "size": [
+                    {
+                        "name": "Medium",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            },
+            {
+                "color": "#cc3333",
+                "color_name": "Red",
+                "price": 240,
+                "size": [
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Extra Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            }
+        ],
+        "__typename": "Product"
+    },
+    {
+        "id": 109,
+        "name": "Butler Stool Ladder",
+        "slug": "butler-stool-ladder",
+        "price": 25,
+        "sale_price": 20,
+        "review": 2,
+        "ratings": 3,
+        "until": "2022-01-01",
+        "stock": 100,
+        "top": true,
+        "featured": true,
+        "new": null,
+        "category": [
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_3_1_300x300_a6a525d4b9.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_3_2_300x300_7ef429113e.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 110,
+        "name": "Can 2-Seater Sofa",
+        "slug": "can-2-seater-sofa",
+        "price": 60,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 2,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": true,
+        "new": null,
+        "category": [
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_4_1_300x300_aec4741c63.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_4_2_300x300_ec63a5f054.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 111,
+        "name": "Roots Sofa Bed",
+        "slug": "roots-sofa-bed",
+        "price": 449,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 2,
+        "until": "2022-01-01",
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_11_1_300x300_574a1b1d0e.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_11_2_300x300_8f906c2dcd.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 112,
+        "name": "Carronade Table Lamp",
+        "slug": "carronade-table-lamp",
+        "price": 130,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 4,
+        "until": null,
+        "stock": 100,
+        "top": null,
+        "featured": true,
+        "new": true,
+        "category": [
+            {
+                "name": "Decoration",
+                "slug": "decoration",
+                "__typename": "Category"
+            },
+            {
+                "name": "Electronics",
+                "slug": "electronics",
+                "__typename": "Category"
+            },
+            {
+                "name": "Lighting",
+                "slug": "lighting",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_6_1_300x300_aea55d68e9.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_6_2_300x300_76886659e2.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [
+            {
+                "color": "#cc3333",
+                "color_name": "Red",
+                "price": 150,
+                "size": [
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Extra Small",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            },
+            {
+                "color": "#f0c04a",
+                "color_name": "Yellow",
+                "price": 130,
+                "size": [
+                    {
+                        "name": "Small",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Extra Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            },
+            {
+                "color": "#669933",
+                "color_name": "Green",
+                "price": 110,
+                "size": [
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            }
+        ],
+        "__typename": "Product"
+    },
+    {
+        "id": 113,
+        "name": "Cushion Set 3 Pieces",
+        "slug": "cushion-set-3-pieces",
+        "price": 199,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 0,
+        "until": null,
+        "stock": 100,
+        "top": null,
+        "featured": true,
+        "new": null,
+        "category": [
+            {
+                "name": "Decoration",
+                "slug": "decoration",
+                "__typename": "Category"
+            },
+            {
+                "name": "Beds",
+                "slug": "beds",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_7_1_300x300_298b73e706.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_7_2_300x300_6e6c2d02d3.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 114,
+        "name": "Flow Slim Armchair",
+        "slug": "flow-slim-armchair",
+        "price": 97,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 3,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            },
+            {
+                "name": "Armchairs & Chaises",
+                "slug": "armchairs-and-chaises",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_8_1_300x300_ffd8a22d4a.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_8_2_300x300_aef1526120.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_8_3_300x300_cf0af19cb3.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 115,
+        "name": "Foldable Tray Table",
+        "slug": "foldable-tray-table",
+        "price": 308,
+        "sale_price": 250,
+        "review": 2,
+        "ratings": 3,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Decoration",
+                "slug": "decoration",
+                "__typename": "Category"
+            },
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_9_1_300x300_6a1e6d817c.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_9_2_300x300_1b33d80bc7.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 116,
+        "name": "Garden Armchair",
+        "slug": "garden-armchair",
+        "price": 94,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 5,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Decoration",
+                "slug": "decoration",
+                "__typename": "Category"
+            },
+            {
+                "name": "Furniture",
+                "slug": "furniture",
+                "__typename": "Category"
+            },
+            {
+                "name": "Armchairs & Chaises",
+                "slug": "armchairs-and-chaises",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_10_2_300x300_4ef184c8b8.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_10_1_300x300_76e829e2ec.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [
+            {
+                "color": "#333333",
+                "color_name": "Black",
+                "price": 90,
+                "size": [
+                    {
+                        "name": "Extra Small",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Small",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            },
+            {
+                "color": "#999999",
+                "color_name": "Grey",
+                "price": 100,
+                "size": [
+                    {
+                        "name": "Extra Small",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Extra Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            }
+        ],
+        "__typename": "Product"
+    },
+    {
+        "id": 117,
+        "name": "Carronade Large Suspension Lamp",
+        "slug": "carronade-large-suspension-lamp",
+        "price": 341,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 1,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Lighting",
+                "slug": "lighting",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_5_1_300x300_1dc848bfc9.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_5_2_300x300_5fe4a7e523.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 118,
+        "name": "Petite Table Lamp",
+        "slug": "petite-table-lamp",
+        "price": 65,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 5,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Lighting",
+                "slug": "lighting",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_12_3_300x300_5762cc36c5.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_12_2_300x300_dd9ba0a9be.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [
+            {
+                "color": "#3399cc",
+                "color_name": "Blue",
+                "price": 69,
+                "size": [
+                    {
+                        "name": "Medium",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            },
+            {
+                "color": "#cc3333",
+                "color_name": "Red",
+                "price": 65,
+                "size": [
+                    {
+                        "name": "Small",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Medium",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Extra Large",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Extra Small",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            },
+            {
+                "color": "#ebfa00",
+                "color_name": "Yellow",
+                "price": 73,
+                "size": [
+                    {
+                        "name": "Medium",
+                        "__typename": "Size"
+                    },
+                    {
+                        "name": "Large",
+                        "__typename": "Size"
+                    }
+                ],
+                "__typename": "Variant"
+            }
+        ],
+        "__typename": "Product"
+    },
+    {
+        "id": 119,
+        "name": "Madra Log Holder",
+        "slug": "madra-log-holder",
+        "price": 40,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 3,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": true,
+        "category": [
+            {
+                "name": "Decor",
+                "slug": "decor",
+                "__typename": "Category"
+            },
+            {
+                "name": "Storage Boxes & Baskets",
+                "slug": "storage-boxes-and-baskets",
+                "__typename": "Category"
+            },
+            {
+                "name": "Kitchen Cabinets",
+                "slug": "kitchen-cabinets",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_13_1_300x300_338f481ae5.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_13_2_300x300_c669393809.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 120,
+        "name": "Original Outdoor Beanbag",
+        "slug": "original-outdoor-beanbag",
+        "price": 80,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 4,
+        "until": null,
+        "stock": 100,
+        "top": true,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Storage Boxes & Baskets",
+                "slug": "storage-boxes-and-baskets",
+                "__typename": "Category"
+            },
+            {
+                "name": "Decor",
+                "slug": "decor",
+                "__typename": "Category"
+            },
+            {
+                "name": "Decoration",
+                "slug": "decoration",
+                "__typename": "Category"
+            },
+            {
+                "name": "Beds",
+                "slug": "beds",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_14_1_300x300_627d43a050.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_14_2_300x300_2154bc1dd6.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_14_3_300x300_011cc9330f.jpg",
+                "__typename": "Media"
+            },
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_14_4_300x300_84aa7cc3d2.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    },
+    {
+        "id": 121,
+        "name": "Windback Chair",
+        "slug": "windback-chair",
+        "price": 199,
+        "sale_price": null,
+        "review": 2,
+        "ratings": 3,
+        "until": null,
+        "stock": 100,
+        "top": null,
+        "featured": null,
+        "new": null,
+        "category": [
+            {
+                "name": "Sofas & Sleeper Sofas",
+                "slug": "sofas-and-sleeper-sofas",
+                "__typename": "Category"
+            },
+            {
+                "name": "Decor",
+                "slug": "decor",
+                "__typename": "Category"
+            },
+            {
+                "name": "Armchairs & Chaises",
+                "slug": "armchairs-and-chaises",
+                "__typename": "Category"
+            }
+        ],
+        "sm_pictures": [
+            {
+                "width": 300,
+                "height": 300,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_15_1_300x300_d63bee55db.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "variants": [],
+        "__typename": "Product"
+    }
+];
+
+const postsdata = [
+    {
+        "id": 101,
+        "author": "Jane Doe",
+        "comments": 0,
+        "content": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.Pelletesque aliquet nibh necurna.",
+        "date": "2020-09-22",
+        "slug": "sed-adipiscing-odbrnare.",
+        "title": "Sed adipiscing odbrnare.",
+        "type": "image",
+        "blog_categories": [
+            {
+                "name": "Lifestyle",
+                "slug": "lifestyle",
+                "__typename": "Category"
+            }
+        ],
+        "image": [
+            {
+                "width": 376,
+                "height": 250,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/post_1_8285333d58.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "__typename": "Post"
+    },
+    {
+        "id": 102,
+        "author": "Jane Doe",
+        "comments": 0,
+        "content": "Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis justo.",
+        "date": "2020-05-12",
+        "slug": "fusce-lacifgbnia-arcuet-nulla.",
+        "title": "Fusce lacifgbnia arcuet nulla.",
+        "type": "image",
+        "blog_categories": [
+            {
+                "name": "Lifestyle",
+                "slug": "lifestyle",
+                "__typename": "Category"
+            }
+        ],
+        "image": [
+            {
+                "width": 376,
+                "height": 250,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/post_2_73cf3ad8f8.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "__typename": "Post"
+    },
+    {
+        "id": 103,
+        "author": "Jane Doe",
+        "comments": 2,
+        "content": "Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue.",
+        "date": "2020-05-19",
+        "slug": "quisque-volutpat-mdbattis-eros.",
+        "title": "Quisque volutpat mdbattis eros.",
+        "type": "image",
+        "blog_categories": [
+            {
+                "name": "Lifestyle",
+                "slug": "lifestyle",
+                "__typename": "Category"
+            }
+        ],
+        "image": [
+            {
+                "width": 376,
+                "height": 250,
+                "url": "https://d-themes.com/react_asset_api/molla/uploads/post_3_dbb5414ec7.jpg",
+                "__typename": "Media"
+            }
+        ],
+        "__typename": "Post"
+    }
+];
 
 function Home(props) {
     const { data, loading, error } = useQuery(GET_HOME_DATA);
     const products = data && data.homeData.products;
-    const topProducts = attrFilter(data && data.homeData.products, 'top');
-    const posts = data && data.homeData.posts;
-
+    // const topProducts = attrFilter(data && data.homeData.products, 'top');
+    const topProducts = attrFilter(productdata && productdata, 'top');
+    // const posts = data && data.homeData.posts;
+    const posts = postsdata && postsdata;
     function openVideoModal(e) {
         e.preventDefault();
         props?.showVideo();
@@ -205,7 +1123,7 @@ function Home(props) {
 
                                     <LazyLoadImage
                                         alt="banner"
-                                        src="images/home/banners/WorkstationCollections.jpg"
+                                        src="images/home/banners/WorkstationCollection.jpg"
                                         threshold={200}
                                         width="100%"
                                         height="auto"
@@ -229,7 +1147,7 @@ function Home(props) {
 
                                     <LazyLoadImage
                                         alt="banner"
-                                        src="images/home/banners/ChairCollections1.jpg"
+                                        src="images/home/banners/Chair-Collection.jpg"
                                         threshold={200}
                                         height="auto"
                                         width="100%"
@@ -255,7 +1173,7 @@ function Home(props) {
 
                                             <LazyLoadImage
                                                 alt="banner"
-                                                src="images/home/banners/DeskCollections.jpg"
+                                                src="images/home/banners/Desk-Collection.jpg"
                                                 threshold={200}
                                                 height="auto"
                                                 width="100%"
@@ -276,7 +1194,7 @@ function Home(props) {
 
                                             <LazyLoadImage
                                                 alt="banner"
-                                                src="images/home/banners/SofaCollections1.jpg"
+                                                src="images/home/banners/Sofa-Collection.jpg"
                                                 threshold={200}
                                                 width="100%"
                                                 height="auto"
@@ -284,10 +1202,10 @@ function Home(props) {
                                             />
 
                                             <div className="banner-content banner-content-top">
-                                                <h4 className="banner-subtitle">Enzo Plus</h4>
-                                                <h3 className="banner-title">Sofa Collections</h3>
+                                                <h4 className="banner-subtitle text-grey">Enzo Plus</h4>
+                                                <h3 className="banner-title text-white">Sofa Collections</h3>
                                                 {/* <div className="banner-text">up to 30% off</div> */}
-                                                <ALink href="#" className="btn btn-outline-gray banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href="#" className="btn btn-outline-white banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>

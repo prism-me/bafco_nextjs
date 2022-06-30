@@ -93,7 +93,7 @@ div.intro-slide {
 		background-size: cover;
 
 		.css-1mdo01y {
-			background-color: rgba(255, 255, 255, 0.5);
+			background-color: rgba(255, 255, 255, 0.7);
 			padding: 30px;
 			max-width: max-content;
 		}
@@ -933,5 +933,11 @@ div.intro-slide {
 		background: #fff;
 		padding: 10px 30px;
 		left: 25%;
+	}
+}
+
+.top-management-application-tabs {
+	.lazy-overlay {
+		background: transparent;
 	}
 }

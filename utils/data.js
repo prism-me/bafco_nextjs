@@ -852,7 +852,7 @@ export const featureSlider4 = {
 
 export const introSlider = {
     nav: false,
-    dots: false,
+    dots: true,
     loop: true
 }
 
