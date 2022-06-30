@@ -1,5 +1,6 @@
 module.exports = {
-    basePath: process.env.NODE_ENV === 'production' ? `/react/molla/demo-${process.env.NEXT_PUBLIC_DEMO}` : '',
+    // basePath: process.env.NODE_ENV === 'production' ? `/react/molla/demo-${process.env.NEXT_PUBLIC_DEMO}` : '',
+    basePath: process.env.NODE_ENV === 'production' ? '' : '',
     // basePath: process.env.NODE_ENV === 'production' ? '' : '',
     trailingSlash: true,
     env: {
@@ -9,7 +10,7 @@ module.exports = {
     },
     i18n: {
         // providing the locales supported by your application
-       locales: ["en-US", "es-ES", "it-IT","fr","ar"],
-       defaultLocale: "en-US",
-     },
+        locales: ["en-US", "es-ES", "it-IT", "fr", "ar"],
+        defaultLocale: "en-US",
+    },
 }
