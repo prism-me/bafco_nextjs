@@ -196,8 +196,8 @@ function About() {
 
                 <div className="bg-light-2 pt-6 pb-7">
                     <div className="container">
-                        <h2 className="title text-center mb-4">Meet Our Team</h2>
-
+                        <h2 className="title text-center mb-2">Meet Our Team</h2>
+                        <p className="text-center mb-4">We’re a furniture-loving, creative bunch who love to sing and dance, listen to music, bake cakes, and cuddle with our pets.</p>
                         <div className="row">
                             <div className="col-sm-6 col-lg-3">
                                 <div className="member member-2 text-center">
