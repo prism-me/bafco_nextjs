@@ -13,7 +13,7 @@
 
 .about-img-back {
 	position: absolute;
-	right: 0;
+	right: 13rem;
 	top: 0;
 	z-index: 1;
 }
@@ -30,18 +30,19 @@
 
 .brands-display {
 	margin-top: .5rem;
+
 	.brand {
 		min-height: 0;
 		// margin-bottom: 4rem;
 	}
 
-	[class*="col-"] {
-		display: flex;
+	// [class*="col-"] {
+	// 	display: flex;
 
-		.brand {
-			width: 100%;
-		}
-	}
+	// 	.brand {
+	// 		width: 100%;
+	// 	}
+	// }
 }
 
 .about-testimonials {
@@ -79,6 +80,21 @@
 .member-media {
 	position: relative;
 	margin: 0;
+
+	&:hover img.Sirv.image-hover {
+		opacity: 1;
+	}
+
+	img.Sirv.image-hover {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		object-fit: contain;
+		opacity: 0;
+		transition: opacity .2s;
+	}
 }
 
 .member-content {
@@ -111,7 +127,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-    background-color: rgba(0,0,0,.3);
+	background-color: rgba(0, 0, 0, .3);
 	color: #fff;
 	opacity: 0;
 	visibility: hidden;
@@ -134,7 +150,7 @@
 	.social-icon {
 		font-size: 1.5rem;
 
-		& + .social-icon {
+		&+.social-icon {
 			margin-left: 2.8rem;
 		}
 
@@ -161,6 +177,7 @@
 
 	&.member-anim {
 		.member-overlay {
+
 			.member-title,
 			p,
 			.social-icons {
@@ -189,31 +206,31 @@
 }
 
 @keyframes fadeInUpShort {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 100px, 0);
-    transform: translate3d(0, 100px, 0);
-  }
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 100px, 0);
+		transform: translate3d(0, 100px, 0);
+	}
 
-  to {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+	to {
+		opacity: 1;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
 }
 
 @keyframes fadeOutUpShort {
-  from {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+	from {
+		opacity: 1;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
 
-  to {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100px, 0);
-    transform: translate3d(0, -100px, 0);
-  }
+	to {
+		opacity: 0;
+		-webkit-transform: translate3d(0, -100px, 0);
+		transform: translate3d(0, -100px, 0);
+	}
 }
 
 @media (max-width: 480px) {

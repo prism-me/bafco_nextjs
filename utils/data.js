@@ -448,59 +448,33 @@ export const shopData = {
 export const homeData = {
     brands: [
         {
-            "name": "brand",
-            "image": "images/brands/swarovski.png",
-            "width": 100,
-            "height": 23
+            "name": "Kano",
+            "description": "The world's first technology-driven executive collection? The first “E0” environmentally conscious manufacturer of furniture from China? The first fun workstation? KANO is a new generation company integrating Design, Technology and Products from the best machinery from Japan & Germany, and the leading global designers from Italy. KANO delivers the best value of design, quality & service that will add value to every workplace.",
+            "logo": "images/about/brand/Koplus.jpg",
+            "image": "images/about/KANO.jpg",
+            "slug": "https://kano.tech/row",
         },
         {
-            "name": "brand",
-            "image": "images/brands/eaglestar.png",
-            "width": 101,
-            "height": 34
+            "name": "Humanscale",
+            "description": "Humanscale is a New York-based company that leads the world in the design and manufacture of ergonomic products for modern workplaces, including desks and chairs that promote good posture and improve the health and comfort of work life.",
+            "logo": "images/about/brand/HumanScale.jpg",
+            "image": "images/about/Humanscale.jpg",
+            "slug": "https://mena.humanscale.com/index.cfm?",
         },
         {
-            "name": "brand",
-            "image": "images/brands/kpm.png",
-            "width": 100,
-            "height": 30
+            "name": "Koplus",
+            "description": "Founded in the Netherlands in 2009, KOPLUS takes on the vision of designing products that are truly intelligent and intuitive, from office chairs to meeting pods. Koplus is dedicated to delivering only well-designed, thoroughly tested and globally certified products.",
+            "logo": "images/about/brand/Koplus.jpg",
+            "image": "images/about/Koplus2.jpg",
+            "slug": "https://www.koplus.eu/",
         },
         {
-            "name": "brand",
-            "image": "images/brands/alfuttaim.png",
-            "width": 101,
-            "height": 39
+            "name": "Vantione",
+            "description": "Vantione is a design company founded by a group of young people who are passionate about life. Their designs are inspired by the joyful experiences experienced in our homes, workplaces, and other shared spaces. The furniture helps us to remember those precious moments that create interior environments that follow the Japanese and Scandinavian “lagom” principles.",
+            "logo": "images/about/brand/VantioneLogo.jpg",
+            "image": "images/about/Vantione.jpg",
+            "slug": "http://avanti.one/",
         },
-        {
-            "name": "brand",
-            "image": "images/brands/eaglestar.png",
-            "width": 100,
-            "height": 48
-        },
-        {
-            "name": "brand",
-            "image": "images/brands/swarovski.png",
-            "width": 100,
-            "height": 23
-        },
-        {
-            "name": "brand",
-            "image": "images/brands/eaglestar.png",
-            "width": 63,
-            "height": 32
-        },
-        {
-            "name": "brand",
-            "image": "images/brands/kpm.png",
-            "width": 80,
-            "height": 72
-        },
-        {
-            "name": "brand",
-            "image": "images/brands/alfuttaim.png",
-            "width": 100,
-            "height": 25
-        }
     ]
 }
 
