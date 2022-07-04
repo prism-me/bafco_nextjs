@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/react-hooks";
+import { useEffect, useState } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Reveal from 'react-awesome-reveal';
 import Countdown from "react-countdown";
-
 import ALink from '~/components/features/alink';
 import OwlCarousel from '~/components/features/owl-carousel';
 import SpecialCollection from '~/components/partials/home/special-collection';
@@ -17,6 +17,8 @@ import { attrFilter } from '~/utils';
 import { actions as demoAction } from '~/store/demo';
 // import { productdata } from "../data";
 import { homeData, introSlider, brandSlider, dealSlider, fadeInUpShorter, fadeInLeftShorter, fadeInRightShorter, fadeIn } from '~/utils/data';
+
+const axios = require('axios');
 
 const productdata = [
     {
@@ -942,6 +944,8 @@ function Home(props) {
     const topProducts = attrFilter(productdata && productdata, 'top');
     // const posts = data && data.homeData.posts;
     const posts = postsdata && postsdata;
+    const [homedata, setHomedata] = useState();
+
     function openVideoModal(e) {
         e.preventDefault();
         props?.showVideo();
@@ -951,18 +955,27 @@ function Home(props) {
         return <div></div>
     }
 
+    useEffect(() => {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/api/pages/home-page?en').then(function (response) {
+            // handle success
+            console.log(response.data.content);
+            setHomedata(response.data.content)
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+    })
+
 
     return (
         <div className="main home-page skeleton-body">
             <div className="intro-slider-container">
-                <div className="intro-slide slide1" style={{ backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/Magic7.jpg)' }}>
+                <div className="intro-slide slide1" style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${homedata?.banner?.image !== "" ? homedata?.banner?.image : 'images/home/Magic7.jpg'})` }}>
                     <div className="container intro-content">
                         <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
                             <>
-                                <h3 className="intro-subtitle">Work Better. Live Healthier.</h3>
-                                <h1 className="intro-title">Site Stand <br />Desks
-                                    {/* <br /><span className="text-primary"><sup>$</sup>49,99</span> */}
-                                </h1>
+                                <h3 className="intro-subtitle">{homedata?.banner?.sub_heading}</h3>
+                                <h1 className="intro-title">{homedata?.banner?.heading}</h1>
 
                                 <ALink href="#" className="btn btn-dark btn-outline-darker">
                                     <span>Design My Desk</span>
@@ -1052,9 +1065,9 @@ function Home(props) {
                                         <i className="icon-phone"></i>
                                     </span>
                                     <div className="icon-box-content">
-                                        <h3 className="icon-box-title">Give Us A Call</h3>
+                                        <h3 className="icon-box-title">{homedata?.contact[0]?.text}</h3>
 
-                                        <p>+971 800 (22326)</p>
+                                        <p>{homedata?.contact[0]?.value}</p>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1068,9 +1081,9 @@ function Home(props) {
                                     </span>
 
                                     <div className="icon-box-content">
-                                        <h3 className="icon-box-title">Whatsapp</h3>
+                                        <h3 className="icon-box-title">{homedata?.contact[1]?.text}</h3>
 
-                                        <p>+971 800 (22326)</p>
+                                        <p>{homedata?.contact[1]?.value}</p>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1084,9 +1097,9 @@ function Home(props) {
                                     </span>
 
                                     <div className="icon-box-content">
-                                        <h3 className="icon-box-title">Locations</h3>
+                                        <h3 className="icon-box-title">{homedata?.contact[2]?.text}</h3>
 
-                                        <p>Visit a showroom near you.</p>
+                                        <p>{homedata?.contact[2]?.value}</p>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1123,7 +1136,7 @@ function Home(props) {
 
                                     <LazyLoadImage
                                         alt="banner"
-                                        src="images/home/banners/WorkstationCollection.jpg"
+                                        src={homedata?.collections[0]?.image}
                                         threshold={200}
                                         width="100%"
                                         height="auto"
@@ -1131,9 +1144,9 @@ function Home(props) {
                                     />
 
                                     <div className="banner-content banner-content-top">
-                                        <h4 className="banner-subtitle">Clearance</h4>
-                                        <h3 className="banner-title">Workstation <br /> Collection</h3>
-                                        <div className="banner-text">from Dhs.200</div>
+                                        <h4 className="banner-subtitle">{homedata?.collections[0]?.sub_heading}</h4>
+                                        <h3 className="banner-title">{homedata?.collections[0]?.heading}</h3>
+                                        <div className="banner-text">{homedata?.collections[0]?.starting_from}</div>
                                         <ALink href="#" className="btn btn-outline-gray banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
                                     </div>
                                 </div>
@@ -1147,7 +1160,7 @@ function Home(props) {
 
                                     <LazyLoadImage
                                         alt="banner"
-                                        src="images/home/banners/Chair-Collection.jpg"
+                                        src={homedata?.collections[1]?.image}
                                         threshold={200}
                                         height="auto"
                                         width="100%"
@@ -1155,8 +1168,8 @@ function Home(props) {
                                     />
 
                                     <div className="banner-content banner-content-top">
-                                        <h4 className="banner-subtitle text-grey">Freedom</h4>
-                                        <h3 className="banner-title text-white">Chair Collections </h3>
+                                        <h4 className="banner-subtitle text-grey">{homedata?.collections[1]?.sub_heading}</h4>
+                                        <h3 className="banner-title text-white">{homedata?.collections[1]?.heading}</h3>
                                         {/* <div className="banner-text text-white">from $39.99</div> */}
                                         <ALink href="#" className="btn btn-outline-white banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
                                     </div>
@@ -1173,7 +1186,7 @@ function Home(props) {
 
                                             <LazyLoadImage
                                                 alt="banner"
-                                                src="images/home/banners/Desk-Collection.jpg"
+                                                src={homedata?.collections[2]?.image}
                                                 threshold={200}
                                                 height="auto"
                                                 width="100%"
@@ -1181,8 +1194,8 @@ function Home(props) {
                                             />
 
                                             <div className="banner-content banner-content-top">
-                                                <h4 className="banner-subtitle">Midas</h4>
-                                                <h3 className="banner-title">Desk Collections</h3>
+                                                <h4 className="banner-subtitle">{homedata?.collections[2]?.sub_heading}</h4>
+                                                <h3 className="banner-title">{homedata?.collections[2]?.heading}</h3>
                                                 <ALink href="#" className="btn btn-outline-gray banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
@@ -1194,7 +1207,7 @@ function Home(props) {
 
                                             <LazyLoadImage
                                                 alt="banner"
-                                                src="images/home/banners/Sofa-Collection.jpg"
+                                                src={homedata?.collections[3]?.image}
                                                 threshold={200}
                                                 width="100%"
                                                 height="auto"
@@ -1202,8 +1215,8 @@ function Home(props) {
                                             />
 
                                             <div className="banner-content banner-content-top">
-                                                <h4 className="banner-subtitle text-grey">Enzo Plus</h4>
-                                                <h3 className="banner-title text-white">Sofa Collections</h3>
+                                                <h4 className="banner-subtitle text-grey">{homedata?.collections[3]?.sub_heading}</h4>
+                                                <h3 className="banner-title text-white">{homedata?.collections[3]?.heading}</h3>
                                                 {/* <div className="banner-text">up to 30% off</div> */}
                                                 <ALink href="#" className="btn btn-outline-white banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
                                             </div>
@@ -1220,12 +1233,12 @@ function Home(props) {
 
             <div className="our-projects text-center">
                 <div className="heading heading-center mb-3">
-                    <h2 className="title">Our Projects</h2>
-                    <h4>Furniture Overview</h4>
+                    <h2 className="title">{homedata?.projects?.heading}</h2>
+                    <h4>{homedata?.projects?.sub_heading}</h4>
                 </div>
                 <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce>
                     <div className="projects-list">
-                        <img src="images/home/001-13.jpg" alt="slide" />
+                        <img src={homedata?.projects?.image} alt="slide" />
 
                         {/* <ul>
                             <li className="icon-index1">
@@ -1542,15 +1555,15 @@ function Home(props) {
 
             <div className="mb-6"></div>
 
-            <div className="video-banner video-banner-bg bg-image text-center" style={{ backgroundImage: 'url(images/home/VideoSectionBackgroundwithlayerblur.jpg)' }}>
+            <div className="video-banner video-banner-bg bg-image text-center" style={{ backgroundImage: `url(${homedata?.video?.icon})` }}>
                 <div className="container">
-                    <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce style={{ backgroundImage: 'url(images/home/VideoImage.jpg)' }}>
+                    <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce style={{ backgroundImage: `url(${homedata?.video?.icon})` }}>
                         <>
                             <h3 className="video-banner-title h1 text-white">
                                 {/* <span>New Collection</span> */}
-                                <strong>Visit Our Showroom</strong>
+                                <strong>{homedata?.video?.heading}</strong>
                             </h3>
-                            <a href="https://bafco.b-cdn.net/videos/2020CIFF.mp4" className="btn-video btn-iframe" onClick={openVideoModal}><i className="icon-play"></i></a>
+                            <a href={homedata?.video?.link} className="btn-video btn-iframe" onClick={openVideoModal}><i className="icon-play"></i></a>
                         </>
                     </Reveal>
                 </div>
@@ -1559,6 +1572,7 @@ function Home(props) {
             <div className="mb-6"></div>
 
             <BlogCollection posts={posts} loading={loading}></BlogCollection>
+
             <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
                 <div
                     className="footer-newsletter bg-image"

@@ -111,7 +111,7 @@ function Footer() {
 
                         <div className="col-sm-6 col-lg-3">
                             <div className="widget">
-                                <h4 className="widget-title">Visit our Showroom</h4>
+                                <h4 className="widget-title">VISIT OUR SHOWROOM</h4>
                                 <ul className="contact-list">
                                     <li>
                                         <i className="icon-map-marker"></i>
