@@ -162,13 +162,13 @@ const productdata = [
             {
                 "width": 300,
                 "height": 300,
-                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_3_1_300x300_a6a525d4b9.jpg",
+                "url": "images/products/GeneModularSofa.png",
                 "__typename": "Media"
             },
             {
                 "width": 300,
                 "height": 300,
-                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_3_2_300x300_7ef429113e.jpg",
+                "url": "images/products/GeneModularSofa.png",
                 "__typename": "Media"
             }
         ],
@@ -264,8 +264,8 @@ const productdata = [
         "new": true,
         "category": [
             {
-                "name": "Decoration",
-                "slug": "decoration",
+                "name": "WORKSPACE",
+                "slug": "workspace",
                 "__typename": "Category"
             },
             {
@@ -360,8 +360,8 @@ const productdata = [
         "new": null,
         "category": [
             {
-                "name": "Decoration",
-                "slug": "decoration",
+                "name": "WORKSPACE",
+                "slug": "workspace",
                 "__typename": "Category"
             },
             {
@@ -437,8 +437,8 @@ const productdata = [
     },
     {
         "id": 115,
-        "name": "Foldable Tray Table",
-        "slug": "foldable-tray-table",
+        "name": "Gene Modular Sofa",
+        "slug": "gene-modular-sofa",
         "price": 308,
         "sale_price": 250,
         "review": 2,
@@ -450,8 +450,8 @@ const productdata = [
         "new": null,
         "category": [
             {
-                "name": "Decoration",
-                "slug": "decoration",
+                "name": "WORKSPACE",
+                "slug": "workspace",
                 "__typename": "Category"
             },
             {
@@ -464,13 +464,13 @@ const productdata = [
             {
                 "width": 300,
                 "height": 300,
-                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_9_1_300x300_6a1e6d817c.jpg",
+                "url": "images/products/GeneModularSofa.png",
                 "__typename": "Media"
             },
             {
                 "width": 300,
                 "height": 300,
-                "url": "https://d-themes.com/react_asset_api/molla/uploads/product_9_2_300x300_1b33d80bc7.jpg",
+                "url": "images/products/GeneModularSofa.png",
                 "__typename": "Media"
             }
         ],
@@ -492,8 +492,8 @@ const productdata = [
         "new": null,
         "category": [
             {
-                "name": "Decoration",
-                "slug": "decoration",
+                "name": "WORKSPACE",
+                "slug": "workspace",
                 "__typename": "Category"
             },
             {
@@ -774,8 +774,8 @@ const productdata = [
                 "__typename": "Category"
             },
             {
-                "name": "Decoration",
-                "slug": "decoration",
+                "name": "WORKSPACE",
+                "slug": "workspace",
                 "__typename": "Category"
             },
             {
@@ -956,7 +956,7 @@ function Home(props) {
     }
 
     useEffect(() => {
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/api/pages/home-page?en').then(function (response) {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/home-page?en').then(function (response) {
             // handle success
             console.log(response.data.content);
             setHomedata(response.data.content)

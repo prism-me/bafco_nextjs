@@ -21,10 +21,10 @@ function TopCollection(props) {
                             <span className="nav-link">Furniture</span>
                         </Tab>
                         <Tab className="nav-item">
-                            <span className="nav-link">Decoration</span>
+                            <span className="nav-link">WORKSPACE</span>
                         </Tab>
                         <Tab className="nav-item">
-                            <span className="nav-link">Lighting</span>
+                            <span className="nav-link">DESKS</span>
                         </Tab>
                     </TabList>
                 </div>

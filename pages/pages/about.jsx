@@ -17,7 +17,7 @@ function About() {
 
         countTo();
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/api/pages/about?en').then(function (response) {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/about?en').then(function (response) {
             // handle success
             setAboutdata(response.data.content)
         }).catch(function (error) {
@@ -25,7 +25,7 @@ function About() {
             console.log(error);
         })
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/api/teams?lang=en').then(function (response) {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/teams?lang=en').then(function (response) {
             // handle success
             setTeamList(response?.data)
         }).catch(function (error) {
@@ -33,7 +33,7 @@ function About() {
             console.log(error);
         })
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/api/partners?lang=en').then(function (response) {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/partners?lang=en').then(function (response) {
             // handle success
             setPartnersList(response?.data)
         }).catch(function (error) {

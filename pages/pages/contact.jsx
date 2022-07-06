@@ -1,17 +1,74 @@
 import GoogleMapReact from 'google-map-react';
-
+import { useEffect, useState } from "react";
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
+import { toast } from 'react-toastify';
+
+const axios = require('axios');
 
 const MapComponent = ({ text }) => <div>{text}</div>;
 
+const contactForm = {
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    phone: "",
+};
+
 function Contact() {
+    const [contactusdata, setContactusdata] = useState();
+    const [contactFormData, setcontactFormData] = useState({ ...contactForm });
+
+
+    useEffect(() => {
+
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/contact?en').then(function (response) {
+            // handle success
+            setContactusdata(response.data.content)
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+
+    }, []);
+
+    const handleInit = (e) => {
+        let formdata = { ...contactFormData }
+        formdata[e.target.name] = e.target.value;
+        setcontactFormData(formdata);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let updatedData = { ...contactFormData };
+
+        if (updatedData.email === "" && updatedData.name === "" && updatedData.phone === "" && updatedData.subject === "") {
+            toast.success("Please enter your Data");
+        } else if (updatedData.email === "") {
+            toast.success("Please enter your Email");
+        } else if (updatedData.name === "") {
+            toast.success("Please enter your Name");
+        } else if (updatedData.phone === "") {
+            toast.success("Please enter your Phone number");
+        } else if (updatedData.subject === "") {
+            toast.success("Please enter your Subject");
+        } else {
+            axios.post('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/contact-us', updatedData).then(function (response) {
+                toast.success(response?.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+    };
+
     return (
         <div className="main">
             <PageHeader
-                title="Contact us"
-                subTitle="Lorem ipsum"
-                backgroundImage="images/contact-header-bg.jpg"
+                title={contactusdata?.banner?.heading}
+                subTitle={contactusdata?.banner?.sub_heading}
+                backgroundImage={contactusdata?.banner?.image}
                 buttonText="Shop Now"
                 buttonUrl="#"
             />
@@ -21,7 +78,7 @@ function Contact() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item active">Contact Us</li>
+                        <li className="breadcrumb-item active">{contactusdata?.banner?.heading}</li>
                     </ol>
                 </div>
             </nav>
@@ -34,82 +91,61 @@ function Contact() {
                             <h2 className="title mb-1">Contact Information</h2>
                             <p className="mb-3">Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
                             <div className="row">
-                                <div className="col-sm-7">
-                                    <div className="contact-info">
-                                        <h3>The Dubai Office</h3>
+                                {contactusdata?.contact?.map((item, index) => (
+                                    <div className="col-sm-6" key={index}>
+                                        <div className="contact-info">
+                                            <h3>{item.heading}</h3>
 
-                                        <ul className="contact-list">
-                                            <li>
-                                                <i className="icon-map-marker"></i>
-                                                BAFCO Office & Showroom Ground Floor, Al Manara Building (near Al Safa Metro Station) Sheikh Zayed Road, Dubai, UAE
-                                            </li>
-                                            <li>
-                                                <i className="icon-phone"></i>
-                                                <a href="tel:+9714 324 4424">+9714 324 4424</a>
-                                            </li>
-                                            <li>
-                                                <i className="icon-envelope"></i>
-                                                <a href="mailto:hello@gmail.com">hello@gmail.com</a>
-                                            </li>
-                                        </ul>
+                                            <ul className="contact-list">
+                                                <li>
+                                                    <i className="icon-map-marker"></i>
+                                                    {item.address}
+                                                </li>
+                                                <li>
+                                                    <i className="icon-phone"></i>
+                                                    <a href={`tel:${item.number}`}>{item.number}</a>
+                                                </li>
+                                                <li>
+                                                    <i className="icon-envelope"></i>
+                                                    <a href={`mailto:${item.email}`}>{item.email}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div className="col-sm-5">
-                                    <div className="contact-info">
-                                        <h3>The Abu Dhabi Office</h3>
-
-                                        <ul className="contact-list">
-                                            <li>
-                                                <i className="icon-map-marker"></i>
-                                                Mezzanine Floor, Hareb Tower Sheikh, Airport Road – Old Rashid Bin Saeed Al Maktoum St. (2nd Street) Abu Dhabi, UAE
-                                            </li>
-                                            <li>
-                                                <i className="icon-phone"></i>
-                                                <a href="tel:+9714 324 4424">+9714 324 4424</a>
-                                            </li>
-                                            <li>
-                                                <i className="icon-envelope"></i>
-                                                <a href="mailto:hello@gmail.com">hello@gmail.com</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                         <div className="col-lg-6">
-                            <h2 className="title mb-1">Get In Touch</h2>
-                            <p className="lead text-primary">
-                                We collaborate with ambitious brands and people; we’d love to build something great together.
-                            </p>
-                            <p className="mb-3">Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
+                            <h2 className="title mb-1">{contactusdata?.getInTouch?.heading}</h2>
+                            <p className="lead text-primary">{contactusdata?.getInTouch?.sub_heading}</p>
+                            <div className="mb-3" dangerouslySetInnerHTML={{ __html: contactusdata?.getInTouch?.description }} />
 
-                            <form action="#" className="contact-form mb-2">
+                            <form className="contact-form mb-2">
                                 <div className="row">
                                     <div className="col-sm-4">
                                         <label htmlFor="cname" className="sr-only">Name</label>
-                                        <input type="text" className="form-control" id="cname" placeholder="Name *" required />
+                                        <input type="text" className="form-control" name="name" placeholder="Name *" onChange={handleInit} required />
                                     </div>
 
                                     <div className="col-sm-4">
-                                        <label htmlFor="cemail" className="sr-only">Name</label>
-                                        <input type="email" className="form-control" id="cemail" placeholder="Email *" required />
+                                        <label htmlFor="cemail" className="sr-only">Email</label>
+                                        <input type="email" className="form-control" name="email" placeholder="Email *" onChange={handleInit} required />
                                     </div>
 
                                     <div className="col-sm-4">
                                         <label htmlFor="cphone" className="sr-only">Phone</label>
-                                        <input type="tel" className="form-control" id="cphone" placeholder="Phone" />
+                                        <input type="tel" className="form-control" name="phone" placeholder="Phone" onChange={handleInit} />
                                     </div>
                                 </div>
 
                                 <label htmlFor="csubject" className="sr-only">Subject</label>
-                                <input type="text" className="form-control" id="csubject" placeholder="Subject" />
+                                <input type="text" className="form-control" name="subject" placeholder="Subject" onChange={handleInit} />
 
                                 <label htmlFor="cmessage" className="sr-only">Message</label>
-                                <textarea className="form-control" cols="30" rows="4" id="cmessage" required placeholder="Message *"></textarea>
+                                <textarea className="form-control" cols="30" rows="4" name="message" required placeholder="Message *" onChange={handleInit}></textarea>
 
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-outline-primary-2 btn-minwidth-sm">
+                                    <button type="button" onClick={handleSubmit} className="btn btn-outline-primary-2 btn-minwidth-sm">
                                         <span>SUBMIT</span>
                                         <i className="icon-long-arrow-right"></i>
                                     </button>

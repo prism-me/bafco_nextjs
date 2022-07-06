@@ -161,13 +161,13 @@ function ProductTwelve(props) {
                                 <div className="product-price">Dhs. {minPrice.toFixed(2)}&ndash;Dhs. {maxPrice.toFixed(2)}</div>
                 }
 
-                <div className="ratings-container">
+                {/* <div className="ratings-container">
                     <div className="ratings">
                         <div className="ratings-val" style={{ width: product.ratings * 20 + '%' }}></div>
                         <span className="tooltip-text">{product.ratings.toFixed(2)}</span>
                     </div>
                     <span className="ratings-text">( {product.review} Reviews )</span>
-                </div>
+                </div> */}
 
                 {
                     product.variants.length > 0 ?
