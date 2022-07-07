@@ -16,13 +16,13 @@ function CategoryMenu() {
                         <nav className="side-nav">
                             <ul className="menu-vertical sf-arrows">
                                 <li className={query.category == 'electronics' ? 'active' : ''}><ALink href="/application/top-management/" scroll={false}>Top Management</ALink></li>
-                                <li className={query.category == 'gift-idea' ? 'active' : ''}><ALink href="#" scroll={false}>Senior Management</ALink></li>
-                                <li className={query.category == 'beds' ? 'active' : ''}><ALink href="#" scroll={false}>Majlis Area</ALink></li>
-                                <li className={query.category == 'lighting' ? 'active' : ''}><ALink href="#" scroll={false}>Management Desk & Chairs</ALink></li>
-                                <li className={query.category == 'sofas-and-sleeper-sofas' ? 'active' : ''}><ALink href="#" scroll={false}>Workstation & Ergonomic Chairs</ALink></li>
-                                <li className={query.category == 'storage' ? 'active' : ''}><ALink href="#" scroll={false}>Formal and Casual Meeting Area</ALink></li>
-                                <li className={query.category == 'armchairs-and-chaises' ? 'active' : ''}><ALink href="#" scroll={false}>Collaborative & Public Seating</ALink></li>
-                                <li className={query.category == 'decoration' ? 'active' : ''}><ALink href="#" scroll={false}>Training Area & Pantry Area</ALink></li>
+                                <li className={query.category == 'gift-idea' ? 'active' : ''}><ALink href="/application/senior-management/" scroll={false}>Senior Management</ALink></li>
+                                <li className={query.category == 'beds' ? 'active' : ''}><ALink href="/application/majlis-area/" scroll={false}>Majlis Area</ALink></li>
+                                <li className={query.category == 'lighting' ? 'active' : ''}><ALink href="/application/management-desk-and-chairs/" scroll={false}>Management Desk & Chairs</ALink></li>
+                                <li className={query.category == 'sofas-and-sleeper-sofas' ? 'active' : ''}><ALink href="/application/workstation-and-ergonomic-chairs/" scroll={false}>Workstation & Ergonomic Chairs</ALink></li>
+                                <li className={query.category == 'storage' ? 'active' : ''}><ALink href="/application/formal-and-casual-meeting-area/" scroll={false}>Formal and Casual Meeting Area</ALink></li>
+                                <li className={query.category == 'armchairs-and-chaises' ? 'active' : ''}><ALink href="/application/collaborative-and-public-seating/" scroll={false}>Collaborative & Public Seating</ALink></li>
+                                <li className={query.category == 'decoration' ? 'active' : ''}><ALink href="/application/training-area-and-pantry-area/" scroll={false}>Training Area & Pantry Area</ALink></li>
                             </ul>
                         </nav>
                     </div>

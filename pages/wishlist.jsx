@@ -8,6 +8,7 @@ import { actions as cartAction } from '~/store/cart';
 
 function Wishlist(props) {
     const [wishItems, setWishItems] = useState([]);
+    const wishlistbg = "images/banners/whishlist-banner.png";
 
     useEffect(() => {
         setWishItems(props.wishlist.reduce((acc, product) => {
@@ -46,7 +47,7 @@ function Wishlist(props) {
             <PageHeader
                 title="WishList"
                 subTitle="We make happy workplaces"
-                backgroundImage="images/banners/whishlist-banner.png"
+                backgroundImage={wishlistbg}
                 buttonText="Shop Now"
                 buttonUrl="#"
             />

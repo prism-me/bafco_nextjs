@@ -118,7 +118,7 @@ function Header() {
                         </div>
 
                         {/* <div className="header-right overflow-hidden"> */}
-                        <div className="header-right">
+                        {/* <div className="header-right">
                             <ul className="top-menu">
                                 <li>
                                     <ALink href="#">Links</ALink>
@@ -141,16 +141,15 @@ function Header() {
                                                     <ul>
                                                         <li><ALink href="#">English</ALink></li>
                                                         <li><ALink href="#">Arabic</ALink></li>
-                                                        {/* <li><ALink href="#">Spanish</ALink></li> */}
                                                     </ul>
                                                 </div>
                                             </div>
                                         </li>
-                                        {/* <LoginModal /> */}
+                                        <LoginModal />
                                     </ul>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
                         {/* <i className="la la-lightbulb-o"></i><p className="text-truncate">Clearance<span className="highlight">&nbsp;Up to 30% Off</span></p> */}
                         {/* </div> */}
                     </div>

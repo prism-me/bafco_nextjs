@@ -974,9 +974,11 @@
 
 			li {
 				list-style: none;
+
 				a {
 					color: #000;
-					&:hover{
+
+					&:hover {
 						color: $primary-color;
 					}
 				}

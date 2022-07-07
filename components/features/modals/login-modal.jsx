@@ -79,7 +79,7 @@ function LoginModal(props) {
             'password': userFormData.password
         };
         try {
-            const resp = await axios.post('https://prismcloudhosting.com/BAFCO_APIs/public/api/auth/login', formdata);
+            const resp = await axios.post('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/auth/login', formdata);
             toast.success(resp?.data);
             closeModal();
             localStorage.setItem('authtoken', resp?.headers?.x_auth_token);
@@ -101,8 +101,14 @@ function LoginModal(props) {
     };
 
     return (
-        <li>
-            <a href="#" onClick={openModal}>Sign in / Sign up</a>
+        <div className="account" onClick={openModal}>
+            <ALink href="#">
+                <div className="icon">
+                    <i className="icon-user"></i>
+                </div>
+                <p>Account</p>
+            </ALink>
+
             {
                 open ?
                     <Modal
@@ -237,8 +243,7 @@ function LoginModal(props) {
                     </Modal>
                     : ''
             }
-        </li>
-    )
+        </div>)
 }
 
 export default LoginModal;
