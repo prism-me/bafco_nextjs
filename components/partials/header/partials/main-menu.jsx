@@ -4,7 +4,7 @@ import ALink from '~/components/features/alink';
 
 function MainMenu() {
     const router = useRouter();
-    let path = router.query.type;
+    let path = router.query.slug;
     // let query = router.query;
 
     // function showAllDemos(e) {
@@ -31,13 +31,12 @@ function MainMenu() {
                                     <div className="menu-col">
                                         <div className="menu-title">Chair Collections</div>
                                         <ul>
-                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="#">Executive Chairs</ALink></li>
-                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="#">Ergonomic Chairs</ALink></li>
-                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="#"><span>Conference Chairs<span className="tip tip-new">New</span></span></ALink></li>
-                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="#">Visitor Chairs</ALink></li>
-                                            <li className={path?.indexOf("product/sticky") > -1 ? 'active' : ''}><ALink href="#">Stools</ALink></li>
-                                            <li className={path?.indexOf("product/sidebar") > -1 ? 'active' : ''}><ALink href="#">Multi-Functional Chairs</ALink></li>
-                                            <li className={path?.indexOf("product/fullwidth") > -1 ? 'active' : ''}><ALink href="/collections/allchairs/">(All Chairs)</ALink></li>
+                                            <li className={path?.indexOf("/collections/category/executive-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/category/executive-chairs/">Executive Chairs</ALink></li>
+                                            <li className={path?.indexOf("/collections/category/ergonomic-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/category/ergonomic-chairs/">Ergonomic Chairs</ALink></li>
+                                            <li className={path?.indexOf("/collections/category/conference-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/category/conference-chairs/"><span>Conference Chairs<span className="tip tip-new">New</span></span></ALink></li>
+                                            <li className={path?.indexOf("/collections/category/visitor-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/category/visitor-chairs/">Visitor Chairs</ALink></li>
+                                            <li className={path?.indexOf("/collections/category/stools/") > -1 ? 'active' : ''}><ALink href="/collections/category/stools/">Stools</ALink></li>
+                                            <li className={path?.indexOf("/collections/category/multi-functional-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/category/multi-functional-chairs/">Multi-Functional Chairs</ALink></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -421,11 +420,10 @@ function MainMenu() {
                                     <div className="menu-col">
                                         <div className="menu-title">Desk Collections</div>
                                         <ul>
-                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="#">Executive Desks</ALink></li>
-                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="#">Workstation</ALink></li>
-                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="#">Height Adjustable Desks</ALink></li>
-                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="#">Meeting and Conferences</ALink></li>
-                                            <li className={path?.indexOf("product/sticky") > -1 ? 'active' : ''}><ALink href="#">(All Desks)</ALink></li>
+                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="/collections/category/executive-desks">Executive Desks</ALink></li>
+                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="/collections/category/workstation">Workstation</ALink></li>
+                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="/collections/category/height-adjustable-desks">Height Adjustable Desks</ALink></li>
+                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="/collections/category/meeting-and-conferences">Meeting and Conferences</ALink></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -509,18 +507,17 @@ function MainMenu() {
                                     <div className="menu-col">
                                         <div className="menu-title">Collaborative Collections</div>
                                         <ul>
-                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="#">Executive Desks</ALink></li>
-                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="#">Workstation</ALink></li>
-                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="#">Height Adjustable Desks</ALink></li>
-                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="#">Meeting and Conferences</ALink></li>
-                                            <li className={path?.indexOf("product/sticky") > -1 ? 'active' : ''}><ALink href="#">(All Desks)</ALink></li>
+                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="/collections/category/executive-desks">Executive Desks</ALink></li>
+                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="/collections/category/workstation">Workstation</ALink></li>
+                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="/collections/category/height-adjustable-desks">Height Adjustable Desks</ALink></li>
+                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="/collections/category/meeting-and-conferences">Meeting and Conferences</ALink></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="banner banner-overlay">
-                                        <ALink href="/product/centered/dark-yellow-lace-cut-out-swing-dress">
+                                        <ALink href="/collections/category/executive-desks">
                                             <img src="images/menu/hamburger-menu-image.png" alt="Banner" />
 
                                             <div className="banner-content banner-content-bottom">
@@ -544,18 +541,17 @@ function MainMenu() {
                                     <div className="menu-col">
                                         <div className="menu-title">Collaborative Collections</div>
                                         <ul>
-                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="#">Executive Desks</ALink></li>
-                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="#">Workstation</ALink></li>
-                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="#">Height Adjustable Desks</ALink></li>
-                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="#">Meeting and Conferences</ALink></li>
-                                            <li className={path?.indexOf("product/sticky") > -1 ? 'active' : ''}><ALink href="#">(All Desks)</ALink></li>
+                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="/collections/category/executive-desks">Executive Desks</ALink></li>
+                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="/collections/category/workstation">Workstation</ALink></li>
+                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="/collections/category/height-adjustable-desks">Height Adjustable Desks</ALink></li>
+                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="/collections/category/meeting-and-conferences">Meeting and Conferences</ALink></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="banner banner-overlay">
-                                        <ALink href="/product/centered/dark-yellow-lace-cut-out-swing-dress">
+                                        <ALink href="/collections/category/executive-desks">
                                             <img src="images/menu/hamburger-menu-image.png" alt="Banner" />
 
                                             <div className="banner-content banner-content-bottom">
@@ -579,18 +575,17 @@ function MainMenu() {
                                     <div className="menu-col">
                                         <div className="menu-title">Collaborative Collections</div>
                                         <ul>
-                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="#">Executive Desks</ALink></li>
-                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="#">Workstation</ALink></li>
-                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="#">Height Adjustable Desks</ALink></li>
-                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="#">Meeting and Conferences</ALink></li>
-                                            <li className={path?.indexOf("product/sticky") > -1 ? 'active' : ''}><ALink href="#">(All Desks)</ALink></li>
+                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="/collections/category/executive-desks">Executive Desks</ALink></li>
+                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="/collections/category/workstation">Workstation</ALink></li>
+                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="/collections/category/height-adjustable-desks">Height Adjustable Desks</ALink></li>
+                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="/collections/category/meeting-and-conferences">Meeting and Conferences</ALink></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="banner banner-overlay">
-                                        <ALink href="/product/centered/dark-yellow-lace-cut-out-swing-dress">
+                                        <ALink href="/collections/category/executive-desks">
                                             <img src="images/menu/hamburger-menu-image.png" alt="Banner" />
 
                                             <div className="banner-content banner-content-bottom">
@@ -614,18 +609,17 @@ function MainMenu() {
                                     <div className="menu-col">
                                         <div className="menu-title">Collaborative Collections</div>
                                         <ul>
-                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="#">Executive Desks</ALink></li>
-                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="#">Workstation</ALink></li>
-                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="#">Height Adjustable Desks</ALink></li>
-                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="#">Meeting and Conferences</ALink></li>
-                                            <li className={path?.indexOf("product/sticky") > -1 ? 'active' : ''}><ALink href="#">(All Desks)</ALink></li>
+                                            <li className={path?.indexOf("product/default") > -1 ? 'active' : ''}><ALink href="/collections/category/executive-desks">Executive Desks</ALink></li>
+                                            <li className={path?.indexOf("product/centered") > -1 ? 'active' : ''}><ALink href="/collections/category/workstation">Workstation</ALink></li>
+                                            <li className={path?.indexOf("product/extended") > -1 ? 'active' : ''}><ALink href="/collections/category/height-adjustable-desks">Height Adjustable Desks</ALink></li>
+                                            <li className={path?.indexOf("product/gallery") > -1 ? 'active' : ''}><ALink href="/collections/category/meeting-and-conferences">Meeting and Conferences</ALink></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="banner banner-overlay">
-                                        <ALink href="/product/centered/dark-yellow-lace-cut-out-swing-dress">
+                                        <ALink href="/collections/category/executive-desks">
                                             <img src="images/menu/hamburger-menu-image.png" alt="Banner" />
 
                                             <div className="banner-content banner-content-bottom">

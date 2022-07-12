@@ -15,30 +15,32 @@ import { scrollToPageContent } from '~/utils';
 
 function ProductSubCatInner() {
     const router = useRouter();
-    const type = router?.route.split('/')[2];
     const query = router.query;
+
+    
     const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
     const [firstLoading, setFirstLoading] = useState(false);
     const [perPage, setPerPage] = useState(12);
-    const [pageTitle, setPageTitle] = useState(type);
-    const [toggle, setToggle] = useState(false);
+    // const [toggle, setToggle] = useState(false);
     const products = data && data.products.data;
     const totalCount = data && data.products.totalCount;
 
-    useEffect(() => {
-        window.addEventListener("resize", resizeHandle);
-        resizeHandle();
-        return () => {
-            window.removeEventListener("resize", resizeHandle);
-        }
-    }, [])
+    console.log("query:: ", query)
 
-    function resizeHandle() {
-        if (document.querySelector("body").offsetWidth < 992)
-            setToggle(true);
-        else
-            setToggle(false);
-    }
+    // useEffect(() => {
+    //     window.addEventListener("resize", resizeHandle);
+    //     resizeHandle();
+    //     return () => {
+    //         window.removeEventListener("resize", resizeHandle);
+    //     }
+    // }, [])
+
+    // function resizeHandle() {
+    //     if (document.querySelector("body").offsetWidth < 992)
+    //         setToggle(true);
+    //     else
+    //         setToggle(false);
+    // }
 
     useEffect(() => {
         getProducts({
@@ -64,55 +66,39 @@ function ProductSubCatInner() {
         if (products) setFirstLoading(true);
     }, [products])
 
-    // useEffect(() => {
-    //     if (type == 'list') {
-    //         setPageTitle('List');
-    //         setPerPage(12);
-    //     } else if (type == '2cols') {
-    //         setPageTitle('Grid 2 Columns');
-    //         setPerPage(12);
-    //     } else if (type == '3cols') {
-    //         setPageTitle('Grid 3 Columns');
-    //         setPerPage(12);
-    //     } else if (type == '4cols') {
-    //         setPageTitle('Grid 4 Columns');
-    //         setPerPage(12);
+    // function onSortByChange(e) {
+    //     let queryObject = router.query;
+    //     let url = router.pathname.replace('[type]', query.type) + '?';
+    //     for (let key in queryObject) {
+    //         if (key !== "type" && key !== "sortBy") {
+    //             url += key + '=' + queryObject[key] + '&';
+    //         }
     //     }
-    // }, [type])
 
-    function onSortByChange(e) {
-        let queryObject = router.query;
-        let url = router.pathname.replace('[type]', query.type) + '?';
-        for (let key in queryObject) {
-            if (key !== "type" && key !== "sortBy") {
-                url += key + '=' + queryObject[key] + '&';
-            }
-        }
+    //     router.push(url + 'sortBy=' + e.target.value);
+    // }
 
-        router.push(url + 'sortBy=' + e.target.value);
-    }
+    // function toggleSidebar() {
+    //     if (
+    //         document
+    //             .querySelector('body')
+    //             .classList.contains('sidebar-filter-active')
+    //     ) {
+    //         document
+    //             .querySelector('body')
+    //             .classList.remove('sidebar-filter-active');
+    //     } else {
+    //         document
+    //             .querySelector('body')
+    //             .classList.add('sidebar-filter-active');
+    //     }
+    // }
 
-    function toggleSidebar() {
-        if (
-            document
-                .querySelector('body')
-                .classList.contains('sidebar-filter-active')
-        ) {
-            document
-                .querySelector('body')
-                .classList.remove('sidebar-filter-active');
-        } else {
-            document
-                .querySelector('body')
-                .classList.add('sidebar-filter-active');
-        }
-    }
-
-    function hideSidebar() {
-        document
-            .querySelector('body')
-            .classList.remove('sidebar-filter-active');
-    }
+    // function hideSidebar() {
+    //     document
+    //         .querySelector('body')
+    //         .classList.remove('sidebar-filter-active');
+    // }
 
     if (error) {
         return <div></div>
@@ -121,7 +107,7 @@ function ProductSubCatInner() {
     return (
         <main className="main shop">
             <PageHeader
-                title={pageTitle}
+                title={query?.slug}
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/cat_banner.png"
                 buttonText="View Our Products"
@@ -133,14 +119,7 @@ function ProductSubCatInner() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item active">{pageTitle}</li>
-                        {
-                            query.search ?
-                                <li className="breadcrumb-item">
-                                    <span>Search - {query.searchTerm}</span>
-                                </li>
-                                : ""
-                        }
+                        <li className="breadcrumb-item active">{query?.slug}</li>
                     </ol>
                 </div>
             </nav>

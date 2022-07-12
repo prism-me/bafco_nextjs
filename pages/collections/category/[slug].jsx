@@ -15,7 +15,7 @@ import { scrollToPageContent } from '~/utils';
 
 function ShopGrid() {
     const router = useRouter();
-    const type = router.query.type;
+    const type = router?.query.slug;
     const query = router.query;
     const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
     const [firstLoading, setFirstLoading] = useState(false);
@@ -121,7 +121,7 @@ function ShopGrid() {
     return (
         <main className="main shop">
             <PageHeader
-                title={`All ${pageTitle}`}
+                title={pageTitle}
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/cat_banner.png"
                 buttonText="View Our Products"

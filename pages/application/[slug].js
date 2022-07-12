@@ -18,9 +18,9 @@ function ManagmentPage() {
 
     useEffect(() => {
 
-        setCurrentPage(query?.slug.replace('-', ' '));
+        setCurrentPage(query?.slug);
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/managements/topManagement').then(function (response) {
+        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/managements/${query?.slug}`).then(function (response) {
             // handle success
             console.log(response.data.content);
             setManagementdata(response.data.content)
