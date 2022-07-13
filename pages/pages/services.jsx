@@ -1,19 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
 import OwlCarousel from '~/components/features/owl-carousel';
-
 import { mainSlider5 } from '~/utils/data';
 
+const axios = require('axios');
+
 function Services() {
+
+    const [servicesData, setServicesData] = useState();
+
+    useEffect(() => {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/services').then(function (response) {
+            setServicesData(response.data.content)
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }, [])
 
     return (
         <div className="main">
             <PageHeader
-                title="Services"
-                subTitle="We make happy workplaces"
-                backgroundImage="images/banners/service-banner.png"
+                title={servicesData?.banner?.heading}
+                subTitle={servicesData?.banner?.sub_heading}
+                backgroundImage={servicesData?.banner?.image}
                 buttonText="Shop Now"
                 buttonUrl="#"
             />
@@ -24,7 +35,7 @@ function Services() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item active">Services</li>
+                        <li className="breadcrumb-item active">{servicesData?.banner?.heading}</li>
                     </ol>
                 </div>
             </nav>
@@ -34,64 +45,38 @@ function Services() {
                     <div className="application-heading text-center mb-3">
                         <h2>Our Services</h2>
                     </div>
-                    <div className="row mb-6 align-items-center">
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="sub-cat-featured-img">
-                                <img src="images/service/service01.png" />
-                            </div>
-                        </div>
+                    {servicesData?.content?.map((item, index) => (
+                        index % 2 ?
+                            <div className="row mb-6 align-items-center">
+                                <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                                    <div className="product-details sub-cat-deatil">
+                                        <h2 className="title">{item.heading}</h2>
+                                        <div className="mb-2" dangerouslySetInnerHTML={{ __html: item.description }} />
 
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="product-details sub-cat-deatil text-right">
-                                <h2 className="title">Who we are?</h2>
-                                <p className="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum, id porttitor maecenas amet. Mattis quisque facilisi duis tellus lacus vitae. Malesuada nibh libero eget elementum in nec. Lorem auctor amet tristique est porttitor integer at. Risus massa id consectetur diam. Commodo nec, in tellus faucibus ornare elit bibendum risus lacinia. Ultrices porttitor sem ultricies amet. </p>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-featured-img">
+                                        <img src={item.images} />
+                                    </div>
+                                </div>
+                            </div > :
+                            <div className="row mb-6 align-items-center">
+                                <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-featured-img">
+                                        <img src={item.images} />
+                                    </div>
+                                </div>
 
-                            </div>
-                        </div>
-                    </div >
-                    <div className="row mb-6 align-items-center">
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="product-details sub-cat-deatil">
-                                <h2 className="title">We deliver very carefully</h2>
-                                <p className="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames a nisi, congue feugiat id dignissim pellentesque turpis condimentum. Donec dictumst diam ut sollicitudin iaculis scelerisque. Augue nulla dolor tempus quis arcu natoque.</p>
+                                <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                                    <div className="product-details sub-cat-deatil text-right">
+                                        <h2 className="title">{item.heading}</h2>
+                                        <div className="mb-2" dangerouslySetInnerHTML={{ __html: item.description }} />
 
-                            </div>
-                        </div>
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="sub-cat-featured-img">
-                                <img src="images/service/service02.png" />
-                            </div>
-                        </div>
-                    </div >
-                    <div className="row mb-6 align-items-center">
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="sub-cat-featured-img">
-                                <img src="images/service/service01.png" />
-                            </div>
-                        </div>
-
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="product-details sub-cat-deatil text-right">
-                                <h2 className="title">Why Should You Choose Us?</h2>
-                                <p className="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum, id porttitor maecenas amet. Mattis quisque facilisi duis tellus lacus vitae. Malesuada nibh libero eget elementum in nec. Lorem auctor amet tristique est porttitor integer at. Risus massa id consectetur diam. Commodo nec, in tellus faucibus ornare elit bibendum risus lacinia. Ultrices porttitor sem ultricies amet.</p>
-
-                            </div>
-                        </div>
-                    </div >
-                    <div className="row mb-6 align-items-center">
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="product-details sub-cat-deatil">
-                                <h2 className="title">What Have We Achieved?</h2>
-                                <p className="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fames a nisi, congue feugiat id dignissim pellentesque turpis condimentum. Donec dictumst diam ut sollicitudin iaculis scelerisque. Augue nulla dolor tempus quis arcu natoque.</p>
-
-                            </div>
-                        </div>
-                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
-                            <div className="sub-cat-featured-img">
-                                <img src="images/service/service02.png" />
-                            </div>
-                        </div>
-                    </div >
+                                    </div>
+                                </div>
+                            </div >
+                    ))}
                 </div>
                 <div className="testimonial-containerfluid" style={{ backgroundImage: 'url(images/testimonials/testimonial-bg.png)' }}>
                     <div className="container">
