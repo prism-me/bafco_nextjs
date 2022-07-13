@@ -964,7 +964,7 @@ function Home(props) {
             // handle error
             console.log(error);
         })
-    })
+    }, [])
 
 
     return (
