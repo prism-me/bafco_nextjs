@@ -2,45 +2,44 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/alink';
 
-function PostFour ( props ) {
+function PostFour(props) {
     const { post } = props;
 
-    let date = new Date( post.date );
+    let date = new Date(post.date);
     let options = { year: "numeric", month: "short", day: "2-digit", timeZone: "UTC" };
 
     return (
-        <article className="entry">
-            <figure className="entry-media" style={ { paddingTop: `${post.image[ 0 ].height / post.image[ 0 ].width * 100}%` } }>
-                <ALink href={ `/blogs/${post.slug}` }>
-                    <div className="lazy-overlay"></div>
+        <div className="col-sm-4 col-lg-4">
+            <ALink href={`/blogs/${post.route}`}>
+                <img src={post.featured_img} />
+                <div className="lazy-overlay"></div>
 
-                    <LazyLoadImage
-                        alt="Post"
-                        src={ post.image[ 0 ].url }
-                        threshold={ 500 }
-                        effect="blur"
-                        height="auto"
-                    />
-                </ALink>
-            </figure>
+                <LazyLoadImage
+                    alt="Post"
+                    src={post.featured_img}
+                    threshold={500}
+                    effect="blur"
+                    height="auto"
+                />
+            </ALink>
             <div className="entry-body">
-                <div className="entry-meta">
-                    <ALink href="#">{ date.toLocaleDateString( 'en-US', options ) }</ALink>
+                {/* <div className="entry-meta">
+                    <ALink href="#">{date.toLocaleDateString('en-US', options)}</ALink>
                     <span className="meta-separator">|</span>
-                    <ALink href="#">{ post.comments } Comments</ALink>
-                </div>
+                    <ALink href="#">{post.comments} Comments</ALink>
+                </div> */}
 
                 <h2 className="entry-title">
-                    <ALink href={ `/blogs/${post.slug}` }>
-                        { post.title }
+                    <ALink href={`/blogs/${post.route}`}>
+                        {post.title}
                     </ALink>
                 </h2>
 
                 <div className="entry-content">
-                    <ALink href={ `/blogs/${post.slug}` } className="read-more">Read More</ALink>
+                    <ALink href={`/blogs/${post.route}`} className="read-more">Read More</ALink>
                 </div>
             </div>
-        </article >
+        </div>
     );
 }
 

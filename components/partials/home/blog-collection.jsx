@@ -1,42 +1,55 @@
 import Reveal from 'react-awesome-reveal';
-
+import react, { useEffect, useState } from "react";
 import ALink from '~/components/features/alink';
 import OwlCarousel from '~/components/features/owl-carousel';
 import PostFour from '~/components/features/posts/post-four';
-
+const axios = require('axios');
 import { fadeIn, blogSlider } from '~/utils/data';
 
-function BlogCollection ( props ) {
+function BlogCollection(props) {
     const { loading, posts = [] } = props;
+    const [blogdata, setBlogdata] = useState();
+    // let date = new Date(post.date);
+    // let options = { year: "numeric", month: "short", day: "2-digit", timeZone: "UTC" };
+
+    useEffect(() => {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/blogs?en').then(function (response) {
+            console.log(response.data);
+            setBlogdata(response.data)
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }, [])
 
     return (
         <section className="blog-posts">
             <div className="container">
-                <h2 className="title text-center">From Our Blog</h2>
+                <h2 className="title text-center mb-6">From Our Blog</h2>
+                <div className="row">
+                    {blogdata?.map((item, index) => (
+                        <div className="col-sm-4 col-lg-4" key={index}>
+                            <ALink href={`/blogs/${item.route}`}>
+                                <img src={item.featured_img} />
+                            </ALink>
+                            <div className="entry-body">
+                                <div className="entry-meta mb-2">
+                                    {/* <ALink href="#">{item.created_at.toLocaleDateString('en-US', options)}</ALink> */}
+                                </div>
 
-                {
-                    ( loading || posts.length == 0 ) ?
-                        <OwlCarousel adClass="owl-simple carousel-with-shadow cols-lg-3 cols-sm-2 cols-1" options={ blogSlider }>
-                            {
-                                [ 0, 1, 2, 3, 4 ].map( ( item, index ) =>
-                                    <div className="skel-pro" key={ index }></div>
-                                )
-                            }
-                        </OwlCarousel>
-                        :
-                        <OwlCarousel adClass="owl-simple carousel-with-shadow cols-lg-3 cols-sm-2 cols-1" options={ blogSlider }>
-                            {
-
-                                posts.map( ( item, index ) => (
-                                    <Reveal keyframes={ fadeIn } delay={ 100 } duration={ 1000 } triggerOnce
-                                        key={ index }>
-                                        <PostFour post={ item } />
-                                    </Reveal>
-                                ) )
-                            }
-                        </OwlCarousel>
-                }
-
+                                <h2 className="entry-title">
+                                    <ALink href={`/blogs/${item.route}`}>
+                                        {item.title}
+                                    </ALink>
+                                </h2>
+                                <div className="mb-2" dangerouslySetInnerHTML={{ __html: item.short_description }} />
+                                <div className="entry-content">
+                                    <ALink href={`/blogs/${item.route}`} className="read-more">Read More</ALink>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                    }
+                </div>
                 <div className="text-center mb-7 mt-2">
                     <ALink href="#" className="btn btn-outline-darker btn-more"><span>View more articles</span><i className="icon-long-arrow-right"></i></ALink>
                 </div>
