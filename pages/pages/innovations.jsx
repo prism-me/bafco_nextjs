@@ -1,5 +1,6 @@
 // import React, { useEffect } from 'react';
 import { useQuery } from "@apollo/react-hooks";
+import { useEffect, useState } from "react";
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
 import BlogCollection from '~/components/partials/home/blog-collection';
@@ -12,6 +13,8 @@ import { actions as demoAction } from '~/store/demo';
 import { fadeInUpShorter, dealSlider } from '~/utils/data';
 import OwlCarousel from '~/components/features/owl-carousel';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Masonry from "react-responsive-masonry";
+const axios = require('axios');
 
 const postsdata = [
     {
@@ -99,20 +102,29 @@ function Innovations(props) {
     const { data, loading, error } = useQuery(GET_HOME_DATA);
     // const posts = data && data.homeData.posts;
     const posts = postsdata && postsdata;
-    if (error) {
-        return <div></div>
-    }
+    const [innovationdata, setInnovationdata] = useState();
+
     function openVideoModal(e) {
         e.preventDefault();
         props?.showVideo();
     }
+    useEffect(() => {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/innovations?en').then(function (response) {
+            // handle success
+            console.log(response.data.content);
+            setInnovationdata(response.data.content)
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+    }, [])
 
     return (
         <div className="main">
             <PageHeader
-                title="Innovations"
-                subTitle="We make happy workplaces"
-                backgroundImage="images/banners/innovations-bg.png"
+                title={innovationdata?.banner?.heading}
+                subTitle={innovationdata?.banner?.sub_heading}
+                backgroundImage={innovationdata?.banner?.image}
                 buttonText="Shop Now"
                 buttonUrl="#"
             />
@@ -123,7 +135,7 @@ function Innovations(props) {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item active">Innovations</li>
+                        <li className="breadcrumb-item active">{innovationdata?.banner?.heading}</li>
                     </ol>
                 </div>
             </nav>
@@ -131,8 +143,8 @@ function Innovations(props) {
             <div className="page-content pb-3">
                 <div className="container">
                     <div className="application-heading text-center mb-6">
-                        <h3>Life Philosophy</h3>
-                        <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.</p>
+                        <h3>{innovationdata?.intro?.heading}</h3>
+                        <div dangerouslySetInnerHTML={{ __html: innovationdata?.intro?.description }} />
                     </div>
 
                     <div className="application-heading text-center mb-3">
@@ -142,13 +154,13 @@ function Innovations(props) {
                     <div className="top-management-application-tabs mb-6">
                         <Tabs defaultIndex={0} selectedTabClassName="show">
                             <TabList className="nav nav-pills justify-content-center mb-3" id="tabs-6" role="tablist">
-                                <Tab className="nav-item">
-                                    <span className="nav-link">All Products</span>
-                                </Tab>
-                                <Tab className="nav-item">
-                                    <span className="nav-link">Chairs</span>
-                                </Tab>
-                                <Tab className="nav-item">
+                                {innovationdata?.demonstration?.map((item, index) => (
+                                    <Tab className="nav-item" key={index}>
+                                        {console.log("innovationdata?.demonstration :: ", item)}
+                                        <span className="nav-link">{item.name}</span>
+                                    </Tab>
+                                ))}
+                                {/* <Tab className="nav-item">
                                     <span className="nav-link">Desks</span>
                                 </Tab>
                                 <Tab className="nav-item">
@@ -165,49 +177,36 @@ function Innovations(props) {
                                 </Tab>
                                 <Tab className="nav-item">
                                     <span className="nav-link">Workspaces</span>
-                                </Tab>
+                                </Tab> */}
                             </TabList>
                             <div className="tab-pane tab-content">
-                                <TabPanel className="text-center">
-                                    <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, </p>
-                                </TabPanel>
-
-                                <TabPanel className="text-center">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis.</p>
-                                </TabPanel>
-
-                                <TabPanel className="text-center">
-                                    <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo,</p>
-                                </TabPanel>
-
-                                <TabPanel className="text-center">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis.</p>
-                                </TabPanel>
-
-                                <TabPanel className="text-center">
-                                    <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo,</p>
-                                </TabPanel>
-
-                                <TabPanel className="text-center">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis.</p>
-                                </TabPanel>
-
-                                <TabPanel className="text-center">
-                                    <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo,</p>
-                                </TabPanel>
-
-                                <TabPanel className="text-center">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi tortor eu nibh. Nullam mollis.</p>
-                                </TabPanel>
+                                {innovationdata?.demonstration.map((item, index) => (
+                                    <TabPanel className="text-center" key={index}>
+                                        <div className="mb-3" dangerouslySetInnerHTML={{ __html: item.description }} />
+                                        <div className="application-heading text-center mb-3">
+                                            <h3>Workspace concepts</h3>
+                                        </div>
+                                        <div className="mb-6">
+                                            <Masonry columnsCount={3} gutter="15px">
+                                                {item.workspace.map((item2, index2) => (
+                                                    <div className="Workspace_img">
+                                                        <img
+                                                            key={index2}
+                                                            src={item2.workspaceImage}
+                                                            style={{ width: "100%", display: "block" }}
+                                                        />
+                                                        <h3>{item2.heading}</h3>
+                                                    </div>
+                                                ))}
+                                            </Masonry>
+                                        </div>
+                                    </TabPanel>
+                                ))}
                             </div>
                         </Tabs>
                     </div>
 
-                    <div className="application-heading text-center mb-3">
-                        <h3>Workspace concepts</h3>
-                    </div>
-
-                    <div className="row mb-6">
+                    {/* <div className="row mb-6">
                         <div className="col-sm-4 ">
                             <figure className="mb-0">
                                 <div className="lazy-overlay"></div>
@@ -270,7 +269,7 @@ function Innovations(props) {
                                 </div>
                             </figure>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* <div className="row mb-6">
                         <div className={`col-sm-6 col-md-4 `}>
@@ -298,7 +297,7 @@ function Innovations(props) {
                     <div className="application-heading text-center mb-3">
                         <h3>Video Library</h3>
                     </div>
-                    <OwlCarousel adClass="owl-simple owl-light owl-nav-inside innovationvideo-slider" options={dealSlider}>
+                    <OwlCarousel adclassName="owl-simple owl-light owl-nav-inside innovationvideo-slider" options={dealSlider}>
                         <div className="row" style={{ alignItems: 'center' }}>
                             <div className="col-lg-6 col-sm-6 col-xs-12" style={{ textAlign: 'center' }}>
                                 <p className="lead text-primary mb-3">New Video</p>

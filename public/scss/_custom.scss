@@ -941,3 +941,20 @@ div.intro-slide {
 		background: transparent;
 	}
 }
+
+.Workspace_img {
+	position: relative;
+}
+
+.Workspace_img>h3 {
+	left: 0;
+	position: absolute;
+	background: #fff;
+	padding: 10px 30px;
+	font-size: 24px;
+	top: 45%;
+	right: 0;
+	max-width: max-content;
+	text-align: center;
+	margin: 0 auto;
+}
