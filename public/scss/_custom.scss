@@ -958,3 +958,25 @@ div.intro-slide {
 	text-align: center;
 	margin: 0 auto;
 }
+
+.fabric_finished .owl-item.active.center img {
+	height: auto !important;
+}
+
+.fabric_finished.owl-carousel .owl-nav.disabled,
+.fabric_finished.owl-carousel .owl-dots.disabled {
+	display: block !important;
+}
+
+.fabric_finished.owl-carousel .owl-dots.disabled {
+	bottom: -5rem;
+}
+
+.fabric_finished.owl-simple.owl-light.owl-nav-inside .owl-dots .owl-dot.active span {
+	border-color: #C4C4C4 !important;
+	background: #C4C4C4 !important;
+}
+
+.fabric_finished.owl-simple .owl-dots .owl-dot span {
+	border: 0.1rem solid #C4C4C4 !important;
+}

@@ -863,6 +863,34 @@ export const applicationTabsSlider = {
     }
 }
 
+export const fabricFinishedSlider = {
+    nav: true,
+    dots: true,
+    center: true,
+    margin: 10,
+    loop: true,
+    responsive: {
+        0: {
+            items: 1
+        },
+        420: {
+            items: 1
+        },
+        600: {
+            items: 2
+        },
+        900: {
+            items: 2
+        },
+        1024: {
+            items: 3
+        },
+        1360: {
+            items: 3
+        }
+    }
+}
+
 export const dealSlider = {
     nav: false,
     dots: true,

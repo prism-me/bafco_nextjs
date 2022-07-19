@@ -87,21 +87,21 @@ function ManagmentPage() {
                         <div className="top-management-application-tabs">
                             <Tabs defaultIndex={0} selectedTabClassName="show">
                                 <TabList className="nav nav-pills justify-content-center mb-3" id="tabs-6" role="tablist">
-                                    {item.applications.map((item1, index1) => (
+                                    {item?.applications.map((item1, index1) => (
                                         <Tab className="nav-item" key={index1}>
                                             <span className="nav-link">{item1.heading}</span>
                                         </Tab>
                                     ))}
                                 </TabList>
                                 <div className="tab-pane tab-content">
-                                    {item.applications.map((item1, index1) => (
+                                    {item?.applications.map((item1, index1) => (
                                         index1 % 2 ?
                                             <TabPanel>
                                                 <div className="container">
                                                     <div className="row mb-6" style={{ alignItems: 'center' }}>
                                                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                                                             <div className="sub-cat-featured-img">
-                                                                <img src="images/applications/ring-application.png" />
+                                                                <img src={item1?.images[0]?.avatar} />
                                                             </div>
                                                         </div>
                                                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
@@ -120,28 +120,15 @@ function ManagmentPage() {
                                                 </div>
                                                 <div className="top-management-application-slider tab-content-slider mb-8">
                                                     <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={applicationTabsSlider}>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider01.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider02.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider03.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider04.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider01.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider02.png" />
-                                                        </div>
+                                                        {item1?.images?.map((item2, index2) => (
+                                                            <div className="tab-content-slidis" key={index2}>
+                                                                <img src={item2?.avatar} />
+                                                            </div>
+                                                        ))}
                                                     </OwlCarousel>
                                                 </div>
                                                 <div className="projects-list">
-                                                    <img src={item1.shopableImg} alt="slide" />
+                                                    <img src={item1?.shopableImg} alt="slide" />
                                                 </div>
                                             </TabPanel> :
                                             <TabPanel>
@@ -161,31 +148,18 @@ function ManagmentPage() {
                                                         </div>
                                                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                                                             <div className="sub-cat-featured-img">
-                                                                <img src="images/applications/ring-application.png" />
+                                                                <img src={item1?.images[0]?.avatar} />
                                                             </div>
                                                         </div>
                                                     </div >
                                                 </div>
                                                 <div className="top-management-application-slider tab-content-slider mb-8">
                                                     <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={applicationTabsSlider}>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider01.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider02.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider03.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider04.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider01.png" />
-                                                        </div>
-                                                        <div className="tab-content-slidis">
-                                                            <img src="images/applications/slider/ring-application-slider02.png" />
-                                                        </div>
+                                                        {item1?.images?.map((item2, index2) => (
+                                                            <div className="tab-content-slidis" key={index2}>
+                                                                <img src={item2.avatar} />
+                                                            </div>
+                                                        ))}
                                                     </OwlCarousel>
                                                 </div>
                                                 <div className="projects-list">
