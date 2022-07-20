@@ -7,19 +7,13 @@ const axios = require('axios');
 import { fadeIn, blogSlider } from '~/utils/data';
 
 function BlogCollection(props) {
-    const { loading, posts = [] } = props;
     const [blogdata, setBlogdata] = useState();
     // let date = new Date(post.date);
     // let options = { year: "numeric", month: "short", day: "2-digit", timeZone: "UTC" };
 
     useEffect(() => {
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/blogs?en').then(function (response) {
-            console.log(response.data);
-            setBlogdata(response.data)
-        }).catch(function (error) {
-            console.log(error);
-        })
-    }, [])
+        setBlogdata(props?.posts)
+    }, [props])
 
     return (
         <section className="blog-posts">

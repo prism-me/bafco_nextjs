@@ -23,7 +23,7 @@ function Contact() {
 
     useEffect(() => {
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/contact?en').then(function (response) {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/contact-us').then(function (response) {
             // handle success
             setContactusdata(response.data.content)
         }).catch(function (error) {

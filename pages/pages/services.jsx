@@ -13,17 +13,15 @@ function Services() {
     const [testimonial, setTestimonial] = useState();
 
     useEffect(() => {
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/services').then(function (response) {
-            setServicesData(response.data.content)
+
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/services').then(function (response) {
+            console.log(response.data)
+            setServicesData(response.data.services.content)
+            setTestimonial(response.data.testimonial)
         }).catch(function (error) {
             console.log(error);
         })
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/testimonials').then(function (response) {
-            setTestimonial(response.data)
-        }).catch(function (error) {
-            console.log(error);
-        })
     }, [])
 
     return (

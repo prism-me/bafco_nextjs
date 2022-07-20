@@ -103,20 +103,23 @@ function Innovations(props) {
     // const posts = data && data.homeData.posts;
     const posts = postsdata && postsdata;
     const [innovationdata, setInnovationdata] = useState();
+    const [bloglist, setBlogList] = useState();
 
     function openVideoModal(e) {
         e.preventDefault();
         props?.showVideo();
     }
     useEffect(() => {
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/innovations?en').then(function (response) {
+
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/innovations').then(function (response) {
             // handle success
-            console.log(response.data.content);
-            setInnovationdata(response.data.content)
+            setInnovationdata(response.data.innovations.content)
+            setBlogList(response.data.blog)
         }).catch(function (error) {
             // handle error
             console.log(error);
         })
+
     }, [])
 
     return (
@@ -156,28 +159,9 @@ function Innovations(props) {
                             <TabList className="nav nav-pills justify-content-center mb-3" id="tabs-6" role="tablist">
                                 {innovationdata?.demonstration?.map((item, index) => (
                                     <Tab className="nav-item" key={index}>
-                                        {console.log("innovationdata?.demonstration :: ", item)}
                                         <span className="nav-link">{item.name}</span>
                                     </Tab>
                                 ))}
-                                {/* <Tab className="nav-item">
-                                    <span className="nav-link">Desks</span>
-                                </Tab>
-                                <Tab className="nav-item">
-                                    <span className="nav-link">Collaborative</span>
-                                </Tab>
-                                <Tab className="nav-item">
-                                    <span className="nav-link">Storages</span>
-                                </Tab>
-                                <Tab className="nav-item">
-                                    <span className="nav-link">Accessories</span>
-                                </Tab>
-                                <Tab className="nav-item">
-                                    <span className="nav-link">Materials</span>
-                                </Tab>
-                                <Tab className="nav-item">
-                                    <span className="nav-link">Workspaces</span>
-                                </Tab> */}
                             </TabList>
                             <div className="tab-pane tab-content">
                                 {innovationdata?.demonstration.map((item, index) => (
@@ -206,93 +190,7 @@ function Innovations(props) {
                         </Tabs>
                     </div>
 
-                    {/* <div className="row mb-6">
-                        <div className="col-sm-4 ">
-                            <figure className="mb-0">
-                                <div className="lazy-overlay"></div>
-                                <LazyLoadImage
-                                    alt="banner"
-                                    src="images/innovations/workspace-concepts01.png"
-                                    threshold={200}
-                                    width="100%"
-                                    height="auto"
-                                    effect="blur"
-                                />
-                                <div className="text-center-overlay">
-                                    <h3>Work Spaces</h3>
-                                </div>
-                            </figure>
-                        </div>
-                        <div className="col-sm-4 ">
-                            <figure className="mb-2">
-                                <div className="lazy-overlay"></div>
-                                <LazyLoadImage
-                                    alt="banner"
-                                    src="images/innovations/workspace-concepts02.png"
-                                    threshold={200}
-                                    width="100%"
-                                    height="auto"
-                                    effect="blur"
-                                />
-                                <div className="text-center-overlay text-center-overlay-top">
-                                    <h3>Support Spaces</h3>
-                                </div>
-                            </figure>
-                            <figure className="mb-0">
-                                <div className="lazy-overlay"></div>
-                                <LazyLoadImage
-                                    alt="banner"
-                                    src="images/innovations/workspace-concepts03.png"
-                                    threshold={200}
-                                    width="100%"
-                                    height="auto"
-                                    effect="blur"
-                                />
-                                <div className="text-center-overlay text-center-overlay-bottom">
-                                    <h3>Meeting Spaces</h3>
-                                </div>
-                            </figure>
-                        </div>
-                        <div className="col-sm-4 ">
-                            <figure className="mb-0">
-                                <div className="lazy-overlay"></div>
-                                <LazyLoadImage
-                                    alt="banner"
-                                    src="images/innovations/workspace-concepts04.png"
-                                    threshold={200}
-                                    width="100%"
-                                    height="auto"
-                                    effect="blur"
-                                />
-                                <div className="text-center-overlay">
-                                    <h3>Ergonomics Spaces</h3>
-                                </div>
-                            </figure>
-                        </div>
-                    </div> */}
-
-                    {/* <div className="row mb-6">
-                        <div className={`col-sm-6 col-md-4 `}>
-                            <img src="images/innovations/workspace-concepts01.png" />
-                            <h4>Work Spaces</h4>
-                        </div>
-                        <div className={`col-sm-6 col-md-4 grid-item-workspace`}>
-                            <img src="images/innovations/workspace-concepts02.png" />
-                            <h4>Support Spaces</h4>
-                        </div>
-                        <div className={`col-sm-6 col-md-4 grid-item-workspace`}>
-                            <img src="images/innovations/workspace-concepts04.png" />
-                            <h4>Ergonomics Spaces</h4>
-                        </div>
-                        <div className={`col-sm-6 col-md-4 grid-item-workspace`}>
-                        </div>
-                        <div className={`col-sm-6 col-md-4 grid-item-workspace`}>
-                            <img src="images/innovations/workspace-concepts03.png" />
-                            <h4>Meeting Spaces</h4>
-                        </div>
-                    </div> */}
-
-                    <BlogCollection posts={posts} loading={loading}></BlogCollection>
+                    <BlogCollection posts={bloglist} ></BlogCollection>
 
                     <div className="application-heading text-center mb-3">
                         <h3>Video Library</h3>

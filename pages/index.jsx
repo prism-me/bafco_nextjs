@@ -945,6 +945,7 @@ function Home(props) {
     // const posts = data && data.homeData.posts;
     const posts = postsdata && postsdata;
     const [homedata, setHomedata] = useState();
+    const [bloglist, setBlogList] = useState();
 
     function openVideoModal(e) {
         e.preventDefault();
@@ -956,10 +957,21 @@ function Home(props) {
     }
 
     useEffect(() => {
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/home-page?en').then(function (response) {
+
+        // axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/home-page?en').then(function (response) {
+        //     // handle success
+        //     console.log(response.data.content);
+        //     setHomedata(response.data.content)
+        // }).catch(function (error) {
+        //     // handle error
+        //     console.log(error);
+        // })
+
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home?en').then(function (response) {
             // handle success
-            console.log(response.data.content);
-            setHomedata(response.data.content)
+            console.log(response.data);
+            setHomedata(response.data.pages.content)
+            setBlogList(response.data.blogs)
         }).catch(function (error) {
             // handle error
             console.log(error);
@@ -983,77 +995,9 @@ function Home(props) {
                                 </ALink>
                             </>
                         </Reveal>
-                        {/* <img src="images/home/sliders/slide-1-3.png" className="position-absolute" alt="slide" /> */}
                     </div>
                 </div>
-                {/* <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={introSlider}>
-                    <div className="intro-slide slide1" style={{ backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/sliders/slide-1-1.png)' }}>
-                        <div className="container intro-content">
-                            <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
-                                <>
-                                    <h3 className="intro-subtitle">Deals and Promotions</h3>
-                                    <h1 className="intro-title">Wooden <br />Sideboard Table <br /><span className="text-primary"><sup>$</sup>49,99</span></h1>
-
-                                    <ALink href="/shop/sidebar/list" className="btn btn-dark btn-outline-darker">
-                                        <span>Shop Now</span>
-                                        <i className="icon-long-arrow-right"></i>
-                                    </ALink>
-                                </>
-                            </Reveal>
-                            <img src="images/home/sliders/slide-1-3.png" className="position-absolute" alt="slide" />
-                        </div>
-                    </div>
-                    <div className="intro-slide" style={{ backgroundImage: 'url(images/home/sliders/slide-2.jpg)' }}>
-                        <div className="container intro-content text-right">
-                            <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
-                                <div className="d-inline-block text-left">
-                                    <h3 className="intro-subtitle">Bedroom Furniture</h3>
-                                    <h1 className="intro-title">Find Comfort <br />That Suits You.</h1>
-
-                                    <ALink href="/shop/sidebar/list" className="btn btn-dark btn-outline-darker">
-                                        <span>Shop Now</span>
-                                        <i className="icon-long-arrow-right"></i>
-                                    </ALink>
-                                </div>
-                            </Reveal>
-                        </div>
-                    </div>
-
-                    <div className="intro-slide slide3" style={{ backgroundColor: '#EDF2F0', backgroundImage: 'url(images/home/sliders/slide-3-1.png)' }}>
-                        <div className="container intro-content">
-                            <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
-                                <>
-                                    <h3 className="intro-subtitle">Baskets & Storage</h3>
-                                    <h1 className="intro-title">
-                                        Laundary Basket<br />
-                                        <span className="text-primary">
-                                            <sup className="text-grey font-weight-light">from</sup><sup>$</sup>9,99
-                                        </span>
-                                    </h1>
-
-                                    <ALink href="/shop/sidebar/list" className="btn btn-dark btn-outline-darker">
-                                        <span>Shop Now</span>
-                                        <i className="icon-long-arrow-right"></i>
-                                    </ALink>
-                                </>
-                            </Reveal>
-                        </div>
-                    </div>
-                </OwlCarousel> */}
             </div>
-            {/* <Reveal keyframes={fadeIn} delay="100%" duration={500} triggerOnce>
-                <OwlCarousel adClass="brands-border owl-simple brand-carousel cols-xl-7 cols-lg-5 cols-md-4 cols-sm-3 cols-2" options={brandSlider}>
-                    {
-                        homeData.brands.map((brand, index) => {
-                            return (
-                                <ALink href="#" className="brand mr-0" key={index} >
-                                    <img src={brand.image} alt="brand" width={brand.width} height={brand.height} />
-                                </ALink>
-                            )
-                        })
-                    }
-                </OwlCarousel>
-            </Reveal> */}
 
             <div className="icon-boxes-container icon-boxes-separator">
                 <div className="container">
@@ -1104,22 +1048,6 @@ function Home(props) {
                                 </div>
                             </Reveal>
                         </div>
-
-                        {/* <div className="col-sm-6 col-lg-3">
-                            <Reveal keyframes={fadeInLeftShorter} delay={200} duration={1000} triggerOnce>
-                                <div className="icon-box icon-box-side">
-                                    <span className="icon-box-icon">
-                                        <i className="icon-life-ring"></i>
-                                    </span>
-
-                                    <div className="icon-box-content">
-                                        <h3 className="icon-box-title">We Support</h3>
-
-                                        <p>24/7 amazing services</p>
-                                    </div>
-                                </div>
-                            </Reveal>
-                        </div> */}
                     </div>
                 </div>
             </div>
@@ -1229,8 +1157,6 @@ function Home(props) {
                 </div>
             </div>
 
-            {/* <div className="mb-3"></div> */}
-
             <div className="our-projects text-center">
                 <div className="heading heading-center mb-3">
                     <h2 className="title">{homedata?.projects?.heading}</h2>
@@ -1317,8 +1243,6 @@ function Home(props) {
                 </Reveal>
             </div>
 
-            {/* <div className="mb-3"></div> */}
-
             <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
                 <TopCollection products={topProducts} loading={loading} />
                 <div className="text-center mb-7 mt-2">
@@ -1326,9 +1250,6 @@ function Home(props) {
                 </div>
             </Reveal>
 
-            {/* <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                <SpecialCollection products={products} loading={loading} />
-            </Reveal> */}
             <div className="deal-container pt-5 mb-5">
                 <div className="container">
                     <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={dealSlider}>
@@ -1571,7 +1492,7 @@ function Home(props) {
 
             <div className="mb-6"></div>
 
-            <BlogCollection posts={posts} loading={loading}></BlogCollection>
+            <BlogCollection posts={bloglist} ></BlogCollection>
 
             <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
                 <div

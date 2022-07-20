@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
 import { countTo } from '~/utils';
-import { homeData } from '~/utils/data';
-
 const axios = require('axios');
 
 function About() {
@@ -17,25 +15,12 @@ function About() {
 
         countTo();
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/about?en').then(function (response) {
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/about?lang=en').then(function (response) {
             // handle success
-            setAboutdata(response.data.content)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/teams?lang=en').then(function (response) {
-            // handle success
-            setTeamList(response?.data)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/partners?lang=en').then(function (response) {
-            // handle success
-            setPartnersList(response?.data)
+            console.log(response?.data)
+            setAboutdata(response.data?.about?.content)
+            setTeamList(response?.data?.team)
+            setPartnersList(response?.data?.partner)
         }).catch(function (error) {
             // handle error
             console.log(error);
