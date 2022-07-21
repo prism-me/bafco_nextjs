@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import ALink from '~/components/features/alink';
 
-function WishlistMenu ( props ) {
+function WishlistMenu(props) {
     const { wishlist } = props;
+    const [authtoken, setAuthtoken] = useState('');
+
+    useEffect(() => {
+        setAuthtoken(localStorage.getItem('authtoken'));
+    }, [authtoken]);
 
     return (
         <div className="wishlist">
-            <ALink href="/wishlist" title="Wishlist">
+            <ALink href={authtoken === "" || authtoken === null || authtoken === undefined ? "#" : "/wishlist"} title="Wishlist">
                 <div className="icon">
                     <i className="icon-heart-o"></i>
-                    <span className="wishlist-count badge">{ wishlist.length }</span>
+                    <span className="wishlist-count badge">{wishlist.length}</span>
                 </div>
                 <p>Wishlist</p>
             </ALink>
@@ -19,10 +24,10 @@ function WishlistMenu ( props ) {
     );
 }
 
-function mapStateToProps ( state ) {
+function mapStateToProps(state) {
     return {
         wishlist: state.wishlist.data
     }
 }
 
-export default connect( mapStateToProps, {} )( WishlistMenu );
+export default connect(mapStateToProps, {})(WishlistMenu);

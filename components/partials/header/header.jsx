@@ -99,7 +99,6 @@ function Header() {
                                 </ALink>
                             </div>
                         }
-
                         <WishlistMenu />
                         <CartMenu />
                     </div>
