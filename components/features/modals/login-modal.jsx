@@ -4,8 +4,8 @@ import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import ALink from '~/components/features/alink';
 import { API } from '~/http/API';
 import { toast } from 'react-toastify';
-import axios from "axios";
 import { useRouter } from 'next/router';
+const axios = require('axios').default;
 
 const customStyles = {
     overlay: {
@@ -59,19 +59,55 @@ function LoginModal(props) {
     }
 
     const handleRigistrationSubmit = (e) => {
-        let updatedData = { ...userFormData };
 
-        API.post(`/auth/register`, updatedData, {
-            "Accept": `application/json`,
-        }).then((response) => {
-            closeModal();
-            toast.success(response?.data);
-            router.push('/account/');
+        if (userFormData?.name !== "" && userFormData?.email !== "" && userFormData?.password !== "" && userFormData?.password.length >= 6) {
+            let formdata = new FormData();
+            formdata.append("name", userFormData?.name);
+            formdata.append("email", userFormData?.email);
+            formdata.append("password", userFormData?.password);
+            formdata.append("user_type", "User");
+            formdata.append("redirect_url", "https://bafco-next.herokuapp.com/");
 
-        }).catch((err) => toast.error(err));
+            API.post(`/auth/register`, formdata, {
+                "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
+            }).then((response) => {
+                if (response?.status === 200) {
+                    closeModal();
+                    toast.success(response?.data?.message);
+                    console.log(response);
+                }
+                // router.push('/account/');
+                // localStorage.setItem("userData", JSON.stringify(response.data));
+            })
+                .catch((error) => { console.log(error) });
+        } else {
+            if (userFormData?.name === '') {
+                toast.error("Please Enter User Name.");
+                return false;
+            }
+            if (userFormData?.email === '') {
+                toast.error("Please Enter Email.");
+                return false;
+            }
+            if (userFormData?.password === '') {
+                toast.error("Please Enter Password.");
+                return false;
+            } else if (userFormData?.password.length < 6) {
+                toast.error("Password must be at least 6 characters.");
+                return false;
+            }
+        }
+
+        // API.post(`/auth/register`, updatedData, {
+        //     "Accept": `application/json`,
+        // }).then((response) => {
+        //     closeModal();
+        //     toast.success(response?.data);
+        //     router.push('/account/');
+
+        // }).catch((err) => toast.error(err));
     }
 
-    const axios = require('axios').default;
 
     const handleLoginSubmit = async () => {
         let formdata = {
@@ -80,17 +116,10 @@ function LoginModal(props) {
         };
         try {
             const resp = await axios.post('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/auth/login', formdata);
+            router.push('/account/');
             toast.success(resp?.data);
             closeModal();
             localStorage.setItem('authtoken', resp?.headers?.x_auth_token);
-            let header = {
-                headers: {
-                    'Authorization': `Bearer ${resp?.headers?.x_auth_token}`,
-                }
-            }
-
-            const userdetail = await axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/api/auth/me', header);
-            router.push('/account/');
 
         } catch (err) {
             // Handle Error Here
@@ -216,7 +245,7 @@ function LoginModal(props) {
                                                             </div>
                                                         </div>
                                                     </form>
-                                                    <div className="form-choice">
+                                                    {/* <div className="form-choice">
                                                         <p className="text-center">or sign in with</p>
                                                         <div className="row">
                                                             <div className="col-md-6">
@@ -232,7 +261,7 @@ function LoginModal(props) {
                                                                 </ALink>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </TabPanel>
                                             </div>
                                         </Tabs>

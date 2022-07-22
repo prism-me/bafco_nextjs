@@ -13,6 +13,8 @@ import withApollo from '~/server/apollo';
 import { GET_PRODUCTS } from '~/server/queries';
 import { scrollToPageContent } from '~/utils';
 
+const axios = require('axios');
+
 function ShopGrid() {
     const router = useRouter();
     const type = router?.query.slug;
@@ -24,6 +26,20 @@ function ShopGrid() {
     const [toggle, setToggle] = useState(false);
     const products = data && data.products.data;
     const totalCount = data && data.products.totalCount;
+    // const [products, setProducts] = useState();
+
+    useEffect(() => {
+
+        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/front-products`).then(function (response) {
+            // handle success
+            console.log(response.data.data);
+            // setProducts(response?.data?.data)
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+
+    }, [])
 
     useEffect(() => {
         window.addEventListener("resize", resizeHandle);

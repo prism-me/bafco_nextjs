@@ -88,8 +88,9 @@ function Contact() {
                     <hr className="mt-3 mb-5 mt-md-1" />
                     <div className="row">
                         <div className="col-lg-6 mb-2 mb-lg-0">
-                            <h2 className="title mb-1">Contact Information</h2>
-                            <p className="mb-3">Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
+                            <h2 className="title mb-1">Your story begins here.</h2>
+                            <p className="mb-3">Come and see us at our showrooms in Dubai and Abu Dhabi, where you can try out our collections and see the range of fabrics and finishes available to customise your space.</p>
+                            <p className="mb-3">*You can also call us at our toll-free hotline at <a href="tel:800-BAFCO (22326)">800-BAFCO (22326)</a>.</p>
                             <div className="row">
                                 {contactusdata?.contact?.map((item, index) => (
                                     <div className="col-sm-6" key={index}>

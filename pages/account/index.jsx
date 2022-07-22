@@ -5,6 +5,7 @@ import ALink from '~/components/features/alink';
 import PageHeader from '~/components/features/page-header';
 import { API } from '~/http/API';
 
+
 function MyAccount() {
     const router = useRouter();
     const [userData, setUserData] = useState();
@@ -23,7 +24,6 @@ function MyAccount() {
             API.get(`/auth/me`, header).then((response) => {
 
                 console.log("userdetail :: ", response);
-
                 setUserData(response?.data);
                 setIsuserdetail(false);
 
@@ -31,7 +31,7 @@ function MyAccount() {
             }).catch((err) => console.log(err));
         }
 
-    },[isuserdetail])
+    }, [isuserdetail])
 
     function toOrder(e) {
         e.preventDefault();
@@ -121,19 +121,19 @@ function MyAccount() {
                                     <div className="col-md-8 col-lg-9" style={{ marginTop: "1rem" }}>
                                         <div className="tab-pane">
                                             <TabPanel>
-                                                <p>Hello <span className="font-weight-normal text-dark">User</span> (not <span className="font-weight-normal text-dark">User</span>? <ALink href="/">Log out</ALink>)
+                                                <p>Hello <span className="font-weight-normal text-dark" style={{ textDecoration: "underline" }}>{userData?.name}</span> (not <span className="font-weight-normal text-dark">User</span>? <ALink href="/">Log out</ALink>)
                                                     <br />
                                                     From your account dashboard you can view your <a href="#tab-orders" onClick={toOrder} className="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" onClick={toAddress} className="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" onClick={toAccount} className="tab-trigger-link">edit your password and account details</a>.</p>
                                             </TabPanel>
 
                                             <TabPanel>
                                                 <p>No order has been made yet.</p>
-                                                <ALink href="/shop/sidebar/list" className="btn btn-outline-primary-2"><span>GO SHOP</span><i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href="/collections/category/executive-chairs" className="btn btn-outline-primary-2"><span>GO SHOP</span><i className="icon-long-arrow-right"></i></ALink>
                                             </TabPanel>
 
                                             <TabPanel>
                                                 <p>No downloads available yet.</p>
-                                                <ALink href="/shop/sidebar/list" className="btn btn-outline-primary-2"><span>GO SHOP</span><i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href="/collections/category/executive-chairs" className="btn btn-outline-primary-2"><span>GO SHOP</span><i className="icon-long-arrow-right"></i></ALink>
                                             </TabPanel>
 
                                             <TabPanel>
