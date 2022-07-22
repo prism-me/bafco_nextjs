@@ -216,7 +216,7 @@ function LoginModal(props) {
                                                             </div>
                                                         </div>
                                                     </form>
-                                                    {/* <div className="form-choice">
+                                                    <div className="form-choice">
                                                         <p className="text-center">or sign in with</p>
                                                         <div className="row">
                                                             <div className="col-md-6">
@@ -232,7 +232,7 @@ function LoginModal(props) {
                                                                 </ALink>
                                                             </div>
                                                         </div>
-                                                    </div> */}
+                                                    </div>
                                                 </TabPanel>
                                             </div>
                                         </Tabs>
