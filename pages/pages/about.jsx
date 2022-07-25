@@ -205,8 +205,11 @@ function About() {
                                     </div>
                                 </div>
                             ))}
-                        </div>
 
+                        </div>
+                        <div className="text-center mt-5">
+                            <ALink href="/pages/team/" className="btn btn-outline-darker btn-more"><span>View more</span><i className="icon-long-arrow-right"></i></ALink>
+                        </div>
                     </div>
                 </div>
 
