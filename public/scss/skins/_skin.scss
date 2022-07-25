@@ -1680,3 +1680,12 @@ a:focus {
         margin: 0 auto;
     }
 }
+
+.files-dropzone {
+    display: flex;
+    align-items: center;
+
+    img {
+        padding-right: 15px;
+    }
+}

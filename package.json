@@ -34,6 +34,7 @@
         "react-awesome-reveal": "^3.8.1",
         "react-countdown": "^2.3.2",
         "react-dom": "^16.8.0",
+        "react-files": "^3.0.0-alpha.3",
         "react-helmet": "^6.1.0",
         "react-image-lightbox": "^5.1.4",
         "react-image-magnifiers": "^1.4.0",

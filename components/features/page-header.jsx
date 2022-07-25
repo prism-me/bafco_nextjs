@@ -8,10 +8,12 @@ function PageHeader(props) {
         <div className="page-header text-center" style={{ backgroundImage: `url(${backgroundImage !== "" || backgroundImage !== undefined ? backgroundImage : "images/page-header-bg.jpg"})` }} >
             <div className="container">
                 <h1 className="page-title"><span>{subTitle}</span>{title}</h1>
-                <ALink href={"#"} className="btn btn-dark btn-outline-darker">
-                    <span>{buttonText}</span>
-                    <i className="icon-long-arrow-right"></i>
-                </ALink>
+                {buttonText !== "" &&
+                    <ALink href={"#"} className="btn btn-dark btn-outline-darker">
+                        <span>{buttonText}</span>
+                        <i className="icon-long-arrow-right"></i>
+                    </ALink>
+                }
             </div>
         </div>
     );

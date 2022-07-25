@@ -1011,7 +1011,7 @@ function Home(props) {
                                     <div className="icon-box-content">
                                         <h3 className="icon-box-title">{homedata?.contact[0]?.text}</h3>
 
-                                        <p>{homedata?.contact[0]?.value}</p>
+                                        <p><a href={`tel:${homedata?.contact[0]?.value}`} style={{ color: '#fff' }}>{homedata?.contact[0]?.value}</a></p>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1027,7 +1027,7 @@ function Home(props) {
                                     <div className="icon-box-content">
                                         <h3 className="icon-box-title">{homedata?.contact[1]?.text}</h3>
 
-                                        <p>{homedata?.contact[1]?.value}</p>
+                                        <p><a href={`https://wa.me/${homedata?.contact[1]?.value}`} style={{ color: '#fff' }}>{homedata?.contact[1]?.value}</a></p>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1043,14 +1043,14 @@ function Home(props) {
                                     <div className="icon-box-content">
                                         <h3 className="icon-box-title">{homedata?.contact[2]?.text}</h3>
 
-                                        <p>{homedata?.contact[2]?.value}</p>
+                                        <p><a href="/pages/contact" style={{ color: '#fff' }}>{homedata?.contact[2]?.value}</a></p>
                                     </div>
                                 </div>
                             </Reveal>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
             <div className="mb-3 mb-lg-5"></div>
 
@@ -1075,7 +1075,7 @@ function Home(props) {
                                         <h4 className="banner-subtitle">{homedata?.collections[0]?.sub_heading}</h4>
                                         <h3 className="banner-title">{homedata?.collections[0]?.heading}</h3>
                                         <div className="banner-text">{homedata?.collections[0]?.starting_from}</div>
-                                        <ALink href="#" className="btn btn-outline-gray banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
+                                        <ALink href="#" className="btn btn-outline-gray banner-link">View All Workstations <i className="icon-long-arrow-right"></i></ALink>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1099,7 +1099,7 @@ function Home(props) {
                                         <h4 className="banner-subtitle text-grey">{homedata?.collections[1]?.sub_heading}</h4>
                                         <h3 className="banner-title text-white">{homedata?.collections[1]?.heading}</h3>
                                         {/* <div className="banner-text text-white">from $39.99</div> */}
-                                        <ALink href="#" className="btn btn-outline-white banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
+                                        <ALink href="#" className="btn btn-outline-white banner-link">View All Chairs <i className="icon-long-arrow-right"></i></ALink>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1124,7 +1124,7 @@ function Home(props) {
                                             <div className="banner-content banner-content-top">
                                                 <h4 className="banner-subtitle">{homedata?.collections[2]?.sub_heading}</h4>
                                                 <h3 className="banner-title">{homedata?.collections[2]?.heading}</h3>
-                                                <ALink href="#" className="btn btn-outline-gray banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href="#" className="btn btn-outline-gray banner-link">View All Desks <i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1146,7 +1146,7 @@ function Home(props) {
                                                 <h4 className="banner-subtitle text-grey">{homedata?.collections[3]?.sub_heading}</h4>
                                                 <h3 className="banner-title text-white">{homedata?.collections[3]?.heading}</h3>
                                                 {/* <div className="banner-text">up to 30% off</div> */}
-                                                <ALink href="#" className="btn btn-outline-white banner-link">Discover Now<i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href="#" className="btn btn-outline-white banner-link">View All Sofa <i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1239,6 +1239,9 @@ function Home(props) {
                                 </span>
                             </li>
                         </ul> */}
+                    </div>
+                    <div className="text-center mb-7 mt-2">
+                        <ALink href="/pages/innovations/" className="btn btn-outline-darker btn-more"><span>View All Projects</span><i className="icon-long-arrow-right"></i></ALink>
                     </div>
                 </Reveal>
             </div>
@@ -1536,7 +1539,7 @@ function Home(props) {
                 </div>
             </Reveal>
             <NewsletterModal />
-        </div>
+        </div >
     )
 }
 
