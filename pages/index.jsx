@@ -982,21 +982,25 @@ function Home(props) {
     return (
         <div className="main home-page skeleton-body">
             <div className="intro-slider-container">
-                <div className="intro-slide slide1" style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${homedata?.banner?.image !== "" ? homedata?.banner?.image : 'images/home/Magic7.jpg'})` }}>
-                    <div className="container intro-content">
-                        <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
-                            <>
-                                <h3 className="intro-subtitle">{homedata?.banner?.sub_heading}</h3>
-                                <h1 className="intro-title">{homedata?.banner?.heading}</h1>
+                <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={introSlider}>
+                    {homedata?.banner?.map((item, index) => (
+                        <div className={`intro-slide slide${index + 1}`} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image !== "" ? item.image : 'images/home/Magic7.jpg'})` }}>
+                            <div className="container intro-content">
+                                <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
+                                    <>
+                                        <h3 className="intro-subtitle">{item.sub_heading}</h3>
+                                        <h1 className="intro-title">{item.heading}</h1>
 
-                                <ALink href="#" className="btn btn-dark btn-outline-darker">
-                                    <span>Design My Desk</span>
-                                    <i className="icon-long-arrow-right"></i>
-                                </ALink>
-                            </>
-                        </Reveal>
-                    </div>
-                </div>
+                                        <ALink href="#" className="btn btn-dark btn-outline-darker">
+                                            <span>Design My Desk</span>
+                                            <i className="icon-long-arrow-right"></i>
+                                        </ALink>
+                                    </>
+                                </Reveal>
+                            </div>
+                        </div>
+                    ))}
+                </OwlCarousel>
             </div>
 
             <div className="icon-boxes-container icon-boxes-separator">
@@ -1252,230 +1256,89 @@ function Home(props) {
                     <ALink href="#" className="btn btn-outline-darker btn-more"><span>View more</span><i className="icon-long-arrow-right"></i></ALink>
                 </div>
             </Reveal>
+            {homedata?.deal?.length > 0 &&
+                <div className="deal-container pt-5 mb-5">
+                    <div className="container">
+                        <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={dealSlider}>
+                            {homedata?.deal?.map((item, index) => (
+                                <div className="row" key={index}>
+                                    <div className="col-lg-9">
+                                        <div className="deal">
+                                            <div className="deal-content">
+                                                <Reveal keyframes={fadeInLeftShorter} delay={200} duration={1000} triggerOnce>
+                                                    <>
+                                                        <h4>{item.sub_heading_image1}</h4>
+                                                        <h2>{item.heading_image1}</h2>
 
-            <div className="deal-container pt-5 mb-5">
-                <div className="container">
-                    <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={dealSlider}>
-                        <div className="row">
-                            <div className="col-lg-9">
-                                <div className="deal">
-                                    <div className="deal-content">
-                                        <Reveal keyframes={fadeInLeftShorter} delay={200} duration={1000} triggerOnce>
-                                            <>
-                                                <h4>Limited Quantities</h4>
-                                                <h2>Deal of the Day</h2>
+                                                        <h3 className="product-title">
+                                                            <ALink href="#">Check Out</ALink>
+                                                        </h3>
 
-                                                <h3 className="product-title">
-                                                    <ALink href="#">Check Out</ALink>
-                                                </h3>
+                                                        <div className="product-price">
+                                                            <span className="new-price">{item.new_price}</span>
+                                                            <span className="old-price">{item.old_price}</span>
+                                                        </div>
 
-                                                <div className="product-price">
-                                                    <span className="new-price">Dhs. 5000</span>
-                                                    <span className="old-price">Was Dhs.7000</span>
-                                                </div>
+                                                        <div className="deal-countdown">
+                                                            {/* <Countdown date={`2022-08-01T01:02:03`} renderer={rendererThree} /> */}
+                                                            <Countdown date={item.expires_in} renderer={rendererThree} />
+                                                        </div>
+                                                        <ALink href="#" className="btn btn-primary">
+                                                            <span>Shop Now</span><i className="icon-long-arrow-right"></i>
+                                                        </ALink>
+                                                    </>
+                                                </Reveal>
+                                            </div>
 
-                                                <div className="deal-countdown">
-                                                    <Countdown date={`2022-02-01T01:02:03`} renderer={rendererThree} />
-                                                </div>
+                                            <div className="deal-image position-relative">
+                                                <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
+                                                    <ALink href="#">
+                                                        <div className="lazy-overlay bg-white"></div>
 
-                                                <ALink href="#" className="btn btn-primary">
-                                                    <span>Shop Now</span><i className="icon-long-arrow-right"></i>
-                                                </ALink>
-                                            </>
-                                        </Reveal>
+                                                        <LazyLoadImage
+                                                            alt="deal-banner"
+                                                            src={item.slider_images.main_image}
+                                                            threshold="300"
+                                                            effect="blur"
+                                                            width="100%"
+                                                            height={460}
+                                                        />
+                                                    </ALink>
+                                                </Reveal>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div className="deal-image position-relative">
-                                        <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                                            <ALink href="#">
-                                                <div className="lazy-overlay bg-white"></div>
+                                    <div className="col-lg-3">
+                                        <div className="banner banner-overlay banner-overlay-light d-none d-lg-block h-100 pb-2">
+                                            <ALink href="#" className="h-100">
+                                                <div className="lazy-overlay"></div>
 
                                                 <LazyLoadImage
                                                     alt="deal-banner"
-                                                    src="images/home/deal/ESD61TW-grey.jpg"
+                                                    src={item.slider_images.sub_image}
                                                     threshold="300"
                                                     effect="blur"
+                                                    className="h-100"
                                                     width="100%"
-                                                    height={460}
                                                 />
                                             </ALink>
-                                        </Reveal>
+
+                                            <div className="banner-content banner-content-top">
+                                                <h4 className="banner-subtitle text-white">{item.sub_heading_image2}</h4>
+                                                <h3 className="banner-title text-white">{item.heading_image2}</h3>
+                                                {/* <div className="banner-text text-primary">$49.99</div> */}
+                                                <ALink href="/shop/sidebar/3cols" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></ALink>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            ))}
+                        </OwlCarousel>
 
-                            <div className="col-lg-3">
-                                <div className="banner banner-overlay banner-overlay-light d-none d-lg-block h-100 pb-2">
-                                    <ALink href="#" className="h-100">
-                                        <div className="lazy-overlay"></div>
-
-                                        <LazyLoadImage
-                                            alt="deal-banner"
-                                            src="images/home/banners/banner-5.jpg"
-                                            threshold="300"
-                                            effect="blur"
-                                            className="h-100"
-                                            width="100%"
-                                        />
-                                    </ALink>
-
-                                    <div className="banner-content banner-content-top">
-                                        <h4 className="banner-subtitle text-white">The Best Choice</h4>
-                                        <h3 className="banner-title text-white">Feigelali <br /> Best Sofa</h3>
-                                        {/* <div className="banner-text text-primary">$49.99</div> */}
-                                        <ALink href="/shop/sidebar/3cols" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></ALink>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-9">
-                                <div className="deal">
-                                    <div className="deal-content">
-                                        <Reveal keyframes={fadeInLeftShorter} delay={200} duration={1000} triggerOnce>
-                                            <>
-                                                <h4>Limited Quantities</h4>
-                                                <h2>Deal of the Day</h2>
-
-                                                <h3 className="product-title">
-                                                    <ALink href="#">Check Out</ALink>
-                                                </h3>
-
-                                                <div className="product-price">
-                                                    <span className="new-price">Dhs. 5000</span>
-                                                    <span className="old-price">Was Dhs.7000</span>
-                                                </div>
-
-                                                <div className="deal-countdown">
-                                                    <Countdown date={`2022-02-01T01:02:03`} renderer={rendererThree} />
-                                                </div>
-
-                                                <ALink href="#" className="btn btn-primary">
-                                                    <span>Shop Now</span><i className="icon-long-arrow-right"></i>
-                                                </ALink>
-                                            </>
-                                        </Reveal>
-                                    </div>
-
-                                    <div className="deal-image position-relative">
-                                        <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                                            <ALink href="#">
-                                                <div className="lazy-overlay bg-white"></div>
-
-                                                <LazyLoadImage
-                                                    alt="deal-banner"
-                                                    src="images/home/deal/ESD61TW-grey.jpg"
-                                                    threshold="300"
-                                                    effect="blur"
-                                                    width="100%"
-                                                    height={460}
-                                                />
-                                            </ALink>
-                                        </Reveal>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-lg-3">
-                                <div className="banner banner-overlay banner-overlay-light d-none d-lg-block h-100 pb-2">
-                                    <ALink href="#" className="h-100">
-                                        <div className="lazy-overlay"></div>
-
-                                        <LazyLoadImage
-                                            alt="deal-banner"
-                                            src="images/home/banners/banner-5.jpg"
-                                            threshold="300"
-                                            effect="blur"
-                                            className="h-100"
-                                            width="100%"
-                                        />
-                                    </ALink>
-
-                                    <div className="banner-content banner-content-top">
-                                        <h4 className="banner-subtitle text-white">The Best Choice</h4>
-                                        <h3 className="banner-title text-white">Feigelali <br />Best Sofa</h3>
-                                        {/* <div className="banner-text text-primary">$49.99</div> */}
-                                        <ALink href="/shop/sidebar/3cols" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></ALink>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-9">
-                                <div className="deal">
-                                    <div className="deal-content">
-                                        <Reveal keyframes={fadeInLeftShorter} delay={200} duration={1000} triggerOnce>
-                                            <>
-                                                <h4>Limited Quantities</h4>
-                                                <h2>Deal of the Day</h2>
-
-                                                <h3 className="product-title">
-                                                    <ALink href="#">Check Out</ALink>
-                                                </h3>
-
-                                                <div className="product-price">
-                                                    <span className="new-price">Dhs. 5000</span>
-                                                    <span className="old-price">Was Dhs.7000</span>
-                                                </div>
-
-                                                <div className="deal-countdown">
-                                                    <Countdown date={`2022-02-01T01:02:03`} renderer={rendererThree} />
-                                                </div>
-
-                                                <ALink href="#" className="btn btn-primary">
-                                                    <span>Shop Now</span><i className="icon-long-arrow-right"></i>
-                                                </ALink>
-                                            </>
-                                        </Reveal>
-                                    </div>
-
-                                    <div className="deal-image position-relative">
-                                        <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                                            <ALink href="#">
-                                                <div className="lazy-overlay bg-white"></div>
-
-                                                <LazyLoadImage
-                                                    alt="deal-banner"
-                                                    src="images/home/deal/ESD61TW-grey.jpg"
-                                                    threshold="300"
-                                                    effect="blur"
-                                                    width="100%"
-                                                    height={460}
-                                                />
-                                            </ALink>
-                                        </Reveal>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-lg-3">
-                                <div className="banner banner-overlay banner-overlay-light d-none d-lg-block h-100 pb-2">
-                                    <ALink href="#" className="h-100">
-                                        <div className="lazy-overlay"></div>
-
-                                        <LazyLoadImage
-                                            alt="deal-banner"
-                                            src="images/home/banners/banner-5.jpg"
-                                            threshold="300"
-                                            effect="blur"
-                                            className="h-100"
-                                            width="100%"
-                                        />
-                                    </ALink>
-
-                                    <div className="banner-content banner-content-top">
-                                        <h4 className="banner-subtitle text-white">The Best Choice</h4>
-                                        <h3 className="banner-title text-white">Feigelali <br />Best Sofa</h3>
-                                        {/* <div className="banner-text text-primary">$49.99</div> */}
-                                        <ALink href="/shop/sidebar/3cols" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></ALink>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </OwlCarousel>
-
+                    </div>
                 </div>
-            </div>
+            }
 
             <div className="mb-6"></div>
 

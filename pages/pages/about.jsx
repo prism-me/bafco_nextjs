@@ -51,10 +51,15 @@ function About() {
 
             <div className="page-content pb-3">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="about-text text-center mt-3">
-                                <h2 className="title text-center mb-2">{aboutdata?.intro?.heading}</h2>
+                    <div className="row" style={{ alignItems: 'center' }}>
+                        <div className="col-lg-4">
+                            <div className="about-text mt-3">
+                                <img src={aboutdata?.intro?.animationImg} alt={aboutdata?.intro?.heading} />
+                            </div>
+                        </div>
+                        <div className="col-lg-8">
+                            <div className="about-text mt-3" style={{ marginLeft: '30px' }}>
+                                <h2 className="title mb-2">{aboutdata?.intro?.heading}</h2>
                                 <div dangerouslySetInnerHTML={{ __html: aboutdata?.intro?.description }} />
                             </div>
                         </div>
