@@ -57,6 +57,7 @@ function ShopGrid() {
     }
 
     useEffect(() => {
+        alert("we are here in sub category")
         getProducts({
             variables: {
                 searchTerm: query.searchTerm,
