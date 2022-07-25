@@ -984,7 +984,7 @@ function Home(props) {
             <div className="intro-slider-container">
                 <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={introSlider}>
                     {homedata?.banner?.map((item, index) => (
-                        <div className={`intro-slide slide${index + 1}`} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image !== "" ? item.image : 'images/home/Magic7.jpg'})` }}>
+                        <div className={`intro-slide slide1`} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image !== "" ? item.image : 'images/home/Magic7.jpg'})` }}>
                             <div className="container intro-content">
                                 <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
                                     <>

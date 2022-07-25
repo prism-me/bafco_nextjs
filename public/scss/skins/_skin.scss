@@ -1689,3 +1689,11 @@ a:focus {
         padding-right: 15px;
     }
 }
+
+.intro-slider-container {
+    .owl-theme.owl-nav-inside {
+        .owl-dots {
+            bottom: 5rem;
+        }
+    }
+}
