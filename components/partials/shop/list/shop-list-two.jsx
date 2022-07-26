@@ -8,7 +8,7 @@ function ShopListThree ( props ) {
     return (
         <div className={ `products mb-3 skeleton-body skel-shop-products ${loading ? '' : 'loaded'}` }>
             {
-                ( products.length == 0 && !loading ) ?
+                ( products?.length == 0 && !loading ) ?
                     <p
                         className="no-results"
                     >No products matching your selection.</p>
@@ -22,8 +22,9 @@ function ShopListThree ( props ) {
                                     </div>
                                 ) )
                                 :
-                                products.map( ( product, index ) => (
+                                products?.map( ( product, index ) => (
                                     <div className="col-6 col-md-4 col-xl-3" key={ index }>
+                                        {console.log( product)}
                                         <ProductTwelve product={ product } />
                                     </div>
                                 ) )

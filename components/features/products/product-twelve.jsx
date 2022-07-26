@@ -21,16 +21,16 @@ function ProductTwelve(props) {
     useEffect(() => {
         let min = minPrice;
         let max = maxPrice;
-        product.variants.map(item => {
+        product?.variants?.map(item => {
             if (min > item.price) min = item.price;
             if (max < item.price) max = item.price;
         }, []);
 
-        if (product.variants.length == 0) {
-            min = product.sale_price
-                ? product.sale_price
-                : product.price;
-            max = product.price;
+        if (product?.variants?.length == 0) {
+            min = product?.sale_price
+                ? product?.sale_price
+                : product?.price;
+            max = product?.price;
         }
 
         setMinPrice(min);
@@ -60,32 +60,32 @@ function ProductTwelve(props) {
 
     function onQuickView(e) {
         e.preventDefault();
-        props.showQuickView(product.slug);
+        props.showQuickView(product?.slug);
     }
 
     return (
         <div className="product product-11 text-center">
             <figure className="product-media">
                 {
-                    product.new ?
+                    product?.new ?
                         <span className="product-label label-circle label-new">New</span>
                         : ""
                 }
 
                 {
-                    product.sale_price ?
+                    product?.sale_price ?
                         <span className="product-label label-circle label-sale">Sale</span>
                         : ""
                 }
 
                 {
-                    product.top ?
+                    product?.top ?
                         <span className="product-label label-circle label-top">Top</span>
                         : ""
                 }
 
-                {
-                    !product.stock || product.stock == 0 ?
+                {product?.variations?.length >= 1 &&
+                    !product?.variations[0].in_stock || product?.variations[0].in_stock == 0 ?
                         <span className="product-label label-circle label-out">Out of Stock</span>
                         : ""
                 }
@@ -93,17 +93,17 @@ function ProductTwelve(props) {
                 <ALink href={`#`}>
                     <LazyLoadImage
                         alt="product"
-                        src={product.sm_pictures[0].url}
+                        src={product?.variations[0].images[0].avatar}
                         threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
                     />
                     {
-                        product.sm_pictures.length >= 2 ?
+                        product?.variations?.length >= 2 ?
                             <LazyLoadImage
                                 alt="product"
-                                // src={ process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[ 1 ].url }
-                                src={product.sm_pictures[1].url}
+                                // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
+                                src={product?.variations[1].images[0].avatar}
                                 threshold={500}
                                 effect="black and white"
                                 wrapperClassName="product-image-hover"
@@ -128,31 +128,31 @@ function ProductTwelve(props) {
             <div className="product-body">
                 <div className="product-cat">
                     {
-                        product.category.map((item, index) => (
+                        product?.category?.map((item, index) => (
                             <React.Fragment key={item.slug + '-' + index}>
                                 <ALink href={{ pathname: '/shop/sidebar/list', query: { category: item.slug } }}>
                                     {item.name}
                                 </ALink>
-                                {index < product.category.length - 1 ? ', ' : ""}
+                                {index < product?.category?.length - 1 ? ', ' : ""}
                             </React.Fragment>
                         ))
                     }
                 </div>
 
                 <h3 className="product-title">
-                    <ALink href={`#`}>{product.name}</ALink>
+                    <ALink href={`#`}>{product?.name}</ALink>
                 </h3>
 
                 {
-                    !product.stock || product.stock == 0 ?
+                    !product?.variations[0].in_stock || product?.variations[0].in_stock == 0 ?
                         <div className="product-price">
-                            <span className="out-price">Dhs. {product.price.toFixed(2)}</span>
+                            <span className="out-price">Dhs. {product?.price?.toFixed(2)}</span>
                         </div>
                         :
                         minPrice == maxPrice ?
                             <div className="product-price">Dhs. {minPrice.toFixed(2)}</div>
                             :
-                            product.variants.length == 0 ?
+                            product?.variants?.length == 0 ?
                                 <div className="product-price">
                                     <span className="new-price">Dhs. {minPrice.toFixed(2)}</span>
                                     <span className="old-price">Dhs. {maxPrice.toFixed(2)}</span>
@@ -163,18 +163,18 @@ function ProductTwelve(props) {
 
                 {/* <div className="ratings-container">
                     <div className="ratings">
-                        <div className="ratings-val" style={{ width: product.ratings * 20 + '%' }}></div>
-                        <span className="tooltip-text">{product.ratings.toFixed(2)}</span>
+                        <div className="ratings-val" style={{ width: product?.ratings * 20 + '%' }}></div>
+                        <span className="tooltip-text">{product?.ratings.toFixed(2)}</span>
                     </div>
-                    <span className="ratings-text">( {product.review} Reviews )</span>
+                    <span className="ratings-text">( {product?.review} Reviews )</span>
                 </div> */}
 
                 {
-                    product.variants.length > 0 ?
+                    product?.variants?.length > 0 ?
                         <div className="product-nav product-nav-dots">
                             <div className="row no-gutters">
                                 {
-                                    product.variants.map((item, index) => (
+                                    product?.variants?.map((item, index) => (
                                         <ALink href="#" style={{ backgroundColor: item.color }} key={index}><span className="sr-only">Color Name</span></ALink>
                                     ))
                                 }
@@ -184,10 +184,10 @@ function ProductTwelve(props) {
                 }
             </div>
             {
-                product.stock && product.stock !== 0 ?
+                product?.variations[0].in_stock && product?.variations[0].in_stock !== 0 ?
                     <div className="product-action">
                         {
-                            product.variants.length > 0 ?
+                            product?.variants?.length > 0 ?
                                 <ALink href={`#`} className="btn-product btn-cart btn-select">
                                     <span>select options</span>
                                 </ALink>

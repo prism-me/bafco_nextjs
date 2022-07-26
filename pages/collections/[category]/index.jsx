@@ -13,51 +13,35 @@ import withApollo from '~/server/apollo';
 import { GET_PRODUCTS } from '~/server/queries';
 import { scrollToPageContent } from '~/utils';
 
-const axios = require('axios');
-
-function ShopGrid() {
+function ProductSubCatInner() {
     const router = useRouter();
-    const type = router?.query.slug;
     const query = router.query;
     const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
     const [firstLoading, setFirstLoading] = useState(false);
     const [perPage, setPerPage] = useState(12);
-    const [pageTitle, setPageTitle] = useState(type);
-    const [toggle, setToggle] = useState(false);
+    // const [toggle, setToggle] = useState(false);
     const products = data && data.products.data;
     const totalCount = data && data.products.totalCount;
-    // const [products, setProducts] = useState();
+
+    console.log("query:: ", query)
+
+    // useEffect(() => {
+    //     window.addEventListener("resize", resizeHandle);
+    //     resizeHandle();
+    //     return () => {
+    //         window.removeEventListener("resize", resizeHandle);
+    //     }
+    // }, [])
+
+    // function resizeHandle() {
+    //     if (document.querySelector("body").offsetWidth < 992)
+    //         setToggle(true);
+    //     else
+    //         setToggle(false);
+    // }
 
     useEffect(() => {
-
-        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/front-products`).then(function (response) {
-            // handle success
-            console.log(response.data.data);
-            // setProducts(response?.data?.data)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-
-    }, [])
-
-    useEffect(() => {
-        window.addEventListener("resize", resizeHandle);
-        resizeHandle();
-        return () => {
-            window.removeEventListener("resize", resizeHandle);
-        }
-    }, [])
-
-    function resizeHandle() {
-        if (document.querySelector("body").offsetWidth < 992)
-            setToggle(true);
-        else
-            setToggle(false);
-    }
-
-    useEffect(() => {
-        alert("we are here in category")
+        // alert("we are here in category")
         getProducts({
             variables: {
                 searchTerm: query.searchTerm,
@@ -81,55 +65,39 @@ function ShopGrid() {
         if (products) setFirstLoading(true);
     }, [products])
 
-    // useEffect(() => {
-    //     if (type == 'list') {
-    //         setPageTitle('List');
-    //         setPerPage(12);
-    //     } else if (type == '2cols') {
-    //         setPageTitle('Grid 2 Columns');
-    //         setPerPage(12);
-    //     } else if (type == '3cols') {
-    //         setPageTitle('Grid 3 Columns');
-    //         setPerPage(12);
-    //     } else if (type == '4cols') {
-    //         setPageTitle('Grid 4 Columns');
-    //         setPerPage(12);
+    // function onSortByChange(e) {
+    //     let queryObject = router.query;
+    //     let url = router.pathname.replace('[type]', query.type) + '?';
+    //     for (let key in queryObject) {
+    //         if (key !== "type" && key !== "sortBy") {
+    //             url += key + '=' + queryObject[key] + '&';
+    //         }
     //     }
-    // }, [type])
 
-    function onSortByChange(e) {
-        let queryObject = router.query;
-        let url = router.pathname.replace('[type]', query.type) + '?';
-        for (let key in queryObject) {
-            if (key !== "type" && key !== "sortBy") {
-                url += key + '=' + queryObject[key] + '&';
-            }
-        }
+    //     router.push(url + 'sortBy=' + e.target.value);
+    // }
 
-        router.push(url + 'sortBy=' + e.target.value);
-    }
+    // function toggleSidebar() {
+    //     if (
+    //         document
+    //             .querySelector('body')
+    //             .classList.contains('sidebar-filter-active')
+    //     ) {
+    //         document
+    //             .querySelector('body')
+    //             .classList.remove('sidebar-filter-active');
+    //     } else {
+    //         document
+    //             .querySelector('body')
+    //             .classList.add('sidebar-filter-active');
+    //     }
+    // }
 
-    function toggleSidebar() {
-        if (
-            document
-                .querySelector('body')
-                .classList.contains('sidebar-filter-active')
-        ) {
-            document
-                .querySelector('body')
-                .classList.remove('sidebar-filter-active');
-        } else {
-            document
-                .querySelector('body')
-                .classList.add('sidebar-filter-active');
-        }
-    }
-
-    function hideSidebar() {
-        document
-            .querySelector('body')
-            .classList.remove('sidebar-filter-active');
-    }
+    // function hideSidebar() {
+    //     document
+    //         .querySelector('body')
+    //         .classList.remove('sidebar-filter-active');
+    // }
 
     if (error) {
         return <div></div>
@@ -138,7 +106,7 @@ function ShopGrid() {
     return (
         <main className="main shop">
             <PageHeader
-                title={pageTitle}
+                title={query?.category}
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/cat_banner.png"
                 buttonText="View Our Products"
@@ -150,147 +118,366 @@ function ShopGrid() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item active">{pageTitle}</li>
-                        {
-                            query.search ?
-                                <li className="breadcrumb-item">
-                                    <span>Search - {query.searchTerm}</span>
-                                </li>
-                                : ""
-                        }
+                        <li className="breadcrumb-item active">{query?.category}</li>
                     </ol>
                 </div>
             </nav>
 
             <div className="page-content">
                 <div className="container">
-                    <div className="row skeleton-body">
-                        <div
-                            className={`col-lg-9 skel-shop-products ${!loading ? 'loaded' : ''}`}
-                        >
-                            <div className="toolbox">
-                                <div className="toolbox-left">
-                                    {
-                                        !loading && products ?
-                                            <div className="toolbox-info">
-                                                Showing
-                                                <span> {products.length} of {totalCount}</span> Products
-                                            </div>
-                                            : ""
-                                    }
-                                </div>
-
-                                <div className="toolbox-right">
-                                    <div className="toolbox-sort">
-                                        <label htmlFor="sortby">Sort by:</label>
-                                        <div className="select-custom">
-                                            <select
-                                                name="sortby"
-                                                id="sortby"
-                                                className="form-control"
-                                                onChange={onSortByChange}
-                                                value={query.sortBy ? query.sortBy : 'default'}
-                                            >
-                                                <option value="default">Default</option>
-                                                <option value="featured">Most Popular</option>
-                                                <option value="rating">Most Rated</option>
-                                                <option value="new">Date</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    {/* <div className="toolbox-layout">
-                                        <ALink
-                                            href="/shop/sidebar/list"
-                                            className={ `btn-layout ${ type == 'list' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="16" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="10" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="10" height="4" />
-                                            </svg>
-                                        </ALink>
-
-                                        <ALink
-                                            href="/shop/sidebar/2cols"
-                                            className={ `btn-layout ${ type == '2cols' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="10" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="4" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="4" height="4" />
-                                            </svg>
-                                        </ALink>
-
-                                        <ALink
-                                            href="/shop/sidebar/3cols"
-                                            className={ `btn-layout ${ type == '3cols' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="16" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="4" height="4" />
-                                                <rect x="12" y="0" width="4" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="4" height="4" />
-                                                <rect x="12" y="6" width="4" height="4" />
-                                            </svg>
-                                        </ALink>
-
-                                        <ALink
-                                            href="/shop/sidebar/4cols"
-                                            className={ `btn-layout ${ type == '4cols' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="22" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="4" height="4" />
-                                                <rect x="12" y="0" width="4" height="4" />
-                                                <rect x="18" y="0" width="4" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="4" height="4" />
-                                                <rect x="12" y="6" width="4" height="4" />
-                                                <rect x="18" y="6" width="4" height="4" />
-                                            </svg>
-                                        </ALink>
-                                    </div> */}
-                                </div>
-                            </div >
-
-                            <ShopListTwo products={products} perPage={perPage} loading={loading}></ShopListTwo>
-
-                            {
-                                totalCount > perPage ?
-                                    <Pagination perPage={perPage} total={totalCount}></Pagination>
-                                    : ""
-                            }
-                        </div >
-
-                        <aside className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${(!loading || firstLoading) ? 'loaded' : ''}`}>
-                            <div className="skel-widget"></div>
-                            <div className="skel-widget"></div>
-                            <div className="skel-widget"></div>
-                            <div className="skel-widget"></div>
-                            <StickyBox className="sticky-content" offsetTop={70}>
-                                <ShopSidebarOne toggle={toggle}></ShopSidebarOne>
-                            </StickyBox>
-                            {
-                                toggle ?
-                                    <button className="sidebar-fixed-toggler" onClick={toggleSidebar}>
-                                        <i className="icon-cog"></i>
-                                    </button>
-                                    : ''
-                            }
-                            <div className="sidebar-filter-overlay" onClick={hideSidebar}></div>
-                        </aside >
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="sub-cat-featured-img">
+                                <img src="images/category/Insert-Image-Here.png" />
+                            </div>
+                        </div>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Executive Chairs</h1>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                <ul>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div >
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Our Collections</h1>
+                                <p>Get the latest items immediately with promo prices</p>
+                                <ALink href={"#"} className="btn btn-dark btn-outline-darker">
+                                    <span>Check All </span>
+                                    <i className="icon-long-arrow-right"></i>
+                                </ALink>
+                            </div>
+                        </div>
+                        <div className={`col-lg-9 col-sm-6 col-xs-12`}>
+                            <div className="row">
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection01.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection02.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection03.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection04.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="sub-cat-featured-img">
+                                <img src="images/category/Insert-Image-Here.png" />
+                            </div>
+                        </div>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Ergonomic Chairs</h1>
+                                <p>Our designer already made a lot of beautiful chairs and workspace that inspire you</p>
+                                <ul>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div >
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Our Collections</h1>
+                                <p>Get the latest items immediately with promo prices</p>
+                                <ALink href={"#"} className="btn btn-dark btn-outline-darker">
+                                    <span>Check All </span>
+                                    <i className="icon-long-arrow-right"></i>
+                                </ALink>
+                            </div>
+                        </div>
+                        <div className={`col-lg-9 col-sm-6 col-xs-12`}>
+                            <div className="row">
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection01.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection02.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection03.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection04.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="sub-cat-featured-img">
+                                <img src="images/category/conference-chair.png" />
+                            </div>
+                        </div>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Conference Chairs</h1>
+                                <p>Get the latest items immediately with best prices</p>
+                                <ul>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div >
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Our Collections</h1>
+                                <p>Get the latest items immediately with promo prices</p>
+                                <ALink href={"#"} className="btn btn-dark btn-outline-darker">
+                                    <span>Check All </span>
+                                    <i className="icon-long-arrow-right"></i>
+                                </ALink>
+                            </div>
+                        </div>
+                        <div className={`col-lg-9 col-sm-6 col-xs-12`}>
+                            <div className="row">
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection01.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection02.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection03.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection04.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="sub-cat-featured-img">
+                                <img src="images/category/Visitor-Chairs.png" />
+                            </div>
+                        </div>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Visitor Chairs</h1>
+                                <p>“They are have a perfect touch for make something so professional ,interest and useful for a lot of people .”</p>
+                                <ul>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div >
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Our Collections</h1>
+                                <p>Get the latest items immediately with promo prices</p>
+                                <ALink href={"#"} className="btn btn-dark btn-outline-darker">
+                                    <span>Check All </span>
+                                    <i className="icon-long-arrow-right"></i>
+                                </ALink>
+                            </div>
+                        </div>
+                        <div className={`col-lg-9 col-sm-6 col-xs-12`}>
+                            <div className="row">
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection01.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection02.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection03.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/collection04.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="sub-cat-featured-img">
+                                <img src="images/category/Multi-Functional-Chairs.png" />
+                            </div>
+                        </div>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Multi-Functional Chairs</h1>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                <ul>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div >
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Our Collections</h1>
+                                <p>Get the latest items immediately with promo prices</p>
+                                <ALink href={"#"} className="btn btn-dark btn-outline-darker">
+                                    <span>Check All </span>
+                                    <i className="icon-long-arrow-right"></i>
+                                </ALink>
+                            </div>
+                        </div>
+                        <div className={`col-lg-9 col-sm-6 col-xs-12`}>
+                            <div className="row">
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/Multi-Functional-Chairs-collection01.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/Multi-Functional-Chairs-collection02.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/Multi-Functional-Chairs-collection03.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/Multi-Functional-Chairs-collection04.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="sub-cat-featured-img">
+                                <img src="images/category/Insert-Image-Here.png" />
+                            </div>
+                        </div>
+                        <div className={`col-lg-6 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Stools</h1>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                                <ul>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                    <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div >
+                    <div className="row mb-6" style={{ alignItems: 'center' }}>
+                        <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                            <div className="product-details sub-cat-deatil">
+                                <h1 class="product-title">Our Collections</h1>
+                                <p>Get the latest items immediately with promo prices</p>
+                                <ALink href={"#"} className="btn btn-dark btn-outline-darker">
+                                    <span>Check All </span>
+                                    <i className="icon-long-arrow-right"></i>
+                                </ALink>
+                            </div>
+                        </div>
+                        <div className={`col-lg-9 col-sm-6 col-xs-12`}>
+                            <div className="row">
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/stool01.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/stool02.png" />
+                                        <h6 className="text-center">Freedom Humanscale</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/stool03.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                                <div className={`col-lg-3 col-sm-6 col-xs-12`}>
+                                    <div className="sub-cat-product-img">
+                                        <img src="images/category/products/stool04.png" />
+                                        <h6 className="text-center">Numex Comfort</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div >
             </div >
         </main >
     )
 }
 
-export default withApollo({ ssr: typeof window == 'undefined' })(ShopGrid);
+export default withApollo({ ssr: typeof window == 'undefined' })(ProductSubCatInner);
