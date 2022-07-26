@@ -1250,12 +1250,12 @@ function Home(props) {
                 </Reveal>
             </div>
 
-            <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
+            {/* <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
                 <TopCollection products={topProducts} loading={loading} />
                 <div className="text-center mb-7 mt-2">
                     <ALink href="#" className="btn btn-outline-darker btn-more"><span>View more</span><i className="icon-long-arrow-right"></i></ALink>
                 </div>
-            </Reveal>
+            </Reveal> */}
             {homedata?.deal?.length > 0 &&
                 <div className="deal-container pt-5 mb-5">
                     <div className="container">
