@@ -28,18 +28,18 @@ function CartMenu ( props ) {
                                     <div className="product justify-content-between" key={ index }>
                                         <div className="product-cart-details">
                                             <h4 className="product-title">
-                                                <ALink href={ `/product/default/${item.slug}` }>{ item.name }</ALink>
+                                                <ALink href={ `/product/default/${item.route}` }>{ item.name }</ALink>
                                             </h4>
 
-                                            <span className="cart-product-info">
+                                            {/* <span className="cart-product-info">
                                                 <span className="cart-product-qty">{ item.qty } </span>
                                                  x ${ item.sale_price ? item.sale_price.toFixed( 2 ) : item.price.toFixed( 2 ) }
-                                            </span>
+                                            </span> */}
                                         </div>
 
                                         <figure className="product-image-container ml-2">
-                                            <ALink href={ `/product/default/${item.slug}` } className="product-image">
-                                                <img src={ process.env.NEXT_PUBLIC_ASSET_URI + item.sm_pictures[ 0 ].url } alt="product" />
+                                            <ALink href={ `/product/default/${item.route}` } className="product-image">
+                                                <img src={ item.featured_image } alt="product" />
                                             </ALink>
                                         </figure>
                                         <button className="btn-remove" title="Remove Product" onClick={ () => props.removeFromCart( item ) }><i className="icon-close"></i></button>
@@ -49,7 +49,7 @@ function CartMenu ( props ) {
                             <div className="dropdown-cart-total">
                                 <span>Total</span>
 
-                                <span className="cart-total-price">${ cartPriceTotal( cartlist ).toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } ) }</span>
+                                <span className="cart-total-price">Dhs. { cartPriceTotal( cartlist ).toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } ) }</span>
                             </div>
 
                             <div className="dropdown-cart-action">

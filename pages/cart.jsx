@@ -96,33 +96,33 @@ function Cart(props) {
                                                             <td className="product-col">
                                                                 <div className="product">
                                                                     <figure className="product-media">
-                                                                        <ALink href={`/product/default/${item.slug}`} className="product-image">
-                                                                            <img src={process.env.NEXT_PUBLIC_ASSET_URI + item.sm_pictures[0].url} alt="product" />
+                                                                        <ALink href={`/product/default/${item.route}`} className="product-image">
+                                                                            <img src={item.featured_image} alt="product" />
                                                                         </ALink>
                                                                     </figure>
 
                                                                     <h4 className="product-title">
-                                                                        <ALink href={`/product/default/${item.slug}`}>{item.name}</ALink>
+                                                                        <ALink href={`/product/default/${item.route}`}>{item.name}</ALink>
                                                                     </h4>
                                                                 </div>
                                                             </td>
 
                                                             <td className="price-col">
-                                                                ${
+                                                                {/* Dhs. {
                                                                     item.sale_price ?
                                                                         item.sale_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                                                                         :
                                                                         item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
-                                                                }
+                                                                } */}
                                                             </td>
 
                                                             <td className="quantity-col">
-                                                                <Qty value={item.qty} changeQty={current => changeQty(current, index)} adClass="cart-product-quantity"></Qty>
+                                                                <Qty value={item?.qty} changeQty={current => changeQty(current, index)} adClass="cart-product-quantity"></Qty>
                                                             </td>
 
                                                             <td className="total-col">
-                                                                ${item.sum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                                {/* ${item.sum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} */}
                                                             </td>
 
                                                             <td className="remove-col">

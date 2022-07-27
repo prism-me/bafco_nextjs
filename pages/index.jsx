@@ -946,6 +946,9 @@ function Home(props) {
     const posts = postsdata && postsdata;
     const [homedata, setHomedata] = useState();
     const [bloglist, setBlogList] = useState();
+    const [productList, setProductList] = useState();
+    const [categoryList, setCategoryList] = useState();
+    const [selectedCategory, setSelectedCategory] = useState('all');
 
     function openVideoModal(e) {
         e.preventDefault();
@@ -958,20 +961,25 @@ function Home(props) {
 
     useEffect(() => {
 
-        // axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/home-page?en').then(function (response) {
-        //     // handle success
-        //     console.log(response.data.content);
-        //     setHomedata(response.data.content)
-        // }).catch(function (error) {
-        //     // handle error
-        //     console.log(error);
-        // })
+        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home-product-category-filter/${selectedCategory}`).then(function (response) {
+            // handle success
+            console.log(response.data);
+            setProductList(response.data);
+        }).catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+
+    }, [selectedCategory])
+
+    useEffect(() => {
 
         axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home?en').then(function (response) {
             // handle success
             console.log(response.data);
             setHomedata(response.data.pages.content)
             setBlogList(response.data.blogs)
+            setCategoryList(response.data.category)
         }).catch(function (error) {
             // handle error
             console.log(error);
@@ -1250,12 +1258,12 @@ function Home(props) {
                 </Reveal>
             </div>
 
-            {/* <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                <TopCollection products={topProducts} loading={loading} />
+            <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
+                <TopCollection categories={categoryList} products={productList} setIsSelectedCategory={setSelectedCategory} loading={loading} />
                 <div className="text-center mb-7 mt-2">
                     <ALink href="#" className="btn btn-outline-darker btn-more"><span>View more</span><i className="icon-long-arrow-right"></i></ALink>
                 </div>
-            </Reveal> */}
+            </Reveal>
             {homedata?.deal?.length > 0 &&
                 <div className="deal-container pt-5 mb-5">
                     <div className="container">
