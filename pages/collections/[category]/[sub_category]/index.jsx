@@ -28,6 +28,7 @@ function ShopGrid() {
     // const products = data && data.products.data;
     const totalCount = data && data.products.totalCount;
     const [products, setProducts] = useState();
+    const [filterValues, setFilterValues] = useState();
 
     useEffect(() => {
 
@@ -35,12 +36,21 @@ function ShopGrid() {
 
         axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/front-products/${currentPageRoute}`).then(function (response) {
             // handle success
-            console.log(response.data.data[0].products);
+            // console.log(response.data.data[0].products);
             setProducts(response?.data?.data[0].products)
         }).catch(function (error) {
             // handle error
             console.log(error);
         })
+
+        // axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/filters-listing`).then(function (response) {
+        //     // handle success
+        //     console.log(response?.data);
+        //     setFilterValues(response?.data)
+        // }).catch(function (error) {
+        //     // handle error
+        //     console.log(error);
+        // })
 
     }, [query])
 
@@ -276,7 +286,7 @@ function ShopGrid() {
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <StickyBox className="sticky-content" offsetTop={70}>
-                                <ShopSidebarOne toggle={toggle}></ShopSidebarOne>
+                                <ShopSidebarOne toggle={toggle} filterValueslist={filterValues} />
                             </StickyBox>
                             {
                                 toggle ?

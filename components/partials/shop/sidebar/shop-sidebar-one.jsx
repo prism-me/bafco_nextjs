@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import InputRange from 'react-input-range';
 import SlideToggle from 'react-slide-toggle';
 import 'react-input-range/lib/css/index.css';
-
 import ALink from '~/components/features/alink';
 import { shopData } from '~/utils/data';
 
@@ -18,7 +17,8 @@ function ShopSidebarOne(props) {
             setRange({ min: parseInt(query.minPrice), max: parseInt(query.maxPrice) });
         } else {
             setRange({ min: 0, max: 1000 });
-        }
+        }   
+        console.log("filterValues :: ", props)
     }, [query])
 
     function onChangePriceRange(value) {

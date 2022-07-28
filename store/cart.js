@@ -2,6 +2,7 @@ import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage';
 import { takeEvery } from "redux-saga/effects";
 import { toast } from 'react-toastify';
+import { API } from '~/http/API';
 
 export const actionTypes = {
     addToCart: "ADD_TO_CART",
@@ -14,54 +15,83 @@ const initialState = {
     data: []
 }
 
-const cartReducer = ( state = initialState, action ) => {
-    switch ( action.type ) {
+
+
+const cartReducer = (state = initialState, action) => {
+    switch (action.type) {
         case actionTypes.addToCart:
-            var findIndex = state.data.findIndex( item => item.id == action.payload.product.id );
+            let UserDetail = localStorage.getItem('UserData');
+            console.log("addToCart :: ", action.payload.product)
+            console.log("localStorage :: ", UserDetail)
+
+            var findIndex = state.data.findIndex(item => item.id == action.payload.product.id);
             let qty = action.payload.qty ? action.payload.qty : 1;
-            if ( findIndex !== -1 && action.payload.product.variants.length > 0 ) {
-                findIndex = state.data.findIndex( item => item.name == action.payload.product.name );
+
+            if (findIndex !== -1 && action.payload.product.variations.length > 0) {
+                findIndex = state.data.findIndex(item => item.name == action.payload.product.name);
             }
 
-            if ( findIndex !== -1 ) {
+            if (findIndex !== -1) {
+                console.log("findIndex if :: ", findIndex)
                 return {
                     data: [
-                        ...state.data.reduce( ( acc, product, index ) => {
-                            if ( findIndex == index ) {
-                                acc.push( {
+                        ...state.data.reduce((acc, product, index) => {
+                            if (findIndex == index) {
+                                acc.push({
                                     ...product,
                                     qty: product.qty + qty,
-                                    sum: ( action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price ) * ( product.qty + qty )
-                                } );
+                                    sum: (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price) * (product.qty + qty)
+                                });
                             } else {
-                                acc.push( product );
+                                acc.push(product);
                             }
 
                             return acc;
-                        }, [] )
+                        }, [])
                     ]
                 }
             } else {
-                return {
-                    data: [
-                        ...state.data,
-                        {
-                            ...action.payload.product,
-                            qty: qty,
-                            price: action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price,
-                            sum: qty * ( action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price )
-                        }
-                    ]
-                };
+                console.log("findIndex else :: ", findIndex)
+                if (UserDetail) {
+                    let productData = {
+                        user_id: UserDetail,
+                        product_id: action.payload.product.id,
+                        variation_id: action.payload.product.variations[0].id,
+                        variation_value_id: 9,
+                        qty: qty
+
+                    };
+                    API.post(`/cart`, productData)
+                        .then((response) => {
+                            console.log("cart :: ", response)
+                        })
+                        .catch((err) => {
+                            alert("Something went wrong.");
+                            console.log(err);
+                        });
+                } else {
+                    alert("user is not login");
+                    return {
+                        data: [
+                            ...state.data,
+                            {
+                                ...action.payload.product,
+                                qty: qty,
+                                price: action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price,
+                                sum: qty * (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price)
+                            }
+                        ]
+                    };
+                }
             }
         case actionTypes.removeFromCart:
             return {
                 data: [
-                    ...state.data.filter( item => {
-                        if ( item.id !== action.payload.product.id ) return true;
-                        if ( item.name !== action.payload.product.name ) return true;
+                    ...state.data.filter(item => {
+                        if (item.id !== action.payload.product.id) return true;
+                        if (item.name !== action.payload.product.name) return true;
                         return false;
-                    } )
+                    })
                 ]
             }
 
@@ -80,41 +110,41 @@ const cartReducer = ( state = initialState, action ) => {
 }
 
 export const actions = {
-    addToCart: ( product, qty = 1 ) => ( {
+    addToCart: (product, qty = 1) => ({
         type: actionTypes.addToCart,
         payload: {
             product: product,
             qty: qty
         }
-    } ),
+    }),
 
-    removeFromCart: ( product ) => ( {
+    removeFromCart: (product) => ({
         type: actionTypes.removeFromCart,
         payload: {
             product: product
         }
-    } ),
+    }),
 
-    updateCart: ( cartItems ) => ( {
+    updateCart: (cartItems) => ({
         type: actionTypes.updateCart,
         payload: {
             cartItems: cartItems
         }
-    } )
+    })
 }
 
-export function* cartSaga () {
-    yield takeEvery( actionTypes.addToCart, function* saga ( e ) {
-        toast.success( "Product added to Cart" );
-    } );
+export function* cartSaga() {
+    yield takeEvery(actionTypes.addToCart, function* saga(e) {
+        toast.success("Product added to Cart");
+    });
 
-    yield takeEvery( actionTypes.removeFromCart, function* saga ( e ) {
-        toast.success( "Product removed from Cart" );
-    } );
+    yield takeEvery(actionTypes.removeFromCart, function* saga(e) {
+        toast.success("Product removed from Cart");
+    });
 
-    yield takeEvery( actionTypes.updateCart, function* saga ( e ) {
-        toast.success( "Cart updated successfully" );
-    } );
+    yield takeEvery(actionTypes.updateCart, function* saga(e) {
+        toast.success("Cart updated successfully");
+    });
 }
 
 const persistConfig = {
@@ -123,4 +153,4 @@ const persistConfig = {
     storage
 }
 
-export default persistReducer( persistConfig, cartReducer );
+export default persistReducer(persistConfig, cartReducer);

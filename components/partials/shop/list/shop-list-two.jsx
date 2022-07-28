@@ -24,7 +24,6 @@ function ShopListThree ( props ) {
                                 :
                                 products?.map( ( product, index ) => (
                                     <div className="col-6 col-md-4 col-xl-3" key={ index }>
-                                        {console.log( product)}
                                         <ProductTwelve product={ product } />
                                     </div>
                                 ) )

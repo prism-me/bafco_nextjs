@@ -15,18 +15,17 @@ function MyAccount() {
     useEffect(() => {
         if (isuserdetail === true) {
             let xauthtoken = localStorage.getItem('authtoken');
-            console.log("xauthtoken :: ", xauthtoken)
+            // console.log("xauthtoken :: ", xauthtoken)
             let header = {
                 headers: {
                     'Authorization': `Bearer ${xauthtoken}`,
                 }
             }
             API.get(`/auth/me`, header).then((response) => {
+                localStorage.setItem('UserData', response?.data.id);
 
-                console.log("userdetail :: ", response);
                 setUserData(response?.data);
                 setIsuserdetail(false);
-
 
             }).catch((err) => console.log(err));
         }
@@ -57,6 +56,7 @@ function MyAccount() {
     function handleLogOut() {
         // e.preventDefault();
         localStorage.removeItem('authtoken');
+        localStorage.removeItem('UserData');
         if (window.location.pathname == '/account/') {
             router.push('/');
         } else {
