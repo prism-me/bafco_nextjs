@@ -302,7 +302,7 @@
 		>a {
 			display: block;
 			color: #000;
-			font-weight: 300;
+			font-weight: 600;
 			font-size: 1.5rem;
 			line-height: 1.5;
 			letter-spacing: -.01em;
@@ -310,6 +310,7 @@
 			border-top: none;
 			padding: .9rem 1.9rem;
 			width: 100%;
+			font-family: $font-family1;
 		}
 
 		&.item-lead {

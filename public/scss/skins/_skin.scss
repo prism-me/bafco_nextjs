@@ -147,6 +147,7 @@ a:focus {
 }
 
 .btn-outline-primary-2 {
+    font-weight: 600;
     @include button-outline-variant(#008482, #fff,
         #008482, #008482,
         #008482,
@@ -180,6 +181,7 @@ a:focus {
 }
 
 .btn-outline-darker {
+    font-weight: 600;
     @include button-outline-variant(#333333, #fff,
         $primary-color, #d7d7d7,
         $primary-color,

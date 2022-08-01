@@ -989,9 +989,10 @@
 	.header-bottom {
 		.menu>li {
 			>a {
-				font-size: 1.4rem;
+				font-size: 1.6rem;
 				letter-spacing: -.01em;
 				text-transform: none;
+				font-family: $font-family1;
 
 				&::before {
 					top: 0;

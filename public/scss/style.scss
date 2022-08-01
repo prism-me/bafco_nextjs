@@ -83,7 +83,13 @@
     src: local('Helvetica Neue LT Std'), url("../fonts/HelveticaNeueLTStd-Md.otf") format('opentype');
 }
 
-$font-family: 'Helvetica Neue LT Std';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap');
+
+$font-family: 'Roboto', sans-serif;
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+
+$font-family1: 'Lato', sans-serif;
 
 /*-------------------- 1.General Styles ---------- */
 @import 'base/base';

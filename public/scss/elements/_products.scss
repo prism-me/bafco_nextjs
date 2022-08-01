@@ -248,6 +248,7 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	color: inherit;
+	font-weight: 600;
 
 	&:hover,
 	&:focus {
@@ -551,7 +552,7 @@
 
 	span {
 		color: #666666;
-		font-weight: 400;
+		font-weight: 600;
 		font-size: 1.3rem;
 		letter-spacing: -.01em;
 		transition: all .35s ease;
@@ -1632,6 +1633,7 @@
 
 	.product-price {
 		color: #EE3124;
+		font-weight: 600;
 	}
 
 	.old-price {

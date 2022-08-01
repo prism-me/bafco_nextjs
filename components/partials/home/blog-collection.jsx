@@ -30,7 +30,7 @@ function BlogCollection(props) {
                                     {/* <ALink href="#">{item.created_at.toLocaleDateString('en-US', options)}</ALink> */}
                                 </div>
 
-                                <h2 className="entry-title">
+                                <h2 className="entry-title mb-2">
                                     <ALink href={`/blogs/${item.route}`}>
                                         {item.title}
                                     </ALink>
