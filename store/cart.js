@@ -21,8 +21,7 @@ const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.addToCart:
             let UserDetail = localStorage.getItem('UserData');
-            console.log("addToCart :: ", action.payload.product)
-            console.log("localStorage :: ", UserDetail)
+            let authtoken = localStorage.getItem('authtoken');
 
             var findIndex = state.data.findIndex(item => item.id == action.payload.product.id);
             let qty = action.payload.qty ? action.payload.qty : 1;
@@ -32,7 +31,6 @@ const cartReducer = (state = initialState, action) => {
             }
 
             if (findIndex !== -1) {
-                console.log("findIndex if :: ", findIndex)
                 return {
                     data: [
                         ...state.data.reduce((acc, product, index) => {
@@ -51,7 +49,6 @@ const cartReducer = (state = initialState, action) => {
                     ]
                 }
             } else {
-                console.log("findIndex else :: ", findIndex)
                 if (UserDetail) {
                     let productData = {
                         user_id: UserDetail,
@@ -61,17 +58,22 @@ const cartReducer = (state = initialState, action) => {
                         qty: qty
 
                     };
-                    API.post(`/cart`, productData)
+                    API.post(`/cart`, productData, {
+                        headers: {
+                            'Authorization': `Bearer ${authtoken}`
+                        }
+                    })
                         .then((response) => {
-                            console.log("cart :: ", response)
-                        })
-                        .catch((err) => {
-                            alert("Something went wrong.");
+
+                            console.log("cart :: ", response);
+
+                        }).catch((err) => {
                             console.log(err);
                         });
                 } else {
-                    alert("user is not login");
+                    console.log("cart :: ", action.payload.product);
                     return {
+
                         data: [
                             ...state.data,
                             {

@@ -33,7 +33,7 @@ function MainMenu() {
                                         <ul>
                                             <li className={path?.indexOf("/collections/category/executive-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/chairs/executive-chairs/">Executive Chairs</ALink></li>
                                             <li className={path?.indexOf("/collections/category/ergonomic-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/chairs/ergonomic-chairs/">Ergonomic Chairs</ALink></li>
-                                            <li className={path?.indexOf("/collections/category/conference-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/chairs/conference-chairs/"><span>Conference Chairs<span className="tip tip-new">New</span></span></ALink></li>
+                                            <li className={path?.indexOf("/collections/category/conference-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/chairs/conference-chairs/"><span>Conference Chairs</span></ALink></li>
                                             <li className={path?.indexOf("/collections/category/visitor-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/chairs/visitor-chairs/">Visitor Chairs</ALink></li>
                                             <li className={path?.indexOf("/collections/category/stools/") > -1 ? 'active' : ''}><ALink href="/collections/chairs/stools/">Stools</ALink></li>
                                             <li className={path?.indexOf("/collections/category/multi-functional-chairs/") > -1 ? 'active' : ''}><ALink href="/collections/chairs/multi-functional-chairs/">Multi-Functional Chairs</ALink></li>

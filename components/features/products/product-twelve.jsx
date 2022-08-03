@@ -61,14 +61,16 @@ function ProductTwelve(props) {
 
     function onQuickView(e) {
         e.preventDefault();
-        props.showQuickView(product?.slug);
+        // console.log("product :: ", product)
+        // props.showQuickView(product?.route);
+        router.push(`/collections/${categoryName}/${subCategoryName}/${product?.route}`);
     }
 
     return (
         <div className="product product-11 text-center">
 
             <figure className="product-media">
-                {
+                {/* {
                     product?.new ?
                         <span className="product-label label-circle label-new">New</span>
                         : ""
@@ -84,7 +86,7 @@ function ProductTwelve(props) {
                     product?.top ?
                         <span className="product-label label-circle label-top">Top</span>
                         : ""
-                }
+                } */}
 
                 {product?.variations?.length >= 1 &&
                     !product?.variations[0]?.in_stock || product?.variations[0]?.in_stock == 0 ?
@@ -95,7 +97,7 @@ function ProductTwelve(props) {
                 <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>
                     <LazyLoadImage
                         alt="product"
-                        src={product?.variations[0].images[0].avatar}
+                        src={product?.variations[0]?.images[0]?.avatar}
                         threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
@@ -127,7 +129,7 @@ function ProductTwelve(props) {
                             </a>
 
                     }
-                    <a href="#" className="btn-product-icon btn-quickview" title="Quick View" onClick={onQuickView}><span>quick view</span></a>
+                    <span className="btn-product-icon btn-quickview" style={{ cursor: "pointer" }} title="Quick View" onClick={onQuickView}><span>quick view</span></span>
                 </div>
             </figure>
 

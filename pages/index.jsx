@@ -963,7 +963,6 @@ function Home(props) {
 
         axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home-product-category-filter/${selectedCategory}`).then(function (response) {
             // handle success
-            console.log(response.data);
             setProductList(response.data);
         }).catch(function (error) {
             // handle error
@@ -976,7 +975,6 @@ function Home(props) {
 
         axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home?en').then(function (response) {
             // handle success
-            console.log(response.data);
             setHomedata(response.data.pages.content)
             setBlogList(response.data.blogs)
             setCategoryList(response.data.category)

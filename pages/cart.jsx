@@ -7,13 +7,33 @@ import PageHeader from '~/components/features/page-header';
 
 import { actions as cartAction } from '~/store/cart';
 import { cartPriceTotal } from '~/utils/index';
+// import { API } from '~/http/API';
 
 function Cart(props) {
     const [cartList, setCartList] = useState([]);
     const [shippingCost, setShippingCost] = useState(0);
 
     useEffect(() => {
-        setCartList(props.cartItems);
+        // let authtoken = localStorage.getItem('authtoken');
+        // let UserDetail = localStorage.getItem('UserData');
+
+        // if (authtoken === "" || authtoken === null || authtoken === undefined) {
+            setCartList(props.cartItems);
+        // } else {
+        //     API.get(`/cart/${UserDetail}`, {
+        //         headers: {
+        //             'Authorization': `Bearer ${authtoken}`
+        //         }
+        //     })
+        //         .then((response) => {
+        //             console.log("cart :: ", response)
+        //             setCartList(response?.data);
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         });
+        // }
+
     }, [props.cartItems])
 
     function onChangeShipping(value) {
@@ -62,9 +82,6 @@ function Cart(props) {
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
-                        </li>
-                        <li className="breadcrumb-item">
-                            <ALink href="/shop/sidebar/list">Shop</ALink>
                         </li>
                         <li className="breadcrumb-item active">Shopping Cart</li>
                     </ol>
@@ -163,7 +180,7 @@ function Cart(props) {
                                                 <tbody>
                                                     <tr className="summary-subtotal">
                                                         <td>Subtotal:</td>
-                                                        <td>${cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                        <td>Dhs. {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                                     </tr>
                                                     <tr className="summary-shipping">
                                                         <td>Shipping:</td>
@@ -183,7 +200,7 @@ function Cart(props) {
                                                                 <label className="custom-control-label" htmlFor="free-shipping">Free Shipping</label>
                                                             </div>
                                                         </td>
-                                                        <td>$0.00</td>
+                                                        <td>Dhs. 0.00</td>
                                                     </tr>
 
                                                     <tr className="summary-shipping-row">
@@ -198,7 +215,7 @@ function Cart(props) {
                                                                 <label className="custom-control-label" htmlFor="standard-shipping">Standard:</label>
                                                             </div>
                                                         </td>
-                                                        <td>$10.00</td>
+                                                        <td>Dhs. 10.00</td>
                                                     </tr>
 
                                                     <tr className="summary-shipping-row">
@@ -213,7 +230,7 @@ function Cart(props) {
                                                                 <label className="custom-control-label" htmlFor="express-shipping">Express:</label>
                                                             </div>
                                                         </td>
-                                                        <td>$20.00</td>
+                                                        <td>Dhs. 20.00</td>
                                                     </tr>
 
                                                     <tr className="summary-shipping-estimate">
@@ -224,7 +241,7 @@ function Cart(props) {
                                                     <tr className="summary-total">
                                                         <td>Total:</td>
                                                         <td>
-                                                            ${(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                        Dhs. {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </td>
                                                     </tr>
                                                 </tbody>

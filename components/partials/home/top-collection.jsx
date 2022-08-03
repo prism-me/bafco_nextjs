@@ -7,9 +7,9 @@ import { catFilter } from '~/utils';
 function TopCollection(props) {
     const { products = [], categories, loading, setIsSelectedCategory } = props;
     const visible = 4;
-    console.log("props :: ", props);
+    // console.log("props :: ", props);
     const handleCategory = (route) => {
-        console.log("route :: ", route)
+        // console.log("route :: ", route)
         props.setIsSelectedCategory(route);
     }
     return (
@@ -22,7 +22,7 @@ function TopCollection(props) {
                             <span className="nav-link">All</span>
                         </Tab>
                         {categories?.map((item, index) => (
-                            <Tab className="nav-item" key={index} onclick={console.log("itemmmmm")}>
+                            <Tab className="nav-item" key={index}>
                                 <span className="nav-link">{item.name}</span>
                             </Tab>
                         ))}

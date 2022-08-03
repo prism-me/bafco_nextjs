@@ -40,8 +40,8 @@ function DetailOne(props) {
         let min = 99999;
         let max = 0;
 
-        setVariationGroup(product.variants.reduce((acc, cur) => {
-            cur.size.map(item => {
+        setVariationGroup(product.variations.reduce((acc, cur) => {
+            cur.variationItems.map(item => {
                 acc.push({
                     color: cur.color,
                     colorName: cur.color_name,
@@ -49,17 +49,10 @@ function DetailOne(props) {
                     price: cur.price
                 });
             });
-            if (min > cur.price) min = cur.price;
-            if (max < cur.price) max = cur.price;
+            if (min > cur.price) min = cur.lower_price;
+            if (max < cur.price) max = cur.upper_price;
             return acc;
         }, []));
-
-        if (product.variants.length == 0) {
-            min = product.sale_price
-                ? product.sale_price
-                : product.price;
-            max = product.price;
-        }
 
         setMinPrice(min);
         setMaxPrice(max);
@@ -144,7 +137,7 @@ function DetailOne(props) {
             }, []);
         }
 
-        setColorArray(product.variants.reduce((acc, cur) => {
+        setColorArray(product?.variations?.reduce((acc, cur) => {
             if (
                 tempArray.findIndex(item => item.color == cur.color) == -1
             ) {
@@ -221,7 +214,7 @@ function DetailOne(props) {
         if (e.currentTarget.classList.contains('btn-disabled')) return;
 
         let newProduct = { ...product };
-        if (product.variants.length > 0) {
+        if (product?.variations?.length > 0) {
             newProduct = {
                 ...product,
                 name:
@@ -245,15 +238,16 @@ function DetailOne(props) {
 
     return (
         <div className="product-details" ref={ref}>
+            {console.log("product :: ", product)}
             <h1 className="product-title">{product.name}</h1>
 
-            <div className="ratings-container">
+            {/* <div className="ratings-container">
                 <div className="ratings">
                     <div className="ratings-val" style={{ width: product.ratings * 20 + '%' }}></div>
                     <span className="tooltip-text">{product.ratings.toFixed(2)}</span>
                 </div>
                 <span className="ratings-text">( {product.review} Reviews )</span>
-            </div>
+            </div> */}
 
             {
                 product.stock == 0 ?
@@ -271,7 +265,7 @@ function DetailOne(props) {
                     minPrice == maxPrice ?
                         <div className="product-price">Dhs. {minPrice.toFixed(2)}</div>
                         :
-                        product.variants.length == 0 ?
+                        product?.variations?.length == 0 ?
                             <div className="product-price">
                                 <span className="new-price">Dhs. {minPrice.toFixed(2)}</span>
                                 <span className="old-price">Dhs. {maxPrice.toFixed(2)}</span>
@@ -285,7 +279,7 @@ function DetailOne(props) {
             </div>
 
             {
-                product.variants.length > 0 ?
+                product?.variations?.length > 0 ?
                     <>
                         <div className="details-filter-row details-row-size">
                             <label htmlFor="size">Upholstery:</label>
@@ -389,7 +383,7 @@ function DetailOne(props) {
             <div className="product-details-action">
                 <a
                     href="#"
-                    className={`btn-product btn-cart ${(!canAddToCart(props.cartlist, product, qty) || (product.variants.length > 0 && !showVariationPrice)) ? 'btn-disabled' : ''}`}
+                    className={`btn-product btn-cart ${(!canAddToCart(props.cartlist, product, qty) || (product?.variations?.length > 0 && !showVariationPrice)) ? 'btn-disabled' : ''}`}
                     onClick={e => onCartClick(e, 0)}
                 >
                     <span>add to cart</span>
@@ -406,7 +400,7 @@ function DetailOne(props) {
             </div >
 
             <div className="product-details-footer">
-                <div className="product-cat text-truncate">
+                {/* <div className="product-cat text-truncate">
                     <span>Brand:</span>
                     {
                         product.brands.map((brand, index) => (
@@ -416,7 +410,7 @@ function DetailOne(props) {
                             </span>
                         ))
                     }
-                </div >
+                </div > */}
 
                 <div className="product-cat text-truncate">
                     <span>Type of Seating: </span><span>Office Chairs</span>
@@ -466,7 +460,11 @@ function DetailOne(props) {
                         <div className="col-6">
                             <figure className="product-media">
                                 <ALink href={`/product/default/${product.slug}`}>
-                                    <img src={process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[0].url} alt="product" width={product.sm_pictures[0].width} height={product.sm_pictures[0].height} />
+                                    <img
+                                        src={""} alt="product"
+                                        // width={product.sm_pictures[0].width}
+                                        // height={product.sm_pictures[0].height}
+                                    />
                                 </ALink>
                             </figure>
                             <h3 className="product-title">
@@ -488,7 +486,7 @@ function DetailOne(props) {
                                         minPrice == maxPrice ?
                                             <div className="product-price">Dhs. {minPrice.toFixed(2)}</div>
                                             :
-                                            product.variants.length == 0 ?
+                                            product?.variations?.length == 0 ?
                                                 <div className="product-price">
                                                     <span className="new-price">Dhs. {minPrice.toFixed(2)}</span>
                                                     <span className="old-price">Dhs. {maxPrice.toFixed(2)}</span>
@@ -500,7 +498,7 @@ function DetailOne(props) {
                             <div className="product-details-action">
                                 <a
                                     href="#"
-                                    className={`btn-product btn-cart ${(!canAddToCart(props.cartlist, product, qty) || (product.variants.length > 0 && !showVariationPrice)) ? 'btn-disabled' : ''}`}
+                                    className={`btn-product btn-cart ${(!canAddToCart(props.cartlist, product, qty) || (product?.variations?.length > 0 && !showVariationPrice)) ? 'btn-disabled' : ''}`}
                                     onClick={e => onCartClick(e, 1)}
                                 >
                                     <span>add to cart</span>
