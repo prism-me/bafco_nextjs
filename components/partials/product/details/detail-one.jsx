@@ -23,17 +23,14 @@ function DetailOne(props) {
     const [selectedVariant, setSelectedVariant] = useState({ color: null, colorName: null, price: null, size: "" });
     const [showClear, setShowClear] = useState(false);
     const [showVariationPrice, setShowVariationPrice] = useState(false);
-    const [maxPrice, setMaxPrice] = useState(0);
-    const [minPrice, setMinPrice] = useState(99999);
+    const [maxPrice, setMaxPrice] = useState(product?.product_single_variation?.product_variation_details?.upper_price);
+    const [minPrice, setMinPrice] = useState(product?.product_single_variation?.product_variation_details?.lower_price);
 
     useEffect(() => {
-        window.addEventListener('scroll', scrollHandler, {
-            passive: true
-        });
+        window.addEventListener('scroll', scrollHandler, { passive: true });
 
-        return () => {
-            window.removeEventListener('scroll', scrollHandler);
-        }
+        return () => { window.removeEventListener('scroll', scrollHandler); }
+        
     }, [])
 
     useEffect(() => {
@@ -239,39 +236,39 @@ function DetailOne(props) {
     return (
         <div className="product-details" ref={ref}>
             {console.log("product :: ", product)}
-            <h1 className="product-title">{product.name}</h1>
+            <h1 className="product-title">{product?.single_product_details?.product?.name}</h1>
 
             {/* <div className="ratings-container">
                 <div className="ratings">
                     <div className="ratings-val" style={{ width: product.ratings * 20 + '%' }}></div>
-                    <span className="tooltip-text">{product.ratings.toFixed(2)}</span>
+                    <span className="tooltip-text">{product.ratings}</span>
                 </div>
                 <span className="ratings-text">( {product.review} Reviews )</span>
             </div> */}
 
             {
-                product.stock == 0 ?
+                product?.single_product_details?.product?.stock == 0 ?
                     <div className="product-price">
                         <span className="out-price">
                             {
                                 minPrice == maxPrice ?
-                                    <span>Dhs. {product.price.toFixed(2)}</span>
+                                    <span>Dhs. {product.price}</span>
                                     :
-                                    <span>Dhs. {minPrice.toFixed(2)}&ndash;Dhs. {maxPrice.toFixed(2)}</span>
+                                    <span>Dhs. {minPrice}&ndash;Dhs. {maxPrice}</span>
                             }
                         </span>
                     </div>
                     :
                     minPrice == maxPrice ?
-                        <div className="product-price">Dhs. {minPrice.toFixed(2)}</div>
+                        <div className="product-price">Dhs. {minPrice}</div>
                         :
                         product?.variations?.length == 0 ?
                             <div className="product-price">
-                                <span className="new-price">Dhs. {minPrice.toFixed(2)}</span>
-                                <span className="old-price">Dhs. {maxPrice.toFixed(2)}</span>
+                                <span className="new-price">Dhs. {minPrice}</span>
+                                <span className="old-price">Dhs. {maxPrice}</span>
                             </div>
                             :
-                            <div className="product-price">Dhs. {minPrice.toFixed(2)}&ndash;Dhs. {maxPrice.toFixed(2)}</div>
+                            <div className="product-price">Dhs. {minPrice}&ndash;Dhs. {maxPrice}</div>
             }
 
             <div className="product-content">
@@ -347,7 +344,7 @@ function DetailOne(props) {
                                     <button className={`d-none variation-toggle ${toggleState.toLowerCase()}`} onClick={onToggle}></button>
                                     <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
                                         <div className="product-price">
-                                            Dhs. {selectedVariant.price ? selectedVariant.price.toFixed(2) : 0}
+                                            Dhs. {selectedVariant.price ? selectedVariant.price : 0}
                                         </div>
                                     </div>
                                 </div>
@@ -475,24 +472,24 @@ function DetailOne(props) {
                             {
                                 (selectedVariant.color && selectedVariant.size != "") ?
                                     <div className="product-price">
-                                        ${selectedVariant.price ? selectedVariant.price.toFixed(2) : 0}
+                                        ${selectedVariant.price ? selectedVariant.price : 0}
                                     </div>
                                     :
                                     product.stock == 0 ?
                                         <div className="product-price">
-                                            <span className="out-price">Dhs. {product.price.toFixed(2)}</span>
+                                            <span className="out-price">Dhs. {product.price}</span>
                                         </div>
                                         :
                                         minPrice == maxPrice ?
-                                            <div className="product-price">Dhs. {minPrice.toFixed(2)}</div>
+                                            <div className="product-price">Dhs. {minPrice}</div>
                                             :
                                             product?.variations?.length == 0 ?
                                                 <div className="product-price">
-                                                    <span className="new-price">Dhs. {minPrice.toFixed(2)}</span>
-                                                    <span className="old-price">Dhs. {maxPrice.toFixed(2)}</span>
+                                                    <span className="new-price">Dhs. {minPrice}</span>
+                                                    <span className="old-price">Dhs. {maxPrice}</span>
                                                 </div>
                                                 :
-                                                <div className="product-price">Dhs. {minPrice.toFixed(2)} &ndash; Dhs. {maxPrice.toFixed(2)}</div>
+                                                <div className="product-price">Dhs. {minPrice} &ndash; Dhs. {maxPrice}</div>
                             }
                             <Qty changeQty={onChangeQty2} max={product.stock} value={qty2}></Qty>
                             <div className="product-details-action">

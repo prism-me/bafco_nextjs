@@ -35,7 +35,7 @@ function ProductInner() {
     useEffect(() => {
         // alert("we are here in product")
         setPageTitle(query?.product.replace('-', ' '));
-        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/products/${query?.product}`).then(function (response) {
+        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/product-detail/${query?.product}`).then(function (response) {
             // handle success
             console.log(response.data);
             setProduct(response.data);
@@ -72,8 +72,8 @@ function ProductInner() {
                         <div className={`row skel-pro-single ${loading ? '' : 'loaded'}`}>
                             <div className="col-md-6">
                                 <div className="skel-product-gallery"></div>
-                                {!loading ?
-                                    <GalleryDefault product={product.variations[0]} />
+                                {product?.product_single_variation ?
+                                    <GalleryDefault product={product?.product_single_variation?.product_variation_details} />
                                     : ""
                                 }
                             </div>
@@ -87,11 +87,11 @@ function ProductInner() {
                                         <div className="entry-summary2"></div>
                                     </div>
                                 </div>
-                                {
+                                {/* {
                                     !loading ?
                                         <DetailOne product={product} />
                                         : ""
-                                }
+                                } */}
                             </div>
                         </div>
                     </div>

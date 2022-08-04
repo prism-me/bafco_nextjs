@@ -63,7 +63,7 @@ function Resources(props) {
                             <div className="intro-slide slide1" key={index} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image})` }}>
                                 <div className="container intro-content">
                                     <div className="project-reference-slider-cont">
-                                        <p className="lead text-primary mb-3">{item.sub_heading}</p>
+                                        <p className="lead text-primary">{item.sub_heading}</p>
                                         <h2 className="title">{item.heading}</h2>
                                         <div className="mb-2" dangerouslySetInnerHTML={{ __html: item.description }} />
 

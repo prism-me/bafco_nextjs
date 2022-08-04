@@ -8,6 +8,7 @@ function GalleryDefault(props) {
     const [photoIndex, setPhotoIndex] = useState(0);
 
     useEffect(() => {
+        
         if (product) {
             setIsOpen(false);
             setPhotoIndex(0);

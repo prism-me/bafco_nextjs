@@ -91,6 +91,29 @@ div.intro-slide {
 		// background-position: 72%;
 		background-repeat: no-repeat;
 		background-size: cover;
+		position: relative;
+
+		&:after {
+			content: "";
+			position: absolute;
+			background: rgba(0, 0, 0, 0.2);
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+
+		h2 {
+			color: #fff;
+		}
+
+		p {
+			color: #fff;
+		}
+
+		.text-primary {
+			margin-bottom: 1rem;
+		}
 
 		.css-1mdo01y {
 			background-color: rgba(255, 255, 255, 0.7);
@@ -114,8 +137,8 @@ div.intro-slide {
 	}
 
 	.btn {
-		color: #000;
-		border-color: #000;
+		color: #fff;
+		border-color: #fff;
 		font-size: 15px;
 
 		&:hover {
