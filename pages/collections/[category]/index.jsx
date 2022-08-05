@@ -14,7 +14,7 @@ function ProductSubCatInner() {
         API.get(`/front-category/${query?.category}`)
             .then((response) => {
                 console.log("cart :: ", response)
-                setCategoryData(response?.data)
+                setCategoryData(response?.data[0])
             })
             .catch((err) => {
                 console.log(err);
@@ -44,8 +44,8 @@ function ProductSubCatInner() {
 
             <div className="page-content">
                 <div className="container">
-                    {categoryData?.subcategory_products.length !== 0 &&
-                        categoryData?.subcategory_products.map((item, index) => (
+                    {categoryData?.subcategory_products?.length !== 0 &&
+                        categoryData?.subcategory_products?.map((item, index) => (
                             <div className="row mb-6" style={{ alignItems: 'center' }} key={index}>
                                 <div className={`col-lg-6 col-sm-6 col-xs-12 mb-6`}>
                                     <div className="sub-cat-featured-img">
