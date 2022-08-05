@@ -12,7 +12,7 @@ let initialObject = {
 }
 
 function InfoOne(props) {
-    const { product } = props;
+    const { product, dimension } = props;
     const [reviewData, setReviewData] = useState({ ...initialObject });
 
     const setRating = (e) => {
@@ -72,7 +72,8 @@ function InfoOne(props) {
                     </Tab>
 
                     <Tab className="nav-item">
-                        <span className="nav-link" >Reviews ({product?.review})</span>
+                        {/* <span className="nav-link" >Reviews ({product?.review})</span> */}
+                        <span className="nav-link" >Reviews (2)</span>
                     </Tab>
                 </TabList>
 
@@ -115,10 +116,16 @@ function InfoOne(props) {
                                     <th>Width (mm)</th>
                                     <th>Height (mm)</th>
                                 </thead>
-                                <tbody>
-                                    {/* <tr>
-                                        <td></td>
-                                    </tr> */}
+                                <tbody className="text-center">
+                                    {dimension?.map((dimension, i) => (
+                                        <tr key={i}>
+                                            <td><img src={dimension.images.avatar} style={{ height: "90px", margin: "0px auto" }} /></td>
+                                            <td>{dimension.code}</td>
+                                            <td>{dimension.depth}</td>
+                                            <td>{dimension.width}</td>
+                                            <td>{dimension.height}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

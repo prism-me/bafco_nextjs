@@ -118,8 +118,8 @@ function ProductInner() {
                             )}
                         </OwlCarousel>
                     </div>
-                    <InfoOne product={product?.single_product_details} />
-                                {console.log("product :: ", product?.single_product_details)}
+                    <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
+                    {console.log("product :: ", product?.single_product_details)}
                     <RelatedProductsOne products={product?.related_products} loading={loading} />
                 </div >
             </div >
