@@ -1,17 +1,34 @@
 import { useRouter } from 'next/router';
-
+import React, { useState, useEffect } from 'react';
 import ALink from '~/components/features/alink';
 
 function CategoryMenu() {
+    const [menuBtnCloseIcon, setMenuBtnCloseIcon] = useState(false);
     const query = useRouter().query;
 
-    return (
-        <div className="dropdown category-dropdown">
-            <ALink href="#" className="dropdown-toggle" title="Browse Categories">
-            </ALink>
+    const handleMenuOpen = (e) => {
+        console.log("e :: ", e);
+        if (menuBtnCloseIcon === false) {
+            setMenuBtnCloseIcon(true);
+        } else {
+            setMenuBtnCloseIcon(false);
+        }
 
-            <div className="dropdown-menu">
-                <div className="row no-gutters" style={{ alignItems: "center" }}>
+    }
+
+
+    return (
+        <>
+            <div className="dropdown category-dropdown" onClick={handleMenuOpen}>
+                <ALink
+                    href="#"
+                    className={`dropdown-toggle ${menuBtnCloseIcon === true ? 'toggle_icon_open' : ''}`}
+                    title="Browse Categories">
+                </ALink>
+            </div>
+            <div className={`dropdown-menu ${menuBtnCloseIcon === true ? 'show_verticalmenu' : ''}`}>
+                <button onClick={handleMenuOpen} type="button" class="mfp-close"><span>×</span></button>
+                <div className="row no-gutters">
                     <div className="col-md-6">
                         <nav className="side-nav">
                             <ul className="menu-vertical sf-arrows">
@@ -41,10 +58,28 @@ function CategoryMenu() {
                             </ALink>
                         </div>
                     </div>
+                    <div className="col-md-6">
+                        <nav className="side-nav">
+                            <ul className="menu-vertical sf-arrows hamburger_main_menu">
+                                <li><ALink href="/pages/about/">About Us</ALink></li>
+                                <li><ALink href="/pages/services/">Services</ALink></li>
+                                <li><ALink href="/pages/innovations/">Innovations</ALink></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div className="col-md-6">
+                        <nav className="side-nav">
+                            <ul className="menu-vertical sf-arrows hamburger_main_menu">
+                                <li><ALink href="/pages/resources/">Resources</ALink></li>
+                                <li><ALink href="/pages/team/">Our Team</ALink></li>
+                                <li><ALink href="/pages/contact/">Contact Us</ALink></li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
 
             </div>
-        </div>
+        </>
     );
 }
 

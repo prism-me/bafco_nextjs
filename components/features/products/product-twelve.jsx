@@ -61,7 +61,7 @@ function ProductTwelve(props) {
 
     function onQuickView(e) {
         e.preventDefault();
-        // console.log("product :: ", product)
+        console.log("product :: ", product)
         // props.showQuickView(product?.route);
         router.push(`/collections/${categoryName}/${subCategoryName}/${product?.route}`);
     }

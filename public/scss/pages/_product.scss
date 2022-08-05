@@ -1583,3 +1583,36 @@
 		font-weight: 600;
 	}
 }
+
+.tab-content .tab-content {
+	border: none !important;
+}
+
+.color_tabpanel {
+	.react-tabs .nav-pills {
+		border-bottom: 2px solid #ebebeb;
+		padding-bottom: 30px;
+
+		li::before {
+			display: none !important;
+		}
+	}
+
+	.color_sampel {
+		ul {
+			li {
+				display: inline-block;
+
+				&::before {
+					display: none !important;
+				}
+
+				span {
+					width: 142px;
+					height: 142px;
+					display: block;
+				}
+			}
+		}
+	}
+}
