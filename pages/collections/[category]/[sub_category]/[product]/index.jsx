@@ -87,11 +87,11 @@ function ProductInner() {
                                         <div className="entry-summary2"></div>
                                     </div>
                                 </div>
-                                {/* {
+                                {
                                     !loading ?
                                         <DetailOne product={product} />
                                         : ""
-                                } */}
+                                }
                             </div>
                         </div>
                     </div>
