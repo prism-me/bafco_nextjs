@@ -21,6 +21,7 @@ function ProductInner() {
     const router = useRouter();
     const query = router.query;
     const slug = useRouter().query?.product;
+    const subCategoryName = query?.sub_category.replace('-', ' ');
 
     if (!slug) return <div></div>;
 
@@ -37,7 +38,6 @@ function ProductInner() {
         setPageTitle(query?.product.replace('-', ' '));
         axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/product-detail/${query?.product}`).then(function (response) {
             // handle success
-            console.log(response.data);
             setProduct(response.data);
         }).catch(function (error) {
             // handle error
@@ -61,7 +61,7 @@ function ProductInner() {
                             <ALink href="/">Home</ALink>
                         </li>
                         <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}`}>{query?.category}</ALink></li>
-                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}/${query?.sub_category}`}>{query?.sub_category.replace('-', ' ')}</ALink></li>
+                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}/${query?.sub_category}`}>{subCategoryName}</ALink></li>
                         <li className="breadcrumb-item active">{pageTitle}</li>
                     </ol>
                 </div>
@@ -87,9 +87,10 @@ function ProductInner() {
                                         <div className="entry-summary2"></div>
                                     </div>
                                 </div>
+                                {/* {console.log("product :: ", product)} */}
                                 {
                                     !loading ?
-                                        <DetailOne product={product} />
+                                        <DetailOne product={product} subCategory={subCategoryName} />
                                         : ""
                                 }
                             </div>
@@ -119,7 +120,6 @@ function ProductInner() {
                         </OwlCarousel>
                     </div>
                     <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
-                    {console.log("product :: ", product?.single_product_details)}
                     <RelatedProductsOne products={product?.related_products} loading={loading} />
                 </div >
             </div >

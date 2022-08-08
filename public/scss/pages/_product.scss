@@ -497,11 +497,17 @@
 
 	label {
 		display: inline-block;
-		width: 67px;
+		width: 80px;
 		font-weight: 400;
 		font-size: 1.4rem;
 		margin-bottom: 0;
 		color: #000;
+	}
+
+	span.product-label-out {
+		color: #000;
+		font-weight: 600;
+		font-size: 20px;
 	}
 
 	.product-nav {
