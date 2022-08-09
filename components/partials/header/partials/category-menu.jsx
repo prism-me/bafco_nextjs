@@ -48,7 +48,7 @@ function CategoryMenu() {
                         </nav>
                     </div>
                     <div className="col-md-6">
-                        <div className="banner banner-overlay">
+                        {/* <div className="banner banner-overlay">
                             <ALink href="#">
                                 <img src="images/menu/hamburger-menu-image.png" alt="Banner" />
 
@@ -56,9 +56,19 @@ function CategoryMenu() {
                                     <div className="banner-title text-white">Comfort<br /><span><strong>Executive Chairs</strong></span></div>
                                 </div>
                             </ALink>
-                        </div>
+                        </div> */}
+                        <nav className="side-nav">
+                            <ul className="menu-vertical sf-arrows hamburger_main_menu">
+                                <li><ALink href="/pages/about/">About Us</ALink></li>
+                                <li><ALink href="/pages/services/">Services</ALink></li>
+                                <li><ALink href="/pages/innovations/">Innovations</ALink></li>
+                                <li><ALink href="/pages/resources/">Resources</ALink></li>
+                                <li><ALink href="/pages/team/">Our Team</ALink></li>
+                                <li><ALink href="/pages/contact/">Contact Us</ALink></li>
+                            </ul>
+                        </nav>
                     </div>
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                         <nav className="side-nav">
                             <ul className="menu-vertical sf-arrows hamburger_main_menu">
                                 <li><ALink href="/pages/about/">About Us</ALink></li>
@@ -75,7 +85,7 @@ function CategoryMenu() {
                                 <li><ALink href="/pages/contact/">Contact Us</ALink></li>
                             </ul>
                         </nav>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>

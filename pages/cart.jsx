@@ -125,7 +125,7 @@ function Cart(props) {
                                                             </td>
 
                                                             <td className="price-col">
-                                                                {/* Dhs. {
+                                                                {/* AED{
                                                                     item.sale_price ?
                                                                         item.sale_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                                                                         :
@@ -180,7 +180,7 @@ function Cart(props) {
                                                 <tbody>
                                                     <tr className="summary-subtotal">
                                                         <td>Subtotal:</td>
-                                                        <td>Dhs. {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                        <td>AED{cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                                     </tr>
                                                     <tr className="summary-shipping">
                                                         <td>Shipping:</td>
@@ -200,7 +200,7 @@ function Cart(props) {
                                                                 <label className="custom-control-label" htmlFor="free-shipping">Free Shipping</label>
                                                             </div>
                                                         </td>
-                                                        <td>Dhs. 0.00</td>
+                                                        <td>AED0.00</td>
                                                     </tr>
 
                                                     <tr className="summary-shipping-row">
@@ -215,7 +215,7 @@ function Cart(props) {
                                                                 <label className="custom-control-label" htmlFor="standard-shipping">Standard:</label>
                                                             </div>
                                                         </td>
-                                                        <td>Dhs. 10.00</td>
+                                                        <td>AED10.00</td>
                                                     </tr>
 
                                                     <tr className="summary-shipping-row">
@@ -230,7 +230,7 @@ function Cart(props) {
                                                                 <label className="custom-control-label" htmlFor="express-shipping">Express:</label>
                                                             </div>
                                                         </td>
-                                                        <td>Dhs. 20.00</td>
+                                                        <td>AED20.00</td>
                                                     </tr>
 
                                                     <tr className="summary-shipping-estimate">
@@ -241,7 +241,7 @@ function Cart(props) {
                                                     <tr className="summary-total">
                                                         <td>Total:</td>
                                                         <td>
-                                                        Dhs. {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                        AED{(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -266,7 +266,7 @@ function Cart(props) {
                                             <p className="px-3 py-2 cart-empty mb-3">No products added to the cart</p>
                                             <p className="return-to-shop mb-0">
                                                 <ALink
-                                                    href="/shop/sidebar/list"
+                                                    href="#"
                                                     className="btn btn-primary"
                                                 >RETURN TO SHOP</ALink>
                                             </p>

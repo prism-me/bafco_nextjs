@@ -11,20 +11,21 @@ function Wishlist(props) {
     const wishlistbg = "images/banners/whishlist-banner.png";
 
     useEffect(() => {
+        console.log("props.wishlist :: ", props.wishlist)
         setWishItems(props.wishlist.reduce((acc, product) => {
             let max = 0;
             let min = 999999;
-            product.variants.map(item => {
-                if (min > item.price) min = item.price;
-                if (max < item.price) max = item.price;
+            product.variations.map(item => {
+                if (min > item.lower_price) min = item.lower_price;
+                if (max < item.upper_price) max = item.upper_price;
             }, []);
 
-            if (product.variants.length == 0) {
-                min = product.sale_price
-                    ? product.sale_price
-                    : product.price;
-                max = product.price;
-            }
+            // if (product.variations.length == 0) {
+            //     min = product.sale_price
+            //         ? product.sale_price
+            //         : product.price;
+            //     max = product.price;
+            // }
 
             return [
                 ...acc,
@@ -88,48 +89,48 @@ function Wishlist(props) {
                                                 <td className="product-col">
                                                     <div className="product">
                                                         <figure className="product-media">
-                                                            <ALink href={`/product/default/${product.slug}`} className="product-image">
-                                                                <img src={process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[0].url} alt="product" />
+                                                            <ALink href={`/product/default/${product.route}`} className="product-image">
+                                                                <img src={product.featured_image} alt="product" />
                                                             </ALink>
                                                         </figure>
 
                                                         <h4 className="product-title">
-                                                            <ALink href={`/product/default/${product.slug}`}>{product.name}</ALink>
+                                                            <ALink href={`/product/default/${product.route}`}>{product.name}</ALink>
                                                         </h4>
                                                     </div>
                                                 </td>
                                                 {console.log("product :: ", product)}
                                                 <td className="price-col">
                                                     {
-                                                        product.stock == 0 ?
+                                                        product.variations[0].in_stock === 0 ?
                                                             <div className="product-price d-inline-block mb-0">
-                                                                <span className="out-price">Dhs. {product.price.toFixed(2)}</span>
+                                                                <span className="out-price">AED{product.variations[0].lower_price}</span>
                                                             </div>
                                                             :
-                                                            product.minPrice == product.maxPrice ?
-                                                                <div className="product-price d-inline-block mb-0">Dhs. {product.minPrice.toFixed(2)}</div>
+                                                            product.variations[0].lower_price === product.variations[0].upper_price ?
+                                                                <div className="product-price d-inline-block mb-0">AED{product.variations[0].lower_price}</div>
                                                                 :
-                                                                product.variants.length == 0 ?
+                                                                product.variations.length === 0 ?
                                                                     <div className="product-price d-inline-block mb-0">
-                                                                        <span className="new-price">Dhs. {product.minPrice.toFixed(2)}</span>
-                                                                        <span className="old-price">Dhs. {product.maxPrice.toFixed(2)}</span>
+                                                                        <span className="new-price">AED{product.variations[0].lower_price}</span>
+                                                                        <span className="old-price">AED{product.variations[0].upper_price}</span>
                                                                     </div>
                                                                     :
-                                                                    <div className="product-price d-inline-block mb-0">Dhs. {product.minPrice.toFixed(2)}&ndash;${product.maxPrice.toFixed(2)}</div>
+                                                                    <div className="product-price d-inline-block mb-0">AED{product.variations[0].lower_price}&ndash;AED{product.variations[0].upper_price}</div>
                                                     }
                                                 </td>
                                                 <td className="stock-col">
-                                                    <span className={`${product.stock == 0 ? 'out-of-stock' : 'in-stock'}`} >{product.stock == 0 ? 'Out of stock' : 'In stock'}</span>
+                                                    <span className={`${product.variations[0].in_stock == 0 ? 'out-of-stock' : 'in-stock'}`} >{product.variations[0].in_stock == 0 ? 'Out of stock' : 'In stock'}</span>
                                                 </td>
                                                 <td className="action-col">
                                                     <div className="dropdown">
                                                         {
-                                                            (product.variants.length > 0 || product.stock == 0) ?
-                                                                <ALink href={`/product/default/${product.slug}`} className="btn btn-block btn-outline-primary-2 btn-select">
-                                                                    <i className="icon-list-alt"></i>
-                                                                    {product.stock == '0' ? 'read more' : 'select'}
-                                                                </ALink>
-                                                                :
+                                                            // (product.variations.length > 0 || product.variations[0].in_stock === 0) ?
+                                                            //     <ALink href={`/product/default/${product.route}`} className="btn btn-block btn-outline-primary-2 btn-select">
+                                                            //         <i className="icon-list-alt"></i>
+                                                            //         {product.variations[0].in_stock == '0' ? 'read more' : 'select'}
+                                                            //     </ALink>
+                                                            //     :
                                                                 <button className="btn btn-block btn-outline-primary-2" onClick={e => moveToCart(product)}>
                                                                     <i className="icon-cart-plus"></i>
                                                                     add to cart
@@ -200,7 +201,7 @@ function Wishlist(props) {
                                 <i className="icon-heart-o wishlist-empty d-block" style={{ fontSize: '15rem', lineHeight: '1' }}></i>
                                 <span className="d-block mt-2">No products added to wishlist</span>
                                 <ALink
-                                    href="/shop/sidebar/list"
+                                    href="#"
                                     className="btn btn-primary mt-2"
                                 >Go Shop</ALink>
                             </div>

@@ -21,7 +21,8 @@ function DetailOne(props) {
     const [sizeArray, setSizeArray] = useState([]);
     const [materialArray, setMaterialArray] = useState([]);
     const [variationGroup, setVariationGroup] = useState([]);
-    const [selectedVariant, setSelectedVariant] = useState({ color: null, colorName: null, price: null, size: "" });
+    const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: ""  });
+    const [selectedMaterialVariant, setselectedMaterialVariant] = useState({ fabric: null, fabricName: null, fabricId: null, variationId: null, fabricImage: "" });
     const [showClear, setShowClear] = useState(false);
     const [showVariationPrice, setShowVariationPrice] = useState(false);
     const [maxPrice, setMaxPrice] = useState(product?.product_single_variation?.product_variation_details?.upper_price);
@@ -45,7 +46,8 @@ function DetailOne(props) {
                     color: acc?.product_details?.variation_details?.name,
                     colorName: acc?.product_details?.variation_value_details?.name,
                     colorId: acc?.product_details?.variation_value_details?.id,
-                    variationId: acc?.product_variation_id
+                    variationId: acc?.product_variation_id,
+                    fabricImage: acc?.product_details?.variation_value_details?.type_value,
                 });
         })
 
@@ -58,10 +60,11 @@ function DetailOne(props) {
         product?.product_all_varitaions?.map((acc) => {
             acc?.product_details?.variation_details?.name === "size" &&
                 newProductSize.push({
-                    size: acc?.product_details?.variation_details?.name,
-                    sizeName: acc?.product_details?.variation_value_details?.name,
-                    sizeId: acc?.product_details?.variation_value_details?.id,
-                    variationId: acc?.product_variation_id
+                    color: acc?.product_details?.variation_details?.name,
+                    colorName: acc?.product_details?.variation_value_details?.name,
+                    colorId: acc?.product_details?.variation_value_details?.id,
+                    variationId: acc?.product_variation_id,
+                    fabricImage: acc?.product_details?.variation_value_details?.type_value,
                 });
         })
 
@@ -74,11 +77,11 @@ function DetailOne(props) {
         product?.product_all_varitaions?.map((acc) => {
             acc?.product_details?.variation_details?.name === "fabric" &&
                 newProductMaterial.push({
-                    fabric: acc?.product_details?.variation_details?.name,
-                    fabricName: acc?.product_details?.variation_value_details?.name,
-                    fabricId: acc?.product_details?.variation_value_details?.id,
+                    color: acc?.product_details?.variation_details?.name,
+                    colorName: acc?.product_details?.variation_value_details?.name,
+                    colorId: acc?.product_details?.variation_value_details?.id,
+                    variationId: acc?.product_variation_id,
                     fabricImage: acc?.product_details?.variation_value_details?.type_value,
-                    variationId: acc?.product_variation_id
                 });
         })
 
@@ -108,34 +111,35 @@ function DetailOne(props) {
     }, [product])
 
     useEffect(() => {
-        setSelectedVariant({ color: null, colorName: null, price: null, size: "" });
+        setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: ""  });
+        setselectedMaterialVariant({ fabric: null, fabricName: null, fabricId: null, variationId: null, fabricImage: "" });
         setQty(1);
         setQty2(1);
     }, [router.query.slug])
 
     // useEffect(() => {
     //     refreshSelectableGroup();
-    // }, [variationGroup, selectedVariant])
+    // }, [variationGroup, selectedColorVariant])
 
     useEffect(() => {
         scrollHandler();
     }, [router.pathname])
 
     // useEffect(() => {
-    //     setShowClear((selectedVariant.color || selectedVariant.size != "") ? true : false);
-    //     setShowVariationPrice((selectedVariant.color && selectedVariant.size != "") ? true : false);
+    //     setShowClear((selectedColorVariant.color || selectedColorVariant.size != "") ? true : false);
+    //     setShowVariationPrice((selectedColorVariant.color && selectedColorVariant.size != "") ? true : false);
     //     let toggle = ref.current.querySelector('.variation-toggle');
 
     //     if (toggle) {
-    //         if ((selectedVariant.color && selectedVariant.size != "") && toggle.classList.contains('collapsed')) {
+    //         if ((selectedColorVariant.color && selectedColorVariant.size != "") && toggle.classList.contains('collapsed')) {
     //             toggle.click();
     //         }
 
-    //         if ((!(selectedVariant.color && selectedVariant.size != "")) && !toggle.classList.contains('collapsed')) {
+    //         if ((!(selectedColorVariant.color && selectedColorVariant.size != "")) && !toggle.classList.contains('collapsed')) {
     //             toggle.click();
     //         }
     //     }
-    // }, [selectedVariant])
+    // }, [selectedColorVariant])
 
     function scrollHandler() {
         // if (router.pathname.includes('/product/default')) {
@@ -161,9 +165,9 @@ function DetailOne(props) {
 
     // function refreshSelectableGroup() {
     //     let tempArray = [...variationGroup];
-    //     if (selectedVariant.color) {
+    //     if (selectedColorVariant.color) {
     //         tempArray = variationGroup.reduce((acc, cur) => {
-    //             if (selectedVariant.color !== cur.color) {
+    //             if (selectedColorVariant.color !== cur.color) {
     //                 return acc;
     //             }
     //             return [...acc, cur];
@@ -177,9 +181,9 @@ function DetailOne(props) {
     //     }, []));
 
     //     tempArray = [...variationGroup];
-    //     if (selectedVariant.size) {
+    //     if (selectedColorVariant.size) {
     //         tempArray = variationGroup.reduce((acc, cur) => {
-    //             if (selectedVariant.size !== cur.size) {
+    //             if (selectedColorVariant.size !== cur.size) {
     //                 return acc;
     //             }
     //             return [...acc, cur];
@@ -213,29 +217,44 @@ function DetailOne(props) {
     // }
 
     function selectColor(e, item) {
+        console.log("selectColor :: ", item)
         e.preventDefault()
-        if (item.color == selectedVariant.color) {
-            setSelectedVariant({
-                ...selectedVariant,
-                color: null,
-                colorName: null,
-                price: item.price
-            });
-        } else {
-            setSelectedVariant({
-                ...selectedVariant,
+        if (item.color === selectedColorVariant.color) {
+            setselectedColorVariant({
+                ...selectedColorVariant,
                 color: item.color,
+                colorId: item.colorId,
                 colorName: item.colorName,
-                price: item.price
+                variationId: item.variationId,
+                fabricImage: item.fabricImage
+            });
+        } else if (item.fabric === selectedMaterialVariant.fabric) {
+            setselectedMaterialVariant({
+                ...selectedMaterialVariant,
+                fabric: item.fabric,
+                fabricName: item.fabricName,
+                fabricId: item.fabricId,
+                variationId: item.variationId,
+                fabricImage: item.fabricImage
+            });
+        }
+        else {
+            setselectedColorVariant({
+                ...selectedColorVariant,
+                color: item.color,
+                colorId: item.colorId,
+                colorName: item.colorName,
+                variationId: item.variationId,
+                fabricImage: item.fabricImage
             });
         }
     }
 
     function selectSize(e) {
-        if (e.target.value == "") {
-            setSelectedVariant({ ...selectedVariant, size: "" });
+        if (e.target.value === "") {
+            setselectedColorVariant({ ...selectedColorVariant, size: "" });
         } else {
-            setSelectedVariant({ ...selectedVariant, size: e.target.value });
+            setselectedColorVariant({ ...selectedColorVariant, size: e.target.value });
         }
     }
 
@@ -249,8 +268,16 @@ function DetailOne(props) {
 
     function clearSelection(e) {
         e.preventDefault();
-        setSelectedVariant(({
-            ...selectedVariant,
+        setselectedMaterialVariant(({
+            ...selectedMaterialVariant,
+            fabric: null,
+            fabricName: null,
+            fabricId: null,
+            variationId: null,
+            fabricImage: ""
+        }))
+        setselectedColorVariant(({
+            ...selectedColorVariant,
             color: null,
             colorName: null,
             size: ""
@@ -266,13 +293,8 @@ function DetailOne(props) {
         if (product?.variations?.length > 0) {
             newProduct = {
                 ...product,
-                name:
-                    product.name +
-                    ' - ' +
-                    selectedVariant.colorName +
-                    ', ' +
-                    selectedVariant.size,
-                price: selectedVariant.price
+                name: product.name + ' - ' + selectedColorVariant.colorName + ', ' + selectedColorVariant.size,
+                price: selectedColorVariant.price
             };
         }
         props.addToCart(
@@ -297,24 +319,23 @@ function DetailOne(props) {
                 <span className="ratings-text">( {3.4} Reviews )</span>
             </div>
 
-            {product?.product_single_variation?.product_variation_details?.in_stock == 0 ?
+            {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
                 <div className="product-price">
                     <span className="out-price">
-                        {
-                            minPrice === maxPrice ?
-                                <span>Dhs. {product.price}</span>
-                                :
-                                <span>Dhs. {minPrice}&ndash;Dhs. {maxPrice}</span>
+                        {minPrice === maxPrice ?
+                            <span>AED{minPrice}</span>
+                            :
+                            <span>AED{minPrice}&ndash;AED{maxPrice}</span>
                         }
                     </span>
                 </div>
                 :
                 minPrice === maxPrice ?
-                    <div className="product-price">Dhs. {minPrice}</div>
+                    <div className="product-price">AED{minPrice}</div>
                     :
                     <div className="product-price">
-                        <span className="new-price">Dhs. {minPrice}</span>
-                        <span className="old-price">Dhs. {maxPrice}</span>
+                        <span className="new-price">AED{minPrice}</span>
+                        <span className="old-price">AED{maxPrice}</span>
                     </div>
             }
 
@@ -329,7 +350,7 @@ function DetailOne(props) {
                     <select
                         name="size"
                         className="form-control"
-                        value={selectedVariant.size}
+                        value={selectedColorVariant.size}
                         onChange={selectSize}
                     >
                         <option value="">Select a Upholstery</option>
@@ -352,7 +373,7 @@ function DetailOne(props) {
                     <select
                         name="size"
                         className="form-control"
-                        value={selectedVariant.size}
+                        value={selectedColorVariant.size}
                         onChange={selectSize}
                     >
                         <option value="">Select a Materials</option>
@@ -379,7 +400,7 @@ function DetailOne(props) {
                         <button className={`d-none variation-toggle ${toggleState.toLowerCase()}`} onClick={onToggle}></button>
                         <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
                             <div className="product-price">
-                                Dhs. {selectedVariant.price ? selectedVariant.price : 0}
+                                AED{selectedColorVariant.price ? selectedColorVariant.price : 0}
                             </div>
                         </div>
                     </div>
@@ -394,7 +415,7 @@ function DetailOne(props) {
                             {colorArray.map((item, index) => (
                                 <a
                                     href="#"
-                                    className={`${(item.colorName == selectedVariant.color ? 'active ' : '') + (item?.disabled ? 'disabled' : '')}`}
+                                    className={`${(item.colorName === selectedColorVariant.colorName ? 'active ' : '') + (item?.disabled ? 'disabled' : '')}`}
                                     style={{ backgroundColor: item.colorName }}
                                     key={index}
                                     onClick={e => selectColor(e, item)}
@@ -412,7 +433,7 @@ function DetailOne(props) {
                             {materialArray.map((item, index) => (
                                 <a
                                     href="#"
-                                    className={`${(item.fabricName == selectedVariant.color ? 'active ' : '') + (item?.disabled ? 'disabled' : '')}`}
+                                    className={`${(item.colorName == selectedColorVariant.colorName ? 'active ' : '') + (item?.disabled ? 'disabled' : '')}`}
                                     style={{ backgroundImage: `url(${item.fabricImage})` }}
                                     key={index}
                                     onClick={e => selectColor(e, item)}
@@ -517,26 +538,26 @@ function DetailOne(props) {
                         </div>
                         <div className="col-6 justify-content-end">
                             {
-                                (selectedVariant.color && selectedVariant.size != "") ?
+                                (selectedColorVariant.color && selectedColorVariant.size != "") ?
                                     <div className="product-price">
-                                        ${selectedVariant.price ? selectedVariant.price : 0}
+                                        ${selectedColorVariant.price ? selectedColorVariant.price : 0}
                                     </div>
                                     :
                                     product.stock == 0 ?
                                         <div className="product-price">
-                                            <span className="out-price">Dhs. {product.price}</span>
+                                            <span className="out-price">AED{product.price}</span>
                                         </div>
                                         :
                                         minPrice == maxPrice ?
-                                            <div className="product-price">Dhs. {minPrice}</div>
+                                            <div className="product-price">AED{minPrice}</div>
                                             :
                                             product?.variations?.length == 0 ?
                                                 <div className="product-price">
-                                                    <span className="new-price">Dhs. {minPrice}</span>
-                                                    <span className="old-price">Dhs. {maxPrice}</span>
+                                                    <span className="new-price">AED{minPrice}</span>
+                                                    <span className="old-price">AED{maxPrice}</span>
                                                 </div>
                                                 :
-                                                <div className="product-price">Dhs. {minPrice} &ndash; Dhs. {maxPrice}</div>
+                                                <div className="product-price">AED{minPrice} &ndash; AED{maxPrice}</div>
                             }
                             <Qty changeQty={onChangeQty2} max={product.stock} value={qty2}></Qty>
                             <div className="product-details-action">

@@ -20,7 +20,9 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.addToCart:
+
             let UserDetail = localStorage.getItem('UserData');
+            
             let authtoken = localStorage.getItem('authtoken');
 
             var findIndex = state.data.findIndex(item => item.id == action.payload.product.id);
@@ -30,11 +32,13 @@ const cartReducer = (state = initialState, action) => {
                 findIndex = state.data.findIndex(item => item.name == action.payload.product.name);
             }
 
+            console.log("findIndex :: ", findIndex)
+
             if (findIndex !== -1) {
                 return {
                     data: [
                         ...state.data.reduce((acc, product, index) => {
-                            if (findIndex == index) {
+                            if (findIndex === index) {
                                 acc.push({
                                     ...product,
                                     qty: product.qty + qty,
@@ -49,27 +53,26 @@ const cartReducer = (state = initialState, action) => {
                     ]
                 }
             } else {
-                if (UserDetail) {
+                if (UserDetail !== null) {
+                    console.log("action.payload :: ", action.payload)
                     let productData = {
                         user_id: UserDetail,
                         product_id: action.payload.product.id,
                         variation_id: action.payload.product.variations[0].id,
                         variation_value_id: 9,
                         qty: qty
-
                     };
                     API.post(`/cart`, productData, {
                         headers: {
                             'Authorization': `Bearer ${authtoken}`
                         }
-                    })
-                        .then((response) => {
+                    }).then((response) => {
 
-                            console.log("cart :: ", response);
+                        console.log("cart :: ", response);
 
-                        }).catch((err) => {
-                            console.log(err);
-                        });
+                    }).catch((err) => {
+                        console.log(err);
+                    });
                 } else {
                     console.log("cart :: ", action.payload.product);
                     return {

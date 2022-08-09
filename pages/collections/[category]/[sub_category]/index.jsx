@@ -8,7 +8,6 @@ import PageHeader from '~/components/features/page-header';
 import ShopListTwo from '~/components/partials/shop/list/shop-list-two';
 import Pagination from '~/components/features/pagination';
 import ShopSidebarOne from '~/components/partials/shop/sidebar/shop-sidebar-one';
-
 import withApollo from '~/server/apollo';
 import { GET_PRODUCTS } from '~/server/queries';
 import { scrollToPageContent } from '~/utils';
@@ -25,9 +24,8 @@ function ShopGrid() {
     const [perPage, setPerPage] = useState(12);
     const [pageTitle, setPageTitle] = useState("");
     const [toggle, setToggle] = useState(false);
-    // const products = data && data.products.data;
-    const totalCount = data && data.products.totalCount;
     const [products, setProducts] = useState();
+    const totalCount = products && products?.length;
     const [filterValues, setFilterValues] = useState();
 
     useEffect(() => {

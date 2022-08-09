@@ -61,7 +61,6 @@ function ProductTwelve(props) {
 
     function onQuickView(e) {
         e.preventDefault();
-        console.log("product :: ", product)
         // props.showQuickView(product?.route);
         router.push(`/collections/${categoryName}/${subCategoryName}/${product?.route}`);
     }
@@ -118,15 +117,14 @@ function ProductTwelve(props) {
 
 
                 <div className="product-action-vertical">
-                    {
-                        isInWishlist(wishlist, product) ?
-                            <ALink href="/shop/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist">
-                                <span>go to wishlist</span>
-                            </ALink>
-                            :
-                            <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={onWishlistClick}>
-                                <span>add to wishlist</span>
-                            </a>
+                    {isInWishlist(wishlist, product) ?
+                        <ALink href="/shop/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist">
+                            <span>go to wishlist</span>
+                        </ALink>
+                        :
+                        <a href="#" className="btn-product-icon btn-wishlist btn-expandable" onClick={onWishlistClick}>
+                            <span>add to wishlist</span>
+                        </a>
 
                     }
                     <span className="btn-product-icon btn-quickview" style={{ cursor: "pointer" }} title="Quick View" onClick={onQuickView}><span>quick view</span></span>
@@ -147,19 +145,19 @@ function ProductTwelve(props) {
                 {
                     !product?.variations[0].in_stock || product?.variations[0].in_stock == 0 ?
                         <div className="product-price">
-                            <span className="out-price">Dhs. {product?.variations[0]?.lower_price}</span>
+                            <span className="out-price">AED{product?.variations[0]?.lower_price}</span>
                         </div>
                         :
                         product?.variations[0]?.lower_price == product?.variations[0]?.upper_price ?
-                            <div className="product-price">Dhs. {product?.variations[0]?.lower_price}</div>
+                            <div className="product-price">AED{product?.variations[0]?.lower_price}</div>
                             :
                             product?.variants?.length == 0 ?
                                 <div className="product-price">
-                                    <span className="new-price">Dhs. {product?.variations[0]?.lower_price}</span>
-                                    <span className="old-price">Dhs. {product?.variations[0]?.upper_price}</span>
+                                    <span className="new-price">AED{product?.variations[0]?.lower_price}</span>
+                                    <span className="old-price">AED{product?.variations[0]?.upper_price}</span>
                                 </div>
                                 :
-                                <div className="product-price">Dhs. {product?.variations[0]?.lower_price}&ndash;Dhs. {product?.variations[0]?.upper_price}
+                                <div className="product-price">AED{product?.variations[0]?.lower_price}&ndash;AED{product?.variations[0]?.upper_price}
                                 </div>
                 }
 
