@@ -24,15 +24,15 @@ const wishlistReducer = (state = initialState, action) => {
             console.log('authtoken :: ', authtoken)
             if (UserDetail) {
 
-                var findIndex = state.data.findIndex(item => item.id === action.payload.product.id);
-                if (findIndex == -1) {
-                    return {
-                        data: [
-                            ...state.data,
-                            action.payload.product
-                        ]
-                    };
-                }
+                // var findIndex = state.data.findIndex(item => item.id === action.payload.product.id);
+                // if (findIndex == -1) {
+                //     return {
+                //         data: [
+                //             ...state.data,
+                //             action.payload.product
+                //         ]
+                //     };
+                // }
 
                 let productData = {
                     user_id: UserDetail,
@@ -40,7 +40,7 @@ const wishlistReducer = (state = initialState, action) => {
                     variation_id: action.payload.product.variations[0].id,
                 };
 
-                API.post(`/wishlists`, productData, {
+                API.post(`/auth/wishlists`, productData, {
                     headers: {
                         'Authorization': `Bearer ${authtoken}`
                     }

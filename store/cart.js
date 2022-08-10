@@ -62,7 +62,7 @@ const cartReducer = (state = initialState, action) => {
                         variation_value_id: 9,
                         qty: qty
                     };
-                    API.post(`/cart`, productData, {
+                    API.post(`/auth/cart`, productData, {
                         headers: {
                             'Authorization': `Bearer ${authtoken}`
                         }
