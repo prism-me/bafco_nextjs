@@ -21,7 +21,7 @@ function DetailOne(props) {
     const [sizeArray, setSizeArray] = useState([]);
     const [materialArray, setMaterialArray] = useState([]);
     const [variationGroup, setVariationGroup] = useState([]);
-    const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: ""  });
+    const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
     const [selectedMaterialVariant, setselectedMaterialVariant] = useState({ fabric: null, fabricName: null, fabricId: null, variationId: null, fabricImage: "" });
     const [showClear, setShowClear] = useState(false);
     const [showVariationPrice, setShowVariationPrice] = useState(false);
@@ -111,7 +111,7 @@ function DetailOne(props) {
     }, [product])
 
     useEffect(() => {
-        setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: ""  });
+        setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
         setselectedMaterialVariant({ fabric: null, fabricName: null, fabricId: null, variationId: null, fabricImage: "" });
         setQty(1);
         setQty2(1);
@@ -496,7 +496,13 @@ function DetailOne(props) {
 
                 <div className="social-icons social-icons-sm">
                     <span className="social-label">Share:</span>
-                    <ALink href="#" className="social-icon" title="Instagram">
+                    <ALink href="https://www.instagram.com/bafco/" className="social-icon" rel="noopener noreferrer" title="Instagram" target="_blank"><i className="icon-instagram"></i></ALink>
+                    <ALink href="https://www.facebook.com/bafcointeriors" className="social-icon" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
+                    <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
+                    <ALink href="https://twitter.com/Bafco" className="social-icon" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
+                    <ALink href="https://www.pinterest.com/bafcointeriors/" className="social-icon" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>
+
+                    {/* <ALink href="#" className="social-icon" title="Instagram">
                         <i className="icon-instagram"></i>
                     </ALink>
                     <ALink href="#" className="social-icon" title="Facebook">
@@ -508,7 +514,7 @@ function DetailOne(props) {
 
                     <ALink href="#" className="social-icon" title="Twitter">
                         <i className="icon-twitter"></i>
-                    </ALink>
+                    </ALink> */}
                 </div>
             </div >
             <div className="product-details-adv">

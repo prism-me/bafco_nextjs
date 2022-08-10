@@ -114,19 +114,18 @@ function LoginModal(props) {
             'email': userFormData.email,
             'password': userFormData.password
         };
-        try {
-            const resp = await axios.post('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/auth/login', formdata);
-            router.push('/account/');
-            toast.success(resp?.data);
-            closeModal();
-            localStorage.setItem('authtoken', resp?.headers?.x_auth_token);
 
-        } catch (err) {
-            // Handle Error Here
-            // console.log(err?.response?.data);
-            toast.error(err?.response?.data);
+        API.post(`/auth/login`, formdata).then((response) => {
+            if (response?.status === 200) {
+                router.push('/account/');
+                toast.success(response?.data);
+                closeModal();
+                localStorage.setItem('authtoken', response?.headers?.x_auth_token);
+            } else {
+                toast.warning("Somthing went wrong !");
+            }
+        }).catch((error) => { toast.error(error?.response?.data); });
 
-        }
     };
 
     return (

@@ -22,7 +22,6 @@ const cartReducer = (state = initialState, action) => {
         case actionTypes.addToCart:
 
             let UserDetail = localStorage.getItem('UserData');
-            
             let authtoken = localStorage.getItem('authtoken');
 
             var findIndex = state.data.findIndex(item => item.id == action.payload.product.id);
@@ -57,10 +56,11 @@ const cartReducer = (state = initialState, action) => {
                     console.log("action.payload :: ", action.payload)
                     let productData = {
                         user_id: UserDetail,
-                        product_id: action.payload.product.id,
-                        variation_id: action.payload.product.variations[0].id,
-                        variation_value_id: 9,
-                        qty: qty
+                        product_id: action.payload.product.id.toString(),
+                        product_variation_id: action.payload.product.variations[0].variation_items[0].product_variation_id.toString(),
+                        variation_id: action.payload.product.variations[0].id.toString(),
+                        variation_value_id: action.payload.product.variations[0].variation_items[0].variation_value_id.toString(),
+                        qty: qty.toString()
                     };
                     API.post(`/auth/cart`, productData, {
                         headers: {
