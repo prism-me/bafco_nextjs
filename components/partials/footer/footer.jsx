@@ -41,6 +41,8 @@ function Footer() {
                                     <ALink href="https://www.facebook.com/bafcointeriors" className="social-icon social-facebook" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
                                     <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon social-linkedin" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
                                     <ALink href="https://twitter.com/Bafco" className="social-icon social-twitter" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
+                                    <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon social-pinterest" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>
+                                    <ALink href="https://twitter.com/Bafco" className="social-icon social-twitter" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
                                     {/* </div> */}
 
                                     <span className="widget-about-title">Payment Method</span>
