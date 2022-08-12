@@ -120,7 +120,7 @@ function ProductInner() {
                         </OwlCarousel>
                     </div>
                     <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
-                    <RelatedProductsOne products={product?.related_products} loading={loading} />
+                    {/* <RelatedProductsOne products={product?.related_products} loading={loading} /> */}
                 </div >
             </div >
 

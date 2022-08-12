@@ -69,26 +69,8 @@ function ProductTwelve(props) {
         <div className="product product-11 text-center">
 
             <figure className="product-media">
-                {/* {
-                    product?.new ?
-                        <span className="product-label label-circle label-new">New</span>
-                        : ""
-                }
 
-                {
-                    product?.sale_price ?
-                        <span className="product-label label-circle label-sale">Sale</span>
-                        : ""
-                }
-
-                {
-                    product?.top ?
-                        <span className="product-label label-circle label-top">Top</span>
-                        : ""
-                } */}
-
-                {product?.variations?.length >= 1 &&
-                    !product?.variations[0]?.in_stock || product?.variations[0]?.in_stock == 0 ?
+                {!product?.productvariations?.in_stock || product?.productvariations?.in_stock === 0 ?
                     <span className="product-label label-circle label-out">Out of Stock</span>
                     : ""
                 }
@@ -96,7 +78,7 @@ function ProductTwelve(props) {
                 <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>
                     <LazyLoadImage
                         alt="product"
-                        src={product?.variations[0]?.images[0]?.avatar}
+                        src={product?.productvariations.images[0]?.avatar}
                         threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
@@ -106,7 +88,7 @@ function ProductTwelve(props) {
                             <LazyLoadImage
                                 alt="product"
                                 // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
-                                src={product?.variations[0]?.images[0].avatar}
+                                src={product?.productvariations.images[0].avatar}
                                 threshold={500}
                                 effect="black and white"
                                 wrapperClassName="product-image-hover"
@@ -142,23 +124,22 @@ function ProductTwelve(props) {
                     <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>{product?.name}</ALink>
                 </h3>
 
-                {
-                    !product?.variations[0].in_stock || product?.variations[0].in_stock == 0 ?
-                        <div className="product-price">
-                            <span className="out-price">AED{product?.variations[0]?.lower_price}</span>
-                        </div>
+                {!product?.productvariations.in_stock || product?.productvariations.in_stock == 0 ?
+                    <div className="product-price">
+                        <span className="out-price">AED{product?.productvariations.lower_price}</span>
+                    </div>
+                    :
+                    product?.productvariations.lower_price == product?.productvariations.upper_price ?
+                        <div className="product-price">AED{product?.productvariations.lower_price}</div>
                         :
-                        product?.variations[0]?.lower_price == product?.variations[0]?.upper_price ?
-                            <div className="product-price">AED{product?.variations[0]?.lower_price}</div>
+                        product?.variants?.length == 0 ?
+                            <div className="product-price">
+                                <span className="new-price">AED{product?.productvariations.lower_price}</span>
+                                <span className="old-price">AED{product?.productvariations.upper_price}</span>
+                            </div>
                             :
-                            product?.variants?.length == 0 ?
-                                <div className="product-price">
-                                    <span className="new-price">AED{product?.variations[0]?.lower_price}</span>
-                                    <span className="old-price">AED{product?.variations[0]?.upper_price}</span>
-                                </div>
-                                :
-                                <div className="product-price">AED{product?.variations[0]?.lower_price}&ndash;AED{product?.variations[0]?.upper_price}
-                                </div>
+                            <div className="product-price">AED{product?.productvariations.lower_price}&ndash;AED{product?.productvariations.upper_price}
+                            </div>
                 }
 
                 {/* <div className="ratings-container">
@@ -185,7 +166,7 @@ function ProductTwelve(props) {
             </div>
 
             {
-                product?.variations[0]?.in_stock && product?.variations[0]?.in_stock !== 0 ?
+                product?.productvariations.in_stock && product?.productvariations.in_stock !== 0 ?
                     <div className="product-action">
                         {
                             product?.variants?.length > 0 ?

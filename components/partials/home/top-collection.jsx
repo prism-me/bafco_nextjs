@@ -21,19 +21,37 @@ function TopCollection(props) {
                         <Tab className="nav-item">
                             <span className="nav-link">All</span>
                         </Tab>
-                        {categories?.map((item, index) => (
+                        {/* {categories?.map((item, index) => (
                             <Tab className="nav-item" key={index}>
                                 <span className="nav-link">{item.name}</span>
                             </Tab>
-                        ))}
+                        ))} */}
+                        <Tab className="nav-item">
+                            <span className="nav-link">Executive Chairs</span>
+                        </Tab>
+                        <Tab className="nav-item">
+                            <span className="nav-link">Ergonomic Chairs</span>
+                        </Tab>
+                        <Tab className="nav-item">
+                            <span className="nav-link">Conference Chairs</span>
+                        </Tab>
+                        <Tab className="nav-item">
+                            <span className="nav-link">Visitor Chairs</span>
+                        </Tab>
+                        <Tab className="nav-item">
+                            <span className="nav-link">Stools</span>
+                        </Tab>
+                        <Tab className="nav-item">
+                            <span className="nav-link">Multi-Functional Chairs</span>
+                        </Tab>
                     </TabList>
                 </div>
                 <div className="products">
                     <div className="row">
                         {products.map((item1, index1) =>
                             <div className="col-6 col-md-6 col-lg-3" key={index1}>
-                                <ProductTwelve
-                                    product={item1} />
+                                {/* <ProductTwelve
+                                    product={item1} /> */}
                             </div>
                         )}
                     </div>

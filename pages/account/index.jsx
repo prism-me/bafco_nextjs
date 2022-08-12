@@ -5,6 +5,7 @@ import ALink from '~/components/features/alink';
 import PageHeader from '~/components/features/page-header';
 import { API } from '~/http/API';
 import { toast } from 'react-toastify';
+import Modal from 'react-modal';
 
 let userProfileData = {
     name: "",
@@ -17,12 +18,57 @@ let userResetPasswordData = {
     confirmpassword: "",
 }
 
+const customStyles = {
+    overlay: {
+        backgroundColor: 'rgba(77,77,77,0.6)',
+        zIndex: '9000'
+    }
+}
+
+let addressData = {
+    name: "",
+    mobile: "",
+    address: "",
+    emirates: "",
+    area: "",
+}
+
+Modal.setAppElement('body');
 
 function MyAccount() {
     const router = useRouter();
     const [userData, setUserData] = useState({ ...userProfileData });
     const [userResetPassData, setUserResetPassData] = useState({ ...userResetPasswordData });
+    const [useraddressData, setUserAddressData] = useState({ ...addressData });
     const [isuserdetail, setIsuserdetail] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [isdefault, setIsDefault] = useState(true)
+    let timer;
+
+    useEffect(() => {
+        return () => {
+            if (timer) clearTimeout(timer);
+        }
+    });
+
+    function closeModal() {
+        document.getElementById("address-modal").classList.remove("ReactModal__Content--after-open");
+
+        if (document.querySelector(".ReactModal__Overlay")) {
+            document.querySelector(".ReactModal__Overlay").style.opaarea = '0';
+        }
+
+        timer = setTimeout(() => {
+            setOpen(false);
+        }, 350);
+
+    }
+
+    function openModal(e) {
+        e.preventDefault();
+        setOpen(true);
+    }
+
 
     useEffect(() => {
         if (isuserdetail === true) {
@@ -84,6 +130,18 @@ function MyAccount() {
         let formdata = { ...userData }
         formdata[e.target.name] = e.target.value;
         setUserData(formdata);
+    }
+
+    const handleAddressChange = (e) => {
+        let formdata = { ...useraddressData }
+        formdata[e.target.name] = e.target.value;
+        setUserAddressData(formdata);
+    }
+
+    const handleAddressSubmit = () => {
+        let formdata = { ...useraddressData };
+        console.log("handleAddressSubmit :: ", formdata, isdefault)
+
     }
 
     const handleChangeResetPassword = (e) => {
@@ -214,7 +272,7 @@ function MyAccount() {
                                     <div className="col-md-8 col-lg-9" style={{ marginTop: "1rem" }}>
                                         <div className="tab-pane">
                                             <TabPanel>
-                                                <p>Hello <span className="font-weight-normal text-dark" style={{ textDecoration: "underline" }}>{userData?.name}</span> (not <span className="font-weight-normal text-dark">User</span>? <ALink href="/">Log out</ALink>)
+                                                <p>Hello <span className="text-dark" style={{ textDecoration: "underline", fontWeight: "bold" }}>{userData?.name}</span> (not <span className="font-weight-normal text-dark">User</span>? <ALink href="/">Log out</ALink>)
                                                     <br />
                                                     From your account dashboard you can view your <a href="#tab-orders" onClick={toOrder} className="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" onClick={toAddress} className="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" onClick={toAccount} className="tab-trigger-link">edit your password and account details</a>.</p>
                                             </TabPanel>
@@ -231,6 +289,7 @@ function MyAccount() {
 
                                             <TabPanel>
                                                 <p>The following addresses will be used on the checkout page by default.</p>
+                                                <button className="btn btn-outline-primary-2 mb-3" onClick={openModal}>ADD NEW ADDRESS</button>
 
                                                 <div className="row">
                                                     <div className="col-lg-6">
@@ -248,13 +307,12 @@ function MyAccount() {
                                                                     <ALink href="#">Edit <i className="icon-edit"></i></ALink>
                                                                     <ALink href="#">Delete <i className="icon-edit"></i></ALink>
                                                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                        <label style={{ paddingRight: '5px', color: '#008482' }}>Default address</label>
+                                                                        <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
                                                                         <label class="switch">
-                                                                            <input type="checkbox" />
+                                                                            <input type="checkbox" checked={isdefault} onChange={() => { setIsDefault(!isdefault) }} />
                                                                             <span class="slider round"></span>
                                                                         </label>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -271,6 +329,119 @@ function MyAccount() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {open &&
+                                                    <Modal
+                                                        isOpen={open}
+                                                        style={customStyles}
+                                                        contentLabel="login Modal"
+                                                        className="modal-dialog"
+                                                        overlayClassName="d-flex align-items-center justify-content-center"
+                                                        id="address-modal"
+                                                        onRequestClose={closeModal}
+                                                        closeTimeoutMS={10}
+                                                    >
+                                                        <div className="modal-content">
+                                                            <div className="modal-body">
+                                                                <button type="button" className="close" onClick={closeModal}>
+                                                                    <span aria-hidden="true"><i className="icon-close"></i></span>
+                                                                </button>
+                                                                <div className="form-box">
+                                                                    <form>
+                                                                        <div className="form-group">
+                                                                            <label htmlFor="singin-email-2">Name *</label>
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control"
+                                                                                id="singin-email-2"
+                                                                                name="name"
+                                                                                value={useraddressData?.name}
+                                                                                onChange={handleAddressChange}
+                                                                                required
+                                                                            />
+                                                                        </div>
+                                                                        <div className="form-group">
+                                                                            <label htmlFor="singin-email-2">Mobile *</label>
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control"
+                                                                                id="singin-email-2"
+                                                                                name="mobile"
+                                                                                value={useraddressData?.mobile}
+                                                                                onChange={handleAddressChange}
+                                                                                required
+                                                                            />
+                                                                        </div>
+                                                                        <div className="row">
+                                                                            <div className="col-lg-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="singin-email-2">Emirates *</label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="emirates"
+                                                                                        value={useraddressData?.emirates}
+                                                                                        onChange={handleAddressChange}
+                                                                                        required
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-lg-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="singin-email-2">Area *</label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="area"
+                                                                                        value={useraddressData?.area}
+                                                                                        onChange={handleAddressChange}
+                                                                                        required
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="form-group">
+                                                                            <label htmlFor="singin-email-2">Address *</label>
+                                                                            <textarea
+                                                                                id="reply-message"
+                                                                                cols="30"
+                                                                                rows="6"
+                                                                                name="address"
+                                                                                className="form-control mb-2"
+                                                                                placeholder="e.g. Apartment 4, Building name, Street 3"
+                                                                                value={useraddressData?.address}
+                                                                                onChange={handleAddressChange}
+                                                                                required>
+
+                                                                            </textarea>
+                                                                        </div>
+                                                                        <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                                <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
+                                                                                <label class="switch">
+                                                                                    <input type="checkbox" />
+                                                                                    <span class="slider round"></span>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div className="form-footer">
+                                                                            <button
+                                                                                type="button"
+                                                                                onClick={handleAddressSubmit}
+                                                                                className="btn btn-outline-primary-2">
+                                                                                <span>Add Address</span>
+                                                                                <i className="icon-long-arrow-right"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </Modal>
+                                                }
+
                                             </TabPanel>
 
                                             <TabPanel>

@@ -34,8 +34,8 @@ function ShopGrid() {
 
         axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/front-products/${currentPageRoute}`).then(function (response) {
             // handle success
-            // console.log(response.data.data[0].products);
-            setProducts(response?.data?.data[0].products)
+            console.log(response?.data?.products);
+            setProducts(response?.data?.products)
         }).catch(function (error) {
             // handle error
             console.log(error);

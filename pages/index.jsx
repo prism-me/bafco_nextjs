@@ -15,6 +15,8 @@ import withApollo from '~/server/apollo';
 import { GET_HOME_DATA } from '~/server/queries';
 import { attrFilter } from '~/utils';
 import { actions as demoAction } from '~/store/demo';
+import ProductTwelve from '~/components/features/products/product-twelve';
+import { API } from '~/http/API';
 // import { productdata } from "../data";
 import { homeData, introSlider, brandSlider, dealSlider, fadeInUpShorter, fadeInLeftShorter, fadeInRightShorter, fadeIn } from '~/utils/data';
 
@@ -948,7 +950,7 @@ function Home(props) {
     const [bloglist, setBlogList] = useState();
     const [productList, setProductList] = useState();
     const [categoryList, setCategoryList] = useState();
-    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [selectedCategory, setSelectedCategory] = useState('executive-chairs');
 
     function openVideoModal(e) {
         e.preventDefault();
@@ -961,13 +963,22 @@ function Home(props) {
 
     useEffect(() => {
 
-        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home-product-category-filter/${selectedCategory}`).then(function (response) {
-            // handle success
-            setProductList(response.data);
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
+        API.get(`/front-products/${selectedCategory}`)
+            .then((response) => {
+                console.log(response?.data?.products);
+                setProductList(response?.data?.products)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        // axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home-product-category-filter/${selectedCategory}`).then(function (response) {
+        //     // handle success
+        //     setProductList(response.data);
+        // }).catch(function (error) {
+        //     // handle error
+        //     console.log(error);
+        // })
 
     }, [selectedCategory])
 
@@ -988,7 +999,7 @@ function Home(props) {
     return (
         <div className="main home-page skeleton-body">
             <div className="intro-slider-container">
-                <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={introSlider}>
+                <OwlCarousel adclassName="owl-simple owl-light owl-nav-inside" options={introSlider}>
                     {homedata?.banner?.map((item, index) => (
                         <div className={`intro-slide slide1`} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image !== "" ? item.image : 'images/home/Magic7.jpg'})` }}>
                             <div className="container intro-content">
@@ -1257,7 +1268,51 @@ function Home(props) {
             </div>
 
             <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                <TopCollection categories={categoryList} products={productList} setIsSelectedCategory={setSelectedCategory} loading={loading} />
+                {/* <TopCollection categories={categoryList} products={productList} setIsSelectedCategory={setSelectedCategory} loading={loading} /> */}
+                <div className="container">
+                    <div className="heading heading-center mb-3">
+                        <h2 className="title">Top Selling Products</h2>
+                    </div>
+                    <div className="top-collection  mb-3">
+                        <ul className="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                            {/* <li className={`nav-item ${selectedCategory === 'all' ? 'show' : ''}`} onClick={() => setSelectedCategory('all')}>
+                                <span className="nav-link">All</span>
+                            </li> */}
+                            <li className={`nav-item ${selectedCategory === 'executive-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('executive-chairs')}>
+                                <span className="nav-link">Executive Chairs</span>
+                            </li>
+                            <li className={`nav-item ${selectedCategory === 'ergonomic-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('ergonomic-chairs')}>
+                                <span className="nav-link">Ergonomic Chairs</span>
+                            </li>
+                            <li className={`nav-item ${selectedCategory === 'conference-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('conference-chairs')}>
+                                <span className="nav-link">Conference Chairs</span>
+                            </li>
+                            <li className={`nav-item ${selectedCategory === 'visitor-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('visitor-chairs')}>
+                                <span className="nav-link">Visitor Chairs</span>
+                            </li>
+                            <li className={`nav-item ${selectedCategory === 'stools' ? 'show' : ''}`} onClick={() => setSelectedCategory('stools')}>
+                                <span className="nav-link">Stools</span>
+                            </li>
+                            <li className={`nav-item ${selectedCategory === 'multi-functional-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('multi-functional-chairs')}>
+                                <span className="nav-link">Multi-Functional Chairs</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="products">
+                        <div className="row">
+                            {console.log("product :: ", productList)}
+                            {productList?.length > 0 ?
+                                productList?.map((item1, index1) =>
+                                    <div className="col-6 col-md-6 col-lg-3" key={index1}>
+                                        <ProductTwelve
+                                            product={item1} />
+                                    </div>
+                                ) :
+                                <p style={{fontSize: '20px', textAlign: 'center', fontWeight: 'bold', display: 'block', width: '100%'}}>No product found.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
                 <div className="text-center mb-7 mt-2">
                     <ALink href="#" className="btn btn-outline-darker btn-more"><span>View more</span><i className="icon-long-arrow-right"></i></ALink>
                 </div>
@@ -1265,7 +1320,7 @@ function Home(props) {
             {homedata?.deal?.length > 0 &&
                 <div className="deal-container pt-5 mb-5">
                     <div className="container">
-                        <OwlCarousel adClass="owl-simple owl-light owl-nav-inside" options={dealSlider}>
+                        <OwlCarousel adclassName="owl-simple owl-light owl-nav-inside" options={dealSlider}>
                             {homedata?.deal?.map((item, index) => (
                                 <div className="row" key={index}>
                                     <div className="col-lg-9">
