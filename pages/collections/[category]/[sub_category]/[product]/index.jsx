@@ -13,6 +13,7 @@ import OwlCarousel from '~/components/features/owl-carousel';
 import { GET_PRODUCT } from '~/server/queries';
 import withApollo from '~/server/apollo';
 import ALink from '~/components/features/alink';
+import { API } from '~/http/API';
 
 
 const axios = require('axios');
@@ -36,13 +37,13 @@ function ProductInner() {
     useEffect(() => {
         // alert("we are here in product")
         setPageTitle(query?.product.replace('-', ' '));
-        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/product-detail/${query?.product}`).then(function (response) {
-            // handle success
-            setProduct(response.data);
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
+        API.get(`/product-detail/${query?.product}`)
+            .then((response) => {
+                setProduct(response?.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, [query])
 
     return (
@@ -120,7 +121,7 @@ function ProductInner() {
                         </OwlCarousel>
                     </div>
                     <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
-                    {/* <RelatedProductsOne products={product?.related_products} loading={loading} /> */}
+                    <RelatedProductsOne relatedproducts={product?.related_products} randomProduct={product?.random_purchase} loading={loading} />
                 </div >
             </div >
 
