@@ -9,6 +9,7 @@ import CartMenu from '~/components/partials/header/partials/cart-menu';
 import CategoryMenu from '~/components/partials/header/partials/category-menu';
 import MainMenu from '~/components/partials/header/partials/main-menu';
 import StickyHeader from '~/components/features/sticky-header';
+import AccountMenu from '~/components/partials/header/partials/account-menu';
 
 function Header() {
     const router = useRouter();
@@ -99,6 +100,7 @@ function Header() {
                                 </ALink>
                             </div>
                         }
+                        {/* <AccountMenu /> */}
                         <WishlistMenu />
                         <CartMenu />
                     </div>

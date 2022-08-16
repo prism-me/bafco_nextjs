@@ -177,7 +177,7 @@ function Contact() {
                                         onChange={onFilesChange}
                                         onError={onFilesError}
                                         accepts={['image/png', '.pdf', 'audio/*']}
-                                        multiple
+                                        multiple = "true"
                                         maxFileSize={10000000}
                                         minFileSize={0}
                                         clickable

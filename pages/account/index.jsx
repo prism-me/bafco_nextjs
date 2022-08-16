@@ -6,6 +6,8 @@ import PageHeader from '~/components/features/page-header';
 import { API } from '~/http/API';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
+import CountryRegionData from '../../utils/countrydata.json';
+
 
 let userProfileData = {
     name: "",
@@ -28,8 +30,8 @@ const customStyles = {
 let addressData = {
     name: "",
     mobile: "",
-    address: "",
-    emirates: "",
+    DeliveryAddress: "",
+    country: "",
     area: "",
 }
 
@@ -40,10 +42,21 @@ function MyAccount() {
     const [userData, setUserData] = useState({ ...userProfileData });
     const [userResetPassData, setUserResetPassData] = useState({ ...userResetPasswordData });
     const [useraddressData, setUserAddressData] = useState({ ...addressData });
+    const [useraddressList, setUserAddressList] = useState();
     const [isuserdetail, setIsuserdetail] = useState(true);
     const [open, setOpen] = useState(false);
-    const [isdefault, setIsDefault] = useState(true)
+    const [isdefault, setIsDefault] = useState(false);
+    const [countryList, setCountryList] = useState();
+    const [areaList, setAreaList] = useState();
     let timer;
+
+    useEffect(() => {
+        let country = [];
+        CountryRegionData?.map((item) => {
+            country.push(item.countryName);
+        })
+        setCountryList(country);
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -69,21 +82,25 @@ function MyAccount() {
         setOpen(true);
     }
 
-
     useEffect(() => {
         if (isuserdetail === true) {
             let xauthtoken = localStorage.getItem('authtoken');
-            // console.log("xauthtoken :: ", xauthtoken)
+            let UserId = localStorage.getItem('UserData');
+
             let header = {
                 headers: {
                     'Authorization': `Bearer ${xauthtoken}`,
                 }
             }
             API.get(`/auth/me`, header).then((response) => {
-                console.log("response :: ", response)
                 localStorage.setItem('UserData', response?.data.id);
                 setUserData(response?.data);
                 setIsuserdetail(false);
+
+            }).catch((err) => console.log(err));
+
+            API.get(`/addresses/${UserId}`, header).then((response) => {
+                setUserAddressList(response?.data);
 
             }).catch((err) => console.log(err));
         }
@@ -105,9 +122,9 @@ function MyAccount() {
                     'Authorization': `Bearer ${xauthtoken}`
                 }
             }).then((response) => {
-                console.log("res :: ", response);
+                console.log(response);
                 if (response?.status === 200) {
-                    toast.success("Done.")
+                    toast.success(response?.data?.message)
                 } else {
                     toast.warning("Somthing went wrong !");
                 }
@@ -138,24 +155,165 @@ function MyAccount() {
         setUserAddressData(formdata);
     }
 
-    const handleAddressSubmit = () => {
-        let formdata = { ...useraddressData };
-        console.log("handleAddressSubmit :: ", formdata, isdefault)
+    const handleCountryChange = (e) => {
+
+        let formdata = { ...useraddressData }
+        formdata.country = e.target.value;
+        setUserAddressData(formdata);
+
+        let areaList = [];
+        areaList = CountryRegionData.filter(item => {
+            return item.countryName === e.target.value;
+        });
+        setAreaList(areaList);
 
     }
+
+    const handleUserphone = (e) => {
+
+        let a = Number(e.target.value)
+        let formdata = { ...useraddressData }
+        if (e.target.value === "") {
+            formdata.mobile = ""
+            setUserAddressData(formdata)
+
+        } else if (!isNaN(a)) {
+            formdata.mobile = e.target.value
+            setUserAddressData(formdata)
+        } else {
+            e.preventDefault();
+        }
+
+    }
+
+    const handleChangeSetDefault = (e, id) => {
+
+        e.preventDefault();
+
+        let xauthtoken = localStorage.getItem('authtoken');
+        let UserId = localStorage.getItem('UserData');
+        let formdata = {
+            'user_id': UserId,
+        };
+
+
+        API.put(`/set-default/${id}`, formdata, {
+            headers: {
+                'Authorization': `Bearer ${xauthtoken}`
+            }
+        }).then((response) => {
+            if (response?.status === 200) {
+                window.location.reload(false);
+            } else {
+                toast.warning("Somthing went wrong !");
+            }
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+
+    const handleAddressDelete = (e, id) => {
+
+        e.preventDefault();
+
+        let xauthtoken = localStorage.getItem('authtoken');
+
+        API.delete(`/addresses/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${xauthtoken}`
+            }
+        }).then((response) => {
+            if (response?.status === 200) {
+                window.location.reload(false);
+            } else {
+                toast.warning("Somthing went wrong !");
+            }
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
+
+    const handleAddressSubmit = () => {
+
+        let xauthtoken = localStorage.getItem('authtoken');
+        let UserId = localStorage.getItem('UserData');
+        let formdata = {
+            'user_id': UserId,
+            'address': useraddressData,
+        };
+
+        if (useraddressData?.name !== "" && useraddressData?.mobile !== "" && useraddressData?.DeliveryAddress !== "" && useraddressData?.country !== "" && useraddressData?.area !== "") {
+
+            API.post(`/addresses`, formdata, {
+                headers: {
+                    'Authorization': `Bearer ${xauthtoken}`
+                }
+            }).then((response) => {
+                if (response?.status === 200) {
+                    toast.success(response?.data)
+                    closeModal()
+                } else {
+                    toast.warning("Somthing went wrong !");
+                }
+            }).catch((error) => {
+                toast.error("Somthing went wrong !");
+            });
+        } else {
+            if (useraddressData?.name === "") {
+                toast.warning("Please enter a name before submit.")
+                return
+            } else if (useraddressData?.mobile === "") {
+                toast.warning("Please enter a mobile number before submit.")
+                return
+            } else if (useraddressData?.DeliveryAddress === "") {
+                toast.warning("Please enter a Address before submit.")
+                return
+            } else if (useraddressData?.country === "") {
+                toast.warning("Please enter a mobile number before submit.")
+                return
+            } else if (useraddressData?.area === "") {
+                toast.warning("Please enter a mobile number before submit.")
+                return
+            }
+        }
+
+    }
+
+    /** Change Password Functional */
 
     const handleChangeResetPassword = (e) => {
         let formdata = { ...userResetPassData }
         formdata[e.target.name] = e.target.value;
         setUserResetPassData(formdata);
-        console.log("handleResetPassword :: ", formdata);
+        // console.log("handleResetPassword :: ", formdata);
     }
 
     const handleResetPassword = () => {
-        let formdata = { ...userResetPassData }
-        console.log("handleResetPassword :: ", formdata);
+
+        let xauthtoken = localStorage.getItem('authtoken');
+        let UserId = localStorage.getItem('UserData');
+        let formdata = {
+            'user_id': UserId,
+            "password": userResetPassData.password,
+            "change_password": userResetPassData.newpassword,
+            "confirm_password": userResetPassData.confirmpassword
+        };
         if (userResetPassData?.password !== "" && userResetPassData?.newpassword !== "" && userResetPassData?.confirmpassword !== "" && userResetPassData?.newpassword === userResetPassData?.confirmpassword && userResetPassData?.password !== userResetPassData?.newpassword && userResetPassData?.newpassword.length >= 6) {
-            alert("Valid data");
+            API.post(`/auth/change-password`, formdata, {
+                headers: {
+                    'Authorization': `Bearer ${xauthtoken}`
+                }
+            }).then((response) => {
+                console.log("reset ::", response)
+                if (response?.status === 200) {
+                    toast.success(response?.data?.message)
+                } else {
+                    toast.warning("Somthing went wrong !");
+                }
+            }).catch((error) => {
+                // toast.error("Somthing went wrong !");
+                console.error(error);
+            });
         } else {
             if (userResetPassData?.password === "") {
                 toast.warning("Please enter a password before submission")
@@ -293,40 +451,70 @@ function MyAccount() {
 
                                                 <div className="row">
                                                     <div className="col-lg-6">
-                                                        <div className="card card-dashboard">
-                                                            <div className="card-body">
-                                                                <h3 className="card-title">Default address</h3>
 
-                                                                <p>User Name<br />
-                                                                    User Company<br />
-                                                                    John str<br />
-                                                                    New York, NY 10001<br />
-                                                                    1-234-987-6543<br />
-                                                                    yourmail@mail.com<br /></p>
-                                                                <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                                    <ALink href="#">Edit <i className="icon-edit"></i></ALink>
-                                                                    <ALink href="#">Delete <i className="icon-edit"></i></ALink>
-                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                        <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
-                                                                        <label class="switch">
-                                                                            <input type="checkbox" checked={isdefault} onChange={() => { setIsDefault(!isdefault) }} />
-                                                                            <span class="slider round"></span>
-                                                                        </label>
+                                                        <h3 className="card-title mb-3">Default address</h3>
+
+                                                        {useraddressList?.map((address, index) => (
+                                                            address.default === 1 &&
+                                                            <div className="card card-dashboard" key={index}>
+                                                                <div className="card-body">
+
+                                                                    <p>{address.address.name}<br />
+                                                                        {address.address.DeliveryAddress}<br />
+                                                                        {address.address.area}, {address.address.country}<br />
+                                                                        {address.address.mobile}<br /></p>
+                                                                    <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                        <ALink href="#">Edit <i className="icon-edit"></i></ALink>
+                                                                        <ALink href="#" style={{ cursor: 'not-allowed' }}>Delete <i className="icon-edit"></i></ALink>
+                                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                            <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
+                                                                            <label className="switch" style={{ cursor: 'not-allowed', pointerEvents: 'none', opacity: '0.8' }}>
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    defaultChecked={address.default === 1 ? true : isdefault}
+                                                                                // onChange={(e) => handleChangeSetDefault(e, index, address.id)}
+                                                                                // onChange={() => { setIsDefault(!isdefault) }} 
+                                                                                />
+                                                                                <span className="slider round"></span>
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        ))}
                                                     </div>
 
                                                     <div className="col-lg-6">
-                                                        <div className="card card-dashboard">
-                                                            <div className="card-body">
-                                                                <h3 className="card-title">Other addresses</h3>
 
-                                                                <p>You have not set up this type of address yet.<br />
-                                                                    <ALink href="#">Edit <i className="icon-edit"></i></ALink></p>
+                                                        <h3 className="card-title mb-3">Other Addresses</h3>
+
+                                                        {useraddressList?.map((address, index) => (
+                                                            address.default !== 1 &&
+                                                            <div className="card card-dashboard" key={index}>
+                                                                <div className="card-body">
+                                                                    <p>{address.address.name}<br />
+                                                                        {address.address.DeliveryAddress}<br />
+                                                                        {address.address.area}, {address.address.country}<br />
+                                                                        {address.address.mobile}<br /></p>
+                                                                    <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                        <ALink href="#">Edit <i className="icon-edit"></i></ALink>
+                                                                        <button onClick={(e) => handleAddressDelete(e, address.id)} style={{ fontWeight: '600' }}>Delete <i className="icon-edit"></i></button>
+                                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                            <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
+                                                                            <label className="switch">
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    // checked={address.default === 1 ? true : isdefault}
+                                                                                    value={isdefault}
+                                                                                    onChange={(e) => handleChangeSetDefault(e, address.id)}
+                                                                                />
+                                                                                <span className="slider round"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        ))}
                                                     </div>
                                                 </div>
                                                 {open &&
@@ -367,66 +555,69 @@ function MyAccount() {
                                                                                 id="singin-email-2"
                                                                                 name="mobile"
                                                                                 value={useraddressData?.mobile}
-                                                                                onChange={handleAddressChange}
+                                                                                onChange={handleUserphone}
                                                                                 required
                                                                             />
                                                                         </div>
                                                                         <div className="row">
                                                                             <div className="col-lg-6">
                                                                                 <div className="form-group">
-                                                                                    <label htmlFor="singin-email-2">Emirates *</label>
-                                                                                    <input
-                                                                                        type="text"
+                                                                                    <label htmlFor="singin-email-2">Country *</label>
+                                                                                    <select
                                                                                         className="form-control"
-                                                                                        id="singin-email-2"
-                                                                                        name="emirates"
-                                                                                        value={useraddressData?.emirates}
-                                                                                        onChange={handleAddressChange}
-                                                                                        required
-                                                                                    />
+                                                                                        id="country"
+                                                                                        name="country"
+                                                                                        value={useraddressData?.country}
+                                                                                        label="Select Country"
+                                                                                        fullwidth="true"
+                                                                                        style={{ color: "" }}
+                                                                                        onChange={handleCountryChange}
+                                                                                    >
+                                                                                        <option value={""}>Select Country</option>
+                                                                                        {countryList?.map((item, index) => (
+                                                                                            <option value={item} key={index}>{item}</option>
+                                                                                        ))}
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-lg-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">Area *</label>
-                                                                                    <input
-                                                                                        type="text"
+                                                                                    <select
                                                                                         className="form-control"
-                                                                                        id="singin-email-2"
+                                                                                        id="area"
                                                                                         name="area"
                                                                                         value={useraddressData?.area}
+                                                                                        label="Select Area"
+                                                                                        fullwidth="true"
+                                                                                        style={{ color: "" }}
                                                                                         onChange={handleAddressChange}
-                                                                                        required
-                                                                                    />
+                                                                                    >
+                                                                                        <option value={""}>Select Area</option>
+                                                                                        {areaList && areaList[0]?.regions?.map((item, index) => (
+                                                                                            <option value={item.name} key={index}>{item.name}</option>
+                                                                                        ))}
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div className="form-group">
-                                                                            <label htmlFor="singin-email-2">Address *</label>
-                                                                            <textarea
-                                                                                id="reply-message"
-                                                                                cols="30"
-                                                                                rows="6"
-                                                                                name="address"
-                                                                                className="form-control mb-2"
+                                                                            <label htmlFor="singin-email-2">Delivery Address *</label>
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control"
+                                                                                id="singin-email-2"
+                                                                                name="DeliveryAddress"
                                                                                 placeholder="e.g. Apartment 4, Building name, Street 3"
-                                                                                value={useraddressData?.address}
+                                                                                value={useraddressData?.DeliveryAddress}
                                                                                 onChange={handleAddressChange}
-                                                                                required>
+                                                                                required
+                                                                            />
 
-                                                                            </textarea>
-                                                                        </div>
-                                                                        <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                                <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
-                                                                                <label class="switch">
-                                                                                    <input type="checkbox" />
-                                                                                    <span class="slider round"></span>
-                                                                                </label>
-                                                                            </div>
                                                                         </div>
 
-                                                                        <div className="form-footer">
+
+                                                                        <div className="form-footer" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                                                             <button
                                                                                 type="button"
                                                                                 onClick={handleAddressSubmit}
@@ -434,6 +625,15 @@ function MyAccount() {
                                                                                 <span>Add Address</span>
                                                                                 <i className="icon-long-arrow-right"></i>
                                                                             </button>
+                                                                            {/* <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                                    <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
+                                                                                    <label className="switch">
+                                                                                        <input type="checkbox" />
+                                                                                        <span className="slider round"></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div> */}
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -462,12 +662,13 @@ function MyAccount() {
                                                         value={userData?.email}
                                                         // onChange={handleChange}
                                                         className="form-control"
-                                                        readonly='readonly'
+                                                        readOnly
                                                     />
 
                                                     <input type="button" className="btn btn-outline-primary-2" value="SAVE CHANGES" onClick={handleSubmit} />
                                                 </form>
                                             </TabPanel>
+
                                             <TabPanel>
                                                 <form>
                                                     <label>Current password (leave blank to leave unchanged)</label>
@@ -500,6 +701,7 @@ function MyAccount() {
                                                     <input type="button" className="btn btn-outline-primary-2" value="SAVE CHANGES" onClick={handleResetPassword} />
                                                 </form>
                                             </TabPanel>
+
                                             <TabPanel>
                                                 <div></div>
                                             </TabPanel>

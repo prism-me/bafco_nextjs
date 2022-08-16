@@ -155,7 +155,7 @@ function ProductSubCatInner() {
                         </div>
                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Executive Chairs</h1>
+                                <h1 className="product-title">Executive Chairs</h1>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
                                 <ul>
                                     <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
@@ -167,7 +167,7 @@ function ProductSubCatInner() {
                     <div className="row mb-6" style={{ alignItems: 'center' }}>
                         <div className={`col-lg-3 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Our Collections</h1>
+                                <h1 className="product-title">Our Collections</h1>
                                 <p>Get the latest items immediately with promo prices</p>
                                 <ALink href={"#"} className="btn btn-dark btn-outline-darker">
                                     <span>Check All </span>
@@ -213,7 +213,7 @@ function ProductSubCatInner() {
                         </div>
                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Ergonomic Chairs</h1>
+                                <h1 className="product-title">Ergonomic Chairs</h1>
                                 <p>Our designer already made a lot of beautiful chairs and workspace that inspire you</p>
                                 <ul>
                                     <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
@@ -225,7 +225,7 @@ function ProductSubCatInner() {
                     <div className="row mb-6" style={{ alignItems: 'center' }}>
                         <div className={`col-lg-3 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Our Collections</h1>
+                                <h1 className="product-title">Our Collections</h1>
                                 <p>Get the latest items immediately with promo prices</p>
                                 <ALink href={"#"} className="btn btn-dark btn-outline-darker">
                                     <span>Check All </span>
@@ -271,7 +271,7 @@ function ProductSubCatInner() {
                         </div>
                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Conference Chairs</h1>
+                                <h1 className="product-title">Conference Chairs</h1>
                                 <p>Get the latest items immediately with best prices</p>
                                 <ul>
                                     <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
@@ -283,7 +283,7 @@ function ProductSubCatInner() {
                     <div className="row mb-6" style={{ alignItems: 'center' }}>
                         <div className={`col-lg-3 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Our Collections</h1>
+                                <h1 className="product-title">Our Collections</h1>
                                 <p>Get the latest items immediately with promo prices</p>
                                 <ALink href={"#"} className="btn btn-dark btn-outline-darker">
                                     <span>Check All </span>
@@ -329,7 +329,7 @@ function ProductSubCatInner() {
                         </div>
                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Visitor Chairs</h1>
+                                <h1 className="product-title">Visitor Chairs</h1>
                                 <p>“They are have a perfect touch for make something so professional ,interest and useful for a lot of people .”</p>
                                 <ul>
                                     <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
@@ -341,7 +341,7 @@ function ProductSubCatInner() {
                     <div className="row mb-6" style={{ alignItems: 'center' }}>
                         <div className={`col-lg-3 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Our Collections</h1>
+                                <h1 className="product-title">Our Collections</h1>
                                 <p>Get the latest items immediately with promo prices</p>
                                 <ALink href={"#"} className="btn btn-dark btn-outline-darker">
                                     <span>Check All </span>
@@ -387,7 +387,7 @@ function ProductSubCatInner() {
                         </div>
                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Multi-Functional Chairs</h1>
+                                <h1 className="product-title">Multi-Functional Chairs</h1>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
                                 <ul>
                                     <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
@@ -399,7 +399,7 @@ function ProductSubCatInner() {
                     <div className="row mb-6" style={{ alignItems: 'center' }}>
                         <div className={`col-lg-3 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Our Collections</h1>
+                                <h1 className="product-title">Our Collections</h1>
                                 <p>Get the latest items immediately with promo prices</p>
                                 <ALink href={"#"} className="btn btn-dark btn-outline-darker">
                                     <span>Check All </span>
@@ -445,7 +445,7 @@ function ProductSubCatInner() {
                         </div>
                         <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Stools</h1>
+                                <h1 className="product-title">Stools</h1>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
                                 <ul>
                                     <li><strong>Lorem Ipsum</strong><br /> Sometimes features Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</li>
@@ -457,7 +457,7 @@ function ProductSubCatInner() {
                     <div className="row mb-6" style={{ alignItems: 'center' }}>
                         <div className={`col-lg-3 col-sm-6 col-xs-12`}>
                             <div className="product-details sub-cat-deatil">
-                                <h1 class="product-title">Our Collections</h1>
+                                <h1 className="product-title">Our Collections</h1>
                                 <p>Get the latest items immediately with promo prices</p>
                                 <ALink href={"#"} className="btn btn-dark btn-outline-darker">
                                     <span>Check All </span>

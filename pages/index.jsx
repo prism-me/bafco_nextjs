@@ -965,7 +965,7 @@ function Home(props) {
 
         API.get(`/front-products/${selectedCategory}`)
             .then((response) => {
-                console.log(response?.data?.products);
+                // console.log(response?.data?.products);
                 setProductList(response?.data?.products)
             })
             .catch((err) => {
@@ -1001,7 +1001,7 @@ function Home(props) {
             <div className="intro-slider-container">
                 <OwlCarousel adclassName="owl-simple owl-light owl-nav-inside" options={introSlider}>
                     {homedata?.banner?.map((item, index) => (
-                        <div className={`intro-slide slide1`} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image !== "" ? item.image : 'images/home/Magic7.jpg'})` }}>
+                        <div className={`intro-slide slide1`} key={index} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image !== "" ? item.image : 'images/home/Magic7.jpg'})` }}>
                             <div className="container intro-content">
                                 <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
                                     <>
@@ -1300,7 +1300,6 @@ function Home(props) {
                     </div>
                     <div className="products">
                         <div className="row">
-                            {console.log("product :: ", productList)}
                             {productList?.length > 0 ?
                                 productList?.map((item1, index1) =>
                                     <div className="col-6 col-md-6 col-lg-3" key={index1}>

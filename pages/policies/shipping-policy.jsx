@@ -28,7 +28,7 @@ function TermsOfService() {
             <div className="page-content">
                 <div className="container">
                     <h2 className="title text-center mb-3">Shipping policy</h2>
-                    <div class="rte">
+                    <div className="rte">
                         <p>Free Ground Shipping on all orders above AED2000 (Two Thousand Dirhams) or more. Only applies to orders totalling AED2001.00 or more after all other discounts etc. have been applied, with a shipping destination within the United Arab Emirates, a low delivery fee of AED300.00 (Three Hundred Dirhams) will be chargeable extra on any order/s below AED2001 (Two Thousand and One Dirhams).</p>
 
                         <p>Most orders placed before 1200hrs UAE time will be processed on the same day and an Order Confirmation Mail will be sent to the client. </p>

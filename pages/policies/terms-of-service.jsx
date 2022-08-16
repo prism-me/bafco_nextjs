@@ -28,7 +28,7 @@ function TermsOfService() {
             <div className="page-content">
                 <div className="container">
                     <h2 className="title text-center mb-3">Terms of service</h2>
-                    <div class="rte">
+                    <div className="rte">
                     <h6 className="mt-3">OVERVIEW</h6>
 
                         <p>The following Terms of Use (“Terms”) governs the relationship between you and BAFCO (“BAFCO Trading LLC”) a company incorporated in Dubai under Department of Economic Development with its registered office at Al Karama Furniture Mall, Umm Hurair Road, Oud Metha, Dubai United Arab Emirates, PO Box 15556 in connection with your use of www.bafco.com and www.store.bafco.com, (“Site”). The Site is owned and operated by BAFCO Trading LLC and its affiliates (collectively, “BAFCO”, “We”, “Us” or “Our”).</p>

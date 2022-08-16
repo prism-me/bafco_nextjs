@@ -5,7 +5,7 @@ import SlideToggle from 'react-slide-toggle';
 
 import ALink from '~/components/features/alink';
 import Qty from '~/components/features/qty';
-
+import { actions as globalAction } from '~/store/global';
 import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
 
@@ -27,8 +27,11 @@ function DetailOne(props) {
     const [showVariationPrice, setShowVariationPrice] = useState(false);
     const [maxPrice, setMaxPrice] = useState(product?.product_single_variation?.product_variation_details?.upper_price);
     const [minPrice, setMinPrice] = useState(product?.product_single_variation?.product_variation_details?.lower_price);
+    const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
+        setAuthtoken(localStorage.getItem('authtoken'));
+
         window.addEventListener('scroll', scrollHandler, { passive: true });
 
         return () => { window.removeEventListener('scroll', scrollHandler); }
@@ -154,12 +157,17 @@ function DetailOne(props) {
         // }
     }
 
+
     function onWishlistClick(e) {
         e.preventDefault();
         if (!isInWishlist(props.wishlist, product)) {
-            props.addToWishlist(product);
+            if (authtoken === "" || authtoken === null || authtoken === undefined) {
+                props.showPopup(true);
+            } else {
+                props.addToWishlist(product);
+            }
         } else {
-            router.push('/pages/wishlist');
+            router.push('/wishlist');
         }
     }
 
@@ -597,4 +605,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { ...wishlistAction, ...cartAction })(DetailOne);
+export default connect(mapStateToProps, { ...wishlistAction, ...cartAction, ...globalAction })(DetailOne);

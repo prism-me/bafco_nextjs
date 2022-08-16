@@ -17,11 +17,9 @@ const initialState = {
 const wishlistReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.addToWishlist:
-            console.log('Wishlist')
             let UserDetail = localStorage.getItem('UserData');
             let authtoken = localStorage.getItem('authtoken');
-            console.log('UserDetail :: ', UserDetail)
-            console.log('authtoken :: ', authtoken)
+            console.log("action.payload.product :: ", action.payload.product)
             if (UserDetail) {
 
                 // var findIndex = state.data.findIndex(item => item.id === action.payload.product.id);
@@ -37,7 +35,9 @@ const wishlistReducer = (state = initialState, action) => {
                 let productData = {
                     user_id: UserDetail,
                     product_id: action.payload.product.id,
-                    variation_id: action.payload.product.variations[0].id,
+                    variation_id: action.payload.product.productvariations.id,
+                    product_variation_id: action.payload.product.productvariations.product_variation_name.product_variation_id,
+                    variation_value_id: action.payload.product.productvariations.product_variation_name.variation_value_id
                 };
 
                 API.post(`/auth/wishlists`, productData, {
@@ -48,6 +48,12 @@ const wishlistReducer = (state = initialState, action) => {
                     .then((response) => {
 
                         console.log("wishlists :: ", response);
+                        return {
+                            data: [
+                                ...state.data,
+                                action.payload.product = response,
+                            ]
+                        };
 
                     }).catch((err) => {
                         console.log(err);

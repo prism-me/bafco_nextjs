@@ -9,6 +9,7 @@ import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
 import { actions as compareAction } from '~/store/compare';
 import { actions as demoAction } from '~/store/demo';
+import { actions as globalAction } from '~/store/global';
 import { isInWishlist, isInCompare } from '~/utils';
 
 function ProductTwelve(props) {
@@ -18,8 +19,11 @@ function ProductTwelve(props) {
     const [minPrice, setMinPrice] = useState(99999);
     const categoryName = router.query.category;
     const subCategoryName = router.query.sub_category;
+    const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
+        setAuthtoken(localStorage.getItem('authtoken'));
+
         let min = minPrice;
         let max = maxPrice;
         product?.variants?.map(item => {
@@ -46,18 +50,22 @@ function ProductTwelve(props) {
     function onWishlistClick(e) {
         e.preventDefault();
         if (!isInWishlist(props.wishlist, product)) {
-            props.addToWishlist(product);
+            if (authtoken === "" || authtoken === null || authtoken === undefined) {
+                props.showPopup(true);
+            } else {
+                props.addToWishlist(product);
+            }
         } else {
-            router.push('/pages/wishlist');
+            router.push('/wishlist');
         }
     }
 
-    function onCompareClick(e) {
-        e.preventDefault();
-        if (!isInCompare(props.comparelist, product)) {
-            props.addToCompare(product);
-        }
-    }
+    // function onCompareClick(e) {
+    //     e.preventDefault();
+    //     if (!isInCompare(props.comparelist, product)) {
+    //         props.addToCompare(product);
+    //     }
+    // }
 
     function onQuickView(e) {
         e.preventDefault();
@@ -78,7 +86,7 @@ function ProductTwelve(props) {
                 <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>
                     <LazyLoadImage
                         alt="product"
-                        src={product?.productvariations.images[0]?.avatar}
+                        src={product?.productvariations?.images[0]?.avatar}
                         threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
@@ -88,7 +96,7 @@ function ProductTwelve(props) {
                             <LazyLoadImage
                                 alt="product"
                                 // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
-                                src={product?.productvariations.images[0].avatar}
+                                src={product?.productvariations?.images[0].avatar}
                                 threshold={500}
                                 effect="black and white"
                                 wrapperClassName="product-image-hover"
@@ -193,4 +201,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { ...wishlistAction, ...cartAction, ...compareAction, ...demoAction })(ProductTwelve);
+export default connect(mapStateToProps, { ...wishlistAction, ...cartAction, ...compareAction, ...demoAction, ...globalAction })(ProductTwelve);

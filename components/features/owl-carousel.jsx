@@ -10,7 +10,7 @@ function OwlCarousel ( props ) {
         margin: 0,
         responsiveClass: "true",
         nav: true,
-        navText: [ '<i class="icon-angle-left">', '<i class="icon-angle-right">' ],
+        navText: [ '<i className="icon-angle-left">', '<i className="icon-angle-right">' ],
         dots: true,
         smartSpeed: 400,
         autoplay: false,

@@ -53,8 +53,8 @@ function Team() {
                                 <div className="col-sm-6 col-lg-3" key={index}>
                                     <div className="member member-2 text-center">
                                         <figure className="member-media">
-                                            <img src={item.image} class="Sirv image-main" alt={item.name} />
-                                            <img src={item.gif} class="Sirv image-hover" alt={item.name} />
+                                            <img src={item.image} className="Sirv image-main" alt={item.name} />
+                                            <img src={item.gif} className="Sirv image-hover" alt={item.name} />
                                         </figure>
                                         <div className="member-content">
                                             <h3 className="member-title">{item.name}<span>{item.designation}</span></h3>

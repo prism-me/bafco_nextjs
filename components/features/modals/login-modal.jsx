@@ -5,6 +5,8 @@ import ALink from '~/components/features/alink';
 import { API } from '~/http/API';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { actions as globalAction } from '~/store/global';
+import { connect } from 'react-redux';
 const axios = require('axios').default;
 
 const customStyles = {
@@ -29,6 +31,7 @@ function LoginModal(props) {
     let timer;
 
     useEffect(() => {
+        setOpen(props.LoginModal)
         return () => {
             if (timer) clearTimeout(timer);
         }
@@ -43,13 +46,15 @@ function LoginModal(props) {
 
         timer = setTimeout(() => {
             setOpen(false);
+            props.hidePopup(false);
         }, 350);
 
     }
 
     function openModal(e) {
         e.preventDefault();
-        setOpen(true);
+        // setOpen(true);
+        props.showPopup(true);
     }
 
     const handleInit = (e) => {
@@ -116,7 +121,9 @@ function LoginModal(props) {
         };
 
         API.post(`/auth/login`, formdata).then((response) => {
+            console.log("response :: ", response)
             if (response?.status === 200) {
+
                 router.push('/account/');
                 toast.success(response?.data);
                 closeModal();
@@ -274,4 +281,13 @@ function LoginModal(props) {
         </div>)
 }
 
-export default LoginModal;
+const mapStateToProps = (state) => {
+    return {
+        // wishlist: state.wishlist.data,
+        comparelist: state.comparelist.data,
+        LoginModal: state.globalReducer.popupShow
+    }
+}
+
+// export default LoginModal;
+export default connect(mapStateToProps, { ...globalAction })(LoginModal);

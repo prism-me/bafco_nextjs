@@ -28,7 +28,7 @@ function PrivacyPolicy() {
             <div className="page-content">
                 <div className="container">
                     <h2 className="title text-center mb-3">Privacy policy</h2>
-                    <div class="rte">
+                    <div className="rte">
                         <p>This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from store.bafco.com (the “Site”).</p>
 
                         <h6 className="mt-3">PERSONAL INFORMATION WE COLLECT</h6>

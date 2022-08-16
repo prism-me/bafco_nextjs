@@ -2,18 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { actions as globalAction } from '~/store/global';
-import ALink from '~/components/features/alink';
 
-function WishlistMenu(props) {
+function AccountMenu(props) {
     const router = useRouter();
-    const { wishlist } = props;
     const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
         setAuthtoken(localStorage.getItem('authtoken'));
     }, [authtoken]);
 
-    function onWishlistClick(e) {
+    function onAccountClick(e) {
         e.preventDefault();
         if (authtoken === "" || authtoken === null || authtoken === undefined) {
 
@@ -21,23 +19,22 @@ function WishlistMenu(props) {
 
         } else {
 
-            router.push('/wishlist');
+            router.push('/account');
 
         }
     }
 
     return (
-        <div className="wishlist">
+        <div className="account">
             <a
                 href="#"
-                onClick={onWishlistClick}
-                title="Wishlist"
+                onClick={onAccountClick}
+                title="account"
             >
                 <div className="icon">
-                    <i className="icon-heart-o"></i>
-                    <span className="wishlist-count badge">{wishlist.length}</span>
+                    <i className="icon-user"></i>
                 </div>
-                <p>Wishlist</p>
+                <p>account</p>
             </a>
         </div>
     );
@@ -50,4 +47,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { ...globalAction })(WishlistMenu);
+export default connect(mapStateToProps, { ...globalAction })(AccountMenu);

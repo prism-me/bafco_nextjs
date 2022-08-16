@@ -26,7 +26,7 @@ function CategoryMenu() {
                 </ALink>
             </div>
             <div className={`dropdown-menu ${menuBtnCloseIcon === true ? 'show_verticalmenu' : ''}`} onClick={handleMenuOpen}>
-                <button onClick={handleMenuOpen} type="button" class="mfp-close"><span>×</span></button>
+                <button onClick={handleMenuOpen} type="button" className="mfp-close"><span>×</span></button>
                 <div className="row no-gutters">
                     <div className="col-md-6">
                         <nav className="side-nav">

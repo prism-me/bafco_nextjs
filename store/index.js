@@ -3,6 +3,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './root-saga';
 import { persistStore, persistReducer } from 'redux-persist';
+import { composeWithDevTools } from 'redux-devtools-extension';
 // import storage from 'redux-persist/lib/storage';
 
 // Import Reducers
@@ -10,11 +11,13 @@ import cartReducer from "./cart";
 import wishlistReducer from './wishlist';
 import compareReducer from './compare';
 import demoReducer from './demo';
+import globalReducer from './global';
 
 const rootReducers = combineReducers({
     cartlist: cartReducer,
     wishlist: wishlistReducer,
     comparelist: compareReducer,
+    globalReducer: globalReducer,
     demo: demoReducer,
 });
 
@@ -27,7 +30,7 @@ const rootReducers = combineReducers({
 const sagaMiddleware = createSagaMiddleware();
 
 export const makeStore = (context) => {
-    const store = createStore(rootReducers, applyMiddleware(sagaMiddleware));
+    const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(sagaMiddleware)));
     store.sagaTask = sagaMiddleware.run(rootSaga);
     store.__persistor = persistStore(store);
     return store;

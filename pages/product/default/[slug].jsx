@@ -24,7 +24,7 @@ function ProductDefault() {
     const prev = data && data.product.prev;
     const next = data && data.product.next;
 
-    console.log("Product :: ", product);
+    // console.log("Product :: ", product);
 
     if (error) {
         return <div></div>

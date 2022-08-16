@@ -63,13 +63,13 @@ function Accordions () {
                     <div className="row">
                         <div className="col-md-6">
                             <Accordion adClass="accordion-icon">
-                                <Card title="<i class='icon-star-o'></i>Cras ornare tristique elit." expanded="true">
+                                <Card title="<i className='icon-star-o'></i>Cras ornare tristique elit." expanded="true">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
                                     </Card>
-                                <Card title="<i class='icon-info-circle'></i>Vivamus vestibulum ntulla">
+                                <Card title="<i className='icon-info-circle'></i>Vivamus vestibulum ntulla">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
                                     </Card>
-                                <Card title="<i class='icon-heart-o'></i>Praesent placerat risus">
+                                <Card title="<i className='icon-heart-o'></i>Praesent placerat risus">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
                                     </Card>
                             </Accordion>
@@ -77,13 +77,13 @@ function Accordions () {
 
                         <div className="col-md-6">
                             <Accordion adClass="accordion-icon">
-                                <Card title="<i class='icon-star-o'></i>Cras ornare tristique elit." expanded="true" adClass="card-box bg-light">
+                                <Card title="<i className='icon-star-o'></i>Cras ornare tristique elit." expanded="true" adClass="card-box bg-light">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
                                     </Card>
-                                <Card title="<i class='icon-info-circle'></i>Vivamus vestibulum ntulla" adClass="card-box bg-light">
+                                <Card title="<i className='icon-info-circle'></i>Vivamus vestibulum ntulla" adClass="card-box bg-light">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
                                     </Card>
-                                <Card title="<i class='icon-heart-o'></i>Praesent placerat risus" adClass="card-box bg-light">
+                                <Card title="<i className='icon-heart-o'></i>Praesent placerat risus" adClass="card-box bg-light">
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
                                     </Card>
                             </Accordion>

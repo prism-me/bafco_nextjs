@@ -1,0 +1,234 @@
+[
+    {
+        "countryName": "Bahrain",
+        "countryShortCode": "BH",
+        "regions": [
+            {
+                "name": "Al Janūbīyah",
+                "shortCode": "14"
+            },
+            {
+                "name": "Al Manāmah",
+                "shortCode": "13"
+            },
+            {
+                "name": "Al Muḩarraq",
+                "shortCode": "15"
+            },
+            {
+                "name": "Al Wusţá",
+                "shortCode": "16"
+            },
+            {
+                "name": "Ash Shamālīyah",
+                "shortCode": "17"
+            }
+        ]
+    },
+    {
+        "countryName": "Kuwait",
+        "countryShortCode": "KW",
+        "regions": [
+            {
+                "name": "Al Aḩmadi",
+                "shortCode": "AH"
+            },
+            {
+                "name": "Al Farwānīyah",
+                "shortCode": "FA"
+            },
+            {
+                "name": "Al Jahrā’",
+                "shortCode": "JA"
+            },
+            {
+                "name": "Al ‘Āşimah",
+                "shortCode": "KU"
+            },
+            {
+                "name": "Ḩawallī",
+                "shortCode": "HA"
+            },
+            {
+                "name": "Mubārak al Kabir",
+                "shortCode": "MU"
+            }
+        ]
+    },
+    {
+        "countryName": "Oman",
+        "countryShortCode": "OM",
+        "regions": [
+            {
+                "name": "Ad Dakhiliyah",
+                "shortCode": "DA"
+            },
+            {
+                "name": "Al Buraymi",
+                "shortCode": "BU"
+            },
+            {
+                "name": "Al Wusta",
+                "shortCode": "WU"
+            },
+            {
+                "name": "Az Zahirah",
+                "shortCode": "ZA"
+            },
+            {
+                "name": "Janub al Batinah",
+                "shortCode": "BS"
+            },
+            {
+                "name": "Janub ash Sharqiyah",
+                "shortCode": "SS"
+            },
+            {
+                "name": "Masqat",
+                "shortCode": "MA"
+            },
+            {
+                "name": "Musandam",
+                "shortCode": "MU"
+            },
+            {
+                "name": "Shamal al Batinah",
+                "shortCode": "BJ"
+            },
+            {
+                "name": "Shamal ash Sharqiyah",
+                "shortCode": "SJ"
+            },
+            {
+                "name": "Zufar",
+                "shortCode": "ZU"
+            }
+        ]
+    },
+    {
+        "countryName": "Qatar",
+        "countryShortCode": "QA",
+        "regions": [
+            {
+                "name": "Ad Dawḩah",
+                "shortCode": "DA"
+            },
+            {
+                "name": "Al Khawr wa adh Dhakhīrah",
+                "shortCode": "KH"
+            },
+            {
+                "name": "Al Wakrah",
+                "shortCode": "WA"
+            },
+            {
+                "name": "Ar Rayyān",
+                "shortCode": "RA"
+            },
+            {
+                "name": "Ash Shamāl",
+                "shortCode": "MS"
+            },
+            {
+                "name": "Az̧ Za̧`āyin",
+                "shortCode": "ZA"
+            },
+            {
+                "name": "Umm Şalāl",
+                "shortCode": "US"
+            }
+        ]
+    },
+    {
+        "countryName": "Saudi Arabia",
+        "countryShortCode": "SA",
+        "regions": [
+            {
+                "name": "'Asir",
+                "shortCode": "14"
+            },
+            {
+                "name": "Al Bahah",
+                "shortCode": "11"
+            },
+            {
+                "name": "Al Hudud ash Shamaliyah",
+                "shortCode": "08"
+            },
+            {
+                "name": "Al Jawf",
+                "shortCode": "12"
+            },
+            {
+                "name": "Al Madinah al Munawwarah",
+                "shortCode": "03"
+            },
+            {
+                "name": "Al Qasim",
+                "shortCode": "05"
+            },
+            {
+                "name": "Ar Riyad",
+                "shortCode": "01"
+            },
+            {
+                "name": "Ash Sharqiyah",
+                "shortCode": "04"
+            },
+            {
+                "name": "Ha'il",
+                "shortCode": "06"
+            },
+            {
+                "name": "Jazan",
+                "shortCode": "09"
+            },
+            {
+                "name": "Makkah al Mukarramah",
+                "shortCode": "02"
+            },
+            {
+                "name": "Najran",
+                "shortCode": "10"
+            },
+            {
+                "name": "Tabuk",
+                "shortCode": "07"
+            }
+        ]
+    },
+    {
+        "countryName": "United Arab Emirates",
+        "countryShortCode": "AE",
+        "regions": [
+            {
+                "name": "Abu Dhabi",
+                "shortCode": "AZ"
+            },
+            {
+                "name": "Ajman",
+                "shortCode": "AJ"
+            },
+            {
+                "name": "Dubai",
+                "shortCode": "DU"
+            },
+            {
+                "name": "Fujairah",
+                "shortCode": "FU"
+            },
+            {
+                "name": "Ras al Khaimah",
+                "shortCode": "RK"
+            },
+            {
+                "name": "Sharjah",
+                "shortCode": "SH"
+            },
+            {
+                "name": "Umm Al Quwain",
+                "shortCode": "UQ"
+            }
+        ]
+    }
+]

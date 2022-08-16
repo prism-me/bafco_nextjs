@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "~/store";
 
 //const apiURL = "http://127.0.0.1:8000/v1/api/";
- const apiURL = "https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/";
+const apiURL = "https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/";
 export const API = axios.create({
   baseURL: apiURL,
   timeout: 90000,
@@ -43,6 +43,8 @@ API.interceptors.response.use(
   },
   (error) => {
     console.log("interceptor response ERROR", error);
+
+    // console.log(error.response.data.message);
 
     // store.dispatch({ type: "HIDE_SPINNER" })
 

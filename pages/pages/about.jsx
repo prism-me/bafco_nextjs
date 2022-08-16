@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-
+import { API } from "~/http/API"
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
 import { countTo } from '~/utils';
-const axios = require('axios');
 
 function About() {
 
@@ -15,16 +14,21 @@ function About() {
 
         countTo();
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/about?lang=en').then(function (response) {
-            // handle success
-            console.log(response?.data)
+        API.get(`/about`).then((response) => {
             setAboutdata(response.data?.about?.content)
             setTeamList(response?.data?.team)
             setPartnersList(response?.data?.partner)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
+        }).catch((err) => console.log(err));
+
+        // axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/about?lang=en').then(function (response) {
+        //     // handle success
+        //     setAboutdata(response.data?.about?.content)
+        //     setTeamList(response?.data?.team)
+        //     setPartnersList(response?.data?.partner)
+        // }).catch(function (error) {
+        //     // handle error
+        //     console.log(error);
+        // })
 
     }, []);
 
@@ -196,8 +200,8 @@ function About() {
                                 <div className="col-sm-6 col-lg-3" key={index}>
                                     <div className="member member-2 text-center">
                                         <figure className="member-media">
-                                            <img src={item.image} class="Sirv image-main" alt={item.name} />
-                                            <img src={item.gif} class="Sirv image-hover" alt={item.name} />
+                                            <img src={item.image} className="Sirv image-main" alt={item.name} />
+                                            <img src={item.gif} className="Sirv image-hover" alt={item.name} />
                                         </figure>
                                         <div className="member-content">
                                             <h3 className="member-title">{item.name}<span>{item.designation}</span></h3>

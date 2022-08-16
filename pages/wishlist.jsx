@@ -7,11 +7,11 @@ import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
 
 function Wishlist(props) {
+
     const [wishItems, setWishItems] = useState([]);
     const wishlistbg = "images/banners/whishlist-banner.png";
 
     useEffect(() => {
-        console.log("props.wishlist :: ", props.wishlist)
         setWishItems(props.wishlist.reduce((acc, product) => {
             let max = 0;
             let min = 999999;
@@ -99,7 +99,7 @@ function Wishlist(props) {
                                                         </h4>
                                                     </div>
                                                 </td>
-                                                {console.log("product :: ", product)}
+                                                {/* {console.log("product :: ", product)} */}
                                                 <td className="price-col">
                                                     {
                                                         product.variations[0].in_stock === 0 ?
