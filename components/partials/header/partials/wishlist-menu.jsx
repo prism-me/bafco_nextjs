@@ -13,24 +13,24 @@ function WishlistMenu(props) {
         setAuthtoken(localStorage.getItem('authtoken'));
     }, [authtoken]);
 
-    function onWishlistClick(e) {
-        e.preventDefault();
-        if (authtoken === "" || authtoken === null || authtoken === undefined) {
+    // function onWishlistClick(e) {
+    //     e.preventDefault();
+    //     if (authtoken === "" || authtoken === null || authtoken === undefined) {
 
-            props.showPopup(true);
+    //         props.showPopup(true);
 
-        } else {
+    //     } else {
 
-            router.push('/wishlist');
+    //         router.push('/wishlist');
 
-        }
-    }
+    //     }
+    // }
 
     return (
         <div className="wishlist">
             <a
-                href="#"
-                onClick={onWishlistClick}
+                href="/wishlist"
+                // onClick={onWishlistClick}
                 title="Wishlist"
             >
                 <div className="icon">

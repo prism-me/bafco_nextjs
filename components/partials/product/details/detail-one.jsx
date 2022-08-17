@@ -25,8 +25,6 @@ function DetailOne(props) {
     const [selectedMaterialVariant, setselectedMaterialVariant] = useState({ fabric: null, fabricName: null, fabricId: null, variationId: null, fabricImage: "" });
     const [showClear, setShowClear] = useState(false);
     const [showVariationPrice, setShowVariationPrice] = useState(false);
-    const [maxPrice, setMaxPrice] = useState(product?.product_single_variation?.product_variation_details?.upper_price);
-    const [minPrice, setMinPrice] = useState(product?.product_single_variation?.product_variation_details?.lower_price);
     const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
@@ -109,8 +107,8 @@ function DetailOne(props) {
         //         return acc;
         //     }, []));
 
-        //     setMinPrice(min);
-        //     setMaxPrice(max);
+        //     setproduct?.product_single_variation?.product_variation_details.lower_price(min);
+        //     setproduct?.product_single_variation?.product_variation_details.upper_price(max);
     }, [product])
 
     useEffect(() => {
@@ -225,7 +223,6 @@ function DetailOne(props) {
     // }
 
     function selectColor(e, item) {
-        console.log("selectColor :: ", item)
         e.preventDefault()
         if (item.color === selectedColorVariant.color) {
             setselectedColorVariant({
@@ -330,20 +327,20 @@ function DetailOne(props) {
             {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
                 <div className="product-price">
                     <span className="out-price">
-                        {minPrice === maxPrice ?
-                            <span>AED{minPrice}</span>
+                        {product?.product_single_variation?.product_variation_details.lower_price === product?.product_single_variation?.product_variation_details.upper_price ?
+                            <span>AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
                             :
-                            <span>AED{minPrice}&ndash;AED{maxPrice}</span>
+                            <span>AED{product?.product_single_variation?.product_variation_details.lower_price}&ndash;AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
                         }
                     </span>
                 </div>
                 :
-                minPrice === maxPrice ?
-                    <div className="product-price">AED{minPrice}</div>
+                product?.product_single_variation?.product_variation_details.lower_price === product?.product_single_variation?.product_variation_details.upper_price ?
+                    <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</div>
                     :
                     <div className="product-price">
-                        <span className="new-price">AED{minPrice}</span>
-                        <span className="old-price">AED{maxPrice}</span>
+                        <span className="new-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
+                        <span className="old-price">AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
                     </div>
             }
 
@@ -352,68 +349,60 @@ function DetailOne(props) {
                 dangerouslySetInnerHTML={{ __html: product?.single_product_details?.product?.short_description }}
             />
 
-            <div className="details-filter-row details-row-size">
-                <label htmlFor="size">Upholstery: </label>
-                <div className="select-custom">
-                    <select
-                        name="size"
-                        className="form-control"
-                        value={selectedColorVariant.size}
-                        onChange={selectSize}
-                    >
-                        <option value="">Select a Upholstery</option>
-                        {
-                            sizeArray.map((item, index) => (
-                                <option
-                                    value={item.sizeName}
-                                    key={index}
-                                >{item.sizeName}</option>
-                            ))
-                        }
-                    </select>
-                </div>
-
-                {showClear ? <a href="#" onClick={clearSelection}>clear</a> : ""}
-            </div >
-            {/* <div className="details-filter-row details-row-size">
-                <label htmlFor="size">Materials :</label>
-                <div className="select-custom">
-                    <select
-                        name="size"
-                        className="form-control"
-                        value={selectedColorVariant.size}
-                        onChange={selectSize}
-                    >
-                        <option value="">Select a Materials</option>
-                        {
-                            materialArray.map((item, index) => (
-                                <option
-                                    value={item.fabricName}
-                                    key={index}
-                                >{item.fabricName}</option>
-                            ))
-                        }
-                    </select>
-                </div>
-
-                {
-                    showClear ?
-                        <a href="#" onClick={clearSelection}>clear</a>
-                        : ""
-                }
-            </div > */}
-            {/* <SlideToggle collapsed={true}>
-                {({ onToggle, setCollapsibleElement, toggleState }) => (
-                    <div>
-                        <button className={`d-none variation-toggle ${toggleState.toLowerCase()}`} onClick={onToggle}></button>
-                        <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
-                            <div className="product-price">
-                                AED{selectedColorVariant.price ? selectedColorVariant.price : 0}
-                            </div>
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="details-filter-row details-row-size">
+                        <label htmlFor="size">Upholstery: </label>
+                        <div className="select-custom">
+                            <select
+                                name="size"
+                                className="form-control"
+                                value={selectedColorVariant.size}
+                                onChange={selectSize}
+                            >
+                                <option value="">Select a Upholstery</option>
+                                {
+                                    sizeArray.map((item, index) => (
+                                        <option
+                                            value={item.sizeName}
+                                            key={index}
+                                        >{item.sizeName}</option>
+                                    ))
+                                }
+                            </select>
                         </div>
-                    </div>
-                )}
-            </SlideToggle> */}
+
+                        {showClear ? <a href="#" onClick={clearSelection}>clear</a> : ""}
+                    </div >
+
+                </div>
+                <div className="col-md-6">
+                    <div className="details-filter-row details-row-size">
+                        <label htmlFor="size">Frame: </label>
+                        <div className="select-custom">
+                            <select
+                                name="size"
+                                className="form-control"
+                                value={selectedColorVariant.size}
+                                onChange={selectSize}
+                            >
+                                <option value="">Select a Frame</option>
+                                {
+                                    sizeArray.map((item, index) => (
+                                        <option
+                                            value={item.sizeName}
+                                            key={index}
+                                        >{item.sizeName}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+
+                        {showClear ? <a href="#" onClick={clearSelection}>clear</a> : ""}
+                    </div >
+
+                </div>
+            </div>
             <div className="row">
                 <div className="col-md-6">
                     <div className="details-filter-row details-row-size">
@@ -562,16 +551,16 @@ function DetailOne(props) {
                                             <span className="out-price">AED{product.price}</span>
                                         </div>
                                         :
-                                        minPrice == maxPrice ?
-                                            <div className="product-price">AED{minPrice}</div>
+                                        product?.product_single_variation?.product_variation_details.lower_price == product?.product_single_variation?.product_variation_details.upper_price ?
+                                            <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</div>
                                             :
                                             product?.variations?.length == 0 ?
                                                 <div className="product-price">
-                                                    <span className="new-price">AED{minPrice}</span>
-                                                    <span className="old-price">AED{maxPrice}</span>
+                                                    <span className="new-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
+                                                    <span className="old-price">AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
                                                 </div>
                                                 :
-                                                <div className="product-price">AED{minPrice} &ndash; AED{maxPrice}</div>
+                                                <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price} &ndash; AED{product?.product_single_variation?.product_variation_details.upper_price}</div>
                             }
                             <Qty changeQty={onChangeQty2} max={product.stock} value={qty2}></Qty>
                             <div className="product-details-action">

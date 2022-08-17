@@ -17,20 +17,11 @@ const initialState = {
 const wishlistReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.addToWishlist:
+
             let UserDetail = localStorage.getItem('UserData');
             let authtoken = localStorage.getItem('authtoken');
-            console.log("action.payload.product :: ", action.payload.product)
-            if (UserDetail) {
 
-                // var findIndex = state.data.findIndex(item => item.id === action.payload.product.id);
-                // if (findIndex == -1) {
-                //     return {
-                //         data: [
-                //             ...state.data,
-                //             action.payload.product
-                //         ]
-                //     };
-                // }
+            if (UserDetail) {
 
                 let productData = {
                     user_id: UserDetail,
@@ -40,21 +31,9 @@ const wishlistReducer = (state = initialState, action) => {
                     variation_value_id: action.payload.product.productvariations.product_variation_name.variation_value_id
                 };
 
-                API.post(`/auth/wishlists`, productData, {
-                    headers: {
-                        'Authorization': `Bearer ${authtoken}`
-                    }
-                })
+                API.post(`/auth/wishlists`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } })
                     .then((response) => {
-
-                        console.log("wishlists :: ", response);
-                        return {
-                            data: [
-                                ...state.data,
-                                action.payload.product = response,
-                            ]
-                        };
-
+                        console.log("wishlists :: ", response.data);
                     }).catch((err) => {
                         console.log(err);
                     });
@@ -62,9 +41,24 @@ const wishlistReducer = (state = initialState, action) => {
                 toast.warning("Please Login/Registration first.");
             }
 
+            let findIndex = state.data.findIndex(item => item.id === action.payload.product.id);
+
+            if (findIndex == -1) {
+
+                return {
+                    data: [
+                        ...state.data,
+                        action.payload.product
+                        // response.data
+                    ]
+                };
+            }
+
         case actionTypes.removeFromWishlist:
+            console.log("removeFromWishlist :: ", action.payload.product)
             return {
-                data: state.data.filter(item => item.id !== action.payload.product.id)
+                data: state.data.filter(item => item.id !== action.payload.product.productData[0].id)
+                // data: state.data.filter(item => item.id !== 418)
             };
 
         case actionTypes.refreshStore:

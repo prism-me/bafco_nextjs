@@ -101,7 +101,9 @@ function Header() {
                             </div>
                         }
                         {/* <AccountMenu /> */}
-                        <WishlistMenu />
+                        {authtoken === "" || authtoken === null || authtoken === undefined ?
+                            "" : <WishlistMenu />
+                        }
                         <CartMenu />
                     </div>
                 </div>
