@@ -55,7 +55,7 @@ const wishlistReducer = (state = initialState, action) => {
             }
 
         case actionTypes.removeFromWishlist:
-            console.log("removeFromWishlist :: ", action.payload.product)
+            // console.log("removeFromWishlist :: ", action.payload.product)
             return {
                 data: state.data.filter(item => item.id !== action.payload.product.productData[0].id)
                 // data: state.data.filter(item => item.id !== 418)

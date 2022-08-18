@@ -1,14 +1,12 @@
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
-import SlideToggle from 'react-slide-toggle';
-
+// import SlideToggle from 'react-slide-toggle';
 import ALink from '~/components/features/alink';
 import Qty from '~/components/features/qty';
 import { actions as globalAction } from '~/store/global';
 import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
-
 import { canAddToCart, isInWishlist } from '~/utils';
 
 function DetailOne(props) {
@@ -17,143 +15,55 @@ function DetailOne(props) {
     const { product, subCategory } = props;
     const [qty, setQty] = useState(1);
     const [qty2, setQty2] = useState(1);
-    const [colorArray, setColorArray] = useState([]);
-    const [sizeArray, setSizeArray] = useState([]);
-    const [materialArray, setMaterialArray] = useState([]);
     const [variationGroup, setVariationGroup] = useState([]);
+    const [variationTypeGroup, setVariationTypeGroup] = useState([]);
     const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
-    const [selectedMaterialVariant, setselectedMaterialVariant] = useState({ fabric: null, fabricName: null, fabricId: null, variationId: null, fabricImage: "" });
-    const [showClear, setShowClear] = useState(false);
-    const [showVariationPrice, setShowVariationPrice] = useState(false);
     const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
-        setAuthtoken(localStorage.getItem('authtoken'));
 
-        window.addEventListener('scroll', scrollHandler, { passive: true });
+        setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
+            acc.find((v) => v.variant.name === curr.variant.name) ? acc : [...acc, curr],
+            []));
 
-        return () => { window.removeEventListener('scroll', scrollHandler); }
+        setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
+            acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
+            []));
 
-    }, [])
-
-    useEffect(() => {
-
-        let newProductColor = [];
-        // newProductColor.push
-
-        product?.product_all_varitaions?.map((acc) => {
-            acc?.product_details?.variation_details?.name === "color" &&
-                newProductColor.push({
-                    color: acc?.product_details?.variation_details?.name,
-                    colorName: acc?.product_details?.variation_value_details?.name,
-                    colorId: acc?.product_details?.variation_value_details?.id,
-                    variationId: acc?.product_variation_id,
-                    fabricImage: acc?.product_details?.variation_value_details?.type_value,
-                });
-        })
-
-        // console.log("newProductColor :: ", newProductColor)
-
-        setColorArray(newProductColor);
-
-        let newProductSize = [];
-
-        product?.product_all_varitaions?.map((acc) => {
-            acc?.product_details?.variation_details?.name === "size" &&
-                newProductSize.push({
-                    color: acc?.product_details?.variation_details?.name,
-                    colorName: acc?.product_details?.variation_value_details?.name,
-                    colorId: acc?.product_details?.variation_value_details?.id,
-                    variationId: acc?.product_variation_id,
-                    fabricImage: acc?.product_details?.variation_value_details?.type_value,
-                });
-        })
-
-        // console.log("newProductSize :: ", newProductSize)
-
-        setSizeArray(newProductSize);
-
-        let newProductMaterial = [];
-
-        product?.product_all_varitaions?.map((acc) => {
-            acc?.product_details?.variation_details?.name === "fabric" &&
-                newProductMaterial.push({
-                    color: acc?.product_details?.variation_details?.name,
-                    colorName: acc?.product_details?.variation_value_details?.name,
-                    colorId: acc?.product_details?.variation_value_details?.id,
-                    variationId: acc?.product_variation_id,
-                    fabricImage: acc?.product_details?.variation_value_details?.type_value,
-                });
-        })
-
-        // console.log("newProductMaterial :: ", newProductMaterial)
-
-        setMaterialArray(newProductMaterial);
-
-        //     let min = 99999;
-        //     let max = 0;
-
-        //     setVariationGroup(product?.variations.reduce((acc, cur) => {
-        //         cur.variationItems.map(item => {
-        //             acc.push({
-        //                 color: cur.color,
-        //                 colorName: cur.color_name,
-        //                 size: item.name,
-        //                 price: cur.price
-        //             });
-        //         });
-        //         if (min > cur.price) min = cur.lower_price;
-        //         if (max < cur.price) max = cur.upper_price;
-        //         return acc;
-        //     }, []));
-
-        //     setproduct?.product_single_variation?.product_variation_details.lower_price(min);
-        //     setproduct?.product_single_variation?.product_variation_details.upper_price(max);
     }, [product])
 
     useEffect(() => {
         setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
-        setselectedMaterialVariant({ fabric: null, fabricName: null, fabricId: null, variationId: null, fabricImage: "" });
         setQty(1);
         setQty2(1);
     }, [router.query.slug])
 
     // useEffect(() => {
-    //     refreshSelectableGroup();
-    // }, [variationGroup, selectedColorVariant])
 
-    useEffect(() => {
-        scrollHandler();
-    }, [router.pathname])
+    //     setAuthtoken(localStorage.getItem('authtoken'));
+
+    //     window.addEventListener('scroll', scrollHandler, { passive: true });
+
+    //     return () => { window.removeEventListener('scroll', scrollHandler); }
+
+    // }, [])
 
     // useEffect(() => {
-    //     setShowClear((selectedColorVariant.color || selectedColorVariant.size != "") ? true : false);
-    //     setShowVariationPrice((selectedColorVariant.color && selectedColorVariant.size != "") ? true : false);
-    //     let toggle = ref.current.querySelector('.variation-toggle');
+    //     scrollHandler();
+    // }, [router.pathname])
 
-    //     if (toggle) {
-    //         if ((selectedColorVariant.color && selectedColorVariant.size != "") && toggle.classList.contains('collapsed')) {
-    //             toggle.click();
+    // function scrollHandler() {
+    //     if (router.pathname.includes('/collections/')) {
+    //         let stickyBar = ref.current.querySelector('.sticky-bar');
+    //         if (stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom < 0) {
+    //             stickyBar.classList.remove('d-none');
+    //             return;
     //         }
-
-    //         if ((!(selectedColorVariant.color && selectedColorVariant.size != "")) && !toggle.classList.contains('collapsed')) {
-    //             toggle.click();
+    //         if (!stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom > 0) {
+    //             stickyBar.classList.add('d-none');
     //         }
     //     }
-    // }, [selectedColorVariant])
-
-    function scrollHandler() {
-        // if (router.pathname.includes('/product/default')) {
-        //     let stickyBar = ref.current.querySelector('.sticky-bar');
-        //     if (stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom < 0) {
-        //         stickyBar.classList.remove('d-none');
-        //         return;
-        //     }
-        //     if (!stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom > 0) {
-        //         stickyBar.classList.add('d-none');
-        //     }
-        // }
-    }
+    // }
 
 
     function onWishlistClick(e) {
@@ -169,125 +79,12 @@ function DetailOne(props) {
         }
     }
 
-    // function refreshSelectableGroup() {
-    //     let tempArray = [...variationGroup];
-    //     if (selectedColorVariant.color) {
-    //         tempArray = variationGroup.reduce((acc, cur) => {
-    //             if (selectedColorVariant.color !== cur.color) {
-    //                 return acc;
-    //             }
-    //             return [...acc, cur];
-    //         }, []);
-    //     }
-
-    //     setSizeArray(tempArray.reduce((acc, cur) => {
-    //         if (acc.findIndex(item => item.size == cur.size) !== -1)
-    //             return acc;
-    //         return [...acc, cur];
-    //     }, []));
-
-    //     tempArray = [...variationGroup];
-    //     if (selectedColorVariant.size) {
-    //         tempArray = variationGroup.reduce((acc, cur) => {
-    //             if (selectedColorVariant.size !== cur.size) {
-    //                 return acc;
-    //             }
-    //             return [...acc, cur];
-    //         }, []);
-    //     }
-
-    //     setColorArray(product?.variations?.reduce((acc, cur) => {
-    //         if (
-    //             tempArray.findIndex(item => item.color == cur.color) == -1
-    //         ) {
-    //             return [
-    //                 ...acc,
-    //                 {
-    //                     color: cur.color,
-    //                     colorName: cur.color_name,
-    //                     price: cur.price,
-    //                     disabled: true
-    //                 }
-    //             ];
-    //         }
-    //         return [
-    //             ...acc,
-    //             {
-    //                 color: cur.color,
-    //                 colorName: cur.color_name,
-    //                 price: cur.price,
-    //                 disabled: false
-    //             }
-    //         ];
-    //     }, []));
-    // }
-
-    function selectColor(e, item) {
-        e.preventDefault()
-        if (item.color === selectedColorVariant.color) {
-            setselectedColorVariant({
-                ...selectedColorVariant,
-                color: item.color,
-                colorId: item.colorId,
-                colorName: item.colorName,
-                variationId: item.variationId,
-                fabricImage: item.fabricImage
-            });
-        } else if (item.fabric === selectedMaterialVariant.fabric) {
-            setselectedMaterialVariant({
-                ...selectedMaterialVariant,
-                fabric: item.fabric,
-                fabricName: item.fabricName,
-                fabricId: item.fabricId,
-                variationId: item.variationId,
-                fabricImage: item.fabricImage
-            });
-        }
-        else {
-            setselectedColorVariant({
-                ...selectedColorVariant,
-                color: item.color,
-                colorId: item.colorId,
-                colorName: item.colorName,
-                variationId: item.variationId,
-                fabricImage: item.fabricImage
-            });
-        }
-    }
-
-    function selectSize(e) {
-        if (e.target.value === "") {
-            setselectedColorVariant({ ...selectedColorVariant, size: "" });
-        } else {
-            setselectedColorVariant({ ...selectedColorVariant, size: e.target.value });
-        }
-    }
-
     function onChangeQty(current) {
         setQty(current);
     }
 
     function onChangeQty2(current) {
         setQty2(current);
-    }
-
-    function clearSelection(e) {
-        e.preventDefault();
-        setselectedMaterialVariant(({
-            ...selectedMaterialVariant,
-            fabric: null,
-            fabricName: null,
-            fabricId: null,
-            variationId: null,
-            fabricImage: ""
-        }))
-        setselectedColorVariant(({
-            ...selectedColorVariant,
-            color: null,
-            colorName: null,
-            size: ""
-        }));
-        // refreshSelectableGroup();
     }
 
     function onCartClick(e, index = 0) {
@@ -306,6 +103,11 @@ function DetailOne(props) {
             newProduct,
             index == 0 ? qty : qty2
         );
+    }
+
+    function handelSelectVariantChange(e, id) {
+        e.preventDefault();
+        console.log("handelSelectVariantChange :: ", id);
     }
 
     if (!product) {
@@ -344,102 +146,49 @@ function DetailOne(props) {
                     </div>
             }
 
-            <div
-                className="product-content"
-                dangerouslySetInnerHTML={{ __html: product?.single_product_details?.product?.short_description }}
-            />
+            <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.single_product_details?.product?.short_description }} />
 
+            {console.log("variationGroup :: ", variationGroup)}
             <div className="row">
-                <div className="col-md-6">
-                    <div className="details-filter-row details-row-size">
-                        <label htmlFor="size">Upholstery: </label>
-                        <div className="select-custom">
-                            <select
-                                name="size"
-                                className="form-control"
-                                value={selectedColorVariant.size}
-                                onChange={selectSize}
-                            >
-                                <option value="">Select a Upholstery</option>
-                                {
-                                    sizeArray.map((item, index) => (
-                                        <option
-                                            value={item.sizeName}
-                                            key={index}
-                                        >{item.sizeName}</option>
-                                    ))
+                {variationTypeGroup !== null &&
+                    variationTypeGroup?.map((item, index) => (
+                        <div className="col-md-6" key={index}>
+                            <div className="details-filter-row details-row-size">
+                                <label htmlFor={`${item.variant.name}`}>{item.variant.name}: </label>
+                                {item.type === "1" ?
+                                    <div className="select-custom">
+                                        <select
+                                            name={`${item.variant.name}`}
+                                            className="form-control"
+                                            value={selectedColorVariant?.item?.variant?.name}
+                                            onChange={(e) => handelSelectVariantChange(e, item.product_variation_id)}
+                                        >
+                                            <option value="">Select a {item.variant.name}</option>
+                                            {variationGroup.map((item2, index2) => (
+                                                item.variant.name === item2.variant.name &&
+                                                <option value={item2.variation_id} key={index2}>{item2.type_value}</option>
+                                            ))
+                                            }
+                                        </select>
+                                    </div> :
+                                    <div className="product-nav product-nav-dots">
+                                        {variationGroup.map((item2, index2) => (
+                                            item.variant.name === item2.variant.name &&
+                                            <a
+                                                href="#"
+                                                className={`${(item2.name == selectedColorVariant.colorName ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                style={{ backgroundImage: `url(${item2.type_value})` }}
+                                                key={index2}
+                                                onClick={(e) => handelSelectVariantChange(e, item.product_variation_id)}
+                                            ></a>
+                                        ))
+                                        }
+                                    </div>
                                 }
-                            </select>
+                            </div >
                         </div>
-
-                        {showClear ? <a href="#" onClick={clearSelection}>clear</a> : ""}
-                    </div >
-
-                </div>
-                <div className="col-md-6">
-                    <div className="details-filter-row details-row-size">
-                        <label htmlFor="size">Frame: </label>
-                        <div className="select-custom">
-                            <select
-                                name="size"
-                                className="form-control"
-                                value={selectedColorVariant.size}
-                                onChange={selectSize}
-                            >
-                                <option value="">Select a Frame</option>
-                                {
-                                    sizeArray.map((item, index) => (
-                                        <option
-                                            value={item.sizeName}
-                                            key={index}
-                                        >{item.sizeName}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-
-                        {showClear ? <a href="#" onClick={clearSelection}>clear</a> : ""}
-                    </div >
-
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-6">
-                    <div className="details-filter-row details-row-size">
-                        <label>Color: </label>
-
-                        <div className="product-nav product-nav-dots">
-                            {colorArray.map((item, index) => (
-                                <a
-                                    href="#"
-                                    className={`${(item.colorName === selectedColorVariant.colorName ? 'active ' : '') + (item?.disabled ? 'disabled' : '')}`}
-                                    style={{ backgroundColor: item.colorName }}
-                                    key={index}
-                                    onClick={e => selectColor(e, item)}
-                                ></a>
-                            ))
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-6">
-                    <div className="details-filter-row details-row-size">
-                        <label>Materials: </label>
-
-                        <div className="product-nav product-nav-dots">
-                            {materialArray.map((item, index) => (
-                                <a
-                                    href="#"
-                                    className={`${(item.colorName == selectedColorVariant.colorName ? 'active ' : '') + (item?.disabled ? 'disabled' : '')}`}
-                                    style={{ backgroundImage: `url(${item.fabricImage})` }}
-                                    key={index}
-                                    onClick={e => selectColor(e, item)}
-                                ></a>
-                            ))
-                            }
-                        </div>
-                    </div>
-                </div>
+                    ))
+                }
             </div>
 
 
@@ -527,19 +276,19 @@ function DetailOne(props) {
                     <div className="row">
                         <div className="col-6">
                             <figure className="product-media">
-                                <ALink href={`/product/default/${product.slug}`}>
+                                <ALink href={`/product/default/${product?.single_product_details?.product?.route}`}>
                                     <img
-                                        src={""} alt="product"
+                                        src={product?.product_single_variation?.product_variation_details?.images[0]?.avatar} alt="product"
                                     // width={product.sm_pictures[0].width}
                                     // height={product.sm_pictures[0].height}
                                     />
                                 </ALink>
                             </figure>
                             <h3 className="product-title">
-                                <ALink href={`/product/default/${product.slug}`}>{product.name}</ALink>
+                                <ALink href={`/product/default/${product?.single_product_details?.product?.route}`}>{product?.single_product_details?.product?.name}</ALink>
                             </h3>
                         </div>
-                        <div className="col-6 justify-content-end">
+                        {/* <div className="col-6 justify-content-end">
                             {
                                 (selectedColorVariant.color && selectedColorVariant.size != "") ?
                                     <div className="product-price">
@@ -579,7 +328,7 @@ function DetailOne(props) {
 
                                 }
                             </div >
-                        </div >
+                        </div > */}
                     </div >
                 </div >
             </div >

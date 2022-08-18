@@ -50,6 +50,7 @@ function Wishlist(props) {
     }, [props.wishlist])
 
     function moveToCart(product) {
+        console.log("product :: ", product)
         props.addToCart(product);
     }
 
