@@ -17,8 +17,9 @@ function DetailOne(props) {
     const [qty2, setQty2] = useState(1);
     const [variationGroup, setVariationGroup] = useState([]);
     const [variationTypeGroup, setVariationTypeGroup] = useState([]);
-    const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
+    // const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
     const [authtoken, setAuthtoken] = useState('');
+    const [selectedVariant, setSelectedVariant] = useState();
 
     useEffect(() => {
 
@@ -30,13 +31,23 @@ function DetailOne(props) {
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
             []));
 
+        let newProduct = product?.product_single_variation?.variation_value_details.map((item) => {
+            return item.variation_values.id;
+        });
+
+        setSelectedVariant(newProduct)
+
     }, [product])
 
-    useEffect(() => {
-        setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
-        setQty(1);
-        setQty2(1);
-    }, [router.query.slug])
+    // useEffect(() => {
+
+    //     setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
+
+    //     setQty(1);
+
+    //     setQty2(1);
+
+    // }, [router.query.slug])
 
     // useEffect(() => {
 
@@ -83,9 +94,9 @@ function DetailOne(props) {
         setQty(current);
     }
 
-    function onChangeQty2(current) {
-        setQty2(current);
-    }
+    // function onChangeQty2(current) {
+    //     setQty2(current);
+    // }
 
     function onCartClick(e, index = 0) {
         e.preventDefault();
@@ -108,6 +119,10 @@ function DetailOne(props) {
     function handelSelectVariantChange(e, id) {
         e.preventDefault();
         console.log("handelSelectVariantChange :: ", id);
+        props.handelselectedVariation(e.target.value)
+        // let updatedproducts = { ...products };
+        // updatedproducts[e.target.name] = e.target.value;
+        // setProducts(updatedproducts);
     }
 
     if (!product) {
@@ -148,7 +163,6 @@ function DetailOne(props) {
 
             <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.single_product_details?.product?.short_description }} />
 
-            {console.log("variationGroup :: ", variationGroup)}
             <div className="row">
                 {variationTypeGroup !== null &&
                     variationTypeGroup?.map((item, index) => (
@@ -160,27 +174,26 @@ function DetailOne(props) {
                                         <select
                                             name={`${item.variant.name}`}
                                             className="form-control"
-                                            value={selectedColorVariant?.item?.variant?.name}
-                                            onChange={(e) => handelSelectVariantChange(e, item.product_variation_id)}
+                                            value={selectedVariant[index]}
+                                            onChange={(e) => handelSelectVariantChange(e, item.id)}
                                         >
                                             <option value="">Select a {item.variant.name}</option>
                                             {variationGroup.map((item2, index2) => (
                                                 item.variant.name === item2.variant.name &&
-                                                <option value={item2.variation_id} key={index2}>{item2.type_value}</option>
-                                            ))
-                                            }
+                                                <option value={item2.id} key={index2}>{item2.type_value}</option>
+                                            ))}
                                         </select>
                                     </div> :
                                     <div className="product-nav product-nav-dots">
                                         {variationGroup.map((item2, index2) => (
                                             item.variant.name === item2.variant.name &&
-                                            <a
-                                                href="#"
-                                                className={`${(item2.name == selectedColorVariant.colorName ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                            <span
+                                                className={`${(item2.id == selectedVariant[index] ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
                                                 style={{ backgroundImage: `url(${item2.type_value})` }}
                                                 key={index2}
-                                                onClick={(e) => handelSelectVariantChange(e, item.product_variation_id)}
-                                            ></a>
+                                                onClick={(e) => handelSelectVariantChange(e, item2.id)}
+                                            >
+                                            </span>
                                         ))
                                         }
                                     </div>
@@ -190,8 +203,6 @@ function DetailOne(props) {
                     ))
                 }
             </div>
-
-
 
             {/* <div className="product product-7 text-center w-100">
                 <figure className="product-media">
@@ -265,10 +276,9 @@ function DetailOne(props) {
             </div >
             <div className="product-details-adv">
                 <ul>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY.png" /></li>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY1.png" /></li>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY2.png" /></li>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY3.png" /></li>
+                {product?.single_product_details?.product?.promotional_images.map(( item, index)=>(
+                    <li key={index}><img src={item.avatar} /></li>
+                ))}
                 </ul>
             </div>
             <div className="sticky-bar d-none">

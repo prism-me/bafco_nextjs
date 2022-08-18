@@ -33,6 +33,7 @@ function ProductInner() {
     const next = data && data.product.next;
     const [product, setProduct] = useState();
     const [pageTitle, setPageTitle] = useState("");
+    const [selectedVariation, setSelectedVariation] = useState();
 
     useEffect(() => {
         // alert("we are here in product")
@@ -44,7 +45,9 @@ function ProductInner() {
             .catch((err) => {
                 console.log(err);
             });
-    }, [query])
+        { console.log("Main :: ", selectedVariation) }
+
+    }, [selectedVariation])
 
     return (
         <div className="main">
@@ -91,7 +94,7 @@ function ProductInner() {
                                 {/* {console.log("product :: ", product)} */}
                                 {
                                     !loading ?
-                                        <DetailOne product={product} subCategory={subCategoryName} />
+                                        <DetailOne product={product} subCategory={subCategoryName} handelselectedVariation={setSelectedVariation} />
                                         : ""
                                 }
                             </div>
