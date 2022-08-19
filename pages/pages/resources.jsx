@@ -70,7 +70,7 @@ function Resources(props) {
 
                     <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
                         <h3>Project References</h3>
-                        <ALink href={"#"} className="btn btn-outline-darker btn-more">
+                        <ALink href={"/pages/project-references"} className="btn btn-outline-darker btn-more">
                             <span>View All Projects</span>
                             <i className="icon-long-arrow-right"></i>
                         </ALink>
