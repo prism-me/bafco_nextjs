@@ -45,7 +45,7 @@ function Resources(props) {
     }, [])
 
     return (
-        <div className="main">
+        <div className="main resources-page">
             <PageHeader
                 title={resourcesdata?.banner?.heading}
                 subTitle={resourcesdata?.banner?.sub_heading}
