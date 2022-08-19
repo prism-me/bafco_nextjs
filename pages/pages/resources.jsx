@@ -11,6 +11,8 @@ import { actions as demoAction } from '~/store/demo';
 import OwlCarousel from '~/components/features/owl-carousel';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Masonry from "react-responsive-masonry";
+import BlogCollection from '~/components/partials/home/blog-collection';
+
 
 import { introSlider, fadeInUpShorter, fabricFinishedSlider } from '~/utils/data';
 const axios = require('axios');
@@ -26,6 +28,18 @@ function Resources(props) {
             console.log(response.data.content);
             setResourcesdata(response.data.content)
         }).catch(function (error) {
+            console.log(error);
+        })
+    }, [])
+
+    const [bloglist, setBlogList] = useState();
+    useEffect(() => {
+
+        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home?en').then(function (response) {
+            // handle success
+            setBlogList(response.data.blogs)
+        }).catch(function (error) {
+            // handle error
             console.log(error);
         })
     }, [])
@@ -54,11 +68,15 @@ function Resources(props) {
             <div className="page-content pb-3">
                 <div className="container">
 
-                    <div className="application-heading text-center mb-3">
+                    <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
                         <h3>Project References</h3>
+                        <ALink href={"#"} className="btn btn-outline-darker btn-more">
+                            <span>View All Projects</span>
+                            <i className="icon-long-arrow-right"></i>
+                        </ALink>
                     </div>
 
-                    <OwlCarousel adClass="owl-simple owl-light owl-nav-inside mb-3 project-references" options={introSlider}>
+                    <OwlCarousel adClass="owl-simple owl-light owl-nav-inside mb-5 project-references" options={introSlider}>
                         {resourcesdata?.projectReferences?.map((item, index) => (
                             <div className="intro-slide slide1" key={index} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image})` }}>
                                 <div className="container intro-content">
@@ -68,7 +86,7 @@ function Resources(props) {
                                         <div className="mb-2" dangerouslySetInnerHTML={{ __html: item.description }} />
 
                                         <ALink href={item.btn_url && item.btn_url === "" || item.btn_url === null || item.btn_url === undefined ? "#" : item.btn_url} className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                                            <span>View More</span>
+                                            <span>Click Here</span>
                                             <i className="icon-long-arrow-right"></i>
                                         </ALink>
                                     </div>
@@ -77,22 +95,50 @@ function Resources(props) {
                         ))}
                     </OwlCarousel>
 
-                    <div className="application-heading text-center mb-3">
+                    <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
                         <h3>Planning Ideas</h3>
+                        <ALink href={"#"} className="btn btn-outline-darker btn-more">
+                            <span> View Planning Ideas</span>
+                            <i className="icon-long-arrow-right"></i>
+                        </ALink>
                     </div>
 
-                    <div className="row plannings-container-ideas mb-3">
+                    <div className="row plannings-container-ideas mb-5">
                         <div className="col-lg-8 col-sm-8 col-xs-12">
-                            <div className="planning-imgs">
+                            <div className="planning-imgs imageWrapper">
                                 <img src={resourcesdata?.planingIdeas[0]?.image} style={{ height: '445px' }} />
+                                <div className="planingContent">
+                                    <p className="lead">Lorem Ipsum</p>
+                                    <h2 className="title">Lorem ipsum dolor sit amet</h2>
+                                    <ALink href={"#"} className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                                        <span>Click Here</span>
+                                        <i className="icon-long-arrow-right"></i>
+                                    </ALink>
+                                </div>
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-4 col-xs-12">
-                            <div className="planning-imgs mb-2">
+                            <div className="planning-imgs mb-2 imageWrapper2">
                                 <img src={resourcesdata?.planingIdeas[1]?.image} />
+                                <div className="planingContent2">
+                                    <p className="lead">Lorem Ipsum</p>
+                                    <h2 className="title">Lorem ipsum dolor sit amet</h2>
+                                    <ALink href={"#"} className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                                        <span>Click Here</span>
+                                        <i className="icon-long-arrow-right"></i>
+                                    </ALink>
+                                </div>
                             </div>
-                            <div className="planning-imgs">
+                            <div className="planning-imgs imageWrapper3">
                                 <img src={resourcesdata?.planingIdeas[2]?.image} />
+                                <div className="planingContent3">
+                                    <p className="lead">Lorem Ipsum</p>
+                                    <h2 className="title">Lorem ipsum dolor sit amet</h2>
+                                    <ALink href={"#"} className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                                        <span>Click Here</span>
+                                        <i className="icon-long-arrow-right"></i>
+                                    </ALink>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -119,13 +165,16 @@ function Resources(props) {
                                         <div className="mb-6">
                                             <Masonry columnsCount={3} gutter="15px">
                                                 {item.categorieBrochures.map((item2, index2) => (
-                                                    <div className="Workspace_img">
+                                                    <div className="workspaceWrper">
                                                         <img
                                                             key={index2}
                                                             src={item2.image}
                                                             style={{ width: "100%", display: "block" }}
                                                         />
-                                                        <h3>{item2.title}</h3>
+                                                        <div className="worspaceContent">
+                                                            <h3>{item2.title}</h3>
+                                                            <p className="lead">Lorem Ipsum</p>
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </Masonry>
@@ -135,28 +184,138 @@ function Resources(props) {
                             </div>
                         </Tabs>
                     </div>
+                    <center>
+                        <ALink href={"#"} className="btn btn-outline-darker btn-more mb-5">
+                            <span>View All Brochures & Images</span>
+                            <i className="icon-long-arrow-right"></i>
+                        </ALink>
+                    </center>
                 </div>
-                <hr className="mb-6"/>
-                <div className="container">
-                    <div className="row plannings-container-ideas mb-3" style={{alignItems: 'center'}}>
-                        <div className="col-lg-4 col-sm-6 col-xs-12">
-                            <div className="application-heading mb-2">
-                                <h3>{resourcesdata?.fabricFinished?.title}</h3>
-                                <p>{resourcesdata?.fabricFinished?.sub_title}</p>
+                {/* <hr className="mb-6" /> */}
+                <div className='fabricwrapper mb-5'>
+                    <div className="container">
+                        <div className="row plannings-container-ideas" style={{ alignItems: 'center' }}>
+                            <div className="col-lg-4 col-sm-6 col-xs-12">
+                                <div className="application-heading mb-3">
+                                    <h3>{resourcesdata?.fabricFinished?.title}</h3>
+                                </div>
+                                <p className="fbsubtitle">{resourcesdata?.fabricFinished?.sub_title}</p>
+                                <div className="mb-2" dangerouslySetInnerHTML={{ __html: resourcesdata?.fabricFinished?.description }} />
+                                <ALink href={"#"} className="btn btn-outline-darker btn-more">
+                                    <span>View All Fabric & Finishes</span>
+                                    <i className="icon-long-arrow-right"></i>
+                                </ALink>
                             </div>
-                            <div className="mb-2" dangerouslySetInnerHTML={{ __html: resourcesdata?.fabricFinished?.description }} />
-                        </div>
-                        <div className="col-lg-8 col-sm-6 col-xs-12">
-                            <OwlCarousel adClass="owl-simple owl-light owl-nav-inside mb-3 fabric_finished" options={fabricFinishedSlider}>
-                                {resourcesdata?.fabricFinished?.fabricFinished_images?.map((item, index) => (
-                                    <div key={index}>
-                                        <img src={item.avatar} style={{ height: '325px' }} />
-                                    </div>
-                                ))}
-                            </OwlCarousel>
+                            <div className="col-lg-8 col-sm-6 col-xs-12">
+                                <OwlCarousel adClass="owl-simple owl-light owl-nav-inside mb-3 fabric_finished" options={fabricFinishedSlider}>
+                                    {resourcesdata?.fabricFinished?.fabricFinished_images?.map((item, index) => (
+                                        <div key={index}>
+                                            <img src={item.avatar} style={{ height: '325px' }} />
+                                        </div>
+                                    ))}
+                                </OwlCarousel>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div className="application-heading mb-3 text-center">
+                    <h3>Video Gallery</h3>
+                </div>
+                <div className='container'>
+                    <div className="row video-gallery mb-5">
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                        <div className="col-lg-3 col-sm-3 col-xs-12">
+                            <div className="planning-imgs videoWrapper">
+                                <img src={resourcesdata?.planingIdeas[0]?.image} className="img-fluid" />
+                                <div className="videoContent">
+                                    <i className="icon-play-outline icon"></i>
+                                </div>
+                            </div>
+                            <p className="videotitle">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <BlogCollection posts={bloglist} />
             </div >
         </div >
     )
