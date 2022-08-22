@@ -120,68 +120,74 @@ function DetailOne(props) {
     }
 
     function handelSelectVariantChange(e, item) {
+        
         e.preventDefault();
         console.log("handelSelectVariantChange :: ", item);
         console.log("e :: ", e.target.value);
+        console.log("selectedVariant :: ", selectedVariant);
 
-        if (!e.target.value) {
-            const newState = selectedVariant.map(obj => {
+        // if (!e.target.value) {
+        const newState = selectedVariant.map(obj => {
 
-                // 👇️ if id equals 2, update country property
+            // 👇️ if id equals 2, update country property
 
-                if (obj.type === item.variant.name) {
-                    return { ...obj, name: item.name, type: item.variant.name, variation_value_id: item.id };
-                }
+            if (obj.type === item.variant.name) {
+                return { ...obj, name: item.name, type: item.variant.name, variation_value_id: item.id };
+            }
 
-                // 👇️ otherwise return object as is
-                return obj;
+            // 👇️ otherwise return object as is
+            return obj;
 
-            });
+        });
 
-            console.log("new State :: ", newState)
+        console.log("new State :: ", newState);
 
-            let currentVariation = newState.map((item) => {
-                let VariationID = [];
-                VariationID = item.variation_value_id
-                return VariationID;
-            });
+        let currentVariation = newState.map((item) => {
+            let VariationID = [];
+            VariationID = item.variation_value_id
+            return VariationID;
+        });
 
-            setSelectedVariant(newState);
+        setSelectedVariant(newState);
 
-            props.handelselectedVariation(currentVariation);
+        props.handelselectedVariation(currentVariation);
 
-            let result = product?.dropDown.filter(o1 => newState.some(o2 => o1.name === o2.name));
+        let result = product?.dropDown.filter(o1 => newState.some(o2 => o1.name === o2.name));
 
-            console.log("result :: ", result);
+        console.log("result :: ", result);
 
-        } else {
-            const newState = selectedVariant.map(obj => {
+        let result2 = result.filter(val => val.product_variation_id === 207);
 
-                console.log("obj :: ", obj);
+        console.log("result2 :: ", result2);
 
-                // 👇️ if id equals 2, update country property
+        // } else {
+        //     const newState = selectedVariant.map(obj => {
 
-                if (obj.variation_value_id === e.target.value) {
-                    return { ...obj, name: item.name, type: item.variant.name, variation_value_id: item.id };
-                }
+        //         console.log("obj :: ", obj);
 
-                // 👇️ otherwise return object as is
-                return obj;
+        //         // 👇️ if id equals 2, update country property
 
-            });
+        //         if (obj.variation_value_id === e.target.value) {
+        //             return { ...obj, name: item.name, type: item.variant.name, variation_value_id: item.id };
+        //         }
 
-            console.log("new State :: ", newState)
+        //         // 👇️ otherwise return object as is
+        //         return obj;
 
-            let currentVariation = newState.map((item) => {
-                let VariationID = [];
-                VariationID = item.variation_value_id
-                return VariationID;
-            });
+        //     });
 
-            setSelectedVariant(newState);
+        //     console.log("new State :: ", newState)
 
-            props.handelselectedVariation(currentVariation);
-        }
+        //     let currentVariation = newState.map((item) => {
+        //         let VariationID = [];
+        //         VariationID = item.variation_value_id
+        //         return VariationID;
+        //     });
+
+        //     setSelectedVariant(newState);
+
+        //     props.handelselectedVariation(currentVariation);
+        // }
 
         // const filtered = product?.dropDown.filter(obj => {
         //     return obj.id === newState.variation_value_id;
