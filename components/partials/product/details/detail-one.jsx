@@ -23,19 +23,22 @@ function DetailOne(props) {
 
     useEffect(() => {
 
+        console.log("productproductproductproduct :: ", product)
+
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
-            acc.find((v) => v.variant.name === curr.variant.name) ? acc : [...acc, curr],
+            acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
             []));
 
         setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
             []));
 
-        let newProduct = product?.product_single_variation?.variation_value_details.map((item) => {
-            return item.variation_values.id;
+        let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
+            let productVariation = { "name": item.variation_values.name, "variation_value_id": item.variation_values.id, "type": item.variation_values.variant.name }
+            return productVariation;
         });
 
-        setSelectedVariant(newProduct)
+        setSelectedVariant(currentProductVariation);
 
     }, [product])
 
@@ -116,13 +119,98 @@ function DetailOne(props) {
         );
     }
 
-    function handelSelectVariantChange(e, id) {
+    function handelSelectVariantChange(e, item) {
         e.preventDefault();
-        console.log("handelSelectVariantChange :: ", id);
-        props.handelselectedVariation(e.target.value)
-        // let updatedproducts = { ...products };
-        // updatedproducts[e.target.name] = e.target.value;
-        // setProducts(updatedproducts);
+        console.log("handelSelectVariantChange :: ", item);
+        console.log("e :: ", e.target.value);
+
+        if (!e.target.value) {
+            const newState = selectedVariant.map(obj => {
+
+                // 👇️ if id equals 2, update country property
+
+                if (obj.type === item.variant.name) {
+                    return { ...obj, name: item.name, type: item.variant.name, variation_value_id: item.id };
+                }
+
+                // 👇️ otherwise return object as is
+                return obj;
+
+            });
+
+            console.log("new State :: ", newState)
+
+            let currentVariation = newState.map((item) => {
+                let VariationID = [];
+                VariationID = item.variation_value_id
+                return VariationID;
+            });
+
+            setSelectedVariant(newState);
+
+            props.handelselectedVariation(currentVariation);
+
+            let result = product?.dropDown.filter(o1 => newState.some(o2 => o1.name === o2.name));
+
+            console.log("result :: ", result);
+
+        } else {
+            const newState = selectedVariant.map(obj => {
+
+                console.log("obj :: ", obj);
+
+                // 👇️ if id equals 2, update country property
+
+                if (obj.variation_value_id === e.target.value) {
+                    return { ...obj, name: item.name, type: item.variant.name, variation_value_id: item.id };
+                }
+
+                // 👇️ otherwise return object as is
+                return obj;
+
+            });
+
+            console.log("new State :: ", newState)
+
+            let currentVariation = newState.map((item) => {
+                let VariationID = [];
+                VariationID = item.variation_value_id
+                return VariationID;
+            });
+
+            setSelectedVariant(newState);
+
+            props.handelselectedVariation(currentVariation);
+        }
+
+        // const filtered = product?.dropDown.filter(obj => {
+        //     return obj.id === newState.variation_value_id;
+        // });
+
+        // const matchVariant = product?.dropDown?.map(obj => {
+
+        //     if (obj.type === item.variant.name) {
+        //         return { ...obj, id: newState.variation_value_id };
+        //     }
+
+        //     // 👇️ otherwise return object as is
+        //     return obj;
+        // })
+
+        // if you want to be more clever...
+
+
+        // let getId;
+        // let result = product?.dropDown.map(dropdown => {
+        //     // debugger;
+        //     // newState.map(y => {
+        //         if (dropdown.name === y.name && dropdown.variant.name === y.type) {
+        //             getId = dropdown;
+        //         }
+        //     // });
+
+        // });
+
     }
 
     if (!product) {
@@ -144,54 +232,55 @@ function DetailOne(props) {
             {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
                 <div className="product-price">
                     <span className="out-price">
-                        {product?.product_single_variation?.product_variation_details.lower_price === product?.product_single_variation?.product_variation_details.upper_price ?
-                            <span>AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
+                        {product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
+                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
                             :
-                            <span>AED{product?.product_single_variation?.product_variation_details.lower_price}&ndash;AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
+                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}&ndash;AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
                         }
                     </span>
                 </div>
                 :
-                product?.product_single_variation?.product_variation_details.lower_price === product?.product_single_variation?.product_variation_details.upper_price ?
-                    <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</div>
+                product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
+                    <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</div>
                     :
                     <div className="product-price">
-                        <span className="new-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
-                        <span className="old-price">AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
+                        <span className="new-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
+                        <span className="old-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
                     </div>
             }
 
             <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.single_product_details?.product?.short_description }} />
 
             <div className="row">
+                {console.log("selectedVariant :: ", selectedVariant)}
                 {variationTypeGroup !== null &&
                     variationTypeGroup?.map((item, index) => (
                         <div className="col-md-6" key={index}>
                             <div className="details-filter-row details-row-size">
-                                <label htmlFor={`${item.variant.name}`}>{item.variant.name}: </label>
-                                {item.type === "1" ?
+                                <label htmlFor={`${item?.variant?.name}`}>{item?.variant?.name}: </label>
+                                {item?.type === "1" ?
                                     <div className="select-custom">
                                         <select
-                                            name={`${item.variant.name}`}
+                                            name={`${item?.variant?.name}`}
                                             className="form-control"
-                                            value={selectedVariant[index]}
-                                            onChange={(e) => handelSelectVariantChange(e, item.id)}
+                                            value={selectedVariant[index]?.variation_value_id}
+                                            onChange={(e) => handelSelectVariantChange(e, item)}
                                         >
-                                            <option value="">Select a {item.variant.name}</option>
+                                            <option value="">Select a {item?.variant?.name}</option>
                                             {variationGroup.map((item2, index2) => (
-                                                item.variant.name === item2.variant.name &&
-                                                <option value={item2.id} key={index2}>{item2.type_value}</option>
+                                                item?.variant?.name === item2?.variant?.name &&
+                                                <option value={item2?.id} key={index2}>{item2?.type_value}</option>
                                             ))}
                                         </select>
                                     </div> :
                                     <div className="product-nav product-nav-dots">
                                         {variationGroup.map((item2, index2) => (
-                                            item.variant.name === item2.variant.name &&
+                                            item?.variant?.name === item2?.variant?.name &&
                                             <span
-                                                className={`${(item2.id == selectedVariant[index] ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                                                style={{ backgroundImage: `url(${item2.type_value})` }}
+                                                className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
                                                 key={index2}
-                                                onClick={(e) => handelSelectVariantChange(e, item2.id)}
+                                                onClick={(e) => handelSelectVariantChange(e, item2)}
                                             >
                                             </span>
                                         ))
@@ -276,9 +365,9 @@ function DetailOne(props) {
             </div >
             <div className="product-details-adv">
                 <ul>
-                {product?.single_product_details?.product?.promotional_images.map(( item, index)=>(
-                    <li key={index}><img src={item.avatar} /></li>
-                ))}
+                    {product?.single_product_details?.product?.promotional_images.map((item, index) => (
+                        <li key={index}><img src={item.avatar} /></li>
+                    ))}
                 </ul>
             </div>
             <div className="sticky-bar d-none">
@@ -307,19 +396,19 @@ function DetailOne(props) {
                                     :
                                     product.stock == 0 ?
                                         <div className="product-price">
-                                            <span className="out-price">AED{product.price}</span>
+                                            <span className="out-price">AED {product.price}</span>
                                         </div>
                                         :
                                         product?.product_single_variation?.product_variation_details.lower_price == product?.product_single_variation?.product_variation_details.upper_price ?
-                                            <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</div>
+                                            <div className="product-price">AED {product?.product_single_variation?.product_variation_details.lower_price}</div>
                                             :
                                             product?.variations?.length == 0 ?
                                                 <div className="product-price">
-                                                    <span className="new-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
-                                                    <span className="old-price">AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
+                                                    <span className="new-price">AED {product?.product_single_variation?.product_variation_details.lower_price}</span>
+                                                    <span className="old-price">AED {product?.product_single_variation?.product_variation_details.upper_price}</span>
                                                 </div>
                                                 :
-                                                <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price} &ndash; AED{product?.product_single_variation?.product_variation_details.upper_price}</div>
+                                                <div className="product-price">AED {product?.product_single_variation?.product_variation_details.lower_price} &ndash; AED {product?.product_single_variation?.product_variation_details.upper_price}</div>
                             }
                             <Qty changeQty={onChangeQty2} max={product.stock} value={qty2}></Qty>
                             <div className="product-details-action">

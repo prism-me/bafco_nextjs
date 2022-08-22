@@ -91,7 +91,7 @@ function TermsOfService() {
 
                         <h6 className="mt-3">SECTION 10 - PERSONAL INFORMATION</h6>
                         <p> Your submission of personal information through the store is governed by our Privacy Policy. To view our Privacy Policy.
-                            Our store is hosted on Shopify, if you make a payment for our products or services on our website, the details you are asked to submit will be provided directly to our payment provider via a secured connection. The cardholder must retain a copy of transaction records and Merchant policies and rules. We accept payments online using Visa and MasterCard credit/debit card in AED.</p>
+                            Our store is hosted on Shopify, if you make a payment for our products or services on our website, the details you are asked to submit will be provided directly to our payment provider via a secured connection. The cardholder must retain a copy of transaction records and Merchant policies and rules. We accept payments online using Visa and MasterCard credit/debit card in AED .</p>
 
                         <h6 className="mt-3">SECTION 11 - ERRORS, INACCURACIES AND OMISSIONS</h6>
                         <p> Occasionally there may be information on our site or in the Service that contains typographical errors, inaccuracies or omissions that may relate to product descriptions, pricing, promotions, offers, product shipping charges, transit times and availability. We reserve the right to correct any errors, inaccuracies or omissions, and to change or update information or cancel orders if any information in the Service or on any related website is inaccurate at any time without prior notice (including after you have submitted your order).

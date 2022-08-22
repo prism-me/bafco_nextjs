@@ -124,19 +124,19 @@ function Wishlist(props) {
                                         <td className="price-col">
                                             {product?.variation[0]?.in_stock === 0 ?
                                                 <div className="product-price d-inline-block mb-0">
-                                                    <span className="out-price">AED{product?.variation[0]?.lower_price}</span>
+                                                    <span className="out-price">AED {product?.variation[0]?.lower_price}</span>
                                                 </div>
                                                 :
                                                 product?.variation[0]?.lower_price === product?.variation[0]?.upper_price ?
-                                                    <div className="product-price d-inline-block mb-0">AED{product?.variation[0]?.lower_price}</div>
+                                                    <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.lower_price}</div>
                                                     :
                                                     // product.variations.length === 0 ?
                                                     <div className="product-price d-inline-block mb-0">
-                                                        <span className="new-price">AED{product?.variation[0]?.lower_price}</span>
-                                                        <span className="old-price">AED{product?.variation[0]?.upper_price}</span>
+                                                        <span className="new-price">AED {product?.variation[0]?.lower_price}</span>
+                                                        <span className="old-price">AED {product?.variation[0]?.upper_price}</span>
                                                     </div>
                                                 // :
-                                                // <div className="product-price d-inline-block mb-0">AED{product.productvariations.lower_price}&ndash;AED{product.productvariations.upper_price}</div>
+                                                // <div className="product-price d-inline-block mb-0">AED {product.productvariations.lower_price}&ndash;AED {product.productvariations.upper_price}</div>
                                             }
                                         </td>
                                         <td className="stock-col">

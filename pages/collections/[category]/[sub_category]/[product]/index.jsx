@@ -33,19 +33,48 @@ function ProductInner() {
     const next = data && data.product.next;
     const [product, setProduct] = useState();
     const [pageTitle, setPageTitle] = useState("");
-    const [selectedVariation, setSelectedVariation] = useState();
+    const [selectedVariation, setSelectedVariation] = useState("");
 
     useEffect(() => {
         // alert("we are here in product")
         setPageTitle(query?.product.replace('-', ' '));
-        API.get(`/product-detail/${query?.product}`)
-            .then((response) => {
-                setProduct(response?.data)
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+
         { console.log("Main :: ", selectedVariation) }
+
+        if (selectedVariation !== "") {
+            let formdata = {
+                'product_id': product?.single_product_details?.product?.id,
+                'item': selectedVariation,
+            };
+
+            API.post(`/variation-change`, formdata)
+                .then((response) => {
+                    // setProduct(response?.data)
+                    console.log("post :: ", response.data)
+                    let data = response.data.product_single_variation
+                    let updateProduct;
+                    // if (response === item.variant.name) {
+                    product.product_single_variation = data
+                    // }
+                    console.log("productproduct :: ", product)
+                    setProduct(product);
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+
+            API.get(`/product-detail/${query?.product}`)
+                .then((response) => {
+                    setProduct(response.data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+
+
 
     }, [selectedVariation])
 
@@ -92,11 +121,7 @@ function ProductInner() {
                                     </div>
                                 </div>
                                 {/* {console.log("product :: ", product)} */}
-                                {
-                                    !loading ?
-                                        <DetailOne product={product} subCategory={subCategoryName} handelselectedVariation={setSelectedVariation} />
-                                        : ""
-                                }
+                                <DetailOne product={product} subCategory={subCategoryName} handelselectedVariation={setSelectedVariation} />
                             </div>
                         </div>
                     </div>

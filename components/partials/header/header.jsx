@@ -132,7 +132,7 @@ function Header() {
                                                 <div className="header-menu">
                                                     <ul>
                                                         <li><ALink href="#">USD</ALink></li>
-                                                        <li><ALink href="#">AED</ALink></li>
+                                                        <li><ALink href="#">AED </ALink></li>
                                                     </ul>
                                                 </div>
                                             </div>

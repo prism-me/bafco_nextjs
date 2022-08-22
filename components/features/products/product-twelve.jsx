@@ -134,19 +134,19 @@ function ProductTwelve(props) {
 
                 {!product?.productvariations.in_stock || product?.productvariations.in_stock == 0 ?
                     <div className="product-price">
-                        <span className="out-price">AED{product?.productvariations.lower_price}</span>
+                        <span className="out-price">AED {product?.productvariations.lower_price}</span>
                     </div>
                     :
                     product?.productvariations.lower_price == product?.productvariations.upper_price ?
-                        <div className="product-price">AED{product?.productvariations.lower_price}</div>
+                        <div className="product-price">AED {product?.productvariations.lower_price}</div>
                         :
                         product?.variants?.length == 0 ?
                             <div className="product-price">
-                                <span className="new-price">AED{product?.productvariations.lower_price}</span>
-                                <span className="old-price">AED{product?.productvariations.upper_price}</span>
+                                <span className="new-price">AED {product?.productvariations.lower_price}</span>
+                                <span className="old-price">AED {product?.productvariations.upper_price}</span>
                             </div>
                             :
-                            <div className="product-price">AED{product?.productvariations.lower_price}&ndash;AED{product?.productvariations.upper_price}
+                            <div className="product-price">AED {product?.productvariations.lower_price}&ndash;AED {product?.productvariations.upper_price}
                             </div>
                 }
 
