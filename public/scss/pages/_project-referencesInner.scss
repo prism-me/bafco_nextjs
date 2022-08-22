@@ -1,0 +1,72 @@
+// planing section css
+$forest-green: #008482;
+$primary-color: #EE3124;
+
+.prefrencesInner-page {
+    .breadcrumb-nav {
+        border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
+    }
+    .referencesinnerwrapper {
+
+        h3 {
+            font-weight: 500;
+            font-size: 30px;
+        }
+
+        .prefresubheading {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 20px;
+        }
+
+        .prefresubtitle {
+            margin-bottom: 1rem;
+        }
+
+        .btnWrapper{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        .btn {
+            color: #fff;
+            border-color: $primary-color;
+            background: $primary-color;
+            font-size: 15px;
+            width: 100%;
+    margin-right: 2rem;
+    &:last-child{
+    margin-right: 0;
+    }
+
+            &:hover {
+                color: $primary-color;
+                border-color: $primary-color;
+                background: #fff;
+            }
+        }
+    }
+    }
+
+    .owl-carousel .owl-item img {
+        height: 250px;
+    } 
+    
+    .owl-simple.owl-nav-inside .owl-dots{
+        bottom: -40px;
+    }
+
+    .owl-simple.owl-light.owl-nav-inside .owl-dots .owl-dot.active span {
+        border-color: #525151;
+        background: #525151;
+    }
+
+    .owl-simple .owl-dots .owl-dot span{
+        border-color: #a39c9c;
+        background: #a39c9c;
+    }
+
+    .top-management-application-slider .owl-nav [class*=owl-]{
+        background: transparent;
+    }
+
+}

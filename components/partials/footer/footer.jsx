@@ -61,7 +61,7 @@ function Footer() {
                                     <li><ALink href="#">Delivery & Installation</ALink></li>
                                     <li><ALink href="#">Fabric & Finishes</ALink></li>
                                     <li><ALink href="#">Warranty</ALink></li>
-                                    <li><ALink href="#">Project References</ALink></li>
+                                    <li><ALink href="/project-references/">Project References</ALink></li>
                                     <li><ALink href="#">Testimonials</ALink></li>
                                     <li><ALink href="/blogs/">BLOGS/ Insights</ALink></li>
                                 </ul>

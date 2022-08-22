@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useQuery } from "@apollo/react-hooks";
 import ALink from '~/components/features/alink';
-import { GET_HOME_DATA } from '~/server/queries';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import withApollo from '~/server/apollo';
-import { connect } from 'react-redux';
-import { actions as demoAction } from '~/store/demo';
-import OwlCarousel from '~/components/features/owl-carousel';
-import Masonry from "react-responsive-masonry";
-import { fabricFinishedSlider } from '~/utils/data';
+import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
 const axios = require('axios');
 
-function ProjectReferences(props) {
-    const { data, loading, error } = useQuery(GET_HOME_DATA);
-    const posts = data && data.homeData.posts;
+function ProjectReferences() {
 
     const [resourcesdata, setResourcesdata] = useState();
 
@@ -24,6 +16,7 @@ function ProjectReferences(props) {
             console.log(error);
         })
     }, [])
+
 
     return (
         <div className="main prefrences-page">
@@ -73,22 +66,30 @@ function ProjectReferences(props) {
                             <div className="tab-pane tab-content">
                                 {resourcesdata?.brochures?.map((item, index) => (
                                     <TabPanel key={index}>
-                                        <div className="mb-6">
-                                            <Masonry columnsCount={4} gutter="15px">
+                                        <div className="mb-5">
+                                        <ResponsiveMasonry
+                                              columnsCountBreakPoints={{
+                                                   1100: 3,
+                                                   700: 2,
+                                                   500: 1}}>
+                                            <Masonry gutter="2rem">
                                                 {item.categorieBrochures.map((item2, index2) => (
                                                     <div className="furnitureWrper">
+                                                        <ALink href={`/project-references/${item2.route}`}>
                                                         <img
                                                             key={index2}
                                                             src={item2.image}
                                                             style={{ width: "100%", height: "250px", display: "block" }}
                                                         />
+                                                        </ALink>
                                                         <div className="furnitureContent">
-                                                            <p className="lead">Lorem Ipsum</p>
+                                                            <p className="lead">Category</p>
                                                             <h3>{item2.title}</h3>
                                                         </div>
                                                     </div>
                                                 ))}
                                             </Masonry>
+                                            </ResponsiveMasonry>
                                         </div>
                                     </TabPanel>
                                 ))}
@@ -160,6 +161,4 @@ function ProjectReferences(props) {
     )
 }
 
-// export default React.memo(Innovations);
-// export default withApollo({ ssr: typeof window == 'undefined' })(Innovations);
-export default withApollo({ ssr: typeof window == undefined })(connect(null, { ...demoAction })(ProjectReferences));
+export default withApollo({ ssr: typeof window == undefined })(ProjectReferences);
