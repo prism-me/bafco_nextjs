@@ -2,251 +2,280 @@
 $forest-green: #008482;
 
 .resources-page {
-    .plannings-container-ideas {
-        .imageWrapper {
-            position: relative;
-            color: white;
+  .plannings-container-ideas {
+    .imageWrapper {
+      position: relative;
+      color: white;
 
-            &::before {
-                content: "";
-                position: absolute;
-                background: rgba(0, 0, 0, 0.5);
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
+      &::before {
+        content: "";
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
 
-            .planingContent {
-                position: absolute;
-                top: 30%;
-                left: 10%;
+      .planingContent {
+        position: absolute;
+        top: 30%;
+        left: 10%;
 
-                .lead {
-                    color: #FFFFFF;
-                    opacity: 0.6;
-                }
-
-                .title {
-                    font-weight: 500;
-                    margin-bottom: 1.5rem;
-                    color: #fff;
-                }
-
-                .btn {
-                    color: #fff;
-                    border-color: $forest-green;
-                    background: $forest-green;
-                    font-size: 15px;
-
-                    &:hover {
-                        color: $forest-green;
-                        border-color: #fff;
-                        background: #fff;
-                    }
-                }
-            }
+        .lead {
+          color: #ffffff;
+          opacity: 0.6;
         }
 
-        .imageWrapper2 {
-            position: relative;
-            color: white;
-
-            &::before {
-                content: "";
-                position: absolute;
-                background: rgba(0, 0, 0, 0.5);
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
-
-            .planingContent2 {
-                position: absolute;
-                top: 25%;
-                left: 10%;
-
-                .lead {
-                    color: #FFFFFF;
-                    opacity: 0.6;
-                }
-
-                .title {
-                    font-weight: 500;
-                    margin-bottom: 1.5rem;
-                    color: #fff;
-                    font-size: 20px;
-                }
-
-                .btn {
-                    color: $forest-green;
-                    border: none;
-                    background: transparent;
-                    font-size: 15px;
-                    padding: 0;
-                    margin: 0;
-                    min-width: fit-content;
-
-                    &:hover {
-                        color: #fff;
-                    }
-                }
-            }
-        }
-
-        .imageWrapper3 {
-            position: relative;
-            color: #000000;
-
-            &::before {
-                content: "";
-                position: absolute;
-                background: rgba(255, 255, 255, 0.6);
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
-
-            .planingContent3 {
-                position: absolute;
-                top: 25%;
-                left: 10%;
-
-                .lead {
-                    color: #000000;
-                    opacity: 0.6;
-                }
-
-                .title {
-                    font-weight: 500;
-                    margin-bottom: 1.5rem;
-                    color: #000000;
-                    font-size: 20px;
-                }
-
-                .btn {
-                    color: $forest-green;
-                    border: none;
-                    background: transparent;
-                    font-size: 15px;
-                    padding: 0;
-                    margin: 0;
-                    min-width: fit-content;
-
-                    &:hover {
-                        color: #000000;
-                    }
-                }
-            }
-
-        }
-    }
-
-    .workspaceWrper {
-        position: relative;
-        color: white;
-
-        &::before {
-            content: "";
-            position: absolute;
-            background: rgba(0, 0, 0, 0.3);
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
-
-        .worspaceContent {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            text-align: center;
-
-            .lead {
-                color: #fff;
-                opacity: 0.6;
-                margin-bottom: 1rem;
-            }
-
-            h3 {
-                font-weight: 500;
-                margin-bottom: 1rem;
-                color: #fff;
-                font-size: 20px;
-            }
-        }
-    }
-
-    .fabricwrapper {
-        background: rgba(0, 0, 0, 0.02);
-        padding: 5rem 0;
-
-        .fbsubtitle {
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-    }
-
-    .video-gallery {
-        .videotitle {
-            font-weight: 500;
-            margin: 1rem 0rem 2rem 0rem;
-            color: #000;
-            font-size: 18px;
-            opacity: 0.6;
-            line-height: normal;
-        }
-
-        .videoWrapper {
-            position: relative;
-            color: white;
-
-            &::before {
-                content: "";
-                position: absolute;
-                background: rgba(0, 0, 0, 0.3);
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
-
-            img {
-                height: 220px;
-            }
-
-            .videoContent {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-
-                .icon {
-                    color: #FFFFFF;
-                    font-size: 30px;
-                    border: 2px solid white;
-                    border-radius: 100%;
-                    padding: 0.4rem 0.7rem;
-                }
-            }
-        }
-    }
-
-    .blog-posts {
         .title {
-            margin-bottom: 3rem !important;
-            font-weight: 500 !important;
-            line-height: 1.1 !important;
-            color: #000 !important;
-            font-size: 3rem !important;
+          font-weight: 500;
+          margin-bottom: 1.5rem;
+          color: #fff;
         }
 
-        .blogbtnwrapper {
-            margin-bottom: 2rem !important;
+        .btn {
+          color: #fff;
+          border-color: $forest-green;
+          background: $forest-green;
+          font-size: 15px;
+
+          &:hover {
+            color: $forest-green;
+            border-color: #fff;
+            background: #fff;
+          }
         }
+      }
     }
+
+    .imageWrapper2 {
+      position: relative;
+      color: white;
+
+      &::before {
+        content: "";
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .planingContent2 {
+        position: absolute;
+        top: 25%;
+        left: 10%;
+
+        .lead {
+          color: #ffffff;
+          opacity: 0.6;
+        }
+
+        .title {
+          font-weight: 500;
+          margin-bottom: 1.5rem;
+          color: #fff;
+          font-size: 20px;
+        }
+
+        .btn {
+          color: $forest-green;
+          border: none;
+          background: transparent;
+          font-size: 15px;
+          padding: 0;
+          margin: 0;
+          min-width: fit-content;
+
+          &:hover {
+            color: #fff;
+          }
+        }
+      }
+    }
+
+    .imageWrapper3 {
+      position: relative;
+      color: #000000;
+
+      &::before {
+        content: "";
+        position: absolute;
+        background: rgba(255, 255, 255, 0.6);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .planingContent3 {
+        position: absolute;
+        top: 25%;
+        left: 10%;
+
+        .lead {
+          color: #000000;
+          opacity: 0.6;
+        }
+
+        .title {
+          font-weight: 500;
+          margin-bottom: 1.5rem;
+          color: #000000;
+          font-size: 20px;
+        }
+
+        .btn {
+          color: $forest-green;
+          border: none;
+          background: transparent;
+          font-size: 15px;
+          padding: 0;
+          margin: 0;
+          min-width: fit-content;
+
+          &:hover {
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+
+  .workspaceWrper {
+    position: relative;
+    color: white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      background: rgba(0, 0, 0, 0.3);
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .worspaceContent {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      text-align: center;
+
+      .lead {
+        color: #fff;
+        opacity: 0.6;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-weight: 500;
+        margin-bottom: 1rem;
+        color: #fff;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .fabricwrapper {
+    background: rgba(0, 0, 0, 0.02);
+    padding: 5rem 0;
+
+    .fbsubtitle {
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .video-gallery {
+    .videotitle {
+      font-weight: 500;
+      margin: 1rem 0rem 2rem 0rem;
+      color: #000;
+      font-size: 18px;
+      opacity: 0.6;
+      line-height: normal;
+    }
+
+    .videoWrapper {
+      position: relative;
+      color: white;
+
+      &::before {
+        content: "";
+        position: absolute;
+        background: rgba(0, 0, 0, 0.3);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      img {
+        width: 100%;
+        display: block;
+      }
+
+      .videoContent {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .icon {
+          color: #ffffff;
+          font-size: 30px;
+          border: 2px solid white;
+          border-radius: 100%;
+          padding: 0.4rem 0.7rem;
+        }
+      }
+    }
+
+    .videoWrapper2 {
+      position: relative;
+      color: white;
+
+      &::before {
+        content: "";
+        position: absolute;
+        background: rgba(238, 49, 36, 0.71);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      img {
+        width: 100%;
+        display: block;
+      }
+
+      .videoContent2 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .blog-posts {
+    .title {
+      margin-bottom: 3rem !important;
+      font-weight: 500 !important;
+      line-height: 1.1 !important;
+      color: #000 !important;
+      font-size: 3rem !important;
+    }
+
+    .blogbtnwrapper {
+      margin-bottom: 2rem !important;
+    }
+  }
 }
