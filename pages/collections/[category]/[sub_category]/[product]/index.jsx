@@ -38,28 +38,27 @@ function ProductInner() {
     const [randomProducts, setRandomProducts] = useState();
 
     useEffect(() => {
+
         // alert("we are here in product")
+
         setPageTitle(query?.product.replace('-', ' '));
 
         { console.log("Main :: ", selectedVariation) }
 
         if (selectedVariation !== "") {
-            let formdata = {
-                'product_id': product?.single_product_details?.product?.id,
-                'item': selectedVariation,
-            };
 
-            API.post(`/variation-change`, formdata)
+            API.get(`/product-detail/${query?.product}/${selectedVariation}`)
                 .then((response) => {
+
                     // setProduct(response?.data)
-                    console.log("post :: ", response.data)
-                    let data = response.data.product_single_variation
-                    let updateProduct;
-                    // if (response === item.variant.name) {
-                    product.product_single_variation = data
-                    // }
-                    console.log("productproduct :: ", product)
-                    setProduct(product);
+                    // console.log("post :: ", response.data)
+                    // let data = response.data.product_single_variation
+                    // let updateProduct;
+                    // // if (response === item.variant.name) {
+                    // product.product_single_variation = data
+                    // // }
+                    console.log("productproduct :: ", response?.data)
+                    // setProduct(product);
 
                 })
                 .catch((err) => {
@@ -94,14 +93,14 @@ function ProductInner() {
 
     return (
         <div className="main">
-            <PageHeader
+            {/* <PageHeader
                 title={pageTitle}
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/cat_banner.png"
                 buttonText="Discover More"
                 buttonUrl="#"
-            />
-            <nav className="breadcrumb-nav mb-2">
+            /> */}
+            <nav className="breadcrumb-nav mb-6">
                 <div className="container">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -140,28 +139,25 @@ function ProductInner() {
                         </div>
                     </div>
 
-                    <div className="product-lg position-relative mb-5">
-                        {/* {
-                            product?.stock == 0 ?
-                                <span className="product-label label-out">Out of Stock</span>
-                                : ""
-                        } */}
-                        <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>
-                            {product?.single_product_details?.product?.album.map((item, index) =>
-                                <Magnifier
-                                    imageSrc={item.avatar}
-                                    imageAlt="product"
-                                    largeImageSrc={item.avatar} // Optional
-                                    dragToMove={false}
-                                    mouseActivation="hover"
-                                    cursorStyleActive="crosshair"
-                                    className="product-gallery-image"
-                                    style={{ paddingTop: `${424 / 405 * 100}%` }}
-                                    key={"gallery-" + index}
-                                />
-                            )}
-                        </OwlCarousel>
-                    </div>
+                    {product?.single_product_details?.product?.album?.length === 0 ? "" :
+                        <div className="product-lg position-relative mb-5">
+                            <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>
+                                {product?.single_product_details?.product?.album.map((item, index) =>
+                                    <Magnifier
+                                        imageSrc={item.avatar}
+                                        imageAlt="product"
+                                        largeImageSrc={item.avatar} // Optional
+                                        dragToMove={false}
+                                        mouseActivation="hover"
+                                        cursorStyleActive="crosshair"
+                                        className="product-gallery-image"
+                                        style={{ paddingTop: `${424 / 405 * 100}%` }}
+                                        key={"gallery-" + index}
+                                    />
+                                )}
+                            </OwlCarousel>
+                        </div>
+                    }
                     <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
                     <RelatedProductsOne relatedproducts={relatedProducts} randomProduct={randomProducts} loading={loading} />
                 </div >

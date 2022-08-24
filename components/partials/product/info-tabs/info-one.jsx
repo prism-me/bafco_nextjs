@@ -49,27 +49,35 @@ function InfoOne(props) {
 
     return (
         <Tabs selectedTabClassName="show" selectedTabPanelClassName="active show">
+            {console.log("product :: ", product)}
             <div className="product-details-tab">
                 <TabList className="nav nav-pills justify-content-center">
-                    <Tab className="nav-item">
-                        <span className="nav-link"> Description</span>
-                    </Tab>
+                    {!product?.product?.long_description ? "" :
+                        <Tab className="nav-item">
+                            <span className="nav-link"> Description</span>
+                        </Tab>
+                    }
 
-                    <Tab className="nav-item">
-                        <span className="nav-link"> Resources</span>
-                    </Tab>
+                    {!product?.product?.download ? "" :
+                        <Tab className="nav-item">
+                            <span className="nav-link"> Resources</span>
+                        </Tab>
+                    }
 
-                    <Tab className="nav-item">
-                        <span className="nav-link">Shipping & Returns</span>
-                    </Tab>
+                    {!product?.product?.shiping_and_return ? "" :
+                        <Tab className="nav-item">
+                            <span className="nav-link">Shipping & Returns</span>
+                        </Tab>
+                    }
 
                     <Tab className="nav-item">
                         <span className="nav-link">Dimensions</span>
                     </Tab>
-
-                    <Tab className="nav-item">
-                        <span className="nav-link">Colours & Materials</span>
-                    </Tab>
+                    {product?.footrest?.length === 0 || product?.headrest?.length === 0 ? "" :
+                        <Tab className="nav-item">
+                            <span className="nav-link">Colours & Materials</span>
+                        </Tab>
+                    }
 
                     <Tab className="nav-item">
                         {/* <span className="nav-link" >Reviews ({product?.review})</span> */}
@@ -78,32 +86,38 @@ function InfoOne(props) {
                 </TabList>
 
                 <div className="tab-content">
-                    <TabPanel className="tab-pane">
-                        <div className="product-desc-content">
-                            <h3>Product Information</h3>
-                            <div className="mb-2" dangerouslySetInnerHTML={{ __html: product?.product?.long_description }} />
-                        </div>
-                    </TabPanel>
+                    {!product?.product?.long_description ? "" :
+                        <TabPanel className="tab-pane">
+                            <div className="product-desc-content">
+                                <h3>Product Information</h3>
+                                <div className="mb-2" dangerouslySetInnerHTML={{ __html: product?.product?.long_description }} />
+                            </div>
+                        </TabPanel>
+                    }
 
-                    <TabPanel className="tab-pane">
-                        <div className="product-desc-content">
-                            <a href={product?.download} target="_blank">
-                                <img className="mb-2" src="images/products/Component197.png" />
-                                <div className="pl-sm-2">
-                                    <h3>Office Chair Brochure</h3>
-                                    <p>Brochure</p>
-                                    <p>Visit us : <a href="bit.ly/BAFCOCHAIR">bit.ly/BAFCOCHAIR</a></p>
-                                </div>
-                            </a>
-                        </div>
-                    </TabPanel>
+                    {!product?.product?.download ? "" :
+                        <TabPanel className="tab-pane">
+                            <div className="product-desc-content">
+                                <a href={product?.download} target="_blank">
+                                    <img className="mb-2" src="images/products/Component197.png" />
+                                    <div className="pl-sm-2">
+                                        <h3>Office Chair Brochure</h3>
+                                        <p>Brochure</p>
+                                        <p>Visit us : <a href="bit.ly/BAFCOCHAIR">bit.ly/BAFCOCHAIR</a></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </TabPanel>
+                    }
 
-                    <TabPanel className="tab-pane">
-                        <div className="product-desc-content">
-                            <h3>Delivery & returns</h3>
-                            <div className="mb-2" dangerouslySetInnerHTML={{ __html: product?.product?.shiping_and_return }} />
-                        </div>
-                    </TabPanel>
+                    {!product?.product?.shiping_and_return ? "" :
+                        <TabPanel className="tab-pane">
+                            <div className="product-desc-content">
+                                <h3>Delivery & returns</h3>
+                                <div className="mb-2" dangerouslySetInnerHTML={{ __html: product?.product?.shiping_and_return }} />
+                            </div>
+                        </TabPanel>
+                    }
 
                     <TabPanel className="tab-pane">
                         <div className="product-desc-content">
@@ -117,68 +131,77 @@ function InfoOne(props) {
                                     <th>Height (mm)</th>
                                 </thead>
                                 <tbody className="text-center">
-                                    {dimension?.map((dimension, i) => (
-                                        <tr key={i}>
-                                            <td><img src={dimension.images.avatar} style={{ height: "90px", margin: "0px auto" }} /></td>
-                                            <td>{dimension.code}</td>
-                                            <td>{dimension.depth}</td>
-                                            <td>{dimension.width}</td>
-                                            <td>{dimension.height}</td>
-                                        </tr>
-                                    ))}
+                                    {dimension?.length !== 0 &&
+                                        dimension?.map((dimension, i) => (
+                                            <tr key={i}>
+                                                <td><img src={dimension.images.avatar} style={{ height: "90px", margin: "0px auto" }} /></td>
+                                                <td>{dimension.code}</td>
+                                                <td>{dimension.depth}</td>
+                                                <td>{dimension.width}</td>
+                                                <td>{dimension.height}</td>
+                                            </tr>
+                                        ))}
                                 </tbody>
                             </table>
                         </div>
                     </TabPanel>
-
-                    <TabPanel className="tab-pane">
-                        <div className="product-desc-content color_tabpanel">
-                            {/* <h3>Colours & Materials</h3> */}
-                            <Tabs selectedTabClassName="show" selectedTabPanelClassName="active show">
-                                <TabList className="nav nav-pills">
-                                    <Tab className="nav-item">
-                                        <span className="nav-link"> Seat / Footrest</span>
-                                    </Tab>
-
-                                    <Tab className="nav-item">
-                                        <span className="nav-link"> Backrest / Headrest</span>
-                                    </Tab>
-                                </TabList>
-                                <div className="tab-content">
-                                    <TabPanel className="tab-pane">
-                                        <div className="color_sampel">
-                                            <ul>
-                                                {product?.footrest?.map((item, index) => (
-                                                    <li key={index}>
-                                                        {item.type === '3' ?
-                                                            <img src={item?.type_value} /> :
-                                                            <span style={{ backgroundColor: item.type_value }}></span>
-                                                        }
-                                                        <p>{item.name}</p>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </TabPanel>
-                                    <TabPanel className="tab-pane">
-                                        <div className="color_sampel">
-                                            <ul>
-                                                {product?.headrest?.map((item, index) => (
-                                                    <li key={index}>
-                                                        {item.type === '3' ?
-                                                            <img src={item?.type_value} /> :
-                                                            <span style={{ backgroundColor: item.type_value }}></span>
-                                                        }
-                                                        <p>{item.name}</p>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </TabPanel>
-                                </div>
-                            </Tabs>
-                        </div>
-                    </TabPanel>
+                    {product?.footrest?.length === 0 || product?.headrest?.length === 0 ? "" :
+                        <TabPanel className="tab-pane">
+                            <div className="product-desc-content color_tabpanel">
+                                {/* <h3>Colours & Materials</h3> */}
+                                <Tabs selectedTabClassName="show" selectedTabPanelClassName="active show">
+                                    <TabList className="nav nav-pills">
+                                        {product?.footrest?.length === 0 ? " " :
+                                            < Tab className="nav-item">
+                                                <span className="nav-link"> Seat / Footrest</span>
+                                            </Tab>
+                                        }
+                                        {product?.headrest?.length === 0 ? " " :
+                                            <Tab className="nav-item">
+                                                <span className="nav-link"> Backrest / Headrest</span>
+                                            </Tab>
+                                        }
+                                    </TabList>
+                                    <div className="tab-content">
+                                        {product?.footrest?.length === 0 ? " " :
+                                            <TabPanel className="tab-pane">
+                                                <div className="color_sampel">
+                                                    <ul>
+                                                        {product?.footrest?.map((item, index) => (
+                                                            <li key={index}>
+                                                                {item.type === '3' ?
+                                                                    <img src={item?.type_value} /> :
+                                                                    <span style={{ backgroundColor: item.type_value }}></span>
+                                                                }
+                                                                <p>{item.name}</p>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </TabPanel>
+                                        }
+                                        {product?.headrest?.length === 0 ? " " :
+                                            <TabPanel className="tab-pane">
+                                                <div className="color_sampel">
+                                                    <ul>
+                                                        {product?.headrest?.map((item, index) => (
+                                                            <li key={index}>
+                                                                {item.type === '3' ?
+                                                                    <img src={item?.type_value} /> :
+                                                                    <span style={{ backgroundColor: item.type_value }}></span>
+                                                                }
+                                                                <p>{item.name}</p>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </TabPanel>
+                                        }
+                                    </div>
+                                </Tabs>
+                            </div>
+                        </TabPanel>
+                    }
 
                     <TabPanel className="tab-pane">
                         <div className="reviews">
@@ -187,7 +210,6 @@ function InfoOne(props) {
                                 <div className="row no-gutters">
                                     <div className="col-auto">
                                         <h4><ALink href="#">Samanta J.</ALink></h4>
-
                                         <div className="ratings-container">
                                             <div className="ratings">
                                                 <div className="ratings-val" style={{ width: product?.ratings * 20 + '%' }}></div>
@@ -327,7 +349,7 @@ function InfoOne(props) {
                     </TabPanel>
                 </div>
             </div>
-        </Tabs>
+        </Tabs >
     );
 }
 

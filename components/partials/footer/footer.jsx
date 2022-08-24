@@ -32,7 +32,7 @@ function Footer() {
                         <div className="col-sm-6 col-lg-3">
                             <div className="widget widget-about">
                                 <img src="images/bafco-logo.png" className="footer-logo" alt="Footer Logo" width="150" />
-                                <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
+                                <p>We believe that the workplace is where you can be your best self, and we've been making happy workplaces since 1991.<br />Great interiors, delivered.</p>
 
                                 <div className="widget-about-info">
                                     {/* <div className="social-icons social-icons-color"> */}
