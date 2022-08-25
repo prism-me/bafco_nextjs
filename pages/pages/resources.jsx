@@ -190,7 +190,7 @@ function Resources(props) {
           <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
             <h3>Planning Ideas</h3>
             <ALink
-              href={"/planing-ideas/"}
+              href={"/planning-ideas/"}
               className="btn btn-outline-darker btn-more"
             >
               <span> View Planning Ideas</span>

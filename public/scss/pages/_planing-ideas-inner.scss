@@ -1,0 +1,47 @@
+// planing section css
+$forest-green: #008482;
+$primary-color: #ee3124;
+
+.planingIdeasInner-page {
+  .breadcrumb-nav {
+    border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
+  }
+  .planninginnerwrapper {
+    h3 {
+      font-weight: 500;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 20px;
+    }
+
+    .prefresubtitle {
+      font-weight: 600;
+    }
+
+    .btnWrapper {
+      .btn {
+        color: #fff;
+        border-color: $primary-color;
+        background: $primary-color;
+        font-size: 15px;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+        min-width: fit-content;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          color: $primary-color;
+          border-color: $primary-color;
+          background: #fff;
+        }
+      }
+    }
+  }
+}
