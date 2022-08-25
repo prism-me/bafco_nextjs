@@ -189,7 +189,10 @@ function Resources(props) {
 
           <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
             <h3>Planning Ideas</h3>
-            <ALink href={"#"} className="btn btn-outline-darker btn-more">
+            <ALink
+              href={"/planing-ideas/"}
+              className="btn btn-outline-darker btn-more"
+            >
               <span> View Planning Ideas</span>
               <i className="icon-long-arrow-right"></i>
             </ALink>
@@ -322,7 +325,10 @@ function Resources(props) {
                     __html: resourcesdata?.fabricFinished?.description,
                   }}
                 />
-                <ALink href={"#"} className="btn btn-outline-darker btn-more">
+                <ALink
+                  href={"/fabric-finishes/sidebar/4cols/"}
+                  className="btn btn-outline-darker btn-more"
+                >
                   <span>View All Fabric & Finishes</span>
                   <i className="icon-long-arrow-right"></i>
                 </ALink>

@@ -1,0 +1,82 @@
+$forest-green: #008482;
+
+.fabric-finishes-page {
+  .breadcrumb-nav {
+    border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
+  }
+
+  .fabric-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .btnWrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .btn {
+        color: #fff;
+        border-color: #4f5556;
+        background: #4f5556;
+        font-size: 15px;
+        margin-right: 0.5rem;
+        min-width: fit-content;
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover,
+        &.active {
+          border-color: $primary-color;
+          background: #fff;
+          background: $primary-color;
+        }
+      }
+      .downloadbtn {
+        color: #000;
+        border: none;
+        background: transparent;
+        font-size: 15px;
+        padding: 0;
+        margin-left: 2rem;
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          color: $primary-color;
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  .widget-collapsible .widget-title a {
+    font-size: 16px;
+  }
+
+  .product-title {
+    text-align: left;
+  }
+
+  .product-media::before {
+    padding-top: 100%;
+  }
+  .products {
+    background: #f5f5f5;
+    padding: 5rem;
+  }
+  .product-body {
+    padding: 1rem 0;
+    background: transparent;
+  }
+  .product {
+    background: transparent;
+    &:hover {
+      background: #fff;
+      .product-body {
+        background: #fff;
+        padding: 1.6rem 2rem;
+      }
+    }
+  }
+}
