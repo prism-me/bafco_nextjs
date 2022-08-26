@@ -1,11 +1,16 @@
 .contactform {
+  .formDeatilColmblspace {
+    @media (max-width: 575px) {
+      margin-bottom: 2rem;
+    }
+  }
   .formwrapper {
     background: rgba(0, 0, 0, 0.02);
     padding: 5rem 0;
 
     h3 {
       font-weight: 500;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       font-size: 20px;
     }
 

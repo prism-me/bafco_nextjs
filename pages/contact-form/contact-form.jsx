@@ -7,9 +7,9 @@ function ContactForm() {
         <div className="container">
           <div
             className="row plannings-container-ideas"
-            style={{ alignItems: "center" }}
+            // style={{ alignItems: "center" }}
           >
-            <div className="col-lg-6 col-sm-6 col-xs-12">
+            <div className="col-lg-6 col-sm-6 col-xs-12 formDeatilColmblspace">
               <div className="application-heading mb-3">
                 <h3>Are you creating a project and looking for solutions?</h3>
                 <h3>
