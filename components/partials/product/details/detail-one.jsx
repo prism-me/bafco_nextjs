@@ -23,9 +23,6 @@ function DetailOne(props) {
     const [variantCombGroup, setvariantCombGroup] = useState();
 
     useEffect(() => {
-
-        console.log("productproductproductproduct :: ", product)
-
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
             []));
@@ -34,7 +31,7 @@ function DetailOne(props) {
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
             []));
 
-        console.log("variationGroup :: ", variationGroup)
+        // console.log("variationGroup :: ", variationGroup)
 
         let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
             let productVariation = { "name": item.variation_values.name, "variation_value_id": item.variation_values.id, "type": item.variation_values.variant.name, "product_variation_id": item.product_variation_id }
@@ -43,7 +40,7 @@ function DetailOne(props) {
 
         setSelectedVariant(currentProductVariation);
 
-        console.log("beforeCombination :: ", product?.dropDown);
+        // console.log("beforeCombination :: ", product?.dropDown);
         let comb = [];
 
         product?.dropDown.reduce((acc, item) => {
@@ -57,9 +54,9 @@ function DetailOne(props) {
                 });
             }
             return item.product_variation_id;
-        });
+        }, 0);
 
-        console.log("combination-values", comb);
+        // console.log("combination-values", comb);
 
         setvariantCombGroup(comb)
 
@@ -147,117 +144,107 @@ function DetailOne(props) {
         e.preventDefault();
         console.log("handelSelectVariantChange :: ", item);
         console.log("e :: ", e.target.value);
-        console.log("selectedVariant :: ", selectedVariant);
+        // console.log("selectedVariant :: ", selectedVariant);
 
-        // if (!e.target.value) {
-        const newState = selectedVariant.map(obj => {
+        if (!e.target.value) {
+            const newState = selectedVariant.map(obj => {
 
-            // 👇️ if id equals 2, update country property
-
-            if (obj.type === item.variant.name) {
-                return {
-                    name: item.name,
-                    type: item.variant.name,
-                    variation_value_id: item.id,
-                    product_variation_id: item.product_variation_id
-                };
-            }
-
-            // 👇️ otherwise return object as is
-            return obj;
-
-        });
-
-        setSelectedVariant(newState);
-
-        console.log("new State :: ", newState);
-
-        console.log("variantCombGroup :: ", variantCombGroup);
-
-        let currentVariation = newState.map((item) => {
-            let VariationID = [];
-            VariationID = item.variation_value_id
-            return VariationID;
-        });
-
-        let finalvariation = variantCombGroup.map((variation) => {
-            newState.map((item) => {
-                console.log("item.type :: ", item.type, ":", variation[item.type])
-                if (variation[item.type] === item.name) {
-                    return variation.variation_id
+                if (obj.type === item.variant.name) {
+                    return {
+                        name: item.name,
+                        type: item.variant.name,
+                        variation_value_id: item.id,
+                        product_variation_id: item.product_variation_id
+                    };
                 }
-            })
-        })
+                return obj;
 
-        console.log("finalvariation :: ", finalvariation);
+            });
 
-        props.handelselectedVariation(item.product_variation_id);
+            setSelectedVariant(newState);
 
-        // let result = product?.dropDown.filter(o1 => newState.some(o2 => o1.name === o2.name));
+            let comb = [];
 
-        // console.log("result :: ", result);
+            newState.map((acc) => {
+                comb.push({ [acc.type]: acc.name });
+                return acc;
+            });
 
-        // let result2 = result.filter(val => val.product_variation_id === 207);
+            let resultNewComb = comb.reduce(function (result, item) {
+                var key = Object.keys(item)[0];
+                result[key] = item[key];
+                return result;
 
-        // console.log("result2 :: ", result2);
+            }, {});
 
+            console.log("resultNewComb :: ", resultNewComb)
 
-        // } else {
-        //     const newState = selectedVariant.map(obj => {
+            let getVariationId = variantCombGroup.filter(function (entry) {
+                return Object.keys(resultNewComb).every(function (key) {
+                    return entry[key] === resultNewComb[key];
+                });
+            });
 
-        //         console.log("obj :: ", obj);
+            console.log("getVariationId :: ", getVariationId)
 
-        //         // 👇️ if id equals 2, update country property
+            props.handelselectedVariation(getVariationId[0].variation_id);
 
-        //         if (obj.variation_value_id === e.target.value) {
-        //             return { ...obj, name: item.name, type: item.variant.name, variation_value_id: item.id };
-        //         }
+            // let result = product?.dropDown.filter(o1 => newState.some(o2 => o1.name === o2.name));
 
-        //         // 👇️ otherwise return object as is
-        //         return obj;
+            // console.log("result :: ", result);
 
-        //     });
+            // let result2 = result.filter(val => val.product_variation_id === 207);
 
-        //     console.log("new State :: ", newState)
-
-        //     let currentVariation = newState.map((item) => {
-        //         let VariationID = [];
-        //         VariationID = item.variation_value_id
-        //         return VariationID;
-        //     });
-
-        //     setSelectedVariant(newState);
-
-        //     props.handelselectedVariation(currentVariation);
-        // }
-
-        // const filtered = product?.dropDown.filter(obj => {
-        //     return obj.id === newState.variation_value_id;
-        // });
-
-        // const matchVariant = product?.dropDown?.map(obj => {
-
-        //     if (obj.type === item.variant.name) {
-        //         return { ...obj, id: newState.variation_value_id };
-        //     }
-
-        //     // 👇️ otherwise return object as is
-        //     return obj;
-        // })
-
-        // if you want to be more clever...
+            // console.log("result2 :: ", result2);
 
 
-        // let getId;
-        // let result = product?.dropDown.map(dropdown => {
-        //     // debugger;
-        //     // newState.map(y => {
-        //         if (dropdown.name === y.name && dropdown.variant.name === y.type) {
-        //             getId = dropdown;
-        //         }
-        //     // });
+        } else {
+            const newState = selectedVariant.map(obj => {
+                if (obj.variation_value_id === e.target.value) {
+                    return {
+                        name: item.name,
+                        type: item.variant.name,
+                        variation_value_id: item.id,
+                        product_variation_id: item.product_variation_id
+                    };
+                }
+                return obj;
 
-        // });
+            });
+
+            console.log("new State :: ", newState)
+
+            let currentVariation = newState.map((item) => {
+                let VariationID = [];
+                VariationID = item.variation_value_id
+                return VariationID;
+            });
+
+            setSelectedVariant(newState);
+
+            let comb = [];
+
+            newState.map((acc) => {
+                comb.push({ [acc.type]: acc.name });
+                return acc;
+            });
+
+            let resultNewComb = comb.reduce(function (result, item) {
+                var key = Object.keys(item)[0];
+                result[key] = item[key];
+                return result;
+
+            }, {});
+
+            let getVariationId = variantCombGroup.find(element => {
+                console.log("element :: ", element)
+                return element === resultNewComb;
+            });
+
+
+        }
+
+        // props.handelselectedVariation(item.product_variation_id);
 
     }
 
@@ -297,7 +284,7 @@ function DetailOne(props) {
                     </div>
             }
 
-            <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.single_product_details?.product?.short_description }} />
+            <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
 
             <div className="row">
                 {console.log("selectedVariant :: ", selectedVariant)}
@@ -322,6 +309,7 @@ function DetailOne(props) {
                                         </select>
                                     </div> :
                                     <div className="product-nav product-nav-dots">
+                                        {console.log("selectedVariant[index]?.variation_value_id :: ", selectedVariant[index]?.variation_value_id)}
                                         {variationGroup.map((item2, index2) => (
                                             item?.variant?.name === item2?.variant?.name &&
                                             <span

@@ -12,7 +12,7 @@ import NewsletterModal from "~/components/features/modals/newsletter-modal";
 import { rendererThree } from "~/components/features/count-down";
 import { connect } from 'react-redux';
 import withApollo from '~/server/apollo';
-import { GET_HOME_DATA } from '~/server/queries';
+// import { GET_HOME_DATA } from '~/server/queries';
 import { attrFilter } from '~/utils';
 import { actions as demoAction } from '~/store/demo';
 import ProductTwelve from '~/components/features/products/product-twelve';
@@ -940,8 +940,8 @@ const postsdata = [
 ];
 
 function Home(props) {
-    const { data, loading, error } = useQuery(GET_HOME_DATA);
-    const products = data && data.homeData.products;
+    // const { data, loading, error } = useQuery(GET_HOME_DATA);
+    // const products = data && data.homeData.products;
     // const topProducts = attrFilter(data && data.homeData.products, 'top');
     const topProducts = attrFilter(productdata && productdata, 'top');
     // const posts = data && data.homeData.posts;
@@ -957,9 +957,9 @@ function Home(props) {
         props?.showVideo();
     }
 
-    if (error) {
-        return <div></div>
-    }
+    // if (error) {
+    //     return <div></div>
+    // }
 
     useEffect(() => {
 
@@ -1307,7 +1307,7 @@ function Home(props) {
                                             product={item1} />
                                     </div>
                                 ) :
-                                <p style={{fontSize: '20px', textAlign: 'center', fontWeight: 'bold', display: 'block', width: '100%'}}>No product found.</p>
+                                <p style={{ fontSize: '20px', textAlign: 'center', fontWeight: 'bold', display: 'block', width: '100%' }}>No product found.</p>
                             }
                         </div>
                     </div>
@@ -1466,5 +1466,5 @@ function Home(props) {
     )
 }
 
-// export default withApollo({ ssr: typeof window == 'undefined' })(Home);
-export default withApollo({ ssr: typeof window == undefined })(connect(null, { ...demoAction })(Home));
+export default Home;
+// export default withApollo({ ssr: typeof window == undefined })(connect(null, { ...demoAction })(Home));

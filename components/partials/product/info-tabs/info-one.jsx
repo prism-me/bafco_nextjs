@@ -49,7 +49,6 @@ function InfoOne(props) {
 
     return (
         <Tabs selectedTabClassName="show" selectedTabPanelClassName="active show">
-            {console.log("product :: ", product)}
             <div className="product-details-tab">
                 <TabList className="nav nav-pills justify-content-center">
                     {!product?.product?.long_description ? "" :
@@ -124,11 +123,13 @@ function InfoOne(props) {
                             {/* <h3>Dimensions</h3> */}
                             <table className="table table-striped  justify-content-center">
                                 <thead className="text-center">
-                                    <th>Product</th>
-                                    <th>Product Model</th>
-                                    <th>Depth (mm)</th>
-                                    <th>Width (mm)</th>
-                                    <th>Height (mm)</th>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Product Model</th>
+                                        <th>Depth (mm)</th>
+                                        <th>Width (mm)</th>
+                                        <th>Height (mm)</th>
+                                    </tr>
                                 </thead>
                                 <tbody className="text-center">
                                     {dimension?.length !== 0 &&
@@ -170,7 +171,7 @@ function InfoOne(props) {
                                                         {product?.footrest?.map((item, index) => (
                                                             <li key={index}>
                                                                 {item.type === '3' ?
-                                                                    <img src={item?.type_value} /> :
+                                                                    <img src={item?.type_value} width="150" /> :
                                                                     <span style={{ backgroundColor: item.type_value }}></span>
                                                                 }
                                                                 <p>{item.name}</p>
@@ -187,7 +188,7 @@ function InfoOne(props) {
                                                         {product?.headrest?.map((item, index) => (
                                                             <li key={index}>
                                                                 {item.type === '3' ?
-                                                                    <img src={item?.type_value} /> :
+                                                                    <img src={item?.type_value} width="150" /> :
                                                                     <span style={{ backgroundColor: item.type_value }}></span>
                                                                 }
                                                                 <p>{item.name}</p>

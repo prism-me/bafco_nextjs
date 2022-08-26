@@ -10,13 +10,13 @@ function ShopSidebarOne(props) {
     const { toggle = false } = props;
     const router = useRouter();
     const query = useRouter().query;
-    const [priceRange, setRange] = useState({ min: 0, max: 1000 });
+    const [priceRange, setRange] = useState({ min: 0, max: 10000 });
 
     useEffect(() => {
         if (query.minPrice && query.maxPrice) {
             setRange({ min: parseInt(query.minPrice), max: parseInt(query.maxPrice) });
         } else {
-            setRange({ min: 0, max: 1000 });
+            setRange({ min: 0, max: 10000 });
         }   
         console.log("filterValues :: ", props)
     }, [query])
@@ -200,7 +200,7 @@ function ShopSidebarOne(props) {
                                             <div className="price-slider">
                                                 <InputRange
                                                     formatLabel={value => `${value}`}
-                                                    maxValue={1000}
+                                                    maxValue={10000}
                                                     minValue={0}
                                                     step={50}
                                                     value={priceRange}

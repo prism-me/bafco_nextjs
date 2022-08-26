@@ -987,6 +987,12 @@
 	}
 
 	.header-bottom {
+		.container {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
 		.menu>li {
 			>a {
 				font-size: 1.6rem;
@@ -1008,11 +1014,20 @@
 			margin-left: .7rem;
 		}
 
+		.header-center {
+			flex-basis: unset;
+			max-width: none;
+
+		}
+
 		.header-left {
 			align-self: stretch;
+			flex-basis: unset;
+			max-width: none;
 		}
 
 		.header-right {
+
 			p {
 				padding-right: .5rem;
 				font-size: 1.4rem;
@@ -1084,8 +1099,11 @@
 	}
 
 	.dropdown.category-dropdown {
-		width: 275px;
-		max-width: 95%;
+		width: 100%;
+		max-width: 100%;
+
+		// width: 275px;
+		// max-width: 95%;
 
 		.dropdown-toggle {
 			color: #333;
@@ -1142,13 +1160,15 @@
 		height: 3.2rem;
 	}
 
-	.account a, .account button {
+	.account a,
+	.account button {
 		font-size: 3rem;
 		color: #333;
 		line-height: 1;
 	}
 
-	.wishlist a, .wishlist button {
+	.wishlist a,
+	.wishlist button {
 		font-size: 2.8rem;
 		color: #333;
 		line-height: 1;
