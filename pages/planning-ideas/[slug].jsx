@@ -81,7 +81,7 @@ function PlaningIdeasInner(props) {
 
                 <div className="docWrape mb-3">
                   <div className="row">
-                    <div className="col-lg-6 col-sm-6 col-xs-12 colStyle">
+                    <div className="col-lg-6 col-sm-12 col-xs-12 colStyle">
                       <div className="colSpace">
                         <p>I’m already an Bafco member</p>
                         <form>
@@ -129,7 +129,7 @@ function PlaningIdeasInner(props) {
                         </form>
                       </div>
                     </div>
-                    <div className="col-lg-6 col-sm-6 col-xs-12">
+                    <div className="col-lg-6 col-sm-12 col-xs-12">
                       <div className="colSpace">
                         <p>I don't have an account yet.</p>
                         <p>

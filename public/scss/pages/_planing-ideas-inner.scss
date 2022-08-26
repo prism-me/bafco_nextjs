@@ -68,6 +68,9 @@ $primary-color: #ee3124;
     }
     .colStyle {
       border-right: 0.5px solid #d7d7d7;
+      @media (max-width: 991px) {
+        border-right: none;
+      }
     }
     .colSpace {
       padding: 1rem;
@@ -77,6 +80,9 @@ $primary-color: #ee3124;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    @media (max-width: 991px) {
+      margin-bottom: 3rem;
+    }
     .shareBtn {
       margin-right: 1rem;
       &:last-child {
