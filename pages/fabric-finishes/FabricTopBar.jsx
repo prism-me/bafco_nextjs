@@ -30,10 +30,12 @@ function FabricTopBar(props) {
             <span>Download Collections</span>
           </button>
         </div>
-        <div className="toolbox">
+        <div className="toolbox mb-0">
           <div className="toolbox-right">
             <div className="toolbox-sort">
-              <label htmlFor="sortby">Laminate Card</label>
+              <label htmlFor="sortby" className="mr-0">
+                Laminate Card
+              </label>
             </div>
             {/* <div className="toolbox-layout">
               <ALink
