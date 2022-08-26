@@ -19,6 +19,11 @@ Modal.setAppElement("body");
 function FabricModal(props) {
   const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
 
+  const downloadFile = () => {
+    window.location.href =
+      "https://yoursite.com/src/assets/files/exampleDoc.pdf";
+  };
+
   return (
     <>
       <Modal
@@ -53,7 +58,12 @@ function FabricModal(props) {
                         />
                       </figure>
                       <center>
-                        <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                        <button
+                          className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                          onClick={() =>
+                            window.open("images/fabric/fabric.png", "_blank")
+                          }
+                        >
                           <span>See the Full Panel</span>
                         </button>
                       </center>
@@ -77,7 +87,10 @@ function FabricModal(props) {
                         <p className="title">Finish</p>
                         <p className="subtitle">Leather</p>
                       </div>
-                      <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                      <button
+                        className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                        onClick={downloadFile}
+                      >
                         <span>Download</span>
                         <i className="icon-arrow-down"></i>
                       </button>

@@ -44,4 +44,44 @@ $primary-color: #ee3124;
       }
     }
   }
+  .docWrape {
+    background: #f0efec;
+    padding: 3rem 2rem;
+    .btn {
+      color: #fff;
+      border-color: $primary-color;
+      background: $primary-color;
+      font-size: 15px;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+      min-width: fit-content;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        color: $primary-color;
+        border-color: $primary-color;
+        background: #fff;
+      }
+    }
+    .colStyle {
+      border-right: 0.5px solid #d7d7d7;
+    }
+    .colSpace {
+      padding: 1rem;
+    }
+  }
+  .shareBtnWrape {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .shareBtn {
+      margin-right: 1rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }

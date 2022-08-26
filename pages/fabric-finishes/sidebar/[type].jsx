@@ -116,9 +116,6 @@ function FabricGrid() {
             <li className="breadcrumb-item">
               <ALink href="/">Home</ALink>
             </li>
-            <li className="breadcrumb-item">
-              <ALink href="/pages/resources">Resources</ALink>
-            </li>
             <li className="breadcrumb-item active">Fabric & Finishes</li>
             {query.search ? (
               <li className="breadcrumb-item">
