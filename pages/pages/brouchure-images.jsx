@@ -22,6 +22,54 @@ function BrouchureImages(props) {
       });
   }, [selectedCategory]);
 
+  const productData = [
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+    {
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+      thumbnail:
+        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
+    },
+  ];
+
   return (
     <div className="main brouchure-images-page">
       <nav className="breadcrumb-nav">
@@ -155,13 +203,13 @@ function BrouchureImages(props) {
                     </form>
                   </div>
                 </div>
-                {productList?.length > 0 ? (
-                  productList?.map((item1, index1) => (
+                {productData?.length > 0 ? (
+                  productData?.map((item1, index1) => (
                     <div className="col-6 col-md-6 col-lg-4" key={index1}>
                       <div className="downloadWrper">
                         <img
                           key={index1}
-                          src={item1?.productvariations?.images[0]?.avatar}
+                          src={item1?.thumbnail}
                           style={{ width: "100%", display: "block" }}
                         />
                         <div className="downloadContent">
