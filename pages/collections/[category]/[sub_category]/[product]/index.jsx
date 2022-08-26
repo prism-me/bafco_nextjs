@@ -15,11 +15,13 @@ import withApollo from '~/server/apollo';
 import ALink from '~/components/features/alink';
 import { API } from '~/http/API';
 
-
-const axios = require('axios');
-
 function ProductInner() {
     const router = useRouter();
+
+    // const [query, setQuery] = useState();
+    // const [slug, setSlug] = useState();
+    // const [subCategoryName, setSubCategoryName] = useState();
+
     const query = router.query;
     const slug = useRouter().query?.product;
     const subCategoryName = query?.sub_category.replace('-', ' ');
@@ -37,21 +39,25 @@ function ProductInner() {
     const [relatedProducts, setRelatedProducts] = useState();
     const [randomProducts, setRandomProducts] = useState();
 
+    // useEffect(() => {
+    //     setQuery(router.query);
+    //     let slug1 = router.query?.product;
+    //     setSlug(slug1);
+    //     setSubCategoryName(query?.sub_category.replace('-', ' '));
+
+    //     setPageTitle(query?.product.replace('-', ' '));
+
+    //     console.log("useffect", query);
+
+    // }, [router])
+
     useEffect(() => {
-
-        setPageTitle(query?.product.replace('-', ' '));
-
-        console.log("variationId :: ", selectedVariation)
-        console.log("query :: ", query)
 
         if (selectedVariation !== "") {
 
             router.push(`/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`);
 
-        }
-        if (query?.variationId) {
-
-            API.get(`/product-detail/${query?.product}/${query?.variationId}`).then((response) => {
+            API.get(`/product-detail/${query?.product}/${selectedVariation}`).then((response) => {
 
                 setProduct(response?.data)
 
@@ -61,13 +67,24 @@ function ProductInner() {
 
         } else {
 
-            API.get(`/product-detail/${query?.product}`).then((response) => {
+            if (query?.variationId) {
+                API.get(`/product-detail/${query?.product}/${query?.variationId}`).then((response) => {
 
-                setProduct(response.data)
+                    setProduct(response?.data)
 
-            }).catch((err) => {
-                console.log(err);
-            });
+                }).catch((err) => {
+                    console.log(err);
+                });
+            } else {
+                API.get(`/product-detail/${query?.product}`).then((response) => {
+
+                    setProduct(response.data)
+
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
+
         }
 
         API.get(`related-products/${query?.sub_category}`).then((response) => {

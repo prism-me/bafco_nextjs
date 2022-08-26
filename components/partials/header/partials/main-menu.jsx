@@ -45,7 +45,7 @@ function MainMenu() {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="banner banner-overlay">
-                                                <ALink href="/collections/chairs/executive-chairs/">
+                                                <ALink href={`/collections/${category.route}`}>
                                                     <img src={category?.featured_image} alt={category.name} />
 
                                                     <div className="banner-content banner-content-bottom">

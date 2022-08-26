@@ -84,24 +84,25 @@ function ProductTwelve(props) {
                 }
 
                 <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>
+                    {/* {console.log("product?.productvariations?.images.length :: ", product)}
+                    {console.log("product?.productvariations?.images.length :: ", product?.productvariations?.images.length > 0 ? "bdjc" : "gyxg")} */}
                     <LazyLoadImage
                         alt="product"
-                        src={product?.productvariations?.images[0]?.avatar}
+                        src={product?.productvariations?.images.length > 0 ? product?.featured_image : product?.productvariations?.images[0]?.avatar}
                         threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
                     />
-                    {
-                        product?.variations?.length >= 2 ?
-                            <LazyLoadImage
-                                alt="product"
-                                // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
-                                src={product?.productvariations?.images[0].avatar}
-                                threshold={500}
-                                effect="black and white"
-                                wrapperClassName="product-image-hover"
-                            />
-                            : ""
+                    {product?.variations?.length >= 2 ?
+                        <LazyLoadImage
+                            alt="product"
+                            // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
+                            src={product?.productvariations?.images[1].avatar}
+                            threshold={500}
+                            effect="black and white"
+                            wrapperClassName="product-image-hover"
+                        />
+                        : ""
                     }
                 </ALink>
 

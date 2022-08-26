@@ -23,6 +23,7 @@ function DetailOne(props) {
     const [variantCombGroup, setvariantCombGroup] = useState();
 
     useEffect(() => {
+        
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
             []));
@@ -34,7 +35,12 @@ function DetailOne(props) {
         // console.log("variationGroup :: ", variationGroup)
 
         let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
-            let productVariation = { "name": item.variation_values.name, "variation_value_id": item.variation_values.id, "type": item.variation_values.variant.name, "product_variation_id": item.product_variation_id }
+            let productVariation = {
+                "name": item.variation_values.name,
+                "variation_value_id": item.variation_values.id,
+                "type": item.variation_values.variant.name,
+                "product_variation_id": item.product_variation_id
+            }
             return productVariation;
         });
 
