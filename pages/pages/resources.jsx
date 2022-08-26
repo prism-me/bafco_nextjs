@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { actions as demoAction } from "~/store/demo";
 import OwlCarousel from "~/components/features/owl-carousel";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import Masonry from "react-responsive-masonry";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import BlogCollection from "~/components/partials/home/blog-collection";
 
 import {
@@ -141,7 +141,7 @@ function Resources(props) {
 
       <div className="page-content pb-3">
         <div className="container">
-          <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
+          <div className="application-heading mb-3 d-flex justify-content-between align-items-center resourceheadingmbl">
             <h3>Project References</h3>
             <ALink
               href={"/project-references/"}
@@ -187,7 +187,7 @@ function Resources(props) {
             ))}
           </OwlCarousel>
 
-          <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
+          <div className="application-heading mb-3 d-flex justify-content-between align-items-center resourceheadingmbl">
             <h3>Planning Ideas</h3>
             <ALink
               href={"/planning-ideas/"}
@@ -274,21 +274,29 @@ function Resources(props) {
                 {resourcesdata?.brochures?.map((item, index) => (
                   <TabPanel className="text-center" key={index}>
                     <div className="mb-6">
-                      <Masonry columnsCount={3} gutter="15px">
-                        {item.categorieBrochures.map((item2, index2) => (
-                          <div className="workspaceWrper">
-                            <img
-                              key={index2}
-                              src={item2.image}
-                              style={{ width: "100%", display: "block" }}
-                            />
-                            <div className="worspaceContent">
-                              <h3>{item2.title}</h3>
-                              <p className="lead">Lorem Ipsum</p>
+                      <ResponsiveMasonry
+                        columnsCountBreakPoints={{
+                          1100: 3,
+                          700: 2,
+                          500: 1,
+                        }}
+                      >
+                        <Masonry gutter="15px">
+                          {item.categorieBrochures.map((item2, index2) => (
+                            <div className="workspaceWrper">
+                              <img
+                                key={index2}
+                                src={item2.image}
+                                style={{ width: "100%", display: "block" }}
+                              />
+                              <div className="worspaceContent">
+                                <h3>{item2.title}</h3>
+                                <p className="lead">Lorem Ipsum</p>
+                              </div>
                             </div>
-                          </div>
-                        ))}
-                      </Masonry>
+                          ))}
+                        </Masonry>
+                      </ResponsiveMasonry>
                     </div>
                   </TabPanel>
                 ))}
@@ -359,7 +367,7 @@ function Resources(props) {
             {videoList?.length > 0 ? (
               videoList?.slice(0, 8)?.map((x, i) =>
                 i <= 6 ? (
-                  <div className="col-lg-3 col-sm-3 col-xs-12" key={i}>
+                  <div className="col-lg-3 col-sm-6 col-xs-12" key={i}>
                     <div className="planning-imgs videoWrapper">
                       <img src={x?.thumbnail} className="img-fluid" />
                       <div className="videoContent">
@@ -375,7 +383,7 @@ function Resources(props) {
                     <p className="videotitle">{x?.title}</p>
                   </div>
                 ) : (
-                  <div className="col-lg-3 col-sm-3 col-xs-12">
+                  <div className="col-lg-3 col-sm-6 col-xs-12">
                     <div className="planning-imgs videoWrapper2">
                       <ALink href={"/pages/video-gallery"}>
                         <img src={x?.thumbnail} className="img-fluid" />
