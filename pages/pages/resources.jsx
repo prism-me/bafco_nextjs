@@ -209,7 +209,7 @@ function Resources(props) {
                   <p className="lead">Lorem Ipsum</p>
                   <h2 className="title">Lorem ipsum dolor sit amet</h2>
                   <ALink
-                    href={"#"}
+                    href={"/planning-ideas/"}
                     className="btn btn-sm btn-minwidth btn-outline-primary-2"
                   >
                     <span>Click Here</span>
@@ -225,7 +225,7 @@ function Resources(props) {
                   <p className="lead">Lorem Ipsum</p>
                   <h2 className="title">Lorem ipsum dolor sit amet</h2>
                   <ALink
-                    href={"#"}
+                    href={"/planning-ideas/"}
                     className="btn btn-sm btn-minwidth btn-outline-primary-2"
                   >
                     <span>Click Here</span>
@@ -239,7 +239,7 @@ function Resources(props) {
                   <p className="lead">Lorem Ipsum</p>
                   <h2 className="title">Lorem ipsum dolor sit amet</h2>
                   <ALink
-                    href={"#"}
+                    href={"/planning-ideas/"}
                     className="btn btn-sm btn-minwidth btn-outline-primary-2"
                   >
                     <span>Click Here</span>

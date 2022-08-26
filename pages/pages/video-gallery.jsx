@@ -78,9 +78,6 @@ function VideoGallery(props) {
             <li className="breadcrumb-item">
               <ALink href="/">Home</ALink>
             </li>
-            <li className="breadcrumb-item">
-              <ALink href="/pages/resources">Resources</ALink>
-            </li>
             <li className="breadcrumb-item active">Video Gallery</li>
           </ol>
         </div>
