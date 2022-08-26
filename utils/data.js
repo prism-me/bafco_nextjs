@@ -871,7 +871,6 @@ export const projectReferenceInnerSlider = {
   dots: true,
   margin: 20,
   loop: true,
-  // navText: ["<img src='assets/images/arrow-left.png'>", "<img src='assets/images/arrow-right.svg'>"],
   responsive: {
     0: {
       items: 1,

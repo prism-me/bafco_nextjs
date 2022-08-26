@@ -70,7 +70,7 @@ function ProjectReferencesInner(props) {
           </div>
           <div className="top-management-application-slider mb-5">
             <OwlCarousel
-              adClass="owl-simple owl-light owl-nav-inside"
+              adClass="owl-simple owl-light"
               options={projectReferenceInnerSlider}
             >
               <div className="top-management-application">
@@ -101,34 +101,50 @@ function ProjectReferencesInner(props) {
             <h3>Related Products</h3>
           </div>
 
-          <div className="top-management-application-slider mb-3">
+          <div className="top-management-application-slider mb-3 relatedProductwrape">
             <OwlCarousel
-              adClass="owl-simple owl-light owl-nav-inside"
+              adClass="owl-simple owl-light"
               options={projectReferenceInnerSlider}
             >
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
               <div className="top-management-application">
                 <img src="images/applications/top-management.png" />
+                <h3>Lorem</h3>
+                <p>Lorem Ipsum</p>
               </div>
             </OwlCarousel>
           </div>

@@ -183,6 +183,14 @@ $forest-green: #008482;
     background: rgba(0, 0, 0, 0.02);
     padding: 5rem 0;
 
+    .owl-simple.owl-nav-inside .owl-nav .owl-prev {
+      background: #fff;
+    }
+
+    .owl-simple.owl-nav-inside .owl-nav .owl-next {
+      background: #fff;
+    }
+
     .fbsubtitle {
       font-weight: 600;
       margin-bottom: 1rem;

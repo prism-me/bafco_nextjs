@@ -64,13 +64,10 @@ $primary-color: #ee3124;
 
   .owl-carousel .owl-item img {
     height: 250px;
+    margin-bottom: 2rem;
   }
 
-  .owl-simple.owl-nav-inside .owl-dots {
-    bottom: -40px;
-  }
-
-  .owl-simple.owl-light.owl-nav-inside .owl-dots .owl-dot.active span {
+  .owl-simple.owl-light .owl-dots .owl-dot.active span {
     border-color: #525151;
     background: #525151;
   }
@@ -80,12 +77,22 @@ $primary-color: #ee3124;
     background: #a39c9c;
   }
 
-  // .top-management-application-slider .owl-nav [class*=owl-]{
-  //     background: transparent !important;
-  // }
   .prDeatilColmblspace {
     @media (max-width: 575px) {
       margin-bottom: 2rem;
+    }
+  }
+  .relatedProductwrape {
+    .owl-simple .owl-nav [class*="owl-"] {
+      top: 40%;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    p {
+      opacity: 0.6;
     }
   }
 }
