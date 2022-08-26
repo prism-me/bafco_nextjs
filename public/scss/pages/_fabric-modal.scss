@@ -4,6 +4,14 @@ $primary-color: #ee3124;
 .fabric-modal {
   .product-summary {
     padding: 2rem 3rem;
+    @media (max-width: 991px) {
+      padding: 1rem;
+    }
+  }
+  .fabricImgWrape {
+    @media (max-width: 991px) {
+      padding: 1rem;
+    }
   }
   .title {
     font-weight: 600;
