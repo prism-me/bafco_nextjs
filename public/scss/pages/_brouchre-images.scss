@@ -6,7 +6,17 @@ $primary-color: #ee3124;
     border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
   }
 
+  .brochureImagesWrapper {
+    @media (max-width: 575px) {
+      display: block !important;
+      text-align: center;
+    }
+  }
+
   .brouchurewrapper {
+    @media (max-width: 575px) {
+      margin-bottom: 2rem;
+    }
     .imgWrapper {
       position: relative;
       color: white;
@@ -23,6 +33,9 @@ $primary-color: #ee3124;
       img {
         width: 100%;
         border-radius: 25px;
+        @media (max-width: 575px) {
+          height: 60vh;
+        }
       }
       .bottom-left {
         position: absolute;
@@ -32,12 +45,20 @@ $primary-color: #ee3124;
         font-weight: 700;
         font-size: 30px;
         line-height: normal;
+        @media (max-width: 575px) {
+          bottom: 45px;
+          left: 10px;
+        }
       }
       .top-right {
         position: absolute;
         top: 45px;
         right: 40px;
         width: 50%;
+        @media (max-width: 575px) {
+          top: 45px;
+          right: 10px;
+        }
       }
     }
 

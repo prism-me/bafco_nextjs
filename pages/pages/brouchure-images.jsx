@@ -30,9 +30,6 @@ function BrouchureImages(props) {
             <li className="breadcrumb-item">
               <ALink href="/">Home</ALink>
             </li>
-            <li className="breadcrumb-item">
-              <ALink href="/pages/resources">Resources</ALink>
-            </li>
             <li className="breadcrumb-item active">Brochures and Images</li>
           </ol>
         </div>
@@ -142,7 +139,7 @@ function BrouchureImages(props) {
             <div className="container">
               <div className="row">
                 <div className="col-12 col-md-12 col-lg-12">
-                  <div className="mb-3 d-flex justify-content-between align-items-center">
+                  <div className="mb-3 d-flex justify-content-between align-items-center brochureImagesWrapper">
                     <p className="subtitle">
                       Sed pretium, ligula sollicitudin laoreet viverra, tortor
                       libero sodales leo, eget blandit.
