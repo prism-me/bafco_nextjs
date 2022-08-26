@@ -37,7 +37,7 @@ function ProjectReferencesInner(props) {
               className="row plannings-container-ideas"
               style={{ alignItems: "center" }}
             >
-              <div className="col-lg-4 col-sm-6 col-xs-12">
+              <div className="col-lg-4 col-sm-6 col-xs-12 prDeatilColmblspace">
                 <div className="application-heading mb-3">
                   <h3>Name of the Project</h3>
                 </div>
