@@ -21,14 +21,16 @@ const wishlistReducer = (state = initialState, action) => {
             let UserDetail = localStorage.getItem('UserData');
             let authtoken = localStorage.getItem('authtoken');
 
+            console.log("action.payload.product :: ", action.payload.product)
+
             if (UserDetail) {
 
                 let productData = {
                     user_id: UserDetail,
                     product_id: action.payload.product.id,
-                    variation_id: action.payload.product.productvariations.id,
+                    // variation_id: action.payload.product.productvariations.id,
                     product_variation_id: action.payload.product.productvariations.product_variation_name.product_variation_id,
-                    variation_value_id: action.payload.product.productvariations.product_variation_name.variation_value_id
+                    // variation_value_id: action.payload.product.productvariations.product_variation_name.variation_value_id
                 };
 
                 API.post(`/auth/wishlists`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } })

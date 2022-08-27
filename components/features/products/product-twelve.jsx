@@ -17,8 +17,8 @@ function ProductTwelve(props) {
     const { product, wishlist } = props;
     const [maxPrice, setMaxPrice] = useState(0);
     const [minPrice, setMinPrice] = useState(99999);
-    const categoryName = router.query.category;
-    const subCategoryName = router.query.sub_category;
+    const categoryName = props?.categoryName ? props.categoryName : router.query.category;
+    const subCategoryName = props?.subCategoryName ? props.subCategoryName : router.query.sub_category;
     const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
@@ -84,8 +84,6 @@ function ProductTwelve(props) {
                 }
 
                 <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>
-                    {/* {console.log("product?.productvariations?.images.length :: ", product)}
-                    {console.log("product?.productvariations?.images.length :: ", product?.productvariations?.images.length > 0 ? "bdjc" : "gyxg")} */}
                     <LazyLoadImage
                         alt="product"
                         src={product?.productvariations?.images.length > 0 ? product?.featured_image : product?.productvariations?.images[0]?.avatar}

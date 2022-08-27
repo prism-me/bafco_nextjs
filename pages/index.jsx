@@ -962,37 +962,31 @@ function Home(props) {
     // }
 
     useEffect(() => {
-
-        API.get(`/front-products/${selectedCategory}`)
+        // API.get(`/front-products/${selectedCategory}`)
+        API.get(`/front-products/sofa`)
             .then((response) => {
-                // console.log(response?.data?.products);
-                setProductList(response?.data?.products)
+                setProductList(response?.data)
             })
             .catch((err) => {
                 console.log(err);
             });
-
-        // axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home-product-category-filter/${selectedCategory}`).then(function (response) {
-        //     // handle success
-        //     setProductList(response.data);
-        // }).catch(function (error) {
-        //     // handle error
-        //     console.log(error);
-        // })
-
     }, [selectedCategory])
 
     useEffect(() => {
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home?en').then(function (response) {
-            // handle success
+        API.get(`/home`).then((response) => {
             setHomedata(response.data.pages.content)
             setBlogList(response.data.blogs)
-            setCategoryList(response.data.category)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        API.get(`/top-selling-products-category-list`).then((response) => {
+            setCategoryList(response.data)
+        }).catch((err) => {
+            console.log(err);
+        });
+
     }, [])
 
 
@@ -1278,33 +1272,27 @@ function Home(props) {
                             {/* <li className={`nav-item ${selectedCategory === 'all' ? 'show' : ''}`} onClick={() => setSelectedCategory('all')}>
                                 <span className="nav-link">All</span>
                             </li> */}
-                            <li className={`nav-item ${selectedCategory === 'executive-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('executive-chairs')}>
-                                <span className="nav-link">Executive Chairs</span>
-                            </li>
-                            <li className={`nav-item ${selectedCategory === 'ergonomic-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('ergonomic-chairs')}>
-                                <span className="nav-link">Ergonomic Chairs</span>
-                            </li>
-                            <li className={`nav-item ${selectedCategory === 'conference-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('conference-chairs')}>
-                                <span className="nav-link">Conference Chairs</span>
-                            </li>
-                            <li className={`nav-item ${selectedCategory === 'visitor-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('visitor-chairs')}>
-                                <span className="nav-link">Visitor Chairs</span>
-                            </li>
-                            <li className={`nav-item ${selectedCategory === 'stools' ? 'show' : ''}`} onClick={() => setSelectedCategory('stools')}>
-                                <span className="nav-link">Stools</span>
-                            </li>
-                            <li className={`nav-item ${selectedCategory === 'multi-functional-chairs' ? 'show' : ''}`} onClick={() => setSelectedCategory('multi-functional-chairs')}>
-                                <span className="nav-link">Multi-Functional Chairs</span>
-                            </li>
+                            {categoryList?.map((item, index) => (
+                                <li
+                                    className={`nav-item ${selectedCategory === item.subcategory[0].route ? 'show' : ''}`}
+                                    onClick={() => setSelectedCategory(item.subcategory[0].route)}
+                                    key={index}
+                                >
+                                    <span className="nav-link">{item.name}</span>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                     <div className="products">
                         <div className="row">
-                            {productList?.length > 0 ?
-                                productList?.map((item1, index1) =>
+                            {productList?.products?.length > 0 ?
+                                productList?.products?.slice(0, 4).map((item1, index1) =>
                                     <div className="col-6 col-md-6 col-lg-3" key={index1}>
                                         <ProductTwelve
-                                            product={item1} />
+                                            product={item1}
+                                            categoryName={productList?.parent_category?.route}
+                                            subCategoryName={productList?.route}
+                                        />
                                     </div>
                                 ) :
                                 <p style={{ fontSize: '20px', textAlign: 'center', fontWeight: 'bold', display: 'block', width: '100%' }}>No product found.</p>

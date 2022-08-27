@@ -23,7 +23,7 @@ function DetailOne(props) {
     const [variantCombGroup, setvariantCombGroup] = useState();
 
     useEffect(() => {
-        
+
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
             []));
@@ -78,15 +78,15 @@ function DetailOne(props) {
 
     // }, [router.query.slug])
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     setAuthtoken(localStorage.getItem('authtoken'));
+        setAuthtoken(localStorage.getItem('authtoken'));
 
-    //     window.addEventListener('scroll', scrollHandler, { passive: true });
+        // window.addEventListener('scroll', scrollHandler, { passive: true });
 
-    //     return () => { window.removeEventListener('scroll', scrollHandler); }
+        // return () => { window.removeEventListener('scroll', scrollHandler); }
 
-    // }, [])
+    }, [])
 
     // useEffect(() => {
     //     scrollHandler();
@@ -108,11 +108,17 @@ function DetailOne(props) {
 
     function onWishlistClick(e) {
         e.preventDefault();
+        console.log("product :: ", product)
         if (!isInWishlist(props.wishlist, product)) {
             if (authtoken === "" || authtoken === null || authtoken === undefined) {
                 props.showPopup(true);
             } else {
-                props.addToWishlist(product);
+                let data = {
+                    'product_id': product?.single_product_details?.product?.id,
+                    'product_variation_id': product?.product_single_variation?.variation_value_details[0]?.product_variation_id,
+
+                };
+                props.addToWishlist(data);
             }
         } else {
             router.push('/wishlist');
@@ -293,7 +299,6 @@ function DetailOne(props) {
             <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
 
             <div className="row">
-                {console.log("selectedVariant :: ", selectedVariant)}
                 {variationTypeGroup !== null &&
                     variationTypeGroup?.map((item, index) => (
                         <div className="col-md-6" key={index}>
@@ -315,7 +320,6 @@ function DetailOne(props) {
                                         </select>
                                     </div> :
                                     <div className="product-nav product-nav-dots">
-                                        {console.log("selectedVariant[index]?.variation_value_id :: ", selectedVariant[index]?.variation_value_id)}
                                         {variationGroup.map((item2, index2) => (
                                             item?.variant?.name === item2?.variant?.name &&
                                             <span
