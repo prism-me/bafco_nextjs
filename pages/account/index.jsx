@@ -53,6 +53,8 @@ function MyAccount() {
     const [countryList, setCountryList] = useState();
     const [stateList, setStateList] = useState();
     const [editAddressID, setEditAddressID] = useState();
+    const [isEdit, setIsEdit] = useState(false);
+
     let timer;
 
     useEffect(() => {
@@ -97,12 +99,13 @@ function MyAccount() {
                 'Authorization': `Bearer ${xauthtoken}`,
             }
         }
+        if (isEdit) {
+            API.get(`/address-detail/${editAddressID}`, header).then((response) => {
+                setUserAddressData(response?.data);
 
-        API.get(`/addresses/${editAddressID}`, header).then((response) => {
-            // setUserAddressList(response?.data);
-            console.log("editAddressID ::", response)
+            }).catch((err) => console.log(err));
 
-        }).catch((err) => console.log(err));
+        }
 
     }, [editAddressID]);
 
@@ -111,6 +114,7 @@ function MyAccount() {
         console.log("editAddressID ::", id)
         setEditAddressID(id)
         setOpen(true);
+        setIsEdit(true);
     }
 
     useEffect(() => {
@@ -268,18 +272,6 @@ function MyAccount() {
 
         let xauthtoken = localStorage.getItem('authtoken');
         let UserId = localStorage.getItem('UserData');
-        let formdata = {
-            'user_id': UserId,
-            'name': useraddressData?.name,
-            'phone_number': useraddressData?.phone_number,
-            'address_line1': useraddressData?.address_line1,
-            'address_line2': useraddressData?.address_line2,
-            'postal_code': useraddressData?.postal_code,
-            'country': useraddressData?.country,
-            'state': useraddressData?.state,
-            'city': useraddressData?.city,
-            'address_type': useraddressData?.address_type,
-        };
 
         if (useraddressData?.name !== "" &&
             useraddressData?.phone_number !== "" &&
@@ -290,20 +282,68 @@ function MyAccount() {
             useraddressData?.address_type !== "" &&
             useraddressData?.city !== ""
         ) {
-            API.post(`/addresses`, formdata, {
-                headers: {
-                    'Authorization': `Bearer ${xauthtoken}`
-                }
-            }).then((response) => {
-                if (response?.status === 200) {
-                    toast.success(response?.data)
-                    closeModal()
-                } else {
-                    toast.warning("Somthing went wrong !");
-                }
-            }).catch((error) => {
-                toast.error("Somthing went wrong !");
-            });
+            if (isEdit) {
+                let formdata = {
+                    'id': useraddressData.id,
+                    'user_id': UserId,
+                    'name': useraddressData?.name,
+                    'phone_number': useraddressData?.phone_number,
+                    'address_line1': useraddressData?.address_line1,
+                    'address_line2': useraddressData?.address_line2,
+                    'postal_code': useraddressData?.postal_code,
+                    'country': useraddressData?.country,
+                    'state': useraddressData?.state,
+                    'city': useraddressData?.city,
+                    'address_type': useraddressData?.address_type,
+                };
+
+                API.post(`/addresses`, formdata, {
+                    headers: {
+                        'Authorization': `Bearer ${xauthtoken}`
+                    }
+                }).then((response) => {
+                    if (response?.status === 200) {
+                        toast.success(response?.data)
+                        closeModal()
+                    } else {
+                        toast.warning("Somthing went wrong !");
+                    }
+                }).catch((error) => {
+                    toast.error("Somthing went wrong !");
+                });
+
+
+            } else {
+                let formdata = {
+                    'user_id': UserId,
+                    'name': useraddressData?.name,
+                    'phone_number': useraddressData?.phone_number,
+                    'address_line1': useraddressData?.address_line1,
+                    'address_line2': useraddressData?.address_line2,
+                    'postal_code': useraddressData?.postal_code,
+                    'country': useraddressData?.country,
+                    'state': useraddressData?.state,
+                    'city': useraddressData?.city,
+                    'address_type': useraddressData?.address_type,
+                };
+
+                API.post(`/addresses`, formdata, {
+                    headers: {
+                        'Authorization': `Bearer ${xauthtoken}`
+                    }
+                }).then((response) => {
+                    if (response?.status === 200) {
+                        toast.success(response?.data)
+                        closeModal()
+                    } else {
+                        toast.warning("Somthing went wrong !");
+                    }
+                }).catch((error) => {
+                    toast.error("Somthing went wrong !");
+                });
+
+            }
+
         } else {
             if (useraddressData?.name === "") {
                 toast.warning("Please enter a name before submit.")
@@ -513,10 +553,8 @@ function MyAccount() {
                                                             address.default === 1 &&
                                                             <div className="card card-dashboard" key={index}>
                                                                 <div className="card-body">
-
-                                                                    <p>
-                                                                        {/* {address.address.name}<br /> */}
-                                                                        {address.address_line1}<br />
+                                                                    <h3 className="card-title">{address.name}</h3>
+                                                                    <p>{address.address_line1}<br />
                                                                         {address.address_line2}, {address.postal_code}, {address.city}<br />
                                                                         {address.state}, {address.country}<br />
                                                                         {address.phone_number}<br /></p>
@@ -549,9 +587,8 @@ function MyAccount() {
                                                             address.default !== 1 &&
                                                             <div className="card card-dashboard" key={index}>
                                                                 <div className="card-body">
-                                                                    <p>
-                                                                        {/* {address.address.name}<br /> */}
-                                                                        {address.address_line1}<br />
+                                                                    <h3 className="card-title">{address.name}</h3>
+                                                                    <p> {address.address_line1}<br />
                                                                         {address.address_line2}, {address.postal_code}, {address.city}<br />
                                                                         {address.state}, {address.country}<br />
                                                                         {address.phone_number}<br /></p>

@@ -7,32 +7,42 @@ import PageHeader from '~/components/features/page-header';
 
 import { actions as cartAction } from '~/store/cart';
 import { cartPriceTotal } from '~/utils/index';
-// import { API } from '~/http/API';
+import { API } from '~/http/API';
 
 function Cart(props) {
     const [cartList, setCartList] = useState([]);
     const [shippingCost, setShippingCost] = useState(0);
+    const [cartTotal, setCartTotal] = useState();
 
     useEffect(() => {
-        // let authtoken = localStorage.getItem('authtoken');
-        // let UserDetail = localStorage.getItem('UserData');
+        let authtoken = localStorage.getItem('authtoken');
+        let UserDetail = localStorage.getItem('UserData');
 
-        // if (authtoken === "" || authtoken === null || authtoken === undefined) {
+        if (authtoken === "" || authtoken === null || authtoken === undefined) {
             setCartList(props.cartItems);
-        // } else {
-        //     API.get(`/cart/${UserDetail}`, {
-        //         headers: {
-        //             'Authorization': `Bearer ${authtoken}`
-        //         }
-        //     })
-        //         .then((response) => {
-        //             console.log("cart :: ", response)
-        //             setCartList(response?.data);
-        //         })
-        //         .catch((err) => {
-        //             console.log(err);
-        //         });
-        // }
+        } else {
+            API.get(`/auth/cart/${UserDetail}`, {
+                headers: {
+                    'Authorization': `Bearer ${authtoken}`
+                }
+            }).then((response) => {
+                console.log("cart :: ", response?.data)
+                setCartList(response?.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+
+            API.get(`/auth/cart-total/${UserDetail}`, {
+                headers: {
+                    'Authorization': `Bearer ${authtoken}`
+                }
+            }).then((response) => {
+                console.log("cart :: ", response?.data)
+                setCartTotal(response?.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
 
     }, [props.cartItems])
 
@@ -47,10 +57,10 @@ function Cart(props) {
                     return {
                         ...item,
                         qty: value,
-                        sum:
-                            (item.sale_price
-                                ? item.sale_price
-                                : item.price) * value
+                        // sum:
+                        //     (item.sale_price
+                        //         ? item.sale_price
+                        //         : item.price) * value
                     };
                 return item;
             })
@@ -67,11 +77,28 @@ function Cart(props) {
         }, 400);
     }
 
+    function deleteFromCart(product) {
+        let authtoken = localStorage.getItem('authtoken');
+
+        API.delete(`/auth/remove-cart/${product?.cart[0]?.id}`, {
+            headers: { 'Authorization': `Bearer ${authtoken}` }
+        }).then((response) => {
+            let data = {
+                'product_id': product?.productData[0]?.id,
+                'product_variation_id': product?.variation[0].product_variation_name[0]?.product_variation_id
+            };
+            props.removeFromCart(data);
+
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     return (
         <div className="main">
             <PageHeader
                 title="Cart"
-                subTitle="We make happy workplaces"
+                subTitle=""
                 backgroundImage="images/banners/cart-banner.png"
                 buttonText="Shop Now"
                 buttonUrl="#"
@@ -113,37 +140,46 @@ function Cart(props) {
                                                             <td className="product-col">
                                                                 <div className="product">
                                                                     <figure className="product-media">
-                                                                        <ALink href={`/product/default/${item.route}`} className="product-image">
-                                                                            <img src={item.featured_image} alt="product" />
+                                                                        <ALink href={`/collections/${item?.productData[0]?.product_category?.parent_category?.route}/${item?.productData[0]?.product_category?.route}/${item?.productData[0]?.route}`} className="product-image">
+                                                                            <img src={item?.variation[0]?.images[0]?.avatar} alt="product" />
                                                                         </ALink>
                                                                     </figure>
 
                                                                     <h4 className="product-title">
-                                                                        <ALink href={`/product/default/${item.route}`}>{item.name}</ALink>
+                                                                        <ALink href={`/collections/${item?.productData[0]?.product_category?.parent_category?.route}/${item?.productData[0]?.product_category?.route}/${item?.productData[0]?.route}`}>{item?.productData[0]?.name}</ALink>
                                                                     </h4>
                                                                 </div>
                                                             </td>
 
                                                             <td className="price-col">
-                                                                {/* AED {
-                                                                    item.sale_price ?
-                                                                        item.sale_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                                                                        :
-                                                                        item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-
-                                                                } */}
+                                                                {item?.variation[0]?.in_stock === 0 ?
+                                                                    <div className="product-price d-inline-block mb-0">
+                                                                        <span className="out-price">AED {item?.variation[0]?.upper_price}</span>
+                                                                    </div>
+                                                                    :
+                                                                    <div className="product-price d-inline-block mb-0">AED {item?.variation[0]?.upper_price}</div>
+                                                                }
                                                             </td>
 
                                                             <td className="quantity-col">
-                                                                <Qty value={item?.qty} changeQty={current => changeQty(current, index)} adClass="cart-product-quantity"></Qty>
+                                                                <Qty
+                                                                    value={item?.qty}
+                                                                    changeQty={current => changeQty(current, index)}
+                                                                    adClass="cart-product-quantity"
+                                                                ></Qty>
                                                             </td>
 
                                                             <td className="total-col">
-                                                                {/* ${item.sum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} */}
+                                                                AED {item?.total}
                                                             </td>
 
                                                             <td className="remove-col">
-                                                                <button className="btn-remove" onClick={() => props.removeFromCart(item)}><i className="icon-close"></i></button>
+                                                                <button
+                                                                    className="btn-remove"
+                                                                    onClick={() => deleteFromCart(item)}
+                                                                >
+                                                                    <i className="icon-close"></i>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     ) :
@@ -158,7 +194,7 @@ function Cart(props) {
                                         </table>
 
                                         <div className="cart-bottom">
-                                            <div className="cart-discount">
+                                            {/* <div className="cart-discount">
                                                 <form action="#">
                                                     <div className="input-group">
                                                         <input type="text" className="form-control" required placeholder="coupon code" />
@@ -167,7 +203,9 @@ function Cart(props) {
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div>
+                                            </div> */}
+                                            {/* <button className="btn btn-outline-dark-2" onClick={updateCart}><span>Clear Cart</span><i className="icon-refresh"></i></button> */}
+
 
                                             <button className="btn btn-outline-dark-2" onClick={updateCart}><span>UPDATE CART</span><i className="icon-refresh"></i></button>
                                         </div>
@@ -180,7 +218,8 @@ function Cart(props) {
                                                 <tbody>
                                                     <tr className="summary-subtotal">
                                                         <td>Subtotal:</td>
-                                                        <td>AED {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                        <td>AED {cartTotal?.sub_total}</td>
+                                                        {/* <td>AED {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td> */}
                                                     </tr>
                                                     <tr className="summary-shipping">
                                                         <td>Shipping:</td>
@@ -233,29 +272,30 @@ function Cart(props) {
                                                         <td>AED 20.00</td>
                                                     </tr>
 
-                                                    <tr className="summary-shipping-estimate">
+                                                    {/* <tr className="summary-shipping-estimate">
                                                         <td>Estimate for Your Country<br /> <ALink href="/shop/dashboard">Change address</ALink></td>
                                                         <td>&nbsp;</td>
-                                                    </tr>
+                                                    </tr> */}
 
                                                     <tr className="summary-total">
                                                         <td>Total:</td>
-                                                        <td>
-                                                        AED {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                                        </td>
+                                                        <td>AED {cartTotal?.total}</td>
+                                                        {/* <td>
+                                                            AED {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                        </td> */}
                                                     </tr>
                                                 </tbody>
                                             </table>
 
                                             <ALink
                                                 className="btn btn-outline-primary-2 btn-order btn-block"
-                                                href="/shop/checkout"
+                                                href="/checkout"
                                             >
                                                 PROCEED TO CHECKOUT
                                             </ALink>
                                         </div>
 
-                                        <ALink href="/shop/sidebar/list" className="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i className="icon-refresh"></i></ALink>
+                                        <ALink href="#" className="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i className="icon-refresh"></i></ALink>
                                     </aside>
                                 </div>
                                 :

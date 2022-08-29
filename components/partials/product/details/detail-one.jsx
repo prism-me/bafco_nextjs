@@ -108,7 +108,6 @@ function DetailOne(props) {
 
     function onWishlistClick(e) {
         e.preventDefault();
-        console.log("product :: ", product)
         if (!isInWishlist(props.wishlist, product)) {
             if (authtoken === "" || authtoken === null || authtoken === undefined) {
                 props.showPopup(true);
@@ -116,7 +115,6 @@ function DetailOne(props) {
                 let data = {
                     'product_id': product?.single_product_details?.product?.id,
                     'product_variation_id': product?.product_single_variation?.variation_value_details[0]?.product_variation_id,
-
                 };
                 props.addToWishlist(data);
             }
@@ -266,6 +264,7 @@ function DetailOne(props) {
 
     return (
         <div className="product-details" ref={ref}>
+            {console.log("cartlist :: ", props.cartlist)}
             <h1 className="product-title">{product?.single_product_details?.product?.name}</h1>
 
             <div className="ratings-container">

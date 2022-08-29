@@ -49,7 +49,7 @@ function MainMenu() {
                                                     <img src={category?.featured_image} alt={category.name} />
 
                                                     <div className="banner-content banner-content-bottom">
-                                                        <div className="banner-title text-white">Comfort<br /><span><strong>{category.name}</strong></span></div>
+                                                        <div className="banner-title text-white">{category.sub_title}<br /><span><strong>{category.name}</strong></span></div>
                                                     </div>
                                                 </ALink>
                                             </div>

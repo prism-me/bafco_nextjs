@@ -50,16 +50,28 @@ function Wishlist(props) {
     }, [props.wishlist])
 
     function moveToCart(product) {
-        console.log("product :: ", product)
-        props.addToCart(product);
+
+        console.log("moveToCart :: ", product)
+
+        let data = {
+            'product_id': product?.productData[0]?.id,
+            'product_variation_id': product?.variation[0]?.product_variation_name[0]?.product_variation_id,
+        };
+
+        props.addToCart(data);
+        deleteFromWishlist(product);
     }
 
     function deleteFromWishlist(product) {
         let authtoken = localStorage.getItem('authtoken');
 
-        API.delete(`/auth/wishlists/${product?.wishlist?.id}`, { headers: { 'Authorization': `Bearer ${authtoken}` } })
+        API.delete(`/auth/wishlists/${product?.wishlist[0]?.id}`, { headers: { 'Authorization': `Bearer ${authtoken}` } })
             .then((response) => {
-                props.removeFromWishlist(product);
+                let data = {
+                    'product_id': product?.productData[0]?.id,
+                    'product_variation_id': product?.variation[0].product_variation_name[0]?.product_variation_id
+                };
+                props.removeFromWishlist(data);
 
             }).catch((err) => {
                 console.log(err);
@@ -124,17 +136,17 @@ function Wishlist(props) {
                                         <td className="price-col">
                                             {product?.variation[0]?.in_stock === 0 ?
                                                 <div className="product-price d-inline-block mb-0">
-                                                    <span className="out-price">AED {product?.variation[0]?.lower_price}</span>
+                                                    <span className="out-price">AED {product?.variation[0]?.upper_price}</span>
                                                 </div>
                                                 :
-                                                product?.variation[0]?.lower_price === product?.variation[0]?.upper_price ?
-                                                    <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.lower_price}</div>
-                                                    :
-                                                    // product.variations.length === 0 ?
-                                                    <div className="product-price d-inline-block mb-0">
-                                                        <span className="new-price">AED {product?.variation[0]?.lower_price}</span>
-                                                        <span className="old-price">AED {product?.variation[0]?.upper_price}</span>
-                                                    </div>
+                                                // product?.variation[0]?.lower_price === product?.variation[0]?.upper_price ?
+                                                <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.upper_price}</div>
+                                                // :
+                                                // product.variations.length === 0 ?
+                                                // <div className="product-price d-inline-block mb-0">
+                                                //     <span className="new-price">AED {product?.variation[0]?.lower_price}</span>
+                                                //     <span className="old-price">AED {product?.variation[0]?.upper_price}</span>
+                                                // </div>
                                                 // :
                                                 // <div className="product-price d-inline-block mb-0">AED {product.productvariations.lower_price}&ndash;AED {product.productvariations.upper_price}</div>
                                             }

@@ -21,24 +21,23 @@ const wishlistReducer = (state = initialState, action) => {
             let UserDetail = localStorage.getItem('UserData');
             let authtoken = localStorage.getItem('authtoken');
 
-            console.log("action.payload.product :: ", action.payload.product)
+            // console.log("action.payload.product :: ", action.payload.product)
 
             if (UserDetail) {
 
                 let productData = {
                     user_id: UserDetail,
-                    product_id: action.payload.product.id,
+                    product_id: action?.payload?.product?.product_id,
+                    product_variation_id: action?.payload?.product?.product_variation_id,
                     // variation_id: action.payload.product.productvariations.id,
-                    product_variation_id: action.payload.product.productvariations.product_variation_name.product_variation_id,
                     // variation_value_id: action.payload.product.productvariations.product_variation_name.variation_value_id
                 };
 
-                API.post(`/auth/wishlists`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } })
-                    .then((response) => {
-                        console.log("wishlists :: ", response.data);
-                    }).catch((err) => {
-                        console.log(err);
-                    });
+                API.post(`/auth/wishlists`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
+                    console.log("wishlists :: ", response.data);
+                }).catch((err) => {
+                    console.log(err);
+                });
             } else {
                 toast.warning("Please Login/Registration first.");
             }
@@ -58,9 +57,10 @@ const wishlistReducer = (state = initialState, action) => {
 
         case actionTypes.removeFromWishlist:
             // console.log("removeFromWishlist :: ", action.payload.product)
+            // console.log("state.data :: ", state.data)
             return {
-                data: state.data.filter(item => item.id !== action.payload.product.productData[0].id)
-                // data: state.data.filter(item => item.id !== 418)
+                data: state.data.filter(item => item.product_id !== action.payload.product.product_id)
+                // data: state.data.filter(item => item.product_id !== 438)
             };
 
         case actionTypes.refreshStore:

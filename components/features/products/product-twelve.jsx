@@ -43,8 +43,18 @@ function ProductTwelve(props) {
     }, [])
 
     function onCartClick(e) {
+
         e.preventDefault();
-        props.addToCart(product);
+
+        console.log("onCartClick :: ", product)
+
+        let data = {
+            'product_id': product?.id,
+            'product_variation_id': product?.productvariations?.product_variation_name[0]?.product_variation_id,
+        };
+        
+        props.addToCart(data);
+
     }
 
     function onWishlistClick(e) {
@@ -53,7 +63,12 @@ function ProductTwelve(props) {
             if (authtoken === "" || authtoken === null || authtoken === undefined) {
                 props.showPopup(true);
             } else {
-                props.addToWishlist(product);
+                let data = {
+                    'product_id': product?.id,
+                    'product_variation_id': product?.productvariations?.product_variation_name[0]?.product_variation_id,
+
+                };
+                props.addToWishlist(data);
             }
         } else {
             router.push('/wishlist');
@@ -107,7 +122,7 @@ function ProductTwelve(props) {
 
                 <div className="product-action-vertical">
                     {isInWishlist(wishlist, product) ?
-                        <ALink href="/shop/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist">
+                        <ALink href="/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist">
                             <span>go to wishlist</span>
                         </ALink>
                         :
