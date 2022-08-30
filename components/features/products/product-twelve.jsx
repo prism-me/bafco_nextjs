@@ -22,6 +22,7 @@ function ProductTwelve(props) {
     const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
+
         setAuthtoken(localStorage.getItem('authtoken'));
 
         let min = minPrice;
@@ -46,13 +47,11 @@ function ProductTwelve(props) {
 
         e.preventDefault();
 
-        console.log("onCartClick :: ", product)
-
         let data = {
             'product_id': product?.id,
             'product_variation_id': product?.productvariations?.product_variation_name[0]?.product_variation_id,
         };
-        
+
         props.addToCart(data);
 
     }
@@ -148,20 +147,20 @@ function ProductTwelve(props) {
 
                 {!product?.productvariations.in_stock || product?.productvariations.in_stock == 0 ?
                     <div className="product-price">
-                        <span className="out-price">AED {product?.productvariations.lower_price}</span>
+                        <span className="out-price">AED {product?.productvariations.upper_price}</span>
                     </div>
                     :
-                    product?.productvariations.lower_price == product?.productvariations.upper_price ?
-                        <div className="product-price">AED {product?.productvariations.lower_price}</div>
-                        :
-                        product?.variants?.length == 0 ?
-                            <div className="product-price">
-                                <span className="new-price">AED {product?.productvariations.lower_price}</span>
-                                <span className="old-price">AED {product?.productvariations.upper_price}</span>
-                            </div>
-                            :
-                            <div className="product-price">AED {product?.productvariations.lower_price}&ndash;AED {product?.productvariations.upper_price}
-                            </div>
+                    // product?.productvariations.lower_price == product?.productvariations.upper_price ?
+                    <div className="product-price">AED {product?.productvariations.upper_price}</div>
+                    // :
+                    // product?.variants?.length == 0 ?
+                    //     <div className="product-price">
+                    //         <span className="new-price">AED {product?.productvariations.lower_price}</span>
+                    //         <span className="old-price">AED {product?.productvariations.upper_price}</span>
+                    //     </div>
+                    //     :
+                    //     <div className="product-price">AED {product?.productvariations.lower_price}&ndash;AED {product?.productvariations.upper_price}
+                    //     </div>
                 }
 
                 {/* <div className="ratings-container">

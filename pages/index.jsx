@@ -1175,7 +1175,7 @@ function Home(props) {
             <div className="our-projects text-center">
                 <div className="heading heading-center mb-3">
                     <h2 className="title">{homedata?.projects?.heading}</h2>
-                    <h4>{homedata?.projects?.sub_heading}</h4>
+                    <h5>{homedata?.projects?.sub_heading}</h5>
                 </div>
                 <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce>
                     <div className="projects-list">

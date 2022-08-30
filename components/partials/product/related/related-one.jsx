@@ -14,7 +14,12 @@ function RelatedProductsOne(props) {
                     <h2 className="title text-center mb-4">You May Also Purchase</h2>
                     <OwlCarousel adClass="owl-simple carousel-equal-height carousel-with-shadow cols-lg-4 cols-md-3 cols-xs-2 cols-1 mb-4" isTheme={false} options={mainSlider8}>
                         {randomProduct?.map((product, index) =>
-                            <ProductTwelve product={product} key={index} />
+                            <ProductTwelve
+                                product={product}
+                                key={index}
+                                categoryName={product?.product_category?.parent_category?.route}
+                                subCategoryName={product?.product_category?.route}
+                            />
                         )
                         }
                     </OwlCarousel>

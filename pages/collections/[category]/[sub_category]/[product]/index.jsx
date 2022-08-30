@@ -24,7 +24,7 @@ function ProductInner() {
 
     const query = router.query;
     const slug = useRouter().query?.product;
-    const subCategoryName = query?.sub_category.replace('-', ' ');
+    const subCategoryName = query?.sub_category;
 
     // if (!slug) return <div></div>;
 
@@ -39,17 +39,17 @@ function ProductInner() {
     const [relatedProducts, setRelatedProducts] = useState();
     const [randomProducts, setRandomProducts] = useState();
 
-    // useEffect(() => {
-    //     setQuery(router.query);
-    //     let slug1 = router.query?.product;
-    //     setSlug(slug1);
-    //     setSubCategoryName(query?.sub_category.replace('-', ' '));
+    useEffect(() => {
+        // setQuery(router.query);
+        // let slug1 = router.query?.product;
+        // setSlug(slug1);
+        // setSubCategoryName(query?.sub_category.replace('-', ' '));
 
-    //     setPageTitle(query?.product.replace('-', ' '));
+        setPageTitle(query?.product.replace('-', ' '));
 
-    //     console.log("useffect", query);
+        console.log("useffect", query);
 
-    // }, [router])
+    }, [router])
 
     useEffect(() => {
 

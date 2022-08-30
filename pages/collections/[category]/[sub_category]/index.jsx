@@ -1,25 +1,21 @@
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
 import StickyBox from 'react-sticky-box';
 import { API } from '~/http/API';
 import ALink from '~/components/features/alink';
 import PageHeader from '~/components/features/page-header';
 import ShopListTwo from '~/components/partials/shop/list/shop-list-two';
 import Pagination from '~/components/features/pagination';
-import ShopSidebarOne from '~/components/partials/shop/sidebar/shop-sidebar-one';
 import withApollo from '~/server/apollo';
-import { GET_PRODUCTS } from '~/server/queries';
 import { scrollToPageContent } from '~/utils';
-
-const axios = require('axios');
+import InputRange from 'react-input-range';
+import SlideToggle from 'react-slide-toggle';
+import 'react-input-range/lib/css/index.css';
 
 function ShopGrid() {
     const router = useRouter();
     const query = router.query;
     const currentPageRoute = query?.sub_category;
-    // console.log("rout :: ", query?.sub_category.replace('-', ' '));
-    const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
     const [firstLoading, setFirstLoading] = useState(false);
     const [perPage, setPerPage] = useState(12);
     const [pageTitle, setPageTitle] = useState("");
@@ -27,15 +23,25 @@ function ShopGrid() {
     const [products, setProducts] = useState();
     const totalCount = products && products?.length;
     const [filterValues, setFilterValues] = useState();
+    const [filterByValue, setFilterByValue] = useState();
+    const [priceRange, setRange] = useState({ min: 0, max: 10000 });
+    const [brandValue, setBrandValue] = useState('');
 
     useEffect(() => {
 
-        setPageTitle(query?.sub_category.replace('-', ' '));
+        setPageTitle(query?.sub_category);
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
-
             setProducts(response?.data?.products)
+        }).catch((err) => {
+            console.log(err);
+        });
 
+        API.get(`/category-filters-list/${currentPageRoute}`).then((response) => {
+            setFilterValues(response?.data?.reduce((acc, curr) =>
+                acc.find((v) => v?.brand === curr?.brand) ? acc : [...acc, curr],
+                [])
+            );
         }).catch((err) => {
             console.log(err);
         });
@@ -58,45 +64,12 @@ function ShopGrid() {
     }
 
     useEffect(() => {
-        // alert("we are here in sub category")
-        getProducts({
-            variables: {
-                searchTerm: query.searchTerm,
-                color: query.color ? query.color.split(',') : [],
-                size: query.size ? query.size.split(',') : [],
-                brand: query.brand ? query.brand.split(',') : [],
-                minPrice: parseInt(query.minPrice),
-                maxPrice: parseInt(query.maxPrice),
-                category: query.category,
-                sortBy: query.sortBy ? query.sortBy : 'default',
-                page: query.page ? parseInt(query.page) : 1,
-                perPage: perPage,
-                list: true
-            }
-        });
-
         scrollToPageContent();
     }, [query, perPage])
 
     useEffect(() => {
         if (products) setFirstLoading(true);
     }, [products])
-
-    // useEffect(() => {
-    //     if (type == 'list') {
-    //         setPageTitle('List');
-    //         setPerPage(12);
-    //     } else if (type == '2cols') {
-    //         setPageTitle('Grid 2 Columns');
-    //         setPerPage(12);
-    //     } else if (type == '3cols') {
-    //         setPageTitle('Grid 3 Columns');
-    //         setPerPage(12);
-    //     } else if (type == '4cols') {
-    //         setPageTitle('Grid 4 Columns');
-    //         setPerPage(12);
-    //     }
-    // }, [type])
 
     function onSortByChange(e) {
         let queryObject = router.query;
@@ -132,9 +105,32 @@ function ShopGrid() {
             .classList.remove('sidebar-filter-active');
     }
 
-    if (error) {
-        return <div></div>
+    function onAttrClick(e, attr, value) {
+        setBrandValue(value);
+        // handelSelectFilter();
     }
+
+    function onChangePriceRange(value) {
+        setRange(value);
+    }
+
+    function handelSelectFilter() {
+
+        let formdata = {
+            "brand": brandValue,
+            "min": priceRange.min,
+            "max": priceRange.max,
+            "route": currentPageRoute
+        };
+
+        API.post(`/category-list-filteration`, formdata).then((response) => {
+            setProducts(response?.data?.products)
+        }).catch((err) => {
+            console.log(err);
+        });
+
+    }
+
 
     return (
         <main className="main shop">
@@ -161,17 +157,16 @@ function ShopGrid() {
                 <div className="container">
                     <div className="row skeleton-body">
                         <div
-                            className={`col-lg-9 skel-shop-products ${!loading ? 'loaded' : ''}`}
+                            className={`col-lg-9 skel-shop-products`}
                         >
                             <div className="toolbox">
                                 <div className="toolbox-left">
-                                    {
-                                        !loading && products ?
-                                            <div className="toolbox-info">
-                                                Showing
-                                                <span> {products?.length} of {totalCount}</span> Products
-                                            </div>
-                                            : ""
+                                    {products ?
+                                        <div className="toolbox-info">
+                                            Showing
+                                            <span> {products?.length} of {totalCount}</span> Products
+                                        </div>
+                                        : ""
                                     }
                                 </div>
 
@@ -258,7 +253,7 @@ function ShopGrid() {
                             <ShopListTwo
                                 products={products}
                                 perPage={perPage}
-                                loading={loading}
+                            // loading={loading}
                             />
 
                             {
@@ -268,13 +263,100 @@ function ShopGrid() {
                             }
                         </div >
 
-                        <aside className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${(!loading || firstLoading) ? 'loaded' : ''}`}>
+                        <aside className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${(firstLoading) ? 'loaded' : ''}`}>
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <div className="skel-widget"></div>
                             <StickyBox className="sticky-content" offsetTop={70}>
-                                <ShopSidebarOne toggle={toggle} filterValueslist={filterValues} />
+                                <aside className={`${toggle ? 'sidebar-filter' : 'sidebar'} sidebar-shop`}>
+                                    <div className={toggle ? 'sidebar-filter-wrapper' : ''}>
+                                        <div className="widget widget-clean">
+                                            <label>Filters:</label>
+                                            {/* <ALink
+                                                href={{
+                                                    pathname: router.pathname,
+                                                    query: { type: query.type }
+                                                }} className="sidebar-filter-clear" scroll={false}>Clean All</ALink> */}
+                                            <button
+                                                onClick={handelSelectFilter}
+                                                className="pr-2 sidebar-filter-clear"
+                                                style={{ color: '#EE3124', fontWeight: 'bold' }}
+                                                scroll={false}>Filter</button>
+                                        </div>
+
+                                        <SlideToggle collapsed={false}>
+                                            {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                <div className="widget widget-collapsible">
+                                                    <h3 className="widget-title mb-2"><a href="#brand" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Brand</a></h3>
+                                                    <div ref={setCollapsibleElement}>
+                                                        <div className="widget-body pt-0">
+                                                            <div className="filter-items">
+                                                                {filterValues?.map((item, index) => (
+                                                                    <div className="filter-item" key={index}>
+                                                                        <div className="custom-control custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                className="custom-control-input"
+                                                                                id={`brand-${index + 1}`}
+                                                                                onChange={e => onAttrClick(e, 'brand', item.brand)}
+                                                                            // checked={containsAttrInUrl('brand', item.brand) ? true : false}
+                                                                            />
+                                                                            <label className="custom-control-label" htmlFor={`brand-${index + 1}`}>{item.brand}</label>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </SlideToggle>
+
+                                        <SlideToggle collapsed={false}>
+                                            {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                <div className="widget widget-collapsible">
+                                                    <h3 className="widget-title mb-2">
+                                                        <a href="#"
+                                                            className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`}
+                                                            onClick={(e) => { onToggle(e); e.preventDefault() }}
+                                                        >Price</a>
+                                                    </h3>
+
+                                                    <div ref={setCollapsibleElement}>
+                                                        <div className="widget-body pt-0">
+                                                            <div className="filter-price">
+                                                                <div className="filter-price-text d-flex justify-content-between">
+                                                                    <span>
+                                                                        Price Range:&nbsp;
+                                                                        <span className="filter-price-range">Dhs{priceRange.min} - Dhs{priceRange.max}</span>
+                                                                    </span>
+
+                                                                    {/* <button
+                                                                        onClick={handelSelectFilter}
+                                                                        className="pr-2"
+                                                                        style={{ color: '#EE3124' }}
+                                                                        scroll={false}>Filter</button> */}
+                                                                </div>
+
+                                                                <div className="price-slider">
+                                                                    <InputRange
+                                                                        formatLabel={value => `${value}`}
+                                                                        maxValue={10000}
+                                                                        minValue={0}
+                                                                        step={50}
+                                                                        value={priceRange}
+                                                                        onChange={onChangePriceRange}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </SlideToggle>
+                                    </div>
+                                </aside>
+
                             </StickyBox>
                             {
                                 toggle ?

@@ -11,15 +11,25 @@ function ShopSidebarOne(props) {
     const router = useRouter();
     const query = useRouter().query;
     const [priceRange, setRange] = useState({ min: 0, max: 10000 });
+    const [brand, setBrand] = useState("");
+    const [filterValues, setFilterValues] = useState([]);
+    const [filterByValue, setFilterByValue] = useState();
 
     useEffect(() => {
         if (query.minPrice && query.maxPrice) {
             setRange({ min: parseInt(query.minPrice), max: parseInt(query.maxPrice) });
         } else {
             setRange({ min: 0, max: 10000 });
-        }   
-        console.log("filterValues :: ", props)
-    }, [query])
+        }
+
+        setFilterValues(props?.filterValueslist?.reduce((acc, curr) =>
+            acc.find((v) => v?.brand === curr?.brand) ? acc : [...acc, curr],
+            [])
+        );
+
+        setFilterByValue(props?.filterByValueItem);
+
+    }, [query, props])
 
     function onChangePriceRange(value) {
         setRange(value);
@@ -45,16 +55,19 @@ function ShopSidebarOne(props) {
     }
 
     function onAttrClick(e, attr, value) {
-        if (getUrlForAttrs(attr, value)) {
-            let queryObject = getUrlForAttrs(attr, value).query;
-            let url = router.pathname.replace('[type]', query.type) + '?';
-            for (let key in queryObject) {
-                if (key !== "type") {
-                    url += key + '=' + queryObject[key] + '&';
-                }
-            }
-            router.push(url);
-        }
+        console.log('onAttr :: ', attr, value, priceRange);
+        setBrand(value);
+        setFilterByValue(priceRange, value)
+        // if (getUrlForAttrs(attr, value)) {
+        //     let queryObject = getUrlForAttrs(attr, value).query;
+        //     let url = router.pathname.replace('[type]', query.type) + '?';
+        //     for (let key in queryObject) {
+        //         if (key !== "type") {
+        //             url += key + '=' + queryObject[key] + '&';
+        //         }
+        //     }
+        //     router.push(url);
+        // }
     }
 
     return (
@@ -92,36 +105,77 @@ function ShopSidebarOne(props) {
                     </SlideToggle> */}
 
                     <SlideToggle collapsed={false}>
-                        {
-                            ({ onToggle, setCollapsibleElement, toggleState }) => (
-                                <div className="widget widget-collapsible">
-                                    <h3 className="widget-title mb-2"><a href="#brand" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Brand</a></h3>
-                                    <div ref={setCollapsibleElement}>
-                                        <div className="widget-body pt-0">
-                                            <div className="filter-items">
-                                                {
-                                                    shopData.brands.map((item, index) => (
+                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                            <div className="widget widget-collapsible">
+                                <h3 className="widget-title mb-2"><a href="#brand" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Brand</a></h3>
+                                <div ref={setCollapsibleElement}>
+                                    <div className="widget-body pt-0">
+                                        <div className="filter-items">
+                                            {filterValues?.map((item, index) => (
+                                                <div className="filter-item" key={index}>
+                                                    <div className="custom-control custom-checkbox">
+                                                        <input type="checkbox"
+                                                            className="custom-control-input"
+                                                            id={`brand-${index + 1}`}
+                                                            onChange={e => onAttrClick(e, 'brand', item.brand)}
+                                                        // checked={containsAttrInUrl('brand', item.brand) ? true : false}
+                                                        />
+                                                        <label className="custom-control-label" htmlFor={`brand-${index + 1}`}>{item.brand}</label>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </SlideToggle>
 
-                                                        <div className="filter-item" key={index}>
-                                                            <div className="custom-control custom-checkbox">
+                    <SlideToggle collapsed={false}>
+                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                            <div className="widget widget-collapsible">
+                                <h3 className="widget-title mb-2">
+                                    <a href="#"
+                                        className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`}
+                                        onClick={(e) => { onToggle(e); e.preventDefault() }}
+                                    >Price</a>
+                                </h3>
 
-                                                                <input type="checkbox"
-                                                                    className="custom-control-input"
-                                                                    id={`brand-${index + 1}`}
-                                                                    onChange={e => onAttrClick(e, 'brand', item.slug)}
-                                                                    checked={containsAttrInUrl('brand', item.slug) ? true : false}
-                                                                />
-                                                                <label className="custom-control-label" htmlFor={`brand-${index + 1}`}>{item.brand}</label>
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                }
+                                <div ref={setCollapsibleElement}>
+                                    <div className="widget-body pt-0">
+                                        <div className="filter-price">
+                                            <div className="filter-price-text d-flex justify-content-between">
+                                                <span>
+                                                    Price Range:&nbsp;
+                                                    <span className="filter-price-range">Dhs{priceRange.min} - Dhs{priceRange.max}</span>
+                                                </span>
+
+                                                <ALink
+                                                    href="#"
+                                                    // href={{
+                                                    //     pathname: router.pathname,
+                                                    //     query: { ...query, minPrice: priceRange.min, maxPrice: priceRange.max, page: 1 }
+                                                    // }}
+                                                    onClick={(e) => { onToggle(e); e.preventDefault() }}
+                                                    className="pr-2"
+                                                    scroll={false}>Filter</ALink>
+                                            </div>
+
+                                            <div className="price-slider">
+                                                <InputRange
+                                                    formatLabel={value => `${value}`}
+                                                    maxValue={10000}
+                                                    minValue={0}
+                                                    step={50}
+                                                    value={priceRange}
+                                                    onChange={onChangePriceRange}
+                                                />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            )
-                        }
+                            </div>
+                        )}
                     </SlideToggle>
 
                     {/* <SlideToggle collapsed={false}>
@@ -155,7 +209,7 @@ function ShopSidebarOne(props) {
                         }
                     </SlideToggle> */}
 
-                    <SlideToggle collapsed={false}>
+                    {/* <SlideToggle collapsed={false}>
                         {
                             ({ onToggle, setCollapsibleElement, toggleState }) => (
                                 <div className="widget widget-collapsible">
@@ -176,43 +230,8 @@ function ShopSidebarOne(props) {
                                 </div>
                             )
                         }
-                    </SlideToggle>
+                    </SlideToggle> */}
 
-                    <SlideToggle collapsed={false}>
-                        {({ onToggle, setCollapsibleElement, toggleState }) => (
-                            <div className="widget widget-collapsible">
-                                <h3 className="widget-title mb-2">
-                                    <a href="#price" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Price</a>
-                                </h3>
-
-                                <div ref={setCollapsibleElement}>
-                                    <div className="widget-body pt-0">
-                                        <div className="filter-price">
-                                            <div className="filter-price-text d-flex justify-content-between">
-                                                <span>
-                                                    Price Range:&nbsp;
-                                                    <span className="filter-price-range">Dhs{priceRange.min} - Dhs{priceRange.max}</span>
-                                                </span>
-
-                                                <ALink href={{ pathname: router.pathname, query: { ...query, minPrice: priceRange.min, maxPrice: priceRange.max, page: 1 } }} className="pr-2" scroll={false}>Filter</ALink>
-                                            </div>
-
-                                            <div className="price-slider">
-                                                <InputRange
-                                                    formatLabel={value => `${value}`}
-                                                    maxValue={10000}
-                                                    minValue={0}
-                                                    step={50}
-                                                    value={priceRange}
-                                                    onChange={onChangePriceRange}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </SlideToggle>
                 </div>
             </aside>
         </>

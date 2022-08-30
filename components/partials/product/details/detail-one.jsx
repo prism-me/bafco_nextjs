@@ -26,13 +26,13 @@ function DetailOne(props) {
 
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
-            []));
+            [])
+        );
 
         setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
-            []));
-
-        // console.log("variationGroup :: ", variationGroup)
+            [])
+        );
 
         let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
             let productVariation = {
@@ -46,7 +46,6 @@ function DetailOne(props) {
 
         setSelectedVariant(currentProductVariation);
 
-        // console.log("beforeCombination :: ", product?.dropDown);
         let comb = [];
 
         product?.dropDown.reduce((acc, item) => {
@@ -61,8 +60,6 @@ function DetailOne(props) {
             }
             return item.product_variation_id;
         }, 0);
-
-        // console.log("combination-values", comb);
 
         setvariantCombGroup(comb)
 
@@ -278,21 +275,22 @@ function DetailOne(props) {
             {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
                 <div className="product-price">
                     <span className="out-price">
-                        {product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
+                        <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
+                        {/* {product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
                             <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
                             :
                             <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}&ndash;AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
-                        }
+                        } */}
                     </span>
                 </div>
                 :
-                product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
-                    <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</div>
-                    :
-                    <div className="product-price">
-                        <span className="new-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
-                        <span className="old-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
-                    </div>
+                // product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
+                    <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</div>
+                    // :
+                    // <div className="product-price">
+                    //     <span className="new-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
+                    //     <span className="old-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
+                    // </div>
             }
 
             <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
