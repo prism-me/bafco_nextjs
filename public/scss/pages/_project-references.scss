@@ -1,0 +1,28 @@
+// planing section css
+$forest-green: #008482;
+
+.prefrences-page {
+  .breadcrumb-nav {
+    border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
+  }
+
+  .subtitle {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .furnitureWrper {
+    .furnitureContent {
+      .lead {
+        margin: 1rem 0rem 0.5rem 0rem;
+        opacity: 0.6;
+      }
+
+      h3 {
+        font-weight: 500;
+        margin-bottom: 1rem;
+        font-size: 20px;
+      }
+    }
+  }
+}

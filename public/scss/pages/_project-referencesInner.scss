@@ -1,0 +1,98 @@
+// planing section css
+$forest-green: #008482;
+$primary-color: #ee3124;
+
+.prefrencesInner-page {
+  .breadcrumb-nav {
+    border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
+  }
+  .referencesinnerwrapper {
+    h3 {
+      font-weight: 500;
+      font-size: 30px;
+    }
+
+    .prefresubheading {
+      font-weight: 500;
+      margin-bottom: 1rem;
+      font-size: 20px;
+    }
+
+    .prefresubtitle {
+      margin-bottom: 1rem;
+    }
+
+    .btnWrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @media (max-width: 575px) {
+        display: block;
+      }
+      @media (max-width: 1025px) {
+        display: block;
+      }
+      .btn {
+        color: #fff;
+        border-color: $primary-color;
+        background: $primary-color;
+        font-size: 15px;
+        width: 100%;
+        margin-right: 2rem;
+        @media (max-width: 996px) {
+          margin-bottom: 1.5rem;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        @media (max-width: 1025px) {
+          width: fit-content;
+          min-width: fit-content;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          color: $primary-color;
+          border-color: $primary-color;
+          background: #fff;
+        }
+      }
+    }
+  }
+
+  .owl-carousel .owl-item img {
+    height: 250px;
+    margin-bottom: 2rem;
+  }
+
+  .owl-simple.owl-light .owl-dots .owl-dot.active span {
+    border-color: #525151;
+    background: #525151;
+  }
+
+  .owl-simple .owl-dots .owl-dot span {
+    border-color: #a39c9c;
+    background: #a39c9c;
+  }
+
+  .prDeatilColmblspace {
+    @media (max-width: 575px) {
+      margin-bottom: 2rem;
+    }
+  }
+  .relatedProductwrape {
+    .owl-simple .owl-nav [class*="owl-"] {
+      top: 40%;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    p {
+      opacity: 0.6;
+    }
+  }
+}

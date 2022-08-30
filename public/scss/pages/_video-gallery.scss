@@ -1,0 +1,51 @@
+$forest-green: #008482;
+$primary-color: #ee3124;
+
+.video-gallery-page {
+  .breadcrumb-nav {
+    border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
+  }
+
+  .videotitle {
+    font-weight: 500;
+    margin: 1rem 0rem 2rem 0rem;
+    color: #000;
+    font-size: 18px;
+    opacity: 0.6;
+    line-height: normal;
+  }
+
+  .videowrapper {
+    position: relative;
+    color: white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      background: rgba(0, 0, 0, 0.3);
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    // img {
+    //   height: 220px;
+    // }
+
+    .videoContent {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .icon {
+        color: #ffffff;
+        font-size: 30px;
+        border: 2px solid white;
+        border-radius: 100%;
+        padding: 0.4rem 0.7rem;
+      }
+    }
+  }
+}

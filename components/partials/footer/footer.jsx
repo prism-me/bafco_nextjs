@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 
-import ALink from '~/components/features/alink';
+import ALink from "~/components/features/alink";
 
 function Footer() {
     const router = useRouter("");
@@ -153,34 +153,42 @@ function Footer() {
                 </div>
             </div>
 
-            <div className="footer-bottom">
-                <div className={containerClass}>
-                    <p className="footer-copyright">Copyright © {(new Date()).getFullYear()} Bafco Store. All Rights Reserved.</p>
-                    <ul className="footer-menu">
-                        <li><ALink href="/policies/terms-of-service">Terms Of Use</ALink></li>
-                        <li><ALink href="/policies/privacy-policy">Privacy Policy</ALink></li>
-                        <li><ALink href="/policies/shipping-policy">Shipping Policy</ALink></li>
-                    </ul>
+      <div className="footer-bottom">
+        <div className={containerClass}>
+          <p className="footer-copyright">
+            Copyright © {new Date().getFullYear()} Bafco Store. All Rights
+            Reserved.
+          </p>
+          <ul className="footer-menu">
+            <li>
+              <ALink href="/policies/terms-of-service">Terms Of Use</ALink>
+            </li>
+            <li>
+              <ALink href="/policies/privacy-policy">Privacy Policy</ALink>
+            </li>
+            <li>
+              <ALink href="/policies/shipping-policy">Shipping Policy</ALink>
+            </li>
+          </ul>
 
-                    <div className="social-icons social-icons-color">
-                        <p>Designed and Managed by <ALink href="https://www.prism-me.com/">Prism</ALink></p>
-                        {/* <span className="social-label">Social Media</span>
+          <div className="social-icons social-icons-color">
+            <p>
+              Designed and Managed by{" "}
+              <ALink href="https://www.prism-me.com/">Prism</ALink>
+            </p>
+            {/* <span className="social-label">Social Media</span>
 
                         <ALink href="#" className="social-icon social-facebook" rel="noopener noreferrer" title="Facebook"><i className="icon-facebook-f"></i></ALink>
                         <ALink href="#" className="social-icon social-twitter" rel="noopener noreferrer" title="Twitter"><i className="icon-twitter"></i></ALink>
                         <ALink href="#" className="social-icon social-instagram" rel="noopener noreferrer" title="Instagram"><i className="icon-instagram"></i></ALink>
                         <ALink href="#" className="social-icon social-youtube" rel="noopener noreferrer" title="Youtube"><i className="icon-youtube"></i></ALink>
                         <ALink href="#" className="social-icon social-pinterest" rel="noopener noreferrer" title="Pinterest"><i className="icon-pinterest"></i></ALink> */}
-                    </div>
-                </div>
-            </div>
-            {
-                isBottomSticky ?
-                    <div className="mb-10"></div>
-                    : ""
-            }
-        </footer>
-    );
+          </div>
+        </div>
+      </div>
+      {isBottomSticky ? <div className="mb-10"></div> : ""}
+    </footer>
+  );
 }
 
 export default React.memo(Footer);

@@ -1,0 +1,147 @@
+$forest-green: #008482;
+$primary-color: #ee3124;
+
+.brouchure-images-page {
+  .breadcrumb-nav {
+    border-top: 0.1rem solid rgba(235, 235, 235, 0.55);
+  }
+
+  .brochureImagesWrapper {
+    @media (max-width: 575px) {
+      display: block !important;
+      text-align: center;
+    }
+  }
+
+  .brouchurewrapper {
+    @media (max-width: 575px) {
+      margin-bottom: 2rem;
+    }
+    .imgWrapper {
+      position: relative;
+      color: white;
+      &::before {
+        content: "";
+        position: absolute;
+        background: rgba(0, 0, 0, 0.25);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 25px;
+      }
+      img {
+        width: 100%;
+        border-radius: 25px;
+        @media (max-width: 575px) {
+          height: 60vh;
+        }
+      }
+      .bottom-left {
+        position: absolute;
+        bottom: 45px;
+        left: 40px;
+        width: 50%;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: normal;
+        @media (max-width: 575px) {
+          bottom: 45px;
+          left: 10px;
+        }
+      }
+      .top-right {
+        position: absolute;
+        top: 45px;
+        right: 40px;
+        width: 50%;
+        @media (max-width: 575px) {
+          top: 45px;
+          right: 10px;
+        }
+      }
+    }
+
+    .btnWrapper {
+      .btn {
+        color: #000;
+        border: none;
+        background: transparent;
+        font-size: 15px;
+        padding: 0;
+        margin-right: 2rem;
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  .heading.heading-center .title {
+    margin-bottom: 3rem !important;
+    font-weight: 500 !important;
+    line-height: 1.1 !important;
+    color: #000 !important;
+    font-size: 3rem !important;
+  }
+  .nav.nav-pills .nav-item.show .nav-link,
+  .nav.nav-pills .nav-item .nav-link.active {
+    color: $forest-green !important;
+    border-bottom-color: $forest-green !important;
+  }
+  .nav.nav-border-anim .nav-link:before {
+    background-color: $forest-green !important;
+  }
+  .nav.nav-pills .nav-link:hover,
+  .nav.nav-pills .nav-link:focus {
+    color: $forest-green !important;
+  }
+  .nav.nav-pills .nav-link {
+    text-transform: capitalize !important;
+  }
+  .products {
+    background: rgba(0, 0, 0, 0.02);
+    padding: 5rem 0;
+    .subtitle {
+      font-weight: 600;
+      font-size: 18px;
+    }
+    .form-control {
+      font-weight: 600;
+      font-size: 18px;
+      border: none;
+      color: #000;
+    }
+  }
+  .downloadWrper {
+    .downloadContent {
+      margin-top: 2rem;
+      .subtitle {
+        font-weight: 600;
+        font-size: 18px;
+      }
+      .downloadbtnWrapper {
+        .btn {
+          color: #000;
+          border: none;
+          background: transparent;
+          font-size: 15px;
+          padding: 0;
+          margin-right: 1rem;
+          margin-bottom: 1rem;
+          min-width: fit-content;
+          &:last-child {
+            margin-right: 0;
+          }
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}
