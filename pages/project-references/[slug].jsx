@@ -6,11 +6,21 @@ import withApollo from "~/server/apollo";
 import { actions as demoAction } from "~/store/demo";
 import OwlCarousel from "~/components/features/owl-carousel";
 import { projectReferenceInnerSlider } from "~/utils/data";
-
-const axios = require("axios");
+import { API } from "~/http/API";
 
 function ProjectReferencesInner(props) {
   const slug = useRouter().query.slug;
+  const [projectDetail, setProjectDetail] = useState("");
+
+  useEffect(() => {
+    API.get(`/projects/${slug}`)
+      .then((response) => {
+        setProjectDetail(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [slug]);
 
   return (
     <div className="main prefrencesInner-page">
@@ -23,9 +33,7 @@ function ProjectReferencesInner(props) {
             <li className="breadcrumb-item">
               <ALink href="/project-references/">Project References</ALink>
             </li>
-            <li className="breadcrumb-item active">
-              Project References Details
-            </li>
+            <li className="breadcrumb-item active">{projectDetail.title}</li>
           </ol>
         </div>
       </nav>
@@ -39,7 +47,7 @@ function ProjectReferencesInner(props) {
             >
               <div className="col-lg-4 col-sm-6 col-xs-12 prDeatilColmblspace">
                 <div className="application-heading mb-3">
-                  <h3>Name of the Project</h3>
+                  <h3>{projectDetail.title}</h3>
                 </div>
                 <h3 className="prefresubheading">Office</h3>
                 <p className="prefresubtitle">
@@ -48,7 +56,7 @@ function ProjectReferencesInner(props) {
               </div>
               <div className="col-lg-8 col-sm-6 col-xs-12">
                 <img
-                  src="images/projectreferencesinner/projectreferencesdetail.png"
+                  src={projectDetail.featured_img}
                   className="img-fluid mb-2"
                 />
                 <div className="btnWrapper">
@@ -73,27 +81,11 @@ function ProjectReferencesInner(props) {
               adClass="owl-simple owl-light"
               options={projectReferenceInnerSlider}
             >
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-              </div>
+              {projectDetail?.additional_img?.map((x, i) => (
+                <div className="top-management-application" key={i}>
+                  <img src={x.avatar} />
+                </div>
+              ))}
             </OwlCarousel>
           </div>
 
