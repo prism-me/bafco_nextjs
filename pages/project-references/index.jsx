@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import ALink from "~/components/features/alink";
-import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 import withApollo from "~/server/apollo";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ContactForm from "../contact-form/contact-form";
 import { API } from "~/http/API";
+import { fadeIn } from "~/utils/data";
+import Reveal from "react-awesome-reveal";
 
 function ProjectReferences() {
   const [projectsList, setProjectsList] = useState();
@@ -68,96 +68,87 @@ function ProjectReferences() {
             </p>
           </div>
 
-          <div className="application-heading text-center mb-3">
-            <h3>Furniture</h3>
-          </div>
-
-          <div className="top-management-application-tabs">
-            <Tabs defaultIndex={0} selectedTabClassName="show">
-              <TabList
-                className="nav nav-pills justify-content-center mb-3"
-                id="tabs-6"
-                role="tablist"
-              >
-                <Tab
-                  className="nav-item"
-                  onClick={() => setSelectedCategory("all")}
-                >
-                  <span className="nav-link">All</span>
-                </Tab>
-                {categoryList?.length > 0 &&
-                  categoryList.map((item, index) => (
-                    <Tab
-                      className="nav-item"
-                      key={index}
-                      onClick={() => setSelectedCategory(`${item.route}`)}
-                    >
-                      <span className="nav-link">{item.name}</span>
-                    </Tab>
-                  ))}
-              </TabList>
-              <div className="tab-pane tab-content">
-                {categoryList?.length > 0 &&
-                  categoryList.map((item, index) => (
-                    <TabPanel key={index}>
-                      <div className="mb-5">
-                        <ResponsiveMasonry
-                          columnsCountBreakPoints={{
-                            1100: 3,
-                            700: 2,
-                            500: 1,
-                          }}
-                        >
-                          <Masonry gutter="2rem">
-                            {projectsList?.length > 0 ? (
-                              projectsList.map((x, i) => (
-                                <div className="furnitureWrper">
-                                  <ALink
-                                    href={`/project-references/${x.route}`}
-                                  >
-                                    <img
-                                      key={i}
-                                      src={x.featured_img}
-                                      style={{
-                                        width: "100%",
-                                        // height: "250px",
-                                        display: "block",
-                                      }}
-                                    />
-                                  </ALink>
-                                  <div className="furnitureContent">
-                                    <p className="lead">
-                                      {x.project_category.map((t, ind) => (
-                                        <span key={ind} className="mr-2">
-                                          {t.name},
-                                        </span>
-                                      ))}
-                                    </p>
-                                    <h3>{x.title}</h3>
-                                  </div>
-                                </div>
-                              ))
-                            ) : (
-                              <p
-                                style={{
-                                  fontSize: "20px",
-                                  textAlign: "center",
-                                  fontWeight: "bold",
-                                  display: "block",
-                                  width: "100%",
-                                }}
-                              >
-                                No project found.
-                              </p>
-                            )}
-                          </Masonry>
-                        </ResponsiveMasonry>
-                      </div>
-                    </TabPanel>
-                  ))}
+          <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
+            <div className="container">
+              <div className="heading heading-center mb-3">
+                <h2 className="title">Furniture</h2>
               </div>
-            </Tabs>
-          </div>
+              <div className="top-collection  mb-3">
+                <ul
+                  className="nav nav-pills nav-border-anim justify-content-center"
+                  role="tablist"
+                >
+                  <li
+                    className={`nav-item ${
+                      selectedCategory === "all" ? "show" : ""
+                    }`}
+                    onClick={() => setSelectedCategory("all")}
+                  >
+                    <span className="nav-link">All</span>
+                  </li>
+                  {categoryList?.length > 0 &&
+                    categoryList.map((item, index) => (
+                      <li
+                        key={index}
+                        className={`nav-item ${
+                          selectedCategory === `${item.route}` ? "show" : ""
+                        }`}
+                        onClick={() => setSelectedCategory(`${item.route}`)}
+                      >
+                        <span className="nav-link">{item.name}</span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </div>
+            <div className="products mb-5">
+              <div className="container">
+                <div className="row">
+                  {projectsList?.length > 0 ? (
+                    projectsList.map((x, i) => (
+                      <div className="col-6 col-md-6 col-lg-4" key={i}>
+                        <div className="furnitureWrper">
+                          <ALink href={`/project-references/${x.route}`}>
+                            <img
+                              key={i}
+                              src={x.featured_img}
+                              style={{
+                                width: "100%",
+                                // height: "250px",
+                                display: "block",
+                              }}
+                            />
+                          </ALink>
+                          <div className="furnitureContent">
+                            <p className="lead">
+                              {x.project_category.map((t, ind) => (
+                                <span key={ind} className="mr-2">
+                                  {t.name},
+                                </span>
+                              ))}
+                            </p>
+                            <h3>{x.title}</h3>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p
+                      style={{
+                        fontSize: "20px",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        display: "block",
+                        width: "100%",
+                      }}
+                    >
+                      No Item found.
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
         <ContactForm />
       </div>
