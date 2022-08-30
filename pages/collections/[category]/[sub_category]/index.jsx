@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import StickyBox from 'react-sticky-box';
-
+import { API } from '~/http/API';
 import ALink from '~/components/features/alink';
 import PageHeader from '~/components/features/page-header';
 import ShopListTwo from '~/components/partials/shop/list/shop-list-two';
@@ -32,23 +32,13 @@ function ShopGrid() {
 
         setPageTitle(query?.sub_category.replace('-', ' '));
 
-        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/front-products/${currentPageRoute}`).then(function (response) {
-            // handle success
-            // console.log(response?.data?.products);
-            setProducts(response?.data?.products)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
+        API.get(`/front-products/${currentPageRoute}`).then((response) => {
 
-        // axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/filters-listing`).then(function (response) {
-        //     // handle success
-        //     console.log(response?.data);
-        //     setFilterValues(response?.data)
-        // }).catch(function (error) {
-        //     // handle error
-        //     console.log(error);
-        // })
+            setProducts(response?.data?.products)
+
+        }).catch((err) => {
+            console.log(err);
+        });
 
     }, [query])
 
@@ -150,7 +140,7 @@ function ShopGrid() {
         <main className="main shop">
             <PageHeader
                 title={pageTitle}
-                subTitle="We make happy workplaces"
+                subTitle=""
                 backgroundImage="images/banners/cat_banner.png"
                 buttonText="View Our Products"
                 buttonUrl="#"
