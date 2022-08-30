@@ -4,24 +4,32 @@ import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 import withApollo from "~/server/apollo";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ContactForm from "../contact-form/contact-form";
-
-const axios = require("axios");
+import { API } from "~/http/API";
 
 function ProjectReferences() {
-  const [resourcesdata, setResourcesdata] = useState();
+  const [projectsList, setProjectsList] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [categoryList, setCategoryList] = useState("");
 
   useEffect(() => {
-    axios
-      .get(
-        "https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/resources?en"
-      )
-      .then(function (response) {
-        setResourcesdata(response.data.content);
+    API.get(`/project-category-list/`)
+      .then((response) => {
+        setCategoryList(response?.data);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    API.get(`/all-project/${selectedCategory}`)
+      .then((response) => {
+        setProjectsList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [selectedCategory]);
 
   return (
     <div className="main prefrences-page">
@@ -71,53 +79,82 @@ function ProjectReferences() {
                 id="tabs-6"
                 role="tablist"
               >
-                {/* <Tab className="nav-item">
-                                    <span className="nav-link">All Products</span>
-                                </Tab> */}
-                {resourcesdata?.brochures?.map((item, index) => (
-                  <Tab className="nav-item" key={index}>
-                    <span className="nav-link">{item.categorie}</span>
-                  </Tab>
-                ))}
+                <Tab
+                  className="nav-item"
+                  onClick={() => setSelectedCategory("all")}
+                >
+                  <span className="nav-link">All</span>
+                </Tab>
+                {categoryList?.length > 0 &&
+                  categoryList.map((item, index) => (
+                    <Tab
+                      className="nav-item"
+                      key={index}
+                      onClick={() => setSelectedCategory(`${item.route}`)}
+                    >
+                      <span className="nav-link">{item.name}</span>
+                    </Tab>
+                  ))}
               </TabList>
               <div className="tab-pane tab-content">
-                {resourcesdata?.brochures?.map((item, index) => (
-                  <TabPanel key={index}>
-                    <div className="mb-5">
-                      <ResponsiveMasonry
-                        columnsCountBreakPoints={{
-                          1100: 3,
-                          700: 2,
-                          500: 1,
-                        }}
-                      >
-                        <Masonry gutter="2rem">
-                          {item.categorieBrochures.map((item2, index2) => (
-                            <div className="furnitureWrper">
-                              <ALink
-                                href={`/project-references/${item2.route}`}
+                {categoryList?.length > 0 &&
+                  categoryList.map((item, index) => (
+                    <TabPanel key={index}>
+                      <div className="mb-5">
+                        <ResponsiveMasonry
+                          columnsCountBreakPoints={{
+                            1100: 3,
+                            700: 2,
+                            500: 1,
+                          }}
+                        >
+                          <Masonry gutter="2rem">
+                            {projectsList?.length > 0 ? (
+                              projectsList.map((x, i) => (
+                                <div className="furnitureWrper">
+                                  <ALink
+                                    href={`/project-references/${x.route}`}
+                                  >
+                                    <img
+                                      key={i}
+                                      src={x.featured_img}
+                                      style={{
+                                        width: "100%",
+                                        // height: "250px",
+                                        display: "block",
+                                      }}
+                                    />
+                                  </ALink>
+                                  <div className="furnitureContent">
+                                    <p className="lead">
+                                      {x.project_category.map((t, ind) => (
+                                        <span key={ind} className="mr-2">
+                                          {t.name},
+                                        </span>
+                                      ))}
+                                    </p>
+                                    <h3>{x.title}</h3>
+                                  </div>
+                                </div>
+                              ))
+                            ) : (
+                              <p
+                                style={{
+                                  fontSize: "20px",
+                                  textAlign: "center",
+                                  fontWeight: "bold",
+                                  display: "block",
+                                  width: "100%",
+                                }}
                               >
-                                <img
-                                  key={index2}
-                                  src={item2.image}
-                                  style={{
-                                    width: "100%",
-                                    height: "250px",
-                                    display: "block",
-                                  }}
-                                />
-                              </ALink>
-                              <div className="furnitureContent">
-                                <p className="lead">Category</p>
-                                <h3>{item2.title}</h3>
-                              </div>
-                            </div>
-                          ))}
-                        </Masonry>
-                      </ResponsiveMasonry>
-                    </div>
-                  </TabPanel>
-                ))}
+                                No project found.
+                              </p>
+                            )}
+                          </Masonry>
+                        </ResponsiveMasonry>
+                      </div>
+                    </TabPanel>
+                  ))}
               </div>
             </Tabs>
           </div>
