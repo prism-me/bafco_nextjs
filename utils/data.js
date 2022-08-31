@@ -893,6 +893,33 @@ export const projectReferenceInnerSlider = {
   },
 };
 
+export const projectRelatedProductsInnerSlider = {
+  nav: true,
+  dots: true,
+  margin: 20,
+  loop: false,
+  responsive: {
+    0: {
+      items: 1,
+    },
+    420: {
+      items: 1,
+    },
+    600: {
+      items: 2,
+    },
+    900: {
+      items: 3,
+    },
+    1024: {
+      items: 4,
+    },
+    1360: {
+      items: 4,
+    },
+  },
+};
+
 export const fabricFinishedSlider = {
   nav: true,
   dots: true,
