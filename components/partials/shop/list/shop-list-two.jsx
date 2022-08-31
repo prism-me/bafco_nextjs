@@ -1,14 +1,14 @@
 import React from 'react';
 import ProductTwelve from '~/components/features/products/product-twelve';
 
-function ShopListThree ( props ) {
+function ShopListThree(props) {
     const { products = [], loading } = props;
-    const fakeArray = [ 1, 2, 3, 4, 5, 6, 7, 8 ];
+    const fakeArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
     return (
-        <div className={ `products mb-3 skeleton-body skel-shop-products ${loading ? '' : 'loaded'}` }>
+        <div className={`products mb-3 skeleton-body skel-shop-products ${loading ? '' : 'loaded'}`}>
             {
-                ( products?.length == 0 && !loading ) ?
+                (products?.length == 0 && !loading) ?
                     <p
                         className="no-results"
                     >No products matching your selection.</p>
@@ -16,17 +16,18 @@ function ShopListThree ( props ) {
                     <div className="row">
                         {
                             loading ?
-                                fakeArray.map( ( item, index ) => (
-                                    <div className="col-6 col-md-4 col-xl-3 mb-2" key={ index }>
+                                fakeArray.map((item, index) => (
+                                    <div className="col-6 col-md-4 col-xl-3 mb-2" key={index}>
                                         <div className="skel-pro"></div>
                                     </div>
-                                ) )
+                                ))
                                 :
-                                products?.map( ( product, index ) => (
-                                    <div className="col-6 col-md-4 col-xl-3" key={ index }>
-                                        <ProductTwelve product={ product } />
+                                products?.map((product, index) => (
+                                    product?.productvariations !== null &&
+                                    <div className="col-6 col-md-4 col-xl-3" key={index}>
+                                        <ProductTwelve product={product} />
                                     </div>
-                                ) )
+                                ))
                         }
                     </div>
             }
@@ -34,4 +35,4 @@ function ShopListThree ( props ) {
     )
 }
 
-export default React.memo( ShopListThree );
+export default React.memo(ShopListThree);

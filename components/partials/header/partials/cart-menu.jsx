@@ -49,7 +49,7 @@ function CartMenu ( props ) {
                             <div className="dropdown-cart-total">
                                 <span>Total</span>
 
-                                <span className="cart-total-price">AED{ cartPriceTotal( cartlist ).toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } ) }</span>
+                                <span className="cart-total-price">AED { cartPriceTotal( cartlist ).toLocaleString( undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 } ) }</span>
                             </div>
 
                             <div className="dropdown-cart-action">

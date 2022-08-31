@@ -15,16 +15,18 @@ import withApollo from '~/server/apollo';
 import ALink from '~/components/features/alink';
 import { API } from '~/http/API';
 
-
-const axios = require('axios');
-
 function ProductInner() {
     const router = useRouter();
+
+    // const [query, setQuery] = useState();
+    // const [slug, setSlug] = useState();
+    // const [subCategoryName, setSubCategoryName] = useState();
+
     const query = router.query;
     const slug = useRouter().query?.product;
-    const subCategoryName = query?.sub_category.replace('-', ' ');
+    const subCategoryName = query?.sub_category;
 
-    if (!slug) return <div></div>;
+    // if (!slug) return <div></div>;
 
     const { data, loading, error } = useQuery(GET_PRODUCT, { variables: { slug } });
     // const product = data && data.product.single;
@@ -33,32 +35,84 @@ function ProductInner() {
     const next = data && data.product.next;
     const [product, setProduct] = useState();
     const [pageTitle, setPageTitle] = useState("");
-    const [selectedVariation, setSelectedVariation] = useState();
+    const [selectedVariation, setSelectedVariation] = useState("");
+    const [relatedProducts, setRelatedProducts] = useState();
+    const [randomProducts, setRandomProducts] = useState();
 
     useEffect(() => {
-        // alert("we are here in product")
+        // setQuery(router.query);
+        // let slug1 = router.query?.product;
+        // setSlug(slug1);
+        // setSubCategoryName(query?.sub_category.replace('-', ' '));
+
         setPageTitle(query?.product.replace('-', ' '));
-        API.get(`/product-detail/${query?.product}`)
-            .then((response) => {
+
+        console.log("useffect", query);
+
+    }, [router])
+
+    useEffect(() => {
+
+        if (selectedVariation !== "") {
+
+            router.push(`/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`);
+
+            API.get(`/product-detail/${query?.product}/${selectedVariation}`).then((response) => {
+
                 setProduct(response?.data)
-            })
-            .catch((err) => {
+
+            }).catch((err) => {
                 console.log(err);
             });
-        { console.log("Main :: ", selectedVariation) }
+
+        } else {
+
+            if (query?.variationId) {
+                API.get(`/product-detail/${query?.product}/${query?.variationId}`).then((response) => {
+
+                    setProduct(response?.data)
+
+                }).catch((err) => {
+                    console.log(err);
+                });
+            } else {
+                API.get(`/product-detail/${query?.product}`).then((response) => {
+
+                    setProduct(response.data)
+
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }
+
+        }
+
+        API.get(`related-products/${query?.sub_category}`).then((response) => {
+            setRelatedProducts(response.data.data)
+        }).catch((err) => {
+            console.log(err);
+        });
+
+        API.get(`random-products`).then((response) => {
+            setRandomProducts(response.data.data)
+        }).catch((err) => {
+            console.log(err);
+        });
+
+
 
     }, [selectedVariation])
 
     return (
         <div className="main">
-            <PageHeader
+            {/* <PageHeader
                 title={pageTitle}
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/cat_banner.png"
                 buttonText="Discover More"
                 buttonUrl="#"
-            />
-            <nav className="breadcrumb-nav mb-2">
+            /> */}
+            <nav className="breadcrumb-nav mb-6">
                 <div className="container">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -92,39 +146,32 @@ function ProductInner() {
                                     </div>
                                 </div>
                                 {/* {console.log("product :: ", product)} */}
-                                {
-                                    !loading ?
-                                        <DetailOne product={product} subCategory={subCategoryName} handelselectedVariation={setSelectedVariation} />
-                                        : ""
-                                }
+                                <DetailOne product={product} subCategory={subCategoryName} handelselectedVariation={setSelectedVariation} />
                             </div>
                         </div>
                     </div>
 
-                    <div className="product-lg position-relative mb-5">
-                        {/* {
-                            product?.stock == 0 ?
-                                <span className="product-label label-out">Out of Stock</span>
-                                : ""
-                        } */}
-                        <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>
-                            {product?.single_product_details?.product?.album.map((item, index) =>
-                                <Magnifier
-                                    imageSrc={item.avatar}
-                                    imageAlt="product"
-                                    largeImageSrc={item.avatar} // Optional
-                                    dragToMove={false}
-                                    mouseActivation="hover"
-                                    cursorStyleActive="crosshair"
-                                    className="product-gallery-image"
-                                    style={{ paddingTop: `${424 / 405 * 100}%` }}
-                                    key={"gallery-" + index}
-                                />
-                            )}
-                        </OwlCarousel>
-                    </div>
+                    {product?.single_product_details?.product?.album?.length === 0 ? "" :
+                        <div className="product-lg position-relative mb-5">
+                            <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>
+                                {product?.single_product_details?.product?.album.map((item, index) =>
+                                    <Magnifier
+                                        imageSrc={item.avatar}
+                                        imageAlt="product"
+                                        largeImageSrc={item.avatar} // Optional
+                                        dragToMove={false}
+                                        mouseActivation="hover"
+                                        cursorStyleActive="crosshair"
+                                        className="product-gallery-image"
+                                        style={{ paddingTop: `${424 / 405 * 100}%` }}
+                                        key={"gallery-" + index}
+                                    />
+                                )}
+                            </OwlCarousel>
+                        </div>
+                    }
                     <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
-                    <RelatedProductsOne relatedproducts={product?.related_products} randomProduct={product?.random_purchase} loading={loading} />
+                    <RelatedProductsOne relatedproducts={relatedProducts} randomProduct={randomProducts} loading={loading} />
                 </div >
             </div >
 

@@ -29,10 +29,14 @@ const customStyles = {
 
 let addressData = {
     name: "",
-    mobile: "",
-    DeliveryAddress: "",
+    phone_number: "",
+    address_line1: "",
+    address_line2: "",
+    postal_code: "",
     country: "",
-    area: "",
+    state: "",
+    city: "",
+    address_type: "",
 }
 
 Modal.setAppElement('body');
@@ -47,7 +51,10 @@ function MyAccount() {
     const [open, setOpen] = useState(false);
     const [isdefault, setIsDefault] = useState(false);
     const [countryList, setCountryList] = useState();
-    const [areaList, setAreaList] = useState();
+    const [stateList, setStateList] = useState();
+    const [editAddressID, setEditAddressID] = useState();
+    const [isEdit, setIsEdit] = useState(false);
+
     let timer;
 
     useEffect(() => {
@@ -80,6 +87,34 @@ function MyAccount() {
     function openModal(e) {
         e.preventDefault();
         setOpen(true);
+    }
+
+    useEffect(() => {
+
+        let xauthtoken = localStorage.getItem('authtoken');
+        let UserId = localStorage.getItem('UserData');
+
+        let header = {
+            headers: {
+                'Authorization': `Bearer ${xauthtoken}`,
+            }
+        }
+        if (isEdit) {
+            API.get(`/address-detail/${editAddressID}`, header).then((response) => {
+                setUserAddressData(response?.data);
+
+            }).catch((err) => console.log(err));
+
+        }
+
+    }, [editAddressID]);
+
+    const handleEditAddress = (e, id) => {
+        e.preventDefault();
+        console.log("editAddressID ::", id)
+        setEditAddressID(id)
+        setOpen(true);
+        setIsEdit(true);
     }
 
     useEffect(() => {
@@ -161,11 +196,11 @@ function MyAccount() {
         formdata.country = e.target.value;
         setUserAddressData(formdata);
 
-        let areaList = [];
-        areaList = CountryRegionData.filter(item => {
+        let stateList = [];
+        stateList = CountryRegionData.filter(item => {
             return item.countryName === e.target.value;
         });
-        setAreaList(areaList);
+        setStateList(stateList);
 
     }
 
@@ -174,11 +209,11 @@ function MyAccount() {
         let a = Number(e.target.value)
         let formdata = { ...useraddressData }
         if (e.target.value === "") {
-            formdata.mobile = ""
+            formdata.phone_number = ""
             setUserAddressData(formdata)
 
         } else if (!isNaN(a)) {
-            formdata.mobile = e.target.value
+            formdata.phone_number = e.target.value
             setUserAddressData(formdata)
         } else {
             e.preventDefault();
@@ -237,42 +272,102 @@ function MyAccount() {
 
         let xauthtoken = localStorage.getItem('authtoken');
         let UserId = localStorage.getItem('UserData');
-        let formdata = {
-            'user_id': UserId,
-            'address': useraddressData,
-        };
 
-        if (useraddressData?.name !== "" && useraddressData?.mobile !== "" && useraddressData?.DeliveryAddress !== "" && useraddressData?.country !== "" && useraddressData?.area !== "") {
+        if (useraddressData?.name !== "" &&
+            useraddressData?.phone_number !== "" &&
+            useraddressData?.address_line1 !== "" &&
+            useraddressData?.country !== "" &&
+            useraddressData?.state !== "" &&
+            useraddressData?.postal_code !== "" &&
+            useraddressData?.address_type !== "" &&
+            useraddressData?.city !== ""
+        ) {
+            if (isEdit) {
+                let formdata = {
+                    'id': useraddressData.id,
+                    'user_id': UserId,
+                    'name': useraddressData?.name,
+                    'phone_number': useraddressData?.phone_number,
+                    'address_line1': useraddressData?.address_line1,
+                    'address_line2': useraddressData?.address_line2,
+                    'postal_code': useraddressData?.postal_code,
+                    'country': useraddressData?.country,
+                    'state': useraddressData?.state,
+                    'city': useraddressData?.city,
+                    'address_type': useraddressData?.address_type,
+                };
 
-            API.post(`/addresses`, formdata, {
-                headers: {
-                    'Authorization': `Bearer ${xauthtoken}`
-                }
-            }).then((response) => {
-                if (response?.status === 200) {
-                    toast.success(response?.data)
-                    closeModal()
-                } else {
-                    toast.warning("Somthing went wrong !");
-                }
-            }).catch((error) => {
-                toast.error("Somthing went wrong !");
-            });
+                API.post(`/addresses`, formdata, {
+                    headers: {
+                        'Authorization': `Bearer ${xauthtoken}`
+                    }
+                }).then((response) => {
+                    if (response?.status === 200) {
+                        toast.success(response?.data)
+                        closeModal()
+                    } else {
+                        toast.warning("Somthing went wrong !");
+                    }
+                }).catch((error) => {
+                    toast.error("Somthing went wrong !");
+                });
+
+
+            } else {
+                let formdata = {
+                    'user_id': UserId,
+                    'name': useraddressData?.name,
+                    'phone_number': useraddressData?.phone_number,
+                    'address_line1': useraddressData?.address_line1,
+                    'address_line2': useraddressData?.address_line2,
+                    'postal_code': useraddressData?.postal_code,
+                    'country': useraddressData?.country,
+                    'state': useraddressData?.state,
+                    'city': useraddressData?.city,
+                    'address_type': useraddressData?.address_type,
+                };
+
+                API.post(`/addresses`, formdata, {
+                    headers: {
+                        'Authorization': `Bearer ${xauthtoken}`
+                    }
+                }).then((response) => {
+                    if (response?.status === 200) {
+                        toast.success(response?.data)
+                        closeModal()
+                    } else {
+                        toast.warning("Somthing went wrong !");
+                    }
+                }).catch((error) => {
+                    toast.error("Somthing went wrong !");
+                });
+
+            }
+
         } else {
             if (useraddressData?.name === "") {
                 toast.warning("Please enter a name before submit.")
                 return
-            } else if (useraddressData?.mobile === "") {
-                toast.warning("Please enter a mobile number before submit.")
+            } else if (useraddressData?.phone_number === "") {
+                toast.warning("Please enter a phone number before submit.")
                 return
-            } else if (useraddressData?.DeliveryAddress === "") {
+            } else if (useraddressData?.address_line1 === "") {
                 toast.warning("Please enter a Address before submit.")
                 return
             } else if (useraddressData?.country === "") {
-                toast.warning("Please enter a mobile number before submit.")
+                toast.warning("Please select country before submit.")
                 return
-            } else if (useraddressData?.area === "") {
-                toast.warning("Please enter a mobile number before submit.")
+            } else if (useraddressData?.state === "") {
+                toast.warning("Please select state before submit.")
+                return
+            } else if (useraddressData?.city === "") {
+                toast.warning("Please enter a city before submit.")
+                return
+            } else if (useraddressData?.address_type === "") {
+                toast.warning("Please enter a address type before submit.")
+                return
+            } else if (useraddressData?.postal_code === "") {
+                toast.warning("Please enter a postal code before submit.")
                 return
             }
         }
@@ -458,13 +553,13 @@ function MyAccount() {
                                                             address.default === 1 &&
                                                             <div className="card card-dashboard" key={index}>
                                                                 <div className="card-body">
-
-                                                                    <p>{address.address.name}<br />
-                                                                        {address.address.DeliveryAddress}<br />
-                                                                        {address.address.area}, {address.address.country}<br />
-                                                                        {address.address.mobile}<br /></p>
+                                                                    <h3 className="card-title">{address.name}</h3>
+                                                                    <p>{address.address_line1}<br />
+                                                                        {address.address_line2}, {address.postal_code}, {address.city}<br />
+                                                                        {address.state}, {address.country}<br />
+                                                                        {address.phone_number}<br /></p>
                                                                     <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                                        <ALink href="#">Edit <i className="icon-edit"></i></ALink>
+                                                                        <button onClick={(e) => handleEditAddress(e, address.id)} style={{ fontWeight: '600' }}>Edit <i className="icon-edit"></i></button>
                                                                         <ALink href="#" style={{ cursor: 'not-allowed' }}>Delete <i className="icon-edit"></i></ALink>
                                                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                                                             <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
@@ -492,12 +587,13 @@ function MyAccount() {
                                                             address.default !== 1 &&
                                                             <div className="card card-dashboard" key={index}>
                                                                 <div className="card-body">
-                                                                    <p>{address.address.name}<br />
-                                                                        {address.address.DeliveryAddress}<br />
-                                                                        {address.address.area}, {address.address.country}<br />
-                                                                        {address.address.mobile}<br /></p>
+                                                                    <h3 className="card-title">{address.name}</h3>
+                                                                    <p> {address.address_line1}<br />
+                                                                        {address.address_line2}, {address.postal_code}, {address.city}<br />
+                                                                        {address.state}, {address.country}<br />
+                                                                        {address.phone_number}<br /></p>
                                                                     <div className="address_actions align-items-center" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                                        <ALink href="#">Edit <i className="icon-edit"></i></ALink>
+                                                                        <button onClick={(e) => handleEditAddress(e, address.id)} style={{ fontWeight: '600' }}>Edit <i className="icon-edit"></i></button>
                                                                         <button onClick={(e) => handleAddressDelete(e, address.id)} style={{ fontWeight: '600' }}>Delete <i className="icon-edit"></i></button>
                                                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                                                             <label style={{ paddingRight: '5px', color: '#008482', fontWeight: 'bold' }}>Default address</label>
@@ -535,29 +631,35 @@ function MyAccount() {
                                                                 </button>
                                                                 <div className="form-box">
                                                                     <form>
-                                                                        <div className="form-group">
-                                                                            <label htmlFor="singin-email-2">Name *</label>
-                                                                            <input
-                                                                                type="text"
-                                                                                className="form-control"
-                                                                                id="singin-email-2"
-                                                                                name="name"
-                                                                                value={useraddressData?.name}
-                                                                                onChange={handleAddressChange}
-                                                                                required
-                                                                            />
-                                                                        </div>
-                                                                        <div className="form-group">
-                                                                            <label htmlFor="singin-email-2">Mobile *</label>
-                                                                            <input
-                                                                                type="text"
-                                                                                className="form-control"
-                                                                                id="singin-email-2"
-                                                                                name="mobile"
-                                                                                value={useraddressData?.mobile}
-                                                                                onChange={handleUserphone}
-                                                                                required
-                                                                            />
+                                                                        <div className="row">
+                                                                            <div className="col-lg-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="singin-email-2">Name *</label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="name"
+                                                                                        value={useraddressData?.name}
+                                                                                        onChange={handleAddressChange}
+                                                                                        required
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-lg-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="singin-email-2">Phone Number *</label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="phone_number"
+                                                                                        value={useraddressData?.phone_number}
+                                                                                        onChange={handleUserphone}
+                                                                                        required
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                         <div className="row">
                                                                             <div className="col-lg-6">
@@ -582,40 +684,98 @@ function MyAccount() {
                                                                             </div>
                                                                             <div className="col-lg-6">
                                                                                 <div className="form-group">
-                                                                                    <label htmlFor="singin-email-2">Area *</label>
+                                                                                    <label htmlFor="singin-email-2">State *</label>
                                                                                     <select
                                                                                         className="form-control"
-                                                                                        id="area"
-                                                                                        name="area"
-                                                                                        value={useraddressData?.area}
-                                                                                        label="Select Area"
+                                                                                        id="state"
+                                                                                        name="state"
+                                                                                        value={useraddressData?.state}
+                                                                                        label="Select state"
                                                                                         fullwidth="true"
                                                                                         style={{ color: "" }}
                                                                                         onChange={handleAddressChange}
                                                                                     >
-                                                                                        <option value={""}>Select Area</option>
-                                                                                        {areaList && areaList[0]?.regions?.map((item, index) => (
+                                                                                        <option value={""}>Select state</option>
+                                                                                        {stateList && stateList[0]?.regions?.map((item, index) => (
                                                                                             <option value={item.name} key={index}>{item.name}</option>
                                                                                         ))}
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        <div className="row">
+                                                                            <div className="col-lg-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="singin-email-2">City *</label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="city"
+                                                                                        placeholder=""
+                                                                                        value={useraddressData?.city}
+                                                                                        onChange={handleAddressChange}
+                                                                                        required
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-lg-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="singin-email-2">Postal Code *</label>
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="postal_code"
+                                                                                        placeholder=""
+                                                                                        value={useraddressData?.postal_code}
+                                                                                        onChange={handleAddressChange}
+                                                                                        required
+                                                                                    />
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                         <div className="form-group">
-                                                                            <label htmlFor="singin-email-2">Delivery Address *</label>
+                                                                            <label htmlFor="singin-email-2">Address Line 1 *</label>
                                                                             <input
                                                                                 type="text"
                                                                                 className="form-control"
                                                                                 id="singin-email-2"
-                                                                                name="DeliveryAddress"
+                                                                                name="address_line1"
                                                                                 placeholder="e.g. Apartment 4, Building name, Street 3"
-                                                                                value={useraddressData?.DeliveryAddress}
+                                                                                value={useraddressData?.address_line1}
                                                                                 onChange={handleAddressChange}
                                                                                 required
                                                                             />
 
                                                                         </div>
+                                                                        <div className="form-group">
+                                                                            <label htmlFor="singin-email-2">Address Line 2</label>
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control"
+                                                                                id="singin-email-2"
+                                                                                name="address_line2"
+                                                                                placeholder=""
+                                                                                value={useraddressData?.address_line2}
+                                                                                onChange={handleAddressChange}
+                                                                            />
 
+                                                                        </div>
+                                                                        <div className="form-group">
+                                                                            <label htmlFor="singin-email-2">Address Type *</label>
+                                                                            <input
+                                                                                type="text"
+                                                                                className="form-control"
+                                                                                id="singin-email-2"
+                                                                                name="address_type"
+                                                                                placeholder="Shipping OR Billing"
+                                                                                value={useraddressData?.address_type}
+                                                                                onChange={handleAddressChange}
+                                                                            />
+
+                                                                        </div>
 
                                                                         <div className="form-footer" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                                                             <button

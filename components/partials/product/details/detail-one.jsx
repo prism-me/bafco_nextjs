@@ -20,22 +20,48 @@ function DetailOne(props) {
     // const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
     const [authtoken, setAuthtoken] = useState('');
     const [selectedVariant, setSelectedVariant] = useState();
+    const [variantCombGroup, setvariantCombGroup] = useState();
 
     useEffect(() => {
 
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
-            acc.find((v) => v.variant.name === curr.variant.name) ? acc : [...acc, curr],
-            []));
+            acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
+            [])
+        );
 
         setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
-            []));
+            [])
+        );
 
-        let newProduct = product?.product_single_variation?.variation_value_details.map((item) => {
-            return item.variation_values.id;
+        let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
+            let productVariation = {
+                "name": item.variation_values.name,
+                "variation_value_id": item.variation_values.id,
+                "type": item.variation_values.variant.name,
+                "product_variation_id": item.product_variation_id
+            }
+            return productVariation;
         });
 
-        setSelectedVariant(newProduct)
+        setSelectedVariant(currentProductVariation);
+
+        let comb = [];
+
+        product?.dropDown.reduce((acc, item) => {
+            let ifExist = comb.find((f) => f.variation_id === item.product_variation_id);
+            if (ifExist) {
+                ifExist[item.variant.name] = item.name;
+            } else {
+                comb.push({
+                    [item.variant.name]: item.name,
+                    variation_id: item.product_variation_id,
+                });
+            }
+            return item.product_variation_id;
+        }, 0);
+
+        setvariantCombGroup(comb)
 
     }, [product])
 
@@ -49,15 +75,15 @@ function DetailOne(props) {
 
     // }, [router.query.slug])
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     setAuthtoken(localStorage.getItem('authtoken'));
+        setAuthtoken(localStorage.getItem('authtoken'));
 
-    //     window.addEventListener('scroll', scrollHandler, { passive: true });
+        // window.addEventListener('scroll', scrollHandler, { passive: true });
 
-    //     return () => { window.removeEventListener('scroll', scrollHandler); }
+        // return () => { window.removeEventListener('scroll', scrollHandler); }
 
-    // }, [])
+    }, [])
 
     // useEffect(() => {
     //     scrollHandler();
@@ -83,7 +109,11 @@ function DetailOne(props) {
             if (authtoken === "" || authtoken === null || authtoken === undefined) {
                 props.showPopup(true);
             } else {
-                props.addToWishlist(product);
+                let data = {
+                    'product_id': product?.single_product_details?.product?.id,
+                    'product_variation_id': product?.product_single_variation?.variation_value_details[0]?.product_variation_id,
+                };
+                props.addToWishlist(data);
             }
         } else {
             router.push('/wishlist');
@@ -116,13 +146,113 @@ function DetailOne(props) {
         );
     }
 
-    function handelSelectVariantChange(e, id) {
+    function handelSelectVariantChange(e, item) {
+
         e.preventDefault();
-        console.log("handelSelectVariantChange :: ", id);
-        props.handelselectedVariation(e.target.value)
-        // let updatedproducts = { ...products };
-        // updatedproducts[e.target.name] = e.target.value;
-        // setProducts(updatedproducts);
+        console.log("handelSelectVariantChange :: ", item);
+        console.log("e :: ", e.target.value);
+        // console.log("selectedVariant :: ", selectedVariant);
+
+        if (!e.target.value) {
+            const newState = selectedVariant.map(obj => {
+
+                if (obj.type === item.variant.name) {
+                    return {
+                        name: item.name,
+                        type: item.variant.name,
+                        variation_value_id: item.id,
+                        product_variation_id: item.product_variation_id
+                    };
+                }
+                return obj;
+
+            });
+
+            setSelectedVariant(newState);
+
+            let comb = [];
+
+            newState.map((acc) => {
+                comb.push({ [acc.type]: acc.name });
+                return acc;
+            });
+
+            let resultNewComb = comb.reduce(function (result, item) {
+                var key = Object.keys(item)[0];
+                result[key] = item[key];
+                return result;
+
+            }, {});
+
+            console.log("resultNewComb :: ", resultNewComb)
+
+            let getVariationId = variantCombGroup.filter(function (entry) {
+                return Object.keys(resultNewComb).every(function (key) {
+                    return entry[key] === resultNewComb[key];
+                });
+            });
+
+            console.log("getVariationId :: ", getVariationId)
+
+            props.handelselectedVariation(getVariationId[0].variation_id);
+
+            // let result = product?.dropDown.filter(o1 => newState.some(o2 => o1.name === o2.name));
+
+            // console.log("result :: ", result);
+
+            // let result2 = result.filter(val => val.product_variation_id === 207);
+
+            // console.log("result2 :: ", result2);
+
+
+        } else {
+            const newState = selectedVariant.map(obj => {
+                if (obj.variation_value_id === e.target.value) {
+                    return {
+                        name: item.name,
+                        type: item.variant.name,
+                        variation_value_id: item.id,
+                        product_variation_id: item.product_variation_id
+                    };
+                }
+                return obj;
+
+            });
+
+            console.log("new State :: ", newState)
+
+            let currentVariation = newState.map((item) => {
+                let VariationID = [];
+                VariationID = item.variation_value_id
+                return VariationID;
+            });
+
+            setSelectedVariant(newState);
+
+            let comb = [];
+
+            newState.map((acc) => {
+                comb.push({ [acc.type]: acc.name });
+                return acc;
+            });
+
+            let resultNewComb = comb.reduce(function (result, item) {
+                var key = Object.keys(item)[0];
+                result[key] = item[key];
+                return result;
+
+            }, {});
+
+            let getVariationId = variantCombGroup.find(element => {
+                console.log("element :: ", element)
+                return element === resultNewComb;
+            });
+
+
+        }
+
+        // props.handelselectedVariation(item.product_variation_id);
+
     }
 
     if (!product) {
@@ -131,6 +261,7 @@ function DetailOne(props) {
 
     return (
         <div className="product-details" ref={ref}>
+            {console.log("cartlist :: ", props.cartlist)}
             <h1 className="product-title">{product?.single_product_details?.product?.name}</h1>
 
             <div className="ratings-container">
@@ -144,54 +275,55 @@ function DetailOne(props) {
             {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
                 <div className="product-price">
                     <span className="out-price">
-                        {product?.product_single_variation?.product_variation_details.lower_price === product?.product_single_variation?.product_variation_details.upper_price ?
-                            <span>AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
+                        <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
+                        {/* {product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
+                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
                             :
-                            <span>AED{product?.product_single_variation?.product_variation_details.lower_price}&ndash;AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
-                        }
+                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}&ndash;AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
+                        } */}
                     </span>
                 </div>
                 :
-                product?.product_single_variation?.product_variation_details.lower_price === product?.product_single_variation?.product_variation_details.upper_price ?
-                    <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</div>
-                    :
-                    <div className="product-price">
-                        <span className="new-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
-                        <span className="old-price">AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
-                    </div>
+                // product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
+                    <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</div>
+                    // :
+                    // <div className="product-price">
+                    //     <span className="new-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
+                    //     <span className="old-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
+                    // </div>
             }
 
-            <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.single_product_details?.product?.short_description }} />
+            <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
 
             <div className="row">
                 {variationTypeGroup !== null &&
                     variationTypeGroup?.map((item, index) => (
                         <div className="col-md-6" key={index}>
                             <div className="details-filter-row details-row-size">
-                                <label htmlFor={`${item.variant.name}`}>{item.variant.name}: </label>
-                                {item.type === "1" ?
+                                <label htmlFor={`${item?.variant?.name}`}>{item?.variant?.name}: </label>
+                                {item?.type === "1" ?
                                     <div className="select-custom">
                                         <select
-                                            name={`${item.variant.name}`}
+                                            name={`${item?.variant?.name}`}
                                             className="form-control"
-                                            value={selectedVariant[index]}
-                                            onChange={(e) => handelSelectVariantChange(e, item.id)}
+                                            value={selectedVariant[index]?.variation_value_id}
+                                            onChange={(e) => handelSelectVariantChange(e, item)}
                                         >
-                                            <option value="">Select a {item.variant.name}</option>
+                                            <option value="">Select a {item?.variant?.name}</option>
                                             {variationGroup.map((item2, index2) => (
-                                                item.variant.name === item2.variant.name &&
-                                                <option value={item2.id} key={index2}>{item2.type_value}</option>
+                                                item?.variant?.name === item2?.variant?.name &&
+                                                <option value={item2?.id} key={index2}>{item2?.type_value}</option>
                                             ))}
                                         </select>
                                     </div> :
                                     <div className="product-nav product-nav-dots">
                                         {variationGroup.map((item2, index2) => (
-                                            item.variant.name === item2.variant.name &&
+                                            item?.variant?.name === item2?.variant?.name &&
                                             <span
-                                                className={`${(item2.id == selectedVariant[index] ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                                                style={{ backgroundImage: `url(${item2.type_value})` }}
+                                                className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
                                                 key={index2}
-                                                onClick={(e) => handelSelectVariantChange(e, item2.id)}
+                                                onClick={(e) => handelSelectVariantChange(e, item2)}
                                             >
                                             </span>
                                         ))
@@ -276,9 +408,9 @@ function DetailOne(props) {
             </div >
             <div className="product-details-adv">
                 <ul>
-                {product?.single_product_details?.product?.promotional_images.map(( item, index)=>(
-                    <li key={index}><img src={item.avatar} /></li>
-                ))}
+                    {product?.single_product_details?.product?.promotional_images.map((item, index) => (
+                        <li key={index}><img src={item.avatar} /></li>
+                    ))}
                 </ul>
             </div>
             <div className="sticky-bar d-none">
@@ -307,19 +439,19 @@ function DetailOne(props) {
                                     :
                                     product.stock == 0 ?
                                         <div className="product-price">
-                                            <span className="out-price">AED{product.price}</span>
+                                            <span className="out-price">AED {product.price}</span>
                                         </div>
                                         :
                                         product?.product_single_variation?.product_variation_details.lower_price == product?.product_single_variation?.product_variation_details.upper_price ?
-                                            <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</div>
+                                            <div className="product-price">AED {product?.product_single_variation?.product_variation_details.lower_price}</div>
                                             :
                                             product?.variations?.length == 0 ?
                                                 <div className="product-price">
-                                                    <span className="new-price">AED{product?.product_single_variation?.product_variation_details.lower_price}</span>
-                                                    <span className="old-price">AED{product?.product_single_variation?.product_variation_details.upper_price}</span>
+                                                    <span className="new-price">AED {product?.product_single_variation?.product_variation_details.lower_price}</span>
+                                                    <span className="old-price">AED {product?.product_single_variation?.product_variation_details.upper_price}</span>
                                                 </div>
                                                 :
-                                                <div className="product-price">AED{product?.product_single_variation?.product_variation_details.lower_price} &ndash; AED{product?.product_single_variation?.product_variation_details.upper_price}</div>
+                                                <div className="product-price">AED {product?.product_single_variation?.product_variation_details.lower_price} &ndash; AED {product?.product_single_variation?.product_variation_details.upper_price}</div>
                             }
                             <Qty changeQty={onChangeQty2} max={product.stock} value={qty2}></Qty>
                             <div className="product-details-action">

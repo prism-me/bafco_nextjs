@@ -17,11 +17,12 @@ function ProductTwelve(props) {
     const { product, wishlist } = props;
     const [maxPrice, setMaxPrice] = useState(0);
     const [minPrice, setMinPrice] = useState(99999);
-    const categoryName = router.query.category;
-    const subCategoryName = router.query.sub_category;
+    const categoryName = props?.categoryName ? props.categoryName : router.query.category;
+    const subCategoryName = props?.subCategoryName ? props.subCategoryName : router.query.sub_category;
     const [authtoken, setAuthtoken] = useState('');
 
     useEffect(() => {
+
         setAuthtoken(localStorage.getItem('authtoken'));
 
         let min = minPrice;
@@ -43,8 +44,16 @@ function ProductTwelve(props) {
     }, [])
 
     function onCartClick(e) {
+
         e.preventDefault();
-        props.addToCart(product);
+
+        let data = {
+            'product_id': product?.id,
+            'product_variation_id': product?.productvariations?.product_variation_name[0]?.product_variation_id,
+        };
+
+        props.addToCart(data);
+
     }
 
     function onWishlistClick(e) {
@@ -53,7 +62,12 @@ function ProductTwelve(props) {
             if (authtoken === "" || authtoken === null || authtoken === undefined) {
                 props.showPopup(true);
             } else {
-                props.addToWishlist(product);
+                let data = {
+                    'product_id': product?.id,
+                    'product_variation_id': product?.productvariations?.product_variation_name[0]?.product_variation_id,
+
+                };
+                props.addToWishlist(data);
             }
         } else {
             router.push('/wishlist');
@@ -86,29 +100,28 @@ function ProductTwelve(props) {
                 <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>
                     <LazyLoadImage
                         alt="product"
-                        src={product?.productvariations?.images[0]?.avatar}
+                        src={product?.productvariations?.images.length > 0 ? product?.featured_image : product?.productvariations?.images[0]?.avatar}
                         threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
                     />
-                    {
-                        product?.variations?.length >= 2 ?
-                            <LazyLoadImage
-                                alt="product"
-                                // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
-                                src={product?.productvariations?.images[0].avatar}
-                                threshold={500}
-                                effect="black and white"
-                                wrapperClassName="product-image-hover"
-                            />
-                            : ""
+                    {product?.variations?.length >= 2 ?
+                        <LazyLoadImage
+                            alt="product"
+                            // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
+                            src={product?.productvariations?.images[1].avatar}
+                            threshold={500}
+                            effect="black and white"
+                            wrapperClassName="product-image-hover"
+                        />
+                        : ""
                     }
                 </ALink>
 
 
                 <div className="product-action-vertical">
                     {isInWishlist(wishlist, product) ?
-                        <ALink href="/shop/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist">
+                        <ALink href="/wishlist" className="btn-product-icon btn-wishlist btn-expandable added-to-wishlist">
                             <span>go to wishlist</span>
                         </ALink>
                         :
@@ -134,20 +147,20 @@ function ProductTwelve(props) {
 
                 {!product?.productvariations.in_stock || product?.productvariations.in_stock == 0 ?
                     <div className="product-price">
-                        <span className="out-price">AED{product?.productvariations.lower_price}</span>
+                        <span className="out-price">AED {product?.productvariations.upper_price}</span>
                     </div>
                     :
-                    product?.productvariations.lower_price == product?.productvariations.upper_price ?
-                        <div className="product-price">AED{product?.productvariations.lower_price}</div>
-                        :
-                        product?.variants?.length == 0 ?
-                            <div className="product-price">
-                                <span className="new-price">AED{product?.productvariations.lower_price}</span>
-                                <span className="old-price">AED{product?.productvariations.upper_price}</span>
-                            </div>
-                            :
-                            <div className="product-price">AED{product?.productvariations.lower_price}&ndash;AED{product?.productvariations.upper_price}
-                            </div>
+                    // product?.productvariations.lower_price == product?.productvariations.upper_price ?
+                    <div className="product-price">AED {product?.productvariations.upper_price}</div>
+                    // :
+                    // product?.variants?.length == 0 ?
+                    //     <div className="product-price">
+                    //         <span className="new-price">AED {product?.productvariations.lower_price}</span>
+                    //         <span className="old-price">AED {product?.productvariations.upper_price}</span>
+                    //     </div>
+                    //     :
+                    //     <div className="product-price">AED {product?.productvariations.lower_price}&ndash;AED {product?.productvariations.upper_price}
+                    //     </div>
                 }
 
                 {/* <div className="ratings-container">

@@ -15,8 +15,6 @@ const initialState = {
     data: []
 }
 
-
-
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.addToCart:
@@ -34,6 +32,7 @@ const cartReducer = (state = initialState, action) => {
             console.log("findIndex :: ", findIndex)
 
             if (findIndex !== -1) {
+
                 return {
                     data: [
                         ...state.data.reduce((acc, product, index) => {
@@ -41,7 +40,7 @@ const cartReducer = (state = initialState, action) => {
                                 acc.push({
                                     ...product,
                                     qty: product.qty + qty,
-                                    sum: (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price) * (product.qty + qty)
+                                    // sum: (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price) * (product.qty + qty)
                                 });
                             } else {
                                 acc.push(product);
@@ -53,13 +52,11 @@ const cartReducer = (state = initialState, action) => {
                 }
             } else {
                 if (UserDetail !== null) {
-                    console.log("action.payload :: ", action.payload)
+                    console.log("action.payload :: ", action.payload.product)
                     let productData = {
                         user_id: UserDetail,
-                        product_id: action.payload.product?.id?.toString(),
-                        product_variation_id: action.payload.product?.productvariations?.product_variation_name?.product_variation_id?.toString(),
-                        variation_id: action.payload.product?.productvariations?.variation_id?.toString(),
-                        variation_value_id: action.payload.product?.productvariations?.variation_value_id?.toString(),
+                        product_id: action?.payload?.product?.product_id,
+                        product_variation_id: action?.payload?.product?.product_variation_id,
                         qty: qty.toString()
                     };
                     API.post(`/auth/cart`, productData, {
@@ -74,7 +71,9 @@ const cartReducer = (state = initialState, action) => {
                         console.log(err);
                     });
                 } else {
+
                     console.log("cart :: ", action.payload.product);
+
                     return {
 
                         data: [
@@ -82,25 +81,27 @@ const cartReducer = (state = initialState, action) => {
                             {
                                 ...action.payload.product,
                                 qty: qty,
-                                price: action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price,
-                                sum: qty * (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price)
+                                // price: action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price,
+                                // sum: qty * (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price)
                             }
                         ]
                     };
                 }
             }
+
         case actionTypes.removeFromCart:
             return {
                 data: [
                     ...state.data.filter(item => {
-                        if (item.id !== action.payload.product.id) return true;
-                        if (item.name !== action.payload.product.name) return true;
+                        if (item.product_id !== action.payload.product.product_id) return true;
+                        if (item.product_variation_id !== action.payload.product.product_variation_id) return true;
                         return false;
                     })
                 ]
             }
 
         case actionTypes.updateCart:
+            console.log("action.payload.cartItems :: ", action.payload.cartItems)
             return {
                 data: [
                     ...action.payload.cartItems
