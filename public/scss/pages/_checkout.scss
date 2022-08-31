@@ -19,9 +19,9 @@
 	}
 
 	.form-control {
-		margin-bottom: 1.3rem; 
+		margin-bottom: 1.3rem;
 
-		& + .form-control {
+		&+.form-control {
 			margin-top: 2rem;
 		}
 	}
@@ -37,16 +37,30 @@
 	.custom-control {
 		margin-top: 2.5rem;
 
-		& + .custom-control {
+		&+.custom-control {
 			margin-top: 1.8rem;
 		}
 
-		& + label {
+		&+label {
 			margin-top: 1rem;
 		}
+
 		.custom-control-label {
 			font-weight: 400;
 			color: #333;
+		}
+	}
+
+	.checkout_address_section {
+		.card-dashboard {
+			.card-body {
+				display: flex;
+				align-items: baseline;
+
+				input[type="checkbox"] {
+					margin-right: 5px;
+				}
+			}
 		}
 	}
 }
@@ -146,11 +160,12 @@
 		height: 70px;
 		border-bottom: .1rem solid #ebebeb;
 	}
-	
+
 	thead th,
 	tbody td {
 		vertical-align: middle;
 		border-top: none;
+
 		&:last-child {
 			text-align: right;
 			min-width: 100px;
@@ -167,6 +182,7 @@
 
 .accordion-summary {
 	margin-bottom: 3.2rem;
+
 	.card {
 		overflow: hidden;
 		color: $light-text;
@@ -208,7 +224,7 @@
 				border-radius: 50%;
 				border: .1rem solid #dadada;
 				right: auto;
-				left:0;
+				left: 0;
 				top: .7rem;
 				transform: translateY(0);
 				-ms-transform: translateY(0);
@@ -253,7 +269,7 @@
 
 	&:hover,
 	&:focus {
-		color: $primary-color !important;
+		color: $primary-color  !important;
 	}
 }
 

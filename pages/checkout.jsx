@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import SlideToggle from 'react-slide-toggle';
-
+import { API } from '~/http/API';
 import ALink from '~/components/features/alink';
 import Accordion from '~/components/features/accordion/accordion';
 import Card from '~/components/features/accordion/card';
@@ -11,13 +11,31 @@ import { cartPriceTotal } from '~/utils/index';
 
 function Checkout(props) {
     const { cartlist } = props;
+    const [userAddressList, setUserAddressList] = useState();
+    const [isdefault, setIsDefault] = useState(false);
 
     useEffect(() => {
+
+        let xauthtoken = localStorage.getItem('authtoken');
+        let UserId = localStorage.getItem('UserData');
+
+        let header = {
+            headers: {
+                'Authorization': `Bearer ${xauthtoken}`,
+            }
+        }
+
+        API.get(`/addresses/${UserId}`, header).then((response) => {
+            setUserAddressList(response?.data);
+
+        }).catch((err) => console.log(err));
+
         document.querySelector('body').addEventListener("click", clearOpacity)
 
         return () => {
             document.querySelector('body').removeEventListener("click", clearOpacity);
         }
+
     }, [])
 
     function clearOpacity() {
@@ -37,7 +55,6 @@ function Checkout(props) {
                 backgroundImage="images/banners/cart-banner.png"
                 buttonText="Shop Now"
                 buttonUrl="#"
-
             />
             <nav className="breadcrumb-nav">
                 <div className="container">
@@ -113,7 +130,7 @@ function Checkout(props) {
                                     <label>Email address *</label>
                                     <input type="email" className="form-control" required />
 
-                                    <div className="custom-control custom-checkbox">
+                                    {/* <div className="custom-control custom-checkbox">
                                         <input type="checkbox" className="custom-control-input" id="checkout-create-acc" />
                                         <label className="custom-control-label" htmlFor="checkout-create-acc">Create an account?</label>
                                     </div>
@@ -202,10 +219,34 @@ function Checkout(props) {
                                                 </div>
                                             </div>
                                         )}
-                                    </SlideToggle >
+                                    </SlideToggle > */}
 
                                     <label>Order notes (optional)</label>
                                     <textarea className="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+
+                                    <h2 className="checkout-title">Addresses</h2>
+                                    <div className="row checkout_address_section">
+                                        {userAddressList?.map((address, index) => (
+                                            <div className="col-sm-6">
+                                                <div className="card card-dashboard" key={index}>
+                                                    <div className="card-body">
+                                                        <input
+                                                            type="checkbox"
+                                                            defaultChecked={address.default === 1 ? true : isdefault}
+                                                        />
+                                                        <div>
+                                                            <h3 className="card-title">{address.name}</h3>
+                                                            <p> {address.address_line1}<br />
+                                                                {address.address_line2}, {address.postal_code}, {address.city}<br />
+                                                                {address.state}, {address.country}<br />
+                                                                {address.phone_number}<br /></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
                                 </div>
 
                                 <aside className="col-lg-3">

@@ -261,7 +261,6 @@ function DetailOne(props) {
 
     return (
         <div className="product-details" ref={ref}>
-            {console.log("cartlist :: ", props.cartlist)}
             <h1 className="product-title">{product?.single_product_details?.product?.name}</h1>
 
             <div className="ratings-container">
@@ -275,22 +274,19 @@ function DetailOne(props) {
             {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
                 <div className="product-price">
                     <span className="out-price">
-                        <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
-                        {/* {product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
-                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
+                        {/* <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span> */}
+                        {product?.product_single_variation?.product_variation_details?.limit >= qty ?
+                            <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
                             :
-                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}&ndash;AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
-                        } */}
+                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
+                        }
                     </span>
                 </div>
                 :
-                // product?.product_single_variation?.product_variation_details?.lower_price === product?.product_single_variation?.product_variation_details?.upper_price ?
+                product?.product_single_variation?.product_variation_details?.limit >= qty ?
                     <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</div>
-                    // :
-                    // <div className="product-price">
-                    //     <span className="new-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
-                    //     <span className="old-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
-                    // </div>
+                    :
+                    <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</div>
             }
 
             <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
@@ -346,7 +342,7 @@ function DetailOne(props) {
 
                 <div className="details-filter-row details-row-size">
                     <label htmlFor="qty">Quantity: </label>
-                    <Qty changeQty={onChangeQty} max={5} value={qty}></Qty>
+                    <Qty changeQty={onChangeQty} max={100} value={qty}></Qty>
                     {/* <Qty changeQty={onChangeQty} max={product?.product_single_variation?.product_variation_details?.in_stock} value={qty}></Qty> */}
                 </div >
                 :
@@ -390,27 +386,20 @@ function DetailOne(props) {
                     <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
                     <ALink href="https://twitter.com/Bafco" className="social-icon" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
                     <ALink href="https://www.pinterest.com/bafcointeriors/" className="social-icon" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>
-
-                    {/* <ALink href="#" className="social-icon" title="Instagram">
-                        <i className="icon-instagram"></i>
-                    </ALink>
-                    <ALink href="#" className="social-icon" title="Facebook">
-                        <i className="icon-facebook-f"></i>
-                    </ALink>
-                    <ALink href="#" className="social-icon" title="linkedin">
-                        <i className="icon-linkedin"></i>
-                    </ALink>
-
-                    <ALink href="#" className="social-icon" title="Twitter">
-                        <i className="icon-twitter"></i>
-                    </ALink> */}
                 </div>
             </div >
             <div className="product-details-adv">
                 <ul>
                     {product?.single_product_details?.product?.promotional_images.map((item, index) => (
-                        <li key={index}><img src={item.avatar} /></li>
+                        <li key={index}>
+                            <img src={item.avatar} />
+                        </li>
                     ))}
+                    {product?.product_single_variation?.product_variation_details?.lead_img &&
+                        <li>
+                            <img src={product?.product_single_variation?.product_variation_details?.lead_img} />
+                        </li>
+                    }
                 </ul>
             </div>
             <div className="sticky-bar d-none">
@@ -421,8 +410,6 @@ function DetailOne(props) {
                                 <ALink href={`/product/default/${product?.single_product_details?.product?.route}`}>
                                     <img
                                         src={product?.product_single_variation?.product_variation_details?.images[0]?.avatar} alt="product"
-                                    // width={product.sm_pictures[0].width}
-                                    // height={product.sm_pictures[0].height}
                                     />
                                 </ALink>
                             </figure>
