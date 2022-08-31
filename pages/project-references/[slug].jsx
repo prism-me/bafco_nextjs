@@ -5,17 +5,23 @@ import ALink from "~/components/features/alink";
 import withApollo from "~/server/apollo";
 import { actions as demoAction } from "~/store/demo";
 import OwlCarousel from "~/components/features/owl-carousel";
-import { projectReferenceInnerSlider } from "~/utils/data";
+import {
+  projectReferenceInnerSlider,
+  projectRelatedProductsInnerSlider,
+} from "~/utils/data";
 import { API } from "~/http/API";
+import RelatedProducts from "./related-products";
 
 function ProjectReferencesInner(props) {
   const slug = useRouter().query.slug;
   const [projectDetail, setProjectDetail] = useState("");
+  const [relatedProduct, setrelatedProduct] = useState([]);
 
   useEffect(() => {
-    API.get(`/projects/${slug}`)
+    API.get(`/project-detail/${slug}`)
       .then((response) => {
-        setProjectDetail(response?.data);
+        setProjectDetail(response?.data?.project);
+        setrelatedProduct(response?.data?.relatedProducts);
       })
       .catch((err) => {
         console.log(err);
@@ -49,10 +55,21 @@ function ProjectReferencesInner(props) {
                 <div className="application-heading mb-3">
                   <h3>{projectDetail.title}</h3>
                 </div>
-                <h3 className="prefresubheading">Office</h3>
-                <p className="prefresubtitle">
-                  Afi Chair Colour: natural oak Base color: M115
-                </p>
+                <h3 className="prefresubheading">
+                  {projectDetail.project_category &&
+                    projectDetail.project_category.length > 0 &&
+                    projectDetail.project_category.map((t, ind) => (
+                      <span key={ind} className="mr-2">
+                        {t.name},
+                      </span>
+                    ))}
+                </h3>
+                <p
+                  className="prefresubtitle"
+                  dangerouslySetInnerHTML={{
+                    __html: projectDetail.description,
+                  }}
+                ></p>
               </div>
               <div className="col-lg-8 col-sm-6 col-xs-12">
                 <img
@@ -60,18 +77,33 @@ function ProjectReferencesInner(props) {
                   className="img-fluid mb-2"
                 />
                 <div className="btnWrapper">
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Sketch Up (4.58 MB)</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                  {projectDetail.files &&
+                    projectDetail.files.length > 0 &&
+                    projectDetail.files.map((t, ind) => (
+                      <a
+                        href={t.url}
+                        without
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <button
+                          className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                          key={ind}
+                        >
+                          <i className="icon-arrow-down"></i>
+                          <span>{t.name}</span>
+                        </button>
+                      </a>
+                    ))}
+
+                  {/* <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
                     <i className="icon-arrow-down"></i>
                     <span>Autocad 2D (47.92 KB)</span>
                   </button>
                   <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
                     <i className="icon-arrow-down"></i>
                     <span>Autocad 3D (2.28 MB)</span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -95,50 +127,31 @@ function ProjectReferencesInner(props) {
 
           <div className="top-management-application-slider mb-3 relatedProductwrape">
             <OwlCarousel
+              adClass="owl-simple carousel-equal-height carousel-with-shadow cols-lg-4 cols-md-3 cols-xs-2 cols-1"
+              isTheme={false}
+              options={projectRelatedProductsInnerSlider}
+            >
+              {relatedProduct &&
+                relatedProduct.length > 0 &&
+                relatedProduct.map((product, index) => (
+                  <RelatedProducts product={product} key={index} />
+                ))}
+            </OwlCarousel>
+            {/* <OwlCarousel
               adClass="owl-simple owl-light"
               options={projectReferenceInnerSlider}
             >
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-              <div className="top-management-application">
-                <img src="images/applications/top-management.png" />
-                <h3>Lorem</h3>
-                <p>Lorem Ipsum</p>
-              </div>
-            </OwlCarousel>
+              {relatedProduct &&
+                relatedProduct.length > 0 &&
+                relatedProduct.map((product, index) => (
+                  <ProductTwelve product={product} key={index} />
+                  // <div className="top-management-application" key={index}>
+                  //   <img src={product.featured_image} />
+                  //   <h3>{product.brand}</h3>
+                  //   <p>{product.name}</p>
+                  // </div>
+                ))}
+            </OwlCarousel> */}
           </div>
         </div>
       </div>

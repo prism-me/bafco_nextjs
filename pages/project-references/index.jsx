@@ -108,7 +108,7 @@ function ProjectReferences() {
                     projectsList.map((x, i) => (
                       <div className="col-6 col-md-6 col-lg-4" key={i}>
                         <div className="furnitureWrper">
-                          <ALink href={`/project-references/${x.route}`}>
+                          <ALink href={`/project-references/${x.id}`}>
                             <img
                               key={i}
                               src={x.featured_img}
