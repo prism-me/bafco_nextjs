@@ -6,15 +6,39 @@ import ALink from '~/components/features/alink';
 import Accordion from '~/components/features/accordion/accordion';
 import Card from '~/components/features/accordion/card';
 import PageHeader from '~/components/features/page-header';
-
+import CountryRegionData from '~/utils/countrydata.json';
 import { cartPriceTotal } from '~/utils/index';
+
+let addressData = {
+    name: "",
+    phone_number: "",
+    address_line1: "",
+    address_line2: "",
+    postal_code: "",
+    country: "",
+    state: "",
+    city: "",
+    address_type: "",
+    order_notes: "",
+}
 
 function Checkout(props) {
     const { cartlist } = props;
     const [userAddressList, setUserAddressList] = useState();
     const [isdefault, setIsDefault] = useState(false);
+    const [useraddressData, setUserAddressData] = useState({ ...addressData });
+    const [countryList, setCountryList] = useState();
+    const [stateList, setStateList] = useState();
+    const [email, setEmail] = useState("");
+    const [defaultAddressID, setDefaultAddressID] = useState();
 
     useEffect(() => {
+
+        let country = [];
+        CountryRegionData?.map((item) => {
+            country.push(item.countryName);
+        })
+        setCountryList(country);
 
         let xauthtoken = localStorage.getItem('authtoken');
         let UserId = localStorage.getItem('UserData');
@@ -26,25 +50,85 @@ function Checkout(props) {
         }
 
         API.get(`/addresses/${UserId}`, header).then((response) => {
+
             setUserAddressList(response?.data);
+
+            let dataID = response?.data.find(element => { return element.default === 1 })
+
+            setDefaultAddressID(dataID?.id);
+
+            setUserAddressData(dataID);
+
+        }).catch((err) => console.log(err));
+
+        API.get(`/auth/me`, header).then((response) => {
+
+            setEmail(response.data.email);
 
         }).catch((err) => console.log(err));
 
         document.querySelector('body').addEventListener("click", clearOpacity)
 
         return () => {
+
             document.querySelector('body').removeEventListener("click", clearOpacity);
+
         }
 
-    }, [])
+    }, [defaultAddressID])
+
+    const handleChangeSetDefault = (e, id) => {
+
+    }
 
     function clearOpacity() {
+
         if (document.querySelector('#checkout-discount-input').value == '')
             document.querySelector('#checkout-discount-form label').removeAttribute('style');
+
     }
 
     function addOpacity(e) {
+
         e.currentTarget.parentNode.querySelector("label").setAttribute("style", "opacity: 0");
+
+    }
+
+    const handleCountryChange = (e) => {
+
+        let formdata = { ...useraddressData }
+        formdata.country = e.target.value;
+        setUserAddressData(formdata);
+
+        let stateList = [];
+        stateList = CountryRegionData.filter(item => {
+            return item.countryName === e.target.value;
+        });
+        setStateList(stateList);
+
+    }
+
+    const handleAddressChange = (e) => {
+        let formdata = { ...useraddressData }
+        formdata[e.target.name] = e.target.value;
+        setUserAddressData(formdata);
+    }
+
+    const handleUserphone = (e) => {
+
+        let a = Number(e.target.value)
+        let formdata = { ...useraddressData }
+        if (e.target.value === "") {
+            formdata.phone_number = ""
+            setUserAddressData(formdata)
+
+        } else if (!isNaN(a)) {
+            formdata.phone_number = e.target.value
+            setUserAddressData(formdata)
+        } else {
+            e.preventDefault();
+        }
+
     }
 
     return (
@@ -81,56 +165,119 @@ function Checkout(props) {
                             <div className="row">
                                 <div className="col-lg-9">
                                     <h2 className="checkout-title">Billing Details</h2>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <label>First Name *</label>
-                                            <input type="text" className="form-control" required />
-                                        </div>
-
-                                        <div className="col-sm-6">
-                                            <label>Last Name *</label>
-                                            <input type="text" className="form-control" required />
-                                        </div>
-                                    </div>
-
-                                    <label>Company Name (Optional)</label>
-                                    <input type="text" className="form-control" />
-
-                                    <label>Country *</label>
-                                    <input type="text" className="form-control" required />
-
-                                    <label>Street address *</label>
-                                    <input type="text" className="form-control" placeholder="House number and Street name" required />
-                                    <input type="text" className="form-control" placeholder="Appartments, suite, unit etc ..." required />
 
                                     <div className="row">
                                         <div className="col-sm-6">
-                                            <label>Town / City *</label>
-                                            <input type="text" className="form-control" required />
+                                            <label>Name *</label>
+                                            <input type="text" name="name" value={useraddressData?.name} onChange={handleAddressChange} className="form-control" required />
                                         </div>
 
                                         <div className="col-sm-6">
-                                            <label>State / County *</label>
-                                            <input type="text" className="form-control" required />
+                                            <label>Email *</label>
+                                            <input type="text" name="email" value={email} readOnly className="form-control" />
                                         </div>
                                     </div>
 
                                     <div className="row">
-                                        <div className="col-sm-6">
-                                            <label>Postcode / ZIP *</label>
-                                            <input type="text" className="form-control" required />
-                                        </div>
-
-                                        <div className="col-sm-6">
-                                            <label>Phone *</label>
-                                            <input type="tel" className="form-control" required />
+                                        <div className="col-sm-12">
+                                            <label htmlFor="singin-email-2">Phone Number *</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="singin-email-2"
+                                                name="phone_number"
+                                                value={useraddressData?.phone_number}
+                                                onChange={handleUserphone}
+                                                required
+                                            />
                                         </div>
                                     </div>
 
-                                    <label>Email address *</label>
-                                    <input type="email" className="form-control" required />
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <label>Street address *</label>
+                                            <input type="text" name='address_line1' value={useraddressData?.address_line1} onChange={handleAddressChange} className="form-control" placeholder="House number and Street name" required />
+                                            <input type="text" name='address_line2' value={useraddressData?.address_line2} onChange={handleAddressChange} className="form-control" placeholder="Appartments, suite, unit etc ..." required />
+                                        </div>
+                                    </div>
 
-                                    {/* <div className="custom-control custom-checkbox">
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <div className="form-group">
+                                                <label htmlFor="singin-email-2">Country *</label>
+                                                <select
+                                                    className="form-control"
+                                                    id="country"
+                                                    name="country"
+                                                    value={useraddressData?.country}
+                                                    label="Select Country"
+                                                    fullwidth="true"
+                                                    style={{ color: "" }}
+                                                    onChange={handleCountryChange}
+                                                >
+                                                    <option value={""}>Select Country</option>
+                                                    {countryList?.map((item, index) => (
+                                                        <option value={item} key={index}>{item}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <div className="form-group">
+                                                <label htmlFor="singin-email-2">State *</label>
+                                                <select
+                                                    className="form-control"
+                                                    id="state"
+                                                    name="state"
+                                                    value={useraddressData?.state}
+                                                    label="Select state"
+                                                    fullwidth="true"
+                                                    style={{ color: "" }}
+                                                    onChange={handleAddressChange}
+                                                >
+                                                    <option value={""}>Select state</option>
+                                                    {stateList && stateList[0]?.regions?.map((item, index) => (
+                                                        <option value={item.name} key={index}>{item.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <div className="form-group">
+                                                <label htmlFor="singin-email-2">Town / City *</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="singin-email-2"
+                                                    name="city"
+                                                    placeholder=""
+                                                    value={useraddressData?.city}
+                                                    onChange={handleAddressChange}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <div className="form-group">
+                                                <label htmlFor="singin-email-2">Postcode / ZIP *</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="singin-email-2"
+                                                    name="postal_code"
+                                                    placeholder=""
+                                                    value={useraddressData?.postal_code}
+                                                    onChange={handleAddressChange}
+                                                    required
+                                                />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <>
+                                        {/* <div className="custom-control custom-checkbox">
                                         <input type="checkbox" className="custom-control-input" id="checkout-create-acc" />
                                         <label className="custom-control-label" htmlFor="checkout-create-acc">Create an account?</label>
                                     </div>
@@ -220,14 +367,18 @@ function Checkout(props) {
                                             </div>
                                         )}
                                     </SlideToggle > */}
-
-                                    <label>Order notes (optional)</label>
-                                    <textarea className="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                    </>
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <label>Order notes (optional)</label>
+                                            <textarea className="form-control" value={useraddressData?.order_notes} onChange={handleAddressChange} cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                        </div>
+                                    </div>
 
                                     <h2 className="checkout-title">Addresses</h2>
                                     <div className="row checkout_address_section">
                                         {userAddressList?.map((address, index) => (
-                                            <div className="col-sm-6">
+                                            <div className="col-sm-6" key={index}>
                                                 <div className="card card-dashboard" key={index}>
                                                     <div className="card-body">
                                                         <input

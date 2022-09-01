@@ -52,7 +52,7 @@ function Services() {
                     </div>
                     {servicesData?.content?.map((item, index) => (
                         index % 2 ?
-                            <div className="row mb-6 align-items-center">
+                            <div className="row mb-6 align-items-center" key={index}>
                                 <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                                     <div className="product-details sub-cat-deatil">
                                         <h2 className="title">{item.heading}</h2>
@@ -66,7 +66,7 @@ function Services() {
                                     </div>
                                 </div>
                             </div > :
-                            <div className="row mb-6 align-items-center">
+                            <div className="row mb-6 align-items-center" key={index}>
                                 <div className={`col-lg-6 col-sm-6 col-xs-12`}>
                                     <div className="sub-cat-featured-img">
                                         <img src={item.images} />
@@ -90,7 +90,7 @@ function Services() {
                         <OwlCarousel adClass="owl-testimonials cols-1"
                             options={mainSlider5}>
                             {testimonial?.map((item, index) => (
-                                <blockquote className="testimonial testimonial-icon text-center">
+                                <blockquote className="testimonial testimonial-icon text-center" key={index}>
                                     <img src={item.img} />
                                     <div dangerouslySetInnerHTML={{ __html: item.review }} />
                                     <cite>
