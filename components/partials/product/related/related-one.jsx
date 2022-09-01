@@ -15,9 +15,11 @@ function RelatedProductsOne(props) {
         isTheme={false}
         options={mainSlider8}
       >
-        {randomProduct?.map((product, index) => (
-          <ProductTwelve product={product} key={index} />
-        ))}
+        {randomProduct &&
+          randomProduct?.map((product, index) => (
+            <ProductTwelve product={product} key={index} />
+          ))
+        }
       </OwlCarousel>
 
       <h2 className="title text-center mb-4">You Might Also Like</h2>
@@ -26,9 +28,11 @@ function RelatedProductsOne(props) {
         isTheme={false}
         options={mainSlider8}
       >
-        {relatedproducts?.map((product, index) => (
-          <ProductTwelve product={product} key={index} />
-        ))}
+        {relatedproducts &&
+          relatedproducts?.map((product, index) => (
+            <ProductTwelve product={product} key={index} />
+          ))
+        }
       </OwlCarousel>
     </>
   );

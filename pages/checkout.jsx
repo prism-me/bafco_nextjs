@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
-import SlideToggle from 'react-slide-toggle';
+// import SlideToggle from 'react-slide-toggle';
 import { API } from '~/http/API';
 import ALink from '~/components/features/alink';
-import Accordion from '~/components/features/accordion/accordion';
-import Card from '~/components/features/accordion/card';
+// import Accordion from '~/components/features/accordion/accordion';
+// import Card from '~/components/features/accordion/card';
 import PageHeader from '~/components/features/page-header';
 import CountryRegionData from '~/utils/countrydata.json';
 import { cartPriceTotal } from '~/utils/index';
@@ -24,6 +25,7 @@ let addressData = {
 
 function Checkout(props) {
     const { cartlist } = props;
+    const router = useRouter();
     const [userAddressList, setUserAddressList] = useState();
     const [isdefault, setIsDefault] = useState(false);
     const [useraddressData, setUserAddressData] = useState({ ...addressData });
@@ -31,7 +33,8 @@ function Checkout(props) {
     const [stateList, setStateList] = useState();
     const [email, setEmail] = useState("");
     const [defaultAddressID, setDefaultAddressID] = useState();
-    const [ischeckdefault, setIsCheckDefault] = useState(false)
+    const [ischeckdefault, setIsCheckDefault] = useState(false);
+    const [isError, setIsError] = useState(cartlist.length > 0 ? false : true);
 
     useEffect(() => {
 
@@ -152,6 +155,10 @@ function Checkout(props) {
             e.preventDefault();
         }
 
+    }
+
+    if (isError) {
+        return router.push('/cart/');
     }
 
     return (

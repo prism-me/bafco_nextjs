@@ -156,17 +156,7 @@ function ProductInner() {
                         <div className="product-lg position-relative mb-5">
                             <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>
                                 {product?.single_product_details?.product?.album.map((item, index) =>
-                                    <Magnifier
-                                        imageSrc={item.avatar}
-                                        imageAlt="product"
-                                        largeImageSrc={item.avatar} // Optional
-                                        dragToMove={false}
-                                        mouseActivation="hover"
-                                        cursorStyleActive="crosshair"
-                                        className="product-gallery-image"
-                                        style={{ paddingTop: `${424 / 405 * 100}%` }}
-                                        key={"gallery-" + index}
-                                    />
+                                    <img src={item.avatar} alt={`product_${index}`} key={index} />
                                 )}
                             </OwlCarousel>
                         </div>

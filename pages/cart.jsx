@@ -26,7 +26,6 @@ function Cart(props) {
                     'Authorization': `Bearer ${authtoken}`
                 }
             }).then((response) => {
-                console.log("cart :: ", response?.data)
                 setCartList(response?.data);
             }).catch((err) => {
                 console.log(err);
@@ -37,7 +36,6 @@ function Cart(props) {
                     'Authorization': `Bearer ${authtoken}`
                 }
             }).then((response) => {
-                console.log("cart :: ", response?.data)
                 setCartTotal(response?.data);
             }).catch((err) => {
                 console.log(err);

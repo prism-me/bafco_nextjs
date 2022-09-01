@@ -149,9 +149,6 @@ function DetailOne(props) {
     function handelSelectVariantChange(e, item) {
 
         e.preventDefault();
-        console.log("handelSelectVariantChange :: ", item);
-        console.log("e :: ", e.target.value);
-        // console.log("selectedVariant :: ", selectedVariant);
 
         if (!e.target.value) {
             const newState = selectedVariant.map(obj => {
@@ -184,26 +181,13 @@ function DetailOne(props) {
 
             }, {});
 
-            console.log("resultNewComb :: ", resultNewComb)
-
             let getVariationId = variantCombGroup.filter(function (entry) {
                 return Object.keys(resultNewComb).every(function (key) {
                     return entry[key] === resultNewComb[key];
                 });
             });
 
-            console.log("getVariationId :: ", getVariationId)
-
             props.handelselectedVariation(getVariationId[0].variation_id);
-
-            // let result = product?.dropDown.filter(o1 => newState.some(o2 => o1.name === o2.name));
-
-            // console.log("result :: ", result);
-
-            // let result2 = result.filter(val => val.product_variation_id === 207);
-
-            // console.log("result2 :: ", result2);
-
 
         } else {
             const newState = selectedVariant.map(obj => {
@@ -218,8 +202,6 @@ function DetailOne(props) {
                 return obj;
 
             });
-
-            console.log("new State :: ", newState)
 
             let currentVariation = newState.map((item) => {
                 let VariationID = [];
@@ -251,8 +233,6 @@ function DetailOne(props) {
 
         }
 
-        // props.handelselectedVariation(item.product_variation_id);
-
     }
 
     if (!product) {
@@ -274,7 +254,6 @@ function DetailOne(props) {
             {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
                 <div className="product-price">
                     <span className="out-price">
-                        {/* <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span> */}
                         {product?.product_single_variation?.product_variation_details?.limit >= qty ?
                             <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
                             :
@@ -306,23 +285,26 @@ function DetailOne(props) {
                                             onChange={(e) => handelSelectVariantChange(e, item)}
                                         >
                                             <option value="">Select a {item?.variant?.name}</option>
-                                            {variationGroup.map((item2, index2) => (
-                                                item?.variant?.name === item2?.variant?.name &&
-                                                <option value={item2?.id} key={index2}>{item2?.type_value}</option>
-                                            ))}
+                                            {variationGroup &&
+                                                variationGroup.map((item2, index2) => (
+                                                    item?.variant?.name === item2?.variant?.name &&
+                                                    <option value={item2?.id} key={index2}>{item2?.type_value}</option>
+                                                ))
+                                            }
                                         </select>
                                     </div> :
                                     <div className="product-nav product-nav-dots">
-                                        {variationGroup.map((item2, index2) => (
-                                            item?.variant?.name === item2?.variant?.name &&
-                                            <span
-                                                className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
-                                                key={index2}
-                                                onClick={(e) => handelSelectVariantChange(e, item2)}
-                                            >
-                                            </span>
-                                        ))
+                                        {variationGroup &&
+                                            variationGroup.map((item2, index2) => (
+                                                item?.variant?.name === item2?.variant?.name &&
+                                                <span
+                                                    className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                    style={{ backgroundImage: `url(${item2?.type_value})` }}
+                                                    key={index2}
+                                                    onClick={(e) => handelSelectVariantChange(e, item2)}
+                                                >
+                                                </span>
+                                            ))
                                         }
                                     </div>
                                 }

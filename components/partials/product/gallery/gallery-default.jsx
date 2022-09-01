@@ -8,7 +8,7 @@ function GalleryDefault(props) {
     const [photoIndex, setPhotoIndex] = useState(0);
 
     useEffect(() => {
-        
+
         if (product) {
             setIsOpen(false);
             setPhotoIndex(0);
@@ -64,7 +64,7 @@ function GalleryDefault(props) {
                                 : ""
                         }
 
-                        <Magnifier
+                        {/* <Magnifier
                             imageSrc={product?.images[0].avatar}
                             imageAlt="product"
                             largeImageSrc={product?.images[0].avatar} // Optional
@@ -73,9 +73,16 @@ function GalleryDefault(props) {
                             cursorStyleActive="crosshair"
                             id="product-zoom"
                             className="zoom-image position-relative overflow-hidden"
-                            width={449}
-                            height={569}
-                            style={{ paddingTop: `${569 / 449 * 100}%` }}
+                        width={449}
+                        height={569}
+                        style={{ paddingTop: `${569 / 449 * 100}%` }}
+                        /> */}
+
+                        <img
+                            src={product?.images[0].avatar}
+                            alt={`product${product?.code}`}
+                            id="product-zoom"
+                            className="zoom-image position-relative overflow-hidden"
                         />
 
                         <button id="btn-product-gallery" className="btn-product-gallery" onClick={openLightBox}>
@@ -84,7 +91,7 @@ function GalleryDefault(props) {
                     </figure>
 
                     <div id="product-zoom-gallery" className="product-image-gallery">
-                        {
+                        {product?.images &&
                             product?.images.map((item, index) =>
                                 <button className={`product-gallery-item ${0 === index ? 'active' : ''}`} key={product?.id + '-' + index} onClick={e => changeBgImage(e, `${item.avatar}`, index)}>
                                     <div className="img-wrapper h-100">
@@ -97,23 +104,22 @@ function GalleryDefault(props) {
                 </div>
             </div>
 
-            {
-                isOpen ?
-                    <LightBox
-                        mainSrc={product?.images[photoIndex].avatar}
-                        nextSrc={product?.images[(photoIndex + 1) % product?.images.length].avatar}
-                        prevSrc={product?.images[(photoIndex + product?.images.length - 1) % product?.images.length].avatar}
-                        onCloseRequest={closeLightBox}
-                        onMovePrevRequest={moveNextPhoto}
-                        onMoveNextRequest={movePrevPhoto}
-                        reactModalStyle={{
-                            overlay: {
-                                zIndex: 1041
-                            },
-                        }
-                        }
-                    />
-                    : ''
+            {isOpen ?
+                <LightBox
+                    mainSrc={product?.images[photoIndex].avatar}
+                    nextSrc={product?.images[(photoIndex + 1) % product?.images.length].avatar}
+                    prevSrc={product?.images[(photoIndex + product?.images.length - 1) % product?.images.length].avatar}
+                    onCloseRequest={closeLightBox}
+                    onMovePrevRequest={moveNextPhoto}
+                    onMoveNextRequest={movePrevPhoto}
+                    reactModalStyle={{
+                        overlay: {
+                            zIndex: 1041
+                        },
+                    }
+                    }
+                />
+                : ''
             }
         </>
     )
