@@ -31,6 +31,7 @@ function Checkout(props) {
     const [stateList, setStateList] = useState();
     const [email, setEmail] = useState("");
     const [defaultAddressID, setDefaultAddressID] = useState();
+    const [ischeckdefault, setIsCheckDefault] = useState(false)
 
     useEffect(() => {
 
@@ -61,6 +62,7 @@ function Checkout(props) {
 
         }).catch((err) => console.log(err));
 
+
         API.get(`/auth/me`, header).then((response) => {
 
             setEmail(response.data.email);
@@ -75,10 +77,31 @@ function Checkout(props) {
 
         }
 
+    }, [])
+
+    useEffect(() => {
+        if (ischeckdefault) {
+            let xauthtoken = localStorage.getItem('authtoken');
+            let UserId = localStorage.getItem('UserData');
+
+            let header = {
+                headers: {
+                    'Authorization': `Bearer ${xauthtoken}`,
+                }
+            }
+            API.get(`/addresses/${UserId}`, header).then((response) => {
+
+                let dataID = response?.data.find(element => { return element.id === defaultAddressID })
+
+                setUserAddressData(dataID);
+
+            }).catch((err) => console.log(err));
+        }
     }, [defaultAddressID])
 
     const handleChangeSetDefault = (e, id) => {
-
+        setDefaultAddressID(id);
+        setIsCheckDefault(true);
     }
 
     function clearOpacity() {
@@ -243,6 +266,7 @@ function Checkout(props) {
                                             </div>
                                         </div>
                                     </div>
+
                                     <div className="row">
                                         <div className="col-lg-6">
                                             <div className="form-group">
@@ -382,7 +406,9 @@ function Checkout(props) {
                                                 <div className="card card-dashboard" key={index}>
                                                     <div className="card-body">
                                                         <input
-                                                            type="checkbox"
+                                                            type="radio"
+                                                            name="default_address"
+                                                            onChange={(e) => handleChangeSetDefault(e, address.id)}
                                                             defaultChecked={address.default === 1 ? true : isdefault}
                                                         />
                                                         <div>

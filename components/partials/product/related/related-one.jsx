@@ -15,7 +15,7 @@ function RelatedProductsOne(props) {
         isTheme={false}
         options={mainSlider8}
       >
-        {randomProduct?.data.map((product, index) => (
+        {randomProduct?.map((product, index) => (
           <ProductTwelve product={product} key={index} />
         ))}
       </OwlCarousel>
@@ -26,7 +26,7 @@ function RelatedProductsOne(props) {
         isTheme={false}
         options={mainSlider8}
       >
-        {relatedproducts?.data.map((product, index) => (
+        {relatedproducts?.map((product, index) => (
           <ProductTwelve product={product} key={index} />
         ))}
       </OwlCarousel>
