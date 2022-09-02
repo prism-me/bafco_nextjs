@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
-// import SlideToggle from 'react-slide-toggle';
+import SlideToggle from 'react-slide-toggle';
 import { API } from '~/http/API';
 import ALink from '~/components/features/alink';
-// import Accordion from '~/components/features/accordion/accordion';
-// import Card from '~/components/features/accordion/card';
+import Accordion from '~/components/features/accordion/accordion';
+import Card from '~/components/features/accordion/card';
 import PageHeader from '~/components/features/page-header';
 import CountryRegionData from '~/utils/countrydata.json';
 import { cartPriceTotal } from '~/utils/index';
@@ -158,7 +158,7 @@ function Checkout(props) {
     }
 
     if (isError) {
-        return router.push('/cart/');
+        // return router.push('/cart/');
     }
 
     return (
@@ -308,7 +308,7 @@ function Checkout(props) {
                                         </div>
                                     </div>
                                     <>
-                                        {/* <div className="custom-control custom-checkbox">
+                                        <div className="custom-control custom-checkbox">
                                         <input type="checkbox" className="custom-control-input" id="checkout-create-acc" />
                                         <label className="custom-control-label" htmlFor="checkout-create-acc">Create an account?</label>
                                     </div>

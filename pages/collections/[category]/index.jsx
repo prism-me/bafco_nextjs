@@ -73,7 +73,7 @@ function ProductSubCatInner() {
                                 {item?.products?.length !== 0 &&
                                     <div className={`col-lg-9 col-sm-6 col-xs-12`}>
                                         <div className="row">
-                                            {item.products.map((item2, index2) => (
+                                            {item.products.slice(-4).map((item2, index2) => (
                                                 <div className={`col-lg-3 col-sm-6 col-xs-12`} key={index2}>
                                                     <div className="sub-cat-product-img">
                                                         <img src={item2.featured_image} />
