@@ -1,17 +1,42 @@
+import { useEffect, useState } from "react";
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
 import Card from '~/components/features/accordion/card';
 import Accordion from '~/components/features/accordion/accordion';
+import { API } from '~/http/API';
 
 function FAQ() {
+
+    const [faqsdata, setFaqsdata] = useState();
+    const [faqType, setFaqType] = useState([]);
+
+    useEffect(() => {
+
+        API.get(`/faq`).then((response) => {
+            setFaqsdata(response.data);
+
+            let typeGroup = response.data?.faqs?.reduce((acc, curr) =>
+                acc.find((v) => v?.type === curr?.type) ? acc : [...acc, curr],
+                []);
+
+            let typegroupdata = typeGroup?.map((item) => {
+                let typeData = { 'type': item.type }
+                return typeData
+            })
+            setFaqType(typegroupdata);
+
+        }).catch((err) => console.log(err));
+
+    }, []);
+
     return (
         <div className="main">
             <PageHeader
-                title="Frequently Asked Questions"
-                subTitle="We make happy workplaces"
-                backgroundImage="images/banners/cat_banner.png"
+                title={faqsdata?.FaqBanner?.content?.banner?.heading}
+                subTitle={faqsdata?.FaqBanner?.content?.banner?.sub_heading !== '' ? faqsdata?.FaqBanner?.content?.banner?.sub_heading : ''}
+                backgroundImage={faqsdata?.FaqBanner?.content?.banner?.image}
                 buttonText="Shop Now"
-                buttonUrl="#"
+                buttonUrl="/"
             />
 
             <nav className="breadcrumb-nav">
@@ -27,61 +52,20 @@ function FAQ() {
 
             <div className="page-content">
                 <div className="container">
-                    <h2 className="title text-center mb-3">Shipping Information</h2>
+                    {faqType?.map((item, index) => (
+                        <>
+                            <h2 className="title text-center mb-3" key={index}>{item.type}</h2>
+                            <Accordion adClass="accordion-rounded">
+                                {faqsdata?.faqs?.map((faq, index2) => (
+                                    faq?.type === item.type &&
+                                    <Card title={faq?.question} adClass="card-box card-sm bg-light" key={index2}>
+                                        <div dangerouslySetInnerHTML={{ __html: faq?.answer }} />
+                                    </Card>
+                                ))}
+                            </Accordion>
 
-                    <Accordion adClass="accordion-rounded">
-                        <Card title="How will my parcel be delivered?" adClass="card-box card-sm bg-light">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.
-                        </Card>
-
-                        <Card title="Do I pay for delivery?" adClass="card-box card-sm bg-light">
-                            Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-
-                        <Card title="Will I be charged customs fees?" adClass="card-box card-sm bg-light">
-                            Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-
-                        <Card title="My item has become faulty" adClass="card-box card-sm bg-light"  >
-                            Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-                    </Accordion>
-
-                    <h2 className="title text-center mb-3">Orders and Returns</h2>
-
-                    <Accordion adClass="accordion-rounded">
-                        <Card title="Tracking my order" adClass="card-box card-sm bg-light">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
-                        </Card>
-
-                        <Card title="I haven’t received my order" adClass="card-box card-sm bg-light">
-                            Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-
-                        <Card title="How can I return an item?" adClass="card-box card-sm bg-light">
-                            Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-                    </Accordion>
-
-                    <h2 className="title text-center mb-3">Payments</h2>
-
-                    <Accordion adClass="accordion-rounded">
-                        <Card title="What payment types can I use?" adClass="card-box card-sm bg-light">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
-                        </Card>
-
-                        <Card title="Can I pay by Gift Card?" adClass="card-box card-sm bg-light">
-                            Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-
-                        <Card title="I can't make a payment" adClass="card-box card-sm bg-light">
-                            Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-
-                        <Card title="Has my payment gone through?" adClass="card-box card-sm bg-light">
-                            Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                        </Card>
-                    </Accordion>
+                        </>
+                    ))}
                 </div>
             </div>
 
@@ -103,7 +87,7 @@ function FAQ() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
