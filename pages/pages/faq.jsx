@@ -52,6 +52,9 @@ function FAQ() {
 
             <div className="page-content">
                 <div className="container">
+                    <p className="text-center">From fabric choice to tabletop size, our products can be configured in a multitude of ways. <br /> To determine the best set-up for your space, call our customer service team--they can answer simple questions with more complex solutions.<br />
+                        <a href="tel:800-BAFCO (22326)">800-BAFCO (22326)</a>  or <a href="mailto:hello@bafco.com">hello@bafco.com</a> <br />
+                        Monday to Friday 9am-6pm UAE</p>
                     {faqType?.map((item, index) => (
                         <>
                             <h2 className="title text-center mb-3" key={index}>{item.type}</h2>
