@@ -36,7 +36,7 @@ function ProductInner() {
     const [product, setProduct] = useState();
     const [pageTitle, setPageTitle] = useState("");
     const [selectedVariation, setSelectedVariation] = useState("");
-    const [relatedProducts, setRelatedProducts] = useState();
+    // const [relatedProducts, setRelatedProducts] = useState();
     const [randomProducts, setRandomProducts] = useState();
 
     useEffect(() => {
@@ -87,11 +87,11 @@ function ProductInner() {
 
         }
 
-        API.get(`related-products/${query?.sub_category}`).then((response) => {
-            setRelatedProducts(response.data.data)
-        }).catch((err) => {
-            console.log(err);
-        });
+        // API.get(`related-products/${query?.sub_category}`).then((response) => {
+        //     setRelatedProducts(response.data.data)
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
 
         API.get(`random-products`).then((response) => {
             console.log(response)
@@ -162,7 +162,11 @@ function ProductInner() {
                         </div>
                     }
                     <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
-                    <RelatedProductsOne relatedproducts={relatedProducts} randomProduct={randomProducts} loading={loading} />
+                    <RelatedProductsOne
+                        // relatedproducts={relatedProducts}
+                        randomProduct={randomProducts}
+                        loading={loading}
+                    />
                 </div >
             </div >
 

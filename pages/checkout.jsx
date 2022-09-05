@@ -9,6 +9,7 @@ import Card from '~/components/features/accordion/card';
 import PageHeader from '~/components/features/page-header';
 import CountryRegionData from '~/utils/countrydata.json';
 import { cartPriceTotal } from '~/utils/index';
+import { toast } from 'react-toastify';
 
 let addressData = {
     name: "",
@@ -29,12 +30,14 @@ function Checkout(props) {
     const [userAddressList, setUserAddressList] = useState();
     const [isdefault, setIsDefault] = useState(false);
     const [useraddressData, setUserAddressData] = useState({ ...addressData });
+    const [cuponCode, setCuponCode] = useState('');
     const [countryList, setCountryList] = useState();
     const [stateList, setStateList] = useState();
     const [email, setEmail] = useState("");
     const [defaultAddressID, setDefaultAddressID] = useState();
     const [ischeckdefault, setIsCheckDefault] = useState(false);
     const [isError, setIsError] = useState(cartlist.length > 0 ? false : true);
+    const [cartTotal, setCartTotal] = useState();
 
     useEffect(() => {
 
@@ -43,6 +46,12 @@ function Checkout(props) {
             country.push(item.countryName);
         })
         setCountryList(country);
+
+        let stateList = [];
+        stateList = CountryRegionData.filter(item => {
+            return item.countryName === "United Arab Emirates";
+        });
+        setStateList(stateList);
 
         let xauthtoken = localStorage.getItem('authtoken');
         let UserId = localStorage.getItem('UserData');
@@ -72,13 +81,11 @@ function Checkout(props) {
 
         }).catch((err) => console.log(err));
 
-        document.querySelector('body').addEventListener("click", clearOpacity)
-
-        return () => {
-
-            document.querySelector('body').removeEventListener("click", clearOpacity);
-
-        }
+        API.get(`/auth/cart-total/${UserId}`, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
+            setCartTotal(response?.data);
+        }).catch((err) => {
+            console.log(err);
+        });
 
     }, [])
 
@@ -107,37 +114,42 @@ function Checkout(props) {
         setIsCheckDefault(true);
     }
 
-    function clearOpacity() {
-
-        if (document.querySelector('#checkout-discount-input').value == '')
-            document.querySelector('#checkout-discount-form label').removeAttribute('style');
-
-    }
-
-    function addOpacity(e) {
-
-        e.currentTarget.parentNode.querySelector("label").setAttribute("style", "opacity: 0");
-
-    }
-
-    const handleCountryChange = (e) => {
-
-        let formdata = { ...useraddressData }
-        formdata.country = e.target.value;
-        setUserAddressData(formdata);
-
-        let stateList = [];
-        stateList = CountryRegionData.filter(item => {
-            return item.countryName === e.target.value;
-        });
-        setStateList(stateList);
-
-    }
-
     const handleAddressChange = (e) => {
         let formdata = { ...useraddressData }
         formdata[e.target.name] = e.target.value;
         setUserAddressData(formdata);
+    }
+
+    const handelCuponCode = (e) => {
+        setCuponCode(e.target.value);
+    }
+
+    const handlePromoCodeSubmit = () => {
+        let authtoken = localStorage.getItem('authtoken');
+        let UserDetail = localStorage.getItem('UserData');
+
+        if (UserDetail) {
+            let data = {
+                user_id: UserDetail,
+                promo_code_id: cuponCode
+            }
+
+            API.post(`/auth/promo-check`, data, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
+                console.log(response.data.status, "response")
+                if (response.data.status === 200 || response.status === 201) {
+                    toast.success(response.data.message);
+                    console.log("response?.data?.data", response?.data?.data)
+                    let obj = {
+                        promo_code_id: promoCode,
+                        discount: response?.data?.data
+                    }
+                    setCuponCode(obj)
+                } else {
+                    console.log(response.data.status, "response")
+                    toast.warning(response.data.message);
+                }
+            }).catch((err) => console.log(err));
+        }
     }
 
     const handleUserphone = (e) => {
@@ -184,13 +196,6 @@ function Checkout(props) {
             <div className="page-content">
                 <div className="checkout">
                     <div className="container">
-                        <div className="checkout-discount">
-                            <form action="#" id="checkout-discount-form">
-                                <input type="text" className="form-control" required id="checkout-discount-input" onClick={addOpacity} />
-                                <label htmlFor="checkout-discount-input" className="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
-                            </form>
-                        </div>
-
                         <form action="#">
                             <div className="row">
                                 <div className="col-lg-9">
@@ -235,7 +240,17 @@ function Checkout(props) {
                                         <div className="col-lg-6">
                                             <div className="form-group">
                                                 <label htmlFor="singin-email-2">Country *</label>
-                                                <select
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="singin-email-2"
+                                                    name="country"
+                                                    placeholder=""
+                                                    value={useraddressData?.country}
+                                                    onChange={handleAddressChange}
+                                                    required
+                                                />
+                                                {/* <select
                                                     className="form-control"
                                                     id="country"
                                                     name="country"
@@ -249,12 +264,22 @@ function Checkout(props) {
                                                     {countryList?.map((item, index) => (
                                                         <option value={item} key={index}>{item}</option>
                                                     ))}
-                                                </select>
+                                                </select> */}
                                             </div>
                                         </div>
                                         <div className="col-lg-6">
                                             <div className="form-group">
                                                 <label htmlFor="singin-email-2">State *</label>
+                                                {/* <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="singin-email-2"
+                                                    name="state"
+                                                    placeholder=""
+                                                    value={useraddressData?.state}
+                                                    onChange={handleAddressChange}
+                                                    required
+                                                /> */}
                                                 <select
                                                     className="form-control"
                                                     id="state"
@@ -308,96 +333,91 @@ function Checkout(props) {
                                         </div>
                                     </div>
                                     <>
-                                        <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className="custom-control-input" id="checkout-create-acc" />
-                                        <label className="custom-control-label" htmlFor="checkout-create-acc">Create an account?</label>
-                                    </div>
+                                        {/* <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="checkout-create-acc" />
+                                            <label className="custom-control-label" htmlFor="checkout-create-acc">Create an account?</label>
+                                        </div> */}
 
-                                    <SlideToggle duration={300} collapsed >
-                                        {({ onToggle, setCollapsibleElement }) => (
-                                            <div className="form-group">
-                                                <div className="custom-control custom-checkbox mt-0 address-box">
-                                                    <input type="checkbox" className="custom-control-input"
-                                                        id="different-shipping" onChange={onToggle} />
-                                                    <label className="custom-control-label" htmlFor="different-shipping">Ship to a different address?
-                                                    </label>
-                                                </div>
-                                                <div className="shipping-info" ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
-                                                    <div className="row">
-                                                        <div className="col-md-6">
-                                                            <div className="form-group">
-                                                                <label>First name <abbr className="required"
-                                                                    title="required">*</abbr></label>
-                                                                <input type="text" className="form-control" required />
+                                        <SlideToggle duration={300} collapsed >
+                                            {({ onToggle, setCollapsibleElement }) => (
+                                                <div className="form-group">
+                                                    <div className="custom-control custom-checkbox mt-0 address-box">
+                                                        <input type="checkbox" className="custom-control-input"
+                                                            id="different-shipping" onChange={onToggle} />
+                                                        <label className="custom-control-label" htmlFor="different-shipping">Ship to a different address?
+                                                        </label>
+                                                    </div>
+                                                    <div className="shipping-info" ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
+                                                        <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="form-group">
+                                                                    <label>First name <abbr className="required"
+                                                                        title="required">*</abbr></label>
+                                                                    <input type="text" className="form-control" required />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="col-md-6">
+                                                                <div className="form-group">
+                                                                    <label>Last name <abbr className="required"
+                                                                        title="required">*</abbr></label>
+                                                                    <input type="text" className="form-control" required />
+                                                                </div>
                                                             </div>
                                                         </div>
 
-                                                        <div className="col-md-6">
-                                                            <div className="form-group">
-                                                                <label>Last name <abbr className="required"
-                                                                    title="required">*</abbr></label>
-                                                                <input type="text" className="form-control" required />
-                                                            </div>
+                                                        <div className="select-custom">
+                                                            <label>Country / Region <span className="required">*</span></label>
+                                                            <select name="orderby" className="form-control">
+                                                                <option value="" defaultValue="selected">Vanuatu</option>
+                                                                <option value="1">Brunei</option>
+                                                                <option value="2">Bulgaria</option>
+                                                                <option value="3">Burkina Faso</option>
+                                                                <option value="4">Burundi</option>
+                                                                <option value="5">Cameroon</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div className="form-group mb-1 pb-2">
+                                                            <label>Street address <abbr className="required"
+                                                                title="required">*</abbr></label>
+                                                            <input type="text" className="form-control"
+                                                                placeholder="House number and street name" required />
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <input type="text" className="form-control"
+                                                                placeholder="Apartment, suite, unit, etc. (optional)" required />
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label>Town / City <abbr className="required"
+                                                                title="required">*</abbr></label>
+                                                            <input type="text" className="form-control" required />
+                                                        </div>
+
+                                                        <div className="select-custom">
+                                                            <label>State / County <abbr className="required"
+                                                                title="required">*</abbr></label>
+                                                            <select name="orderby" className="form-control">
+                                                                <option value="" defaultValue="selected">NY</option>
+                                                                <option value="1">Brunei</option>
+                                                                <option value="2">Bulgaria</option>
+                                                                <option value="3">Burkina Faso</option>
+                                                                <option value="4">Burundi</option>
+                                                                <option value="5">Cameroon</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label>Postcode / ZIP <abbr className="required"
+                                                                title="required">*</abbr></label>
+                                                            <input type="text" className="form-control" required />
                                                         </div>
                                                     </div>
-
-                                                    <div className="form-group">
-                                                        <label>Company name (optional)</label>
-                                                        <input type="text" className="form-control" />
-                                                    </div>
-
-                                                    <div className="select-custom">
-                                                        <label>Country / Region <span className="required">*</span></label>
-                                                        <select name="orderby" className="form-control">
-                                                            <option value="" defaultValue="selected">Vanuatu</option>
-                                                            <option value="1">Brunei</option>
-                                                            <option value="2">Bulgaria</option>
-                                                            <option value="3">Burkina Faso</option>
-                                                            <option value="4">Burundi</option>
-                                                            <option value="5">Cameroon</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div className="form-group mb-1 pb-2">
-                                                        <label>Street address <abbr className="required"
-                                                            title="required">*</abbr></label>
-                                                        <input type="text" className="form-control"
-                                                            placeholder="House number and street name" required />
-                                                    </div>
-
-                                                    <div className="form-group">
-                                                        <input type="text" className="form-control"
-                                                            placeholder="Apartment, suite, unit, etc. (optional)" required />
-                                                    </div>
-
-                                                    <div className="form-group">
-                                                        <label>Town / City <abbr className="required"
-                                                            title="required">*</abbr></label>
-                                                        <input type="text" className="form-control" required />
-                                                    </div>
-
-                                                    <div className="select-custom">
-                                                        <label>State / County <abbr className="required"
-                                                            title="required">*</abbr></label>
-                                                        <select name="orderby" className="form-control">
-                                                            <option value="" defaultValue="selected">NY</option>
-                                                            <option value="1">Brunei</option>
-                                                            <option value="2">Bulgaria</option>
-                                                            <option value="3">Burkina Faso</option>
-                                                            <option value="4">Burundi</option>
-                                                            <option value="5">Cameroon</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div className="form-group">
-                                                        <label>Postcode / ZIP <abbr className="required"
-                                                            title="required">*</abbr></label>
-                                                        <input type="text" className="form-control" required />
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
-                                    </SlideToggle > */}
+                                            )}
+                                        </SlideToggle >
                                     </>
                                     <div className="row">
                                         <div className="col-lg-12">
@@ -435,6 +455,23 @@ function Checkout(props) {
 
                                 <aside className="col-lg-3">
                                     <div className="summary">
+                                        <div className="checkout-discount mb-3">
+                                            <form id="checkout-discount-form">
+                                                <input
+                                                    type="text"
+                                                    name="coupon_code"
+                                                    className="form-control"
+                                                    required
+                                                    id="checkout-discount-input"
+                                                    value={cuponCode}
+                                                    onChange={handelCuponCode}
+                                                    placeholder="Have a coupon? Click here to enter your code"
+                                                />
+                                                <button type="button" className="btn btn-outline-primary-2 btn-order btn-block" onClick={handlePromoCodeSubmit}>
+                                                    Use Promo Code
+                                                </button>
+                                            </form>
+                                        </div>
                                         <h3 className="summary-title">Your Order</h3>
 
                                         <table className="table table-summary">
@@ -455,7 +492,7 @@ function Checkout(props) {
                                                 )}
                                                 <tr className="summary-subtotal">
                                                     <td>Subtotal:</td>
-                                                    <td>AED {cartPriceTotal(cartlist).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                    <td>AED {cartTotal?.sub_total}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Shipping:</td>
@@ -463,7 +500,7 @@ function Checkout(props) {
                                                 </tr>
                                                 <tr className="summary-total">
                                                     <td>Total:</td>
-                                                    <td>AED {cartPriceTotal(cartlist).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                    <td>AED {cartTotal?.total}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -497,6 +534,7 @@ function Checkout(props) {
                                             <span className="btn-hover-text">Proceed to Checkout</span>
                                         </button>
                                     </div>
+
                                 </aside>
                             </div>
                         </form>

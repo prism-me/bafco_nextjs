@@ -63,6 +63,12 @@ function MyAccount() {
             country.push(item.countryName);
         })
         setCountryList(country);
+
+        let stateList = [];
+        stateList = CountryRegionData.filter(item => {
+            return item.countryName === "United Arab Emirates";
+        });
+        setStateList(stateList);
     }, []);
 
     useEffect(() => {
@@ -190,19 +196,19 @@ function MyAccount() {
         setUserAddressData(formdata);
     }
 
-    const handleCountryChange = (e) => {
+    // const handleCountryChange = (e) => {
 
-        let formdata = { ...useraddressData }
-        formdata.country = e.target.value;
-        setUserAddressData(formdata);
+    //     let formdata = { ...useraddressData }
+    //     formdata.country = e.target.value;
+    //     setUserAddressData(formdata);
 
-        let stateList = [];
-        stateList = CountryRegionData.filter(item => {
-            return item.countryName === e.target.value;
-        });
-        setStateList(stateList);
+    //     let stateList = [];
+    //     stateList = CountryRegionData.filter(item => {
+    //         return item.countryName === e.target.value;
+    //     });
+    //     setStateList(stateList);
 
-    }
+    // }
 
     const handleUserphone = (e) => {
 
@@ -665,7 +671,17 @@ function MyAccount() {
                                                                             <div className="col-lg-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">Country *</label>
-                                                                                    <select
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="country"
+                                                                                        placeholder=""
+                                                                                        value={useraddressData?.country}
+                                                                                        onChange={handleAddressChange}
+                                                                                        required
+                                                                                    />
+                                                                                    {/* <select
                                                                                         className="form-control"
                                                                                         id="country"
                                                                                         name="country"
@@ -679,12 +695,22 @@ function MyAccount() {
                                                                                         {countryList?.map((item, index) => (
                                                                                             <option value={item} key={index}>{item}</option>
                                                                                         ))}
-                                                                                    </select>
+                                                                                    </select> */}
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-lg-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">State *</label>
+                                                                                    {/* <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="singin-email-2"
+                                                                                        name="state"
+                                                                                        placeholder=""
+                                                                                        value={useraddressData?.state}
+                                                                                        onChange={handleAddressChange}
+                                                                                        required
+                                                                                    /> */}
                                                                                     <select
                                                                                         className="form-control"
                                                                                         id="state"

@@ -293,7 +293,7 @@ function Cart(props) {
                                             </ALink>
                                         </div>
 
-                                        <ALink href="#" className="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i className="icon-refresh"></i></ALink>
+                                        <ALink href="/" className="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i className="icon-refresh"></i></ALink>
                                     </aside>
                                 </div>
                                 :
@@ -304,7 +304,7 @@ function Cart(props) {
                                             <p className="px-3 py-2 cart-empty mb-3">No products added to the cart</p>
                                             <p className="return-to-shop mb-0">
                                                 <ALink
-                                                    href="#"
+                                                    href="/"
                                                     className="btn btn-primary"
                                                 >RETURN TO SHOP</ALink>
                                             </p>
