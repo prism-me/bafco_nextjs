@@ -22,17 +22,19 @@ function ShopGrid() {
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState();
     const totalCount = products && products?.length;
+    const [totalProducts, setTotalProducts] = useState()
     const [filterValues, setFilterValues] = useState();
     const [filterByValue, setFilterByValue] = useState();
     const [priceRange, setRange] = useState({ min: 0, max: 10000 });
-    const [brandValue, setBrandValue] = useState('');
+    const [brandValue, setBrandValue] = useState([]);
 
     useEffect(() => {
 
         setPageTitle(query?.sub_category);
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
-            setProducts(response?.data?.products)
+            setProducts(response?.data?.products);
+            setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
             console.log(err);
         });
@@ -123,6 +125,9 @@ function ShopGrid() {
             "route": currentPageRoute
         };
 
+        console.log("handelSelectFilter :: ", formdata);
+        return
+
         API.post(`/category-list-filteration`, formdata).then((response) => {
             setProducts(response?.data?.products)
         }).catch((err) => {
@@ -164,7 +169,7 @@ function ShopGrid() {
                                     {products ?
                                         <div className="toolbox-info">
                                             Showing
-                                            <span> {products?.length} of {totalCount}</span> Products
+                                            <span> {totalProducts} of {totalCount}</span> Products
                                         </div>
                                         : ""
                                     }

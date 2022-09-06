@@ -4,6 +4,7 @@ import ProductTwelve from '~/components/features/products/product-twelve';
 function ShopListThree(props) {
     const { products = [], loading } = props;
     const fakeArray = [1, 2, 3, 4, 5, 6, 7, 8];
+    // const types = products.filter(x => !Object.values(x).includes(null));
 
     return (
         <div className={`products mb-3 skeleton-body skel-shop-products ${loading ? '' : 'loaded'}`}>
@@ -23,7 +24,7 @@ function ShopListThree(props) {
                                 ))
                                 :
                                 products?.map((product, index) => (
-                                    product?.productvariations !== null &&
+                                    product &&
                                     <div className="col-6 col-md-4 col-xl-3" key={index}>
                                         <ProductTwelve product={product} />
                                     </div>

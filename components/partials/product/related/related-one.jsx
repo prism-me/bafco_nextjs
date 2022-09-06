@@ -9,7 +9,7 @@ function RelatedProductsOne(props) {
 
   return (
     <>
-      <h2 className="title text-center mb-4">You May Also Purchase</h2>
+      <h2 className="title text-center mb-4">Here's what other clients have been buying</h2>
       <OwlCarousel
         adClass="owl-simple carousel-equal-height carousel-with-shadow cols-lg-4 cols-md-3 cols-xs-2 cols-1 mb-4"
         isTheme={false}
