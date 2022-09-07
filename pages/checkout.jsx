@@ -10,6 +10,7 @@ import PageHeader from '~/components/features/page-header';
 import CountryRegionData from '~/utils/countrydata.json';
 import { cartPriceTotal } from '~/utils/index';
 import { toast } from 'react-toastify';
+import Joi from 'joi';
 
 let billingAddressData = {
     name: "",
@@ -40,7 +41,6 @@ let shippingAddressData = {
     },
 }
 
-
 function Checkout(props) {
     const { cartlist } = props;
     const router = useRouter();
@@ -58,6 +58,7 @@ function Checkout(props) {
     const [cartTotal, setCartTotal] = useState();
     const [isPromoCodeValid, setIsPromoCodeValid] = useState(false);
     const [isShipDifferent, setIsShipDifferent] = useState(false);
+    const [error, setError] = useState([]);
 
     useEffect(() => {
 
@@ -201,21 +202,26 @@ function Checkout(props) {
         let xauthtoken = localStorage.getItem('authtoken');
         let UserId = localStorage.getItem('UserData');
 
+
+
         if (UserId) {
+
             let formdata = {
                 "user_id": 27,
-                "coupon_code": isPromoCodeValid === true ? cuponCode : "",
+                "coupon_code": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
                 "total_amount": cartTotal?.total,
-                "tax_amount": "",
+                "tax_amount": "0",
                 "currency": "AED",
                 "shipping": {
                     "id": "shipping-01",
                     "name": "BAFCO Delivery",
-                    "amount": "",
+                    "amount": "0",
                     "address": {
                         "name": isShipDifferent === true ? shipping?.address?.name : billing_address?.name,
                         "phone_number": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
-                        "country": isShipDifferent === true ? shipping?.address?.country : billing_address?.country,
+                        "alt_phone": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
+                        // "country": isShipDifferent === true ? shipping?.address?.country : billing_address?.country,
+                        "country": "AE",
                         "state": isShipDifferent === true ? shipping?.address?.state : billing_address?.state,
                         "city": isShipDifferent === true ? shipping?.address?.city : billing_address?.city,
                         "postal_code": isShipDifferent === true ? shipping?.address?.postal_code : billing_address?.postal_code,
@@ -226,12 +232,13 @@ function Checkout(props) {
                 "billing_address": {
                     "name": billing_address?.name,
                     "phone": billing_address?.phone_number,
-                    "alt_phone": "",
+                    "alt_phone": billing_address?.phone_number,
                     "line1": billing_address?.address_line1,
                     "line2": billing_address?.address_line2,
                     "city": billing_address?.city,
                     "state": billing_address?.state,
-                    "country": billing_address?.country,
+                    // "country": billing_address?.country,
+                    "country": "AE",
                     "postal_code": billing_address?.postal_code,
                     "order_notes": billing_address?.billing_address?.postal_code,
                 },
@@ -242,17 +249,20 @@ function Checkout(props) {
                 },
                 "discounts": [
                     {
-                        "code": isPromoCodeValid === true ? cuponCode : "",
-                        "name": isPromoCodeValid === true ? cuponCode : "",
+                        "code": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
+                        "name": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
                         "amount": cartTotal?.total
                     }
                 ]
             }
 
-            console.log("PlaceOrderSubmit :: ", formdata)
-
             API.post(`/authCheckout`, formdata, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
                 console.log(response);
+                if (response?.data?.error) {
+                    setError(response?.data?.error?.detail);
+                    toast.error("Please fill in the required fields.");
+                }
+                // setError()
             }).catch((error) => {
                 toast.error("Somthing went wrong !");
             });

@@ -25,7 +25,7 @@ function ProductSubCatInner() {
     return (
         <main className="main shop">
             <PageHeader
-                title={query?.category}
+                title={categoryData?.name}
                 subTitle={categoryData?.sub_title}
                 backgroundImage="images/banners/cat_banner.png"
                 buttonText="View Our Products"
@@ -37,7 +37,7 @@ function ProductSubCatInner() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item active">{query?.category}</li>
+                        <li className="breadcrumb-item active">{categoryData?.name}</li>
                     </ol>
                 </div>
             </nav>

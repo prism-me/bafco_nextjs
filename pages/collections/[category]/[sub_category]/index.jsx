@@ -21,6 +21,7 @@ function ShopGrid() {
     const [pageTitle, setPageTitle] = useState("");
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState();
+    const [subCategoryDetails, setsubCategoryDetails] = useState();
     const totalCount = products && products?.length;
     const [totalProducts, setTotalProducts] = useState()
     const [filterValues, setFilterValues] = useState();
@@ -34,6 +35,7 @@ function ShopGrid() {
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
             setProducts(response?.data?.products);
+            console.log(response)
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
             console.log(err);
