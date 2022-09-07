@@ -31,11 +31,12 @@ function ShopGrid() {
 
     useEffect(() => {
 
-        setPageTitle(query?.sub_category);
+        // setPageTitle(query?.sub_category);
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
             setProducts(response?.data?.products);
             console.log(response)
+            setPageTitle(response?.data?.name);
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
             console.log(err);

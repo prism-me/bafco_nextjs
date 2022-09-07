@@ -24,7 +24,10 @@ function ProductInner() {
 
     const query = router.query;
     const slug = useRouter().query?.product;
-    const subCategoryName = query?.sub_category;
+    const subCategoryslug = query?.sub_category?.split("-");
+    const subCategoryName = subCategoryslug?.map((item) => (item + " "));
+    const categoryslug = query?.category?.split("-");
+    const categoryName = categoryslug?.map((item) => (item + " "));
 
     // if (!slug) return <div></div>;
 
@@ -35,21 +38,23 @@ function ProductInner() {
     const next = data && data.product.next;
     const [product, setProduct] = useState();
     const [pageTitle, setPageTitle] = useState("");
+    // const [subCategoryName, setSubCategoryName] = useState("");
+    // const [categoryName, setCategoryName] = useState("");
     const [selectedVariation, setSelectedVariation] = useState("");
     // const [relatedProducts, setRelatedProducts] = useState();
     const [randomProducts, setRandomProducts] = useState();
 
-    useEffect(() => {
-        // setQuery(router.query);
-        // let slug1 = router.query?.product;
-        // setSlug(slug1);
-        // setSubCategoryName(query?.sub_category.replace('-', ' '));
+    // useEffect(() => {
+    //     // setQuery(router.query);
+    //     // let slug1 = router.query?.product;
+    //     // setSlug(slug1);
+    //     // setSubCategoryName(query?.sub_category.replace('-', ' '));
 
-        setPageTitle(query?.product.replace('-', ' '));
+    //     // setPageTitle(query?.product.replace('-', ' '));
 
-        console.log("useffect", query);
+    //     console.log("useffect", query);
 
-    }, [router])
+    // }, [router])
 
     useEffect(() => {
 
@@ -59,7 +64,9 @@ function ProductInner() {
 
             API.get(`/product-detail/${query?.product}/${selectedVariation}`).then((response) => {
 
-                setProduct(response?.data)
+                setProduct(response?.data);
+                setPageTitle(response?.data?.single_product_details?.product?.name);
+                // setSubCategoryName(query?.sub_category);
 
             }).catch((err) => {
                 console.log(err);
@@ -70,7 +77,9 @@ function ProductInner() {
             if (query?.variationId) {
                 API.get(`/product-detail/${query?.product}/${query?.variationId}`).then((response) => {
 
-                    setProduct(response?.data)
+                    setProduct(response?.data);
+                    setPageTitle(response?.data?.single_product_details?.product?.name);
+                    // setSubCategoryName(query?.sub_category);
 
                 }).catch((err) => {
                     console.log(err);
@@ -78,7 +87,9 @@ function ProductInner() {
             } else {
                 API.get(`/product-detail/${query?.product}`).then((response) => {
 
-                    setProduct(response.data)
+                    setProduct(response.data);
+                    setPageTitle(response?.data?.single_product_details?.product?.name);
+                    // setSubCategoryName(query?.sub_category);
 
                 }).catch((err) => {
                     console.log(err);
@@ -119,7 +130,7 @@ function ProductInner() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}`}>{query?.category}</ALink></li>
+                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}`}>{categoryName}</ALink></li>
                         <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}/${query?.sub_category}`}>{subCategoryName}</ALink></li>
                         <li className="breadcrumb-item active">{pageTitle}</li>
                     </ol>

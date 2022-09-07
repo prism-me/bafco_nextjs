@@ -76,7 +76,7 @@ function ProductSubCatInner() {
                                             {item.products.slice(-4).map((item2, index2) => (
                                                 <div className={`col-lg-3 col-sm-6 col-xs-12`} key={index2}>
                                                     <div className="sub-cat-product-img">
-                                                        <img src={item2.featured_image} />
+                                                        <ALink href={`/collections/${query?.category}/${item.route}/${item2.route}`}><img src={item2.featured_image} /></ALink>
                                                         <h6 className="text-center"><ALink href={`/collections/${query?.category}/${item.route}/${item2.route}`}>{item2.name}</ALink></h6>
                                                     </div>
                                                 </div>
