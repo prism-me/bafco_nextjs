@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/react-hooks";
 import ALink from "~/components/features/alink";
 import PageHeader from "~/components/features/page-header";
 import { GET_HOME_DATA } from "~/server/queries";
-import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 import withApollo from "~/server/apollo";
 import Reveal from "react-awesome-reveal";
 import { connect } from "react-redux";
@@ -12,6 +11,8 @@ import OwlCarousel from "~/components/features/owl-carousel";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import BlogCollection from "~/components/partials/home/blog-collection";
+import { API } from "~/http/API";
+import { fadeIn } from "~/utils/data";
 
 import {
   introSlider,
@@ -53,6 +54,30 @@ function Resources(props) {
         console.log(error);
       });
   }, []);
+
+  const [brochuresList, setBrochuresList] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [categoryList, setCategoryList] = useState("");
+
+  useEffect(() => {
+    API.get(`/brochure-category-list`)
+      .then((response) => {
+        setCategoryList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    API.get(`/brochure-filter/${selectedCategory}`)
+      .then((response) => {
+        setBrochuresList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [selectedCategory]);
 
   function openVideoModal(e) {
     e.preventDefault();
@@ -250,59 +275,79 @@ function Resources(props) {
             </div>
           </div>
 
-          <div className="application-heading text-center mb-3">
-            <h3>Brochures and Images</h3>
-          </div>
-
-          <div className="top-management-application-tabs">
-            <Tabs defaultIndex={0} selectedTabClassName="show">
-              <TabList
-                className="nav nav-pills justify-content-center mb-3"
-                id="tabs-6"
-                role="tablist"
-              >
-                {/* <Tab className="nav-item">
-                                    <span className="nav-link">All Products</span>
-                                </Tab> */}
-                {resourcesdata?.brochures?.map((item, index) => (
-                  <Tab className="nav-item" key={index}>
-                    <span className="nav-link">{item.categorie}</span>
-                  </Tab>
-                ))}
-              </TabList>
-              <div className="tab-pane tab-content">
-                {resourcesdata?.brochures?.map((item, index) => (
-                  <TabPanel className="text-center" key={index}>
-                    <div className="mb-6">
-                      <ResponsiveMasonry
-                        columnsCountBreakPoints={{
-                          1100: 3,
-                          700: 2,
-                          500: 1,
-                        }}
-                      >
-                        <Masonry gutter="15px">
-                          {item.categorieBrochures.map((item2, index2) => (
-                            <div className="workspaceWrper">
-                              <img
-                                key={index2}
-                                src={item2.image}
-                                style={{ width: "100%", display: "block" }}
-                              />
-                              <div className="worspaceContent">
-                                <h3>{item2.title}</h3>
-                                <p className="lead">Lorem Ipsum</p>
-                              </div>
-                            </div>
-                          ))}
-                        </Masonry>
-                      </ResponsiveMasonry>
-                    </div>
-                  </TabPanel>
-                ))}
+          <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
+            <div className="container">
+              <div className="heading heading-center mb-3">
+                <h2 className="title">Brochures and Images</h2>
               </div>
-            </Tabs>
-          </div>
+              <div className="top-collection  mb-3">
+                <ul
+                  className="nav nav-pills nav-border-anim justify-content-center"
+                  role="tablist"
+                >
+                  <li
+                    className={`nav-item ${
+                      selectedCategory === "all" ? "show" : ""
+                    }`}
+                    onClick={() => setSelectedCategory("all")}
+                  >
+                    <span className="nav-link">All Products</span>
+                  </li>
+                  {categoryList?.length > 0 &&
+                    categoryList.map((item, index) => (
+                      <li
+                        key={index}
+                        className={`nav-item ${
+                          selectedCategory === `${item.route}` ? "show" : ""
+                        }`}
+                        onClick={() => setSelectedCategory(`${item.route}`)}
+                      >
+                        <span className="nav-link">{item.name}</span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </div>
+            <div className="container mb-6">
+              <ResponsiveMasonry
+                columnsCountBreakPoints={{
+                  1100: 3,
+                  700: 2,
+                  500: 1,
+                }}
+              >
+                <Masonry gutter="15px">
+                  {brochuresList?.length > 0 ? (
+                    brochuresList?.map((x, i) => (
+                      <div className="workspaceWrper">
+                        <img
+                          key={i}
+                          src={x.featured_img}
+                          style={{ width: "100%", display: "block" }}
+                        />
+                        <div className="worspaceContent">
+                          <h3>{x.title}</h3>
+                          <p className="lead">Lorem Ipsum</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p
+                      style={{
+                        fontSize: "20px",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        display: "block",
+                        width: "100%",
+                      }}
+                    >
+                      No Item found.
+                    </p>
+                  )}
+                </Masonry>
+              </ResponsiveMasonry>
+            </div>
+          </Reveal>
           <center>
             <ALink
               href={"/pages/brouchure-images"}

@@ -9,13 +9,24 @@ import { API } from "~/http/API";
 import ContactForm from "../contact-form/contact-form";
 
 function BrouchureImages(props) {
-  const [productList, setProductList] = useState();
-  const [selectedCategory, setSelectedCategory] = useState("executive-chairs");
+  const [brochuresList, setBrochuresList] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("chairs");
+  const [categoryList, setCategoryList] = useState("");
 
   useEffect(() => {
-    API.get(`/front-products/${selectedCategory}`)
+    API.get(`/brochure-category-list`)
       .then((response) => {
-        setProductList(response?.data?.products);
+        setCategoryList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    API.get(`/brochure-filter/${selectedCategory}`)
+      .then((response) => {
+        setBrochuresList(response?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -132,7 +143,19 @@ function BrouchureImages(props) {
                 className="nav nav-pills nav-border-anim justify-content-center"
                 role="tablist"
               >
-                <li
+                {categoryList?.length > 0 &&
+                  categoryList.map((item, index) => (
+                    <li
+                      key={index}
+                      className={`nav-item ${
+                        selectedCategory === `${item.route}` ? "show" : ""
+                      }`}
+                      onClick={() => setSelectedCategory(`${item.route}`)}
+                    >
+                      <span className="nav-link">{item.name}</span>
+                    </li>
+                  ))}
+                {/* <li
                   className={`nav-item ${
                     selectedCategory === "executive-chairs" ? "show" : ""
                   }`}
@@ -179,7 +202,7 @@ function BrouchureImages(props) {
                   onClick={() => setSelectedCategory("multi-functional-chairs")}
                 >
                   <span className="nav-link">Order swatches</span>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -203,19 +226,37 @@ function BrouchureImages(props) {
                     </form>
                   </div>
                 </div>
-                {productData?.length > 0 ? (
-                  productData?.map((item1, index1) => (
-                    <div className="col-6 col-md-6 col-lg-4" key={index1}>
+                {brochuresList?.length > 0 ? (
+                  brochuresList?.map((x, i) => (
+                    <div className="col-6 col-md-6 col-lg-4" key={i}>
                       <div className="downloadWrper">
                         <img
-                          key={index1}
-                          src={item1?.thumbnail}
+                          key={i}
+                          src={x?.featured_img}
                           style={{ width: "100%", display: "block" }}
                         />
                         <div className="downloadContent">
-                          <p className="subtitle">lorem</p>
+                          <p className="subtitle">{x?.title}</p>
                           <div className="downloadbtnWrapper">
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                            {x.files &&
+                              x.files.length > 0 &&
+                              x.files.map((t, ind) => (
+                                <a
+                                  href={t.url}
+                                  without
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
+                                  <button
+                                    className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                                    key={ind}
+                                  >
+                                    <span>{t.name}</span>
+                                    <i className="icon-arrow-down"></i>
+                                  </button>
+                                </a>
+                              ))}
+                            {/* <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
                               <span>2D dwg</span>
                               <i className="icon-arrow-down"></i>
                             </button>
@@ -242,7 +283,7 @@ function BrouchureImages(props) {
                             <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
                               <span>3D dwg</span>
                               <i className="icon-arrow-down"></i>
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       </div>
