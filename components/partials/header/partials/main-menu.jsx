@@ -33,7 +33,7 @@ function MainMenu() {
                                     <div className="row no-gutters">
                                         <div className="col-md-6">
                                             <div className="menu-col">
-                                                <div className="menu-title">{category.name} Collections</div>
+                                                <div className="menu-title">{category.name}</div>
                                                 <ul>
                                                     {category?.header_child?.map((item, index2) => (
                                                         <li className={path?.indexOf(`/collections/${category.route}/${item.route}`) > -1 ? 'active' : ''} key={index2}>

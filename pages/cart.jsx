@@ -99,7 +99,7 @@ function Cart(props) {
                 subTitle=""
                 backgroundImage="images/banners/cart-banner.png"
                 buttonText="Shop Now"
-                buttonUrl="#"
+                buttonUrl="/"
 
             />
             <nav className="breadcrumb-nav">
@@ -219,28 +219,20 @@ function Cart(props) {
                                                         <td>AED {cartTotal?.sub_total}</td>
                                                         {/* <td>AED {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td> */}
                                                     </tr>
-                                                    <tr className="summary-shipping">
-                                                        <td>Shipping:</td>
-                                                        <td>&nbsp;</td>
+
+                                                    {cartTotal?.discounted_price &&
+                                                        <tr className="summary-shipping">
+                                                            <td>Discount:</td>
+                                                            <td>AED {cartTotal?.discounted_price}</td>
+                                                        </tr>
+                                                    }
+
+                                                    <tr>
+                                                        <td>Shipping Fee:</td>
+                                                        <td>{cartTotal?.shipping_charges === 'Free' ? cartTotal?.shipping_charges : `AED ${cartTotal?.shipping_charges}`}</td>
                                                     </tr>
 
-                                                    <tr className="summary-shipping-row">
-                                                        <td>
-                                                            <div className="custom-control custom-radio">
-                                                                <input type="radio"
-                                                                    id="free-shipping"
-                                                                    name="shipping"
-                                                                    className="custom-control-input"
-                                                                    onChange={(e) => onChangeShipping(0)}
-                                                                    defaultChecked={true}
-                                                                />
-                                                                <label className="custom-control-label" htmlFor="free-shipping">Free Shipping</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>AED 0.00</td>
-                                                    </tr>
-
-                                                    <tr className="summary-shipping-row">
+                                                    {/* <tr className="summary-shipping-row">
                                                         <td>
                                                             <div className="custom-control custom-radio">
                                                                 <input type="radio"
@@ -268,7 +260,7 @@ function Cart(props) {
                                                             </div>
                                                         </td>
                                                         <td>AED 20.00</td>
-                                                    </tr>
+                                                    </tr> */}
 
                                                     {/* <tr className="summary-shipping-estimate">
                                                         <td>Estimate for Your Country<br /> <ALink href="/shop/dashboard">Change address</ALink></td>

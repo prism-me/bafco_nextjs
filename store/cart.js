@@ -22,12 +22,8 @@ const cartReducer = (state = initialState, action) => {
             let UserDetail = localStorage.getItem('UserData');
             let authtoken = localStorage.getItem('authtoken');
 
-            var findIndex = state.data.findIndex(item => item.id == action.payload.product.id);
+            var findIndex = state.data.findIndex(item => item.product_id == action.payload.product.product_id);
             let qty = action.payload.qty ? action.payload.qty : 1;
-
-            if (findIndex !== -1 && action.payload.product.variations.length > 0) {
-                findIndex = state.data.findIndex(item => item.name == action.payload.product.name);
-            }
 
             console.log("findIndex :: ", findIndex)
 
@@ -40,7 +36,6 @@ const cartReducer = (state = initialState, action) => {
                                 acc.push({
                                     ...product,
                                     qty: product.qty + qty,
-                                    // sum: (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price) * (product.qty + qty)
                                 });
                             } else {
                                 acc.push(product);
@@ -52,40 +47,57 @@ const cartReducer = (state = initialState, action) => {
                 }
             } else {
                 if (UserDetail !== null) {
-                    console.log("action.payload :: ", action.payload.product)
+                    let productForCart = {}
                     let productData = {
                         user_id: UserDetail,
                         product_id: action?.payload?.product?.product_id,
                         product_variation_id: action?.payload?.product?.product_variation_id,
                         qty: qty.toString()
                     };
-                    API.post(`/auth/cart`, productData, {
-                        headers: {
-                            'Authorization': `Bearer ${authtoken}`
-                        }
-                    }).then((response) => {
+                    API.post(`/auth/cart`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
 
                         console.log("cart :: ", response);
+
+                        return {
+
+                            data: [
+                                ...state.data,
+                                {
+                                    ...action.payload.response.data,
+                                    qty: qty,
+                                }
+                            ]
+                        };
 
                     }).catch((err) => {
                         console.log(err);
                     });
+
+                    // return {
+
+                    //     data: [
+                    //         ...state.data,
+                    //         {
+                    //             ...action.payload.product,
+                    //             qty: qty,
+                    //         }
+                    //     ]
+                    // };
+
                 } else {
 
-                    console.log("cart :: ", action.payload.product);
+                    console.log("action.payload.product :: ", action.payload.product)
 
-                    return {
+                    // return {
 
-                        data: [
-                            ...state.data,
-                            {
-                                ...action.payload.product,
-                                qty: qty,
-                                // price: action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price,
-                                // sum: qty * (action.payload.product.sale_price ? action.payload.product.sale_price : action.payload.product.price)
-                            }
-                        ]
-                    };
+                    //     data: [
+                    //         ...state.data,
+                    //         {
+                    //             ...action.payload.product,
+                    //             qty: qty,
+                    //         }
+                    //     ]
+                    // };
                 }
             }
 
@@ -101,7 +113,6 @@ const cartReducer = (state = initialState, action) => {
             }
 
         case actionTypes.updateCart:
-            console.log("action.payload.cartItems :: ", action.payload.cartItems)
             return {
                 data: [
                     ...action.payload.cartItems

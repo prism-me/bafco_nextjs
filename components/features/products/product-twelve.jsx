@@ -74,16 +74,8 @@ function ProductTwelve(props) {
         }
     }
 
-    // function onCompareClick(e) {
-    //     e.preventDefault();
-    //     if (!isInCompare(props.comparelist, product)) {
-    //         props.addToCompare(product);
-    //     }
-    // }
-
     function onQuickView(e) {
         e.preventDefault();
-        // props.showQuickView(product?.route);
         router.push(`/collections/${categoryName}/${subCategoryName}/${product?.route}`);
     }
 
@@ -108,7 +100,6 @@ function ProductTwelve(props) {
                     {product?.variations?.length >= 2 ?
                         <LazyLoadImage
                             alt="product"
-                            // src={ process.env.NEXT_PUBLIC_ASSET_URI + product?.sm_pictures[ 1 ].url }
                             src={product?.productvariations?.images[1].avatar}
                             threshold={500}
                             effect="black and white"
@@ -150,57 +141,37 @@ function ProductTwelve(props) {
                         <span className="out-price">AED {product?.productvariations.upper_price}</span>
                     </div>
                     :
-                    // product?.productvariations.lower_price == product?.productvariations.upper_price ?
                     <div className="product-price">AED {product?.productvariations.upper_price}</div>
-                    // :
-                    // product?.variants?.length == 0 ?
-                    //     <div className="product-price">
-                    //         <span className="new-price">AED {product?.productvariations.lower_price}</span>
-                    //         <span className="old-price">AED {product?.productvariations.upper_price}</span>
-                    //     </div>
-                    //     :
-                    //     <div className="product-price">AED {product?.productvariations.lower_price}&ndash;AED {product?.productvariations.upper_price}
-                    //     </div>
                 }
 
-                {/* <div className="ratings-container">
-                    <div className="ratings">
-                        <div className="ratings-val" style={{ width: product?.ratings * 20 + '%' }}></div>
-                        <span className="tooltip-text">{product?.ratings?.toFixed(2)}</span>
-                    </div>
-                    <span className="ratings-text">( {product?.review} Reviews )</span>
-                </div> */}
-
-                {
-                    product?.variants?.length > 0 ?
-                        <div className="product-nav product-nav-dots">
-                            <div className="row no-gutters">
-                                {
-                                    product?.variants?.map((item, index) => (
-                                        <ALink href="#" style={{ backgroundColor: item.color }} key={index}><span className="sr-only">Color Name</span></ALink>
-                                    ))
-                                }
-                            </div>
+                {product?.variants?.length > 0 ?
+                    <div className="product-nav product-nav-dots">
+                        <div className="row no-gutters">
+                            {
+                                product?.variants?.map((item, index) => (
+                                    <ALink href="#" style={{ backgroundColor: item.color }} key={index}><span className="sr-only">Color Name</span></ALink>
+                                ))
+                            }
                         </div>
-                        : ""
+                    </div>
+                    : ""
                 }
             </div>
 
-            {
-                product?.productvariations.in_stock && product?.productvariations.in_stock !== 0 ?
-                    <div className="product-action">
-                        {
-                            product?.variants?.length > 0 ?
-                                <ALink href={`#`} className="btn-product btn-cart btn-select">
-                                    <span>select options</span>
-                                </ALink>
-                                :
-                                <button className="btn-product btn-cart" onClick={onCartClick}>
-                                    <span>add to cart</span>
-                                </button>
-                        }
-                    </div>
-                    : ""
+            {product?.productvariations.in_stock && product?.productvariations.in_stock !== 0 ?
+                <div className="product-action">
+                    {
+                        product?.variants?.length > 0 ?
+                            <ALink href={`#`} className="btn-product btn-cart btn-select">
+                                <span>select options</span>
+                            </ALink>
+                            :
+                            <button className="btn-product btn-cart" onClick={onCartClick}>
+                                <span>add to cart</span>
+                            </button>
+                    }
+                </div>
+                : ""
             }
 
         </div>

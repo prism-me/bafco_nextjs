@@ -23,25 +23,6 @@ function Wishlist(props) {
 
             setWishItems(response.data)
 
-            // setWishItems(response.data.reduce((acc, product) => {
-
-            //     let max = 0;
-            //     let min = 999999;
-
-            //     if (min > product.productvariations.lower_price) min = product.productvariations.lower_price;
-            //     if (max < product.productvariations.upper_price) max = product.productvariations.upper_price;
-
-            //     return [
-            //         ...acc,
-            //         {
-            //             ...product,
-            //             minPrice: min,
-            //             maxPrice: max
-            //         }
-            //     ];
-
-            // }, []));
-
         }).catch((err) => {
             console.log(err);
         });
@@ -50,8 +31,6 @@ function Wishlist(props) {
     }, [props.wishlist])
 
     function moveToCart(product) {
-
-        console.log("moveToCart :: ", product)
 
         let data = {
             'product_id': product?.productData[0]?.id,
@@ -84,13 +63,15 @@ function Wishlist(props) {
 
     return (
         <main className="main">
+
             <PageHeader
                 title="WishList"
                 subTitle="We make happy workplaces"
                 backgroundImage={wishlistbg}
                 buttonText="Shop Now"
-                buttonUrl="#"
+                buttonUrl="/"
             />
+
             <nav className="breadcrumb-nav">
                 <div className="container">
                     <ol className="breadcrumb">
@@ -132,23 +113,13 @@ function Wishlist(props) {
                                                 </h4>
                                             </div>
                                         </td>
-                                        {/* {console.log("product :: ", product)} */}
                                         <td className="price-col">
                                             {product?.variation[0]?.in_stock === 0 ?
                                                 <div className="product-price d-inline-block mb-0">
                                                     <span className="out-price">AED {product?.variation[0]?.upper_price}</span>
                                                 </div>
                                                 :
-                                                // product?.variation[0]?.lower_price === product?.variation[0]?.upper_price ?
                                                 <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.upper_price}</div>
-                                                // :
-                                                // product.variations.length === 0 ?
-                                                // <div className="product-price d-inline-block mb-0">
-                                                //     <span className="new-price">AED {product?.variation[0]?.lower_price}</span>
-                                                //     <span className="old-price">AED {product?.variation[0]?.upper_price}</span>
-                                                // </div>
-                                                // :
-                                                // <div className="product-price d-inline-block mb-0">AED {product.productvariations.lower_price}&ndash;AED {product.productvariations.upper_price}</div>
                                             }
                                         </td>
                                         <td className="stock-col">
@@ -156,24 +127,15 @@ function Wishlist(props) {
                                         </td>
                                         <td className="action-col">
                                             <div className="dropdown">
-                                                {
-                                                    // (product.variations.length > 0 || product.productvariations.in_stock === 0) ?
-                                                    //     <ALink href={`/product/default/${product.route}`} className="btn btn-block btn-outline-primary-2 btn-select">
-                                                    //         <i className="icon-list-alt"></i>
-                                                    //         {product.productvariations.in_stock == '0' ? 'read more' : 'select'}
-                                                    //     </ALink>
-                                                    //     :
-                                                    <button className="btn btn-block btn-outline-primary-2" onClick={e => moveToCart(product)}>
-                                                        <i className="icon-cart-plus"></i>
-                                                        add to cart
-                                                    </button>
-                                                }
+                                                <button className="btn btn-block btn-outline-primary-2" onClick={e => moveToCart(product)}>
+                                                    <i className="icon-cart-plus"></i>
+                                                    add to cart
+                                                </button>
                                             </div>
                                         </td>
                                         <td className="remove-col">
                                             <button
                                                 className="btn-remove"
-                                                // onClick={e => props.removeFromWishlist(product)}
                                                 onClick={e => deleteFromWishlist(product)}
                                             >
                                                 <i className="icon-close"></i>
@@ -185,7 +147,7 @@ function Wishlist(props) {
                             </tbody>
                         </table>
 
-                        <div className="wishlist-share">
+                        {/* <div className="wishlist-share">
                             <div className="social-icons social-icons-sm mb-2">
                                 <label className="social-label">Share on:</label>
                                 <ALink
@@ -224,19 +186,14 @@ function Wishlist(props) {
                                     <i className="icon-pinterest"></i>
                                 </ALink>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     :
-                    <div
-                        className="container"
-                    >
+                    <div className="container">
                         <div className="text-center">
                             <i className="icon-heart-o wishlist-empty d-block" style={{ fontSize: '15rem', lineHeight: '1' }}></i>
                             <span className="d-block mt-2">No products added to wishlist</span>
-                            <ALink
-                                href="#"
-                                className="btn btn-primary mt-2"
-                            >Go Shop</ALink>
+                            <ALink href="/" className="btn btn-primary mt-2">Go Shop</ALink>
                         </div>
                     </div>
                 }

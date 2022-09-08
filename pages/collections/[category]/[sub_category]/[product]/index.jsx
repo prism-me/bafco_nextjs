@@ -17,31 +17,16 @@ import { API } from '~/http/API';
 
 function ProductInner() {
     const router = useRouter();
-
-    // const [query, setQuery] = useState();
-    // const [slug, setSlug] = useState();
-    // const [subCategoryName, setSubCategoryName] = useState();
-
     const query = router.query;
     const slug = useRouter().query?.product;
     const subCategoryslug = query?.sub_category?.split("-");
     const subCategoryName = subCategoryslug?.map((item) => (item + " "));
     const categoryslug = query?.category?.split("-");
     const categoryName = categoryslug?.map((item) => (item + " "));
-
-    // if (!slug) return <div></div>;
-
-    const { data, loading, error } = useQuery(GET_PRODUCT, { variables: { slug } });
-    // const product = data && data.product.single;
-    const related = data && data.product.related;
-    const prev = data && data.product.prev;
-    const next = data && data.product.next;
+    const { loading } = useQuery(GET_PRODUCT, { variables: { slug } });
     const [product, setProduct] = useState();
     const [pageTitle, setPageTitle] = useState("");
-    // const [subCategoryName, setSubCategoryName] = useState("");
-    // const [categoryName, setCategoryName] = useState("");
     const [selectedVariation, setSelectedVariation] = useState("");
-    // const [relatedProducts, setRelatedProducts] = useState();
     const [randomProducts, setRandomProducts] = useState();
 
     // useEffect(() => {
@@ -167,7 +152,20 @@ function ProductInner() {
                         <div className="product-lg position-relative mb-5">
                             <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>
                                 {product?.single_product_details?.product?.album.map((item, index) =>
-                                    <img src={item.avatar} alt={`product_${index}`} key={index} />
+                                    <Magnifier
+                                        imageSrc={item.avatar}
+                                        imageAlt="product"
+                                        largeImageSrc={item.avatar} // Optional
+                                        dragToMove={false}
+                                        mouseActivation="hover"
+                                        cursorStyleActive="crosshair"
+                                        id="product-zoom"
+                                        className="zoom-image position-relative overflow-hidden"
+                                        width={449}
+                                        height={569}
+                                        // style={{ paddingTop: `${569 / 449 * 100}%` }}
+                                    />
+                                    // <img src={item.avatar} alt={`product_${index}`} key={index} />
                                 )}
                             </OwlCarousel>
                         </div>

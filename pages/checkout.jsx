@@ -104,6 +104,7 @@ function Checkout(props) {
 
         API.get(`/auth/cart-total/${UserId}`, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
             setCartTotal(response?.data);
+            setCuponCode(response?.data?.coupon);
         }).catch((err) => {
             console.log(err);
         });
@@ -202,14 +203,71 @@ function Checkout(props) {
         let xauthtoken = localStorage.getItem('authtoken');
         let UserId = localStorage.getItem('UserData');
 
-
+        if (billing_address?.name === '') {
+            alert('Please enter a name before submitting.');
+            return;
+        }
+        if (billing_address?.phone_number === '') {
+            alert('Please enter a phone number before submitting.');
+            return;
+        }
+        if (billing_address?.state === '') {
+            alert('Please enter a state before submitting.');
+            return;
+        }
+        if (billing_address?.country === '') {
+            alert('Please enter a country before submitting.');
+            return;
+        }
+        if (billing_address?.city === '') {
+            alert('Please enter a city before submitting.');
+            return;
+        }
+        if (billing_address?.postal_code === '') {
+            alert('Please enter a postal code before submitting.');
+            return;
+        }
+        if (billing_address?.address_line1 === '') {
+            alert('Please enter a address before submitting.');
+            return;
+        }
+        if (isShipDifferent === true) {
+            if (shipping?.name === '') {
+                alert('Please enter a name before submitting.');
+                return;
+            }
+            if (shipping?.phone_number === '') {
+                alert('Please enter a phone number before submitting.');
+                return;
+            }
+            if (shipping?.state === '') {
+                alert('Please enter a state before submitting.');
+                return;
+            }
+            if (shipping?.country === '') {
+                alert('Please enter a country before submitting.');
+                return;
+            }
+            if (shipping?.city === '') {
+                alert('Please enter a city before submitting.');
+                return;
+            }
+            if (shipping?.postal_code === '') {
+                alert('Please enter a postal code before submitting.');
+                return;
+            }
+            if (shipping?.address_line1 === '') {
+                alert('Please enter a address before submitting.');
+                return;
+            }
+        }
 
         if (UserId) {
 
             let formdata = {
                 "user_id": 27,
                 "coupon_code": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
-                "total_amount": cartTotal?.total,
+                "total_amount": cartTotal?.decimal_amount,
                 "tax_amount": "0",
                 "currency": "AED",
                 "shipping": {
@@ -237,7 +295,6 @@ function Checkout(props) {
                     "line2": billing_address?.address_line2,
                     "city": billing_address?.city,
                     "state": billing_address?.state,
-                    // "country": billing_address?.country,
                     "country": "AE",
                     "postal_code": billing_address?.postal_code,
                     "order_notes": billing_address?.billing_address?.postal_code,
@@ -261,6 +318,8 @@ function Checkout(props) {
                 if (response?.data?.error) {
                     setError(response?.data?.error?.detail);
                     toast.error("Please fill in the required fields.");
+                } else {
+                    router.push(response?.data?.redirect_url);
                 }
                 // setError()
             }).catch((error) => {
@@ -283,7 +342,7 @@ function Checkout(props) {
                 subTitle=""
                 backgroundImage="images/banners/cart-banner.png"
                 buttonText="Shop Now"
-                buttonUrl="#"
+                buttonUrl="/"
             />
             <nav className="breadcrumb-nav">
                 <div className="container">
@@ -610,6 +669,9 @@ function Checkout(props) {
                                                     onChange={handelCuponCode}
                                                     placeholder="Have a coupon? Click here to enter your code"
                                                 />
+                                                {cuponCode &&
+                                                    <label>Hurray! You got a discount!</label>
+                                                }
                                                 <button type="button" className="btn btn-outline-primary-2 btn-order btn-block" onClick={handlePromoCodeSubmit}>
                                                     Use Promo Code
                                                 </button>
@@ -635,11 +697,17 @@ function Checkout(props) {
                                                 )}
                                                 <tr className="summary-subtotal">
                                                     <td>Subtotal:</td>
-                                                    <td>AED {cartTotal?.sub_total}</td>
+                                                    <td>{cartTotal?.sub_total}</td>
                                                 </tr>
+                                                {cartTotal?.discounted_price &&
+                                                    <tr className="summary-shipping">
+                                                        <td>Discount:</td>
+                                                        <td>AED {cartTotal?.discounted_price}</td>
+                                                    </tr>
+                                                }
                                                 <tr>
-                                                    <td>Shipping:</td>
-                                                    <td>Free Shipping</td>
+                                                    <td>Shipping Fee:</td>
+                                                    <td>{cartTotal?.shipping_charges === 'Free' ? cartTotal?.shipping_charges : `AED ${cartTotal?.shipping_charges}`}</td>
                                                 </tr>
                                                 <tr className="summary-total">
                                                     <td>Total:</td>
@@ -647,30 +715,6 @@ function Checkout(props) {
                                                 </tr>
                                             </tbody>
                                         </table>
-
-                                        {/* <Accordion type="checkout">
-                                            <Card title="Direct bank transfer" expanded={true}>
-                                                Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
-                                            </Card>
-
-                                            <Card title="Check payments">
-                                                Ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.
-                                            </Card>
-
-                                            <Card title="Cash on delivery">
-                                                Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                                            </Card>
-
-                                            <Card title='PayPal'>
-                                                <small className="float-right paypal-link">What is PayPal?</small>
-                                                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
-                                            </Card>
-
-                                            <Card title='Credit Card (Stripe)'>
-                                                <img src="images/payments-summary.png" alt="payments cards" className="mb-1" />
-                                                Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit ame.
-                                            </Card>
-                                        </Accordion> */}
 
                                         <button type="button" onClick={handlePlaceOrderSubmit} className="btn btn-outline-primary-2 btn-order btn-block">
                                             <span className="btn-text">Place Order</span>

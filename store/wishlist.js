@@ -21,8 +21,6 @@ const wishlistReducer = (state = initialState, action) => {
             let UserDetail = localStorage.getItem('UserData');
             let authtoken = localStorage.getItem('authtoken');
 
-            // console.log("action.payload.product :: ", action.payload.product)
-
             if (UserDetail) {
 
                 let productData = {
@@ -38,11 +36,12 @@ const wishlistReducer = (state = initialState, action) => {
                 }).catch((err) => {
                     console.log(err);
                 });
+
             } else {
                 toast.warning("Please Login/Registration first.");
             }
 
-            let findIndex = state.data.findIndex(item => item.id === action.payload.product.id);
+            let findIndex = state.data.findIndex(item => item.product_id === action.payload.product.product_id);
 
             if (findIndex == -1) {
 
@@ -50,17 +49,13 @@ const wishlistReducer = (state = initialState, action) => {
                     data: [
                         ...state.data,
                         action.payload.product
-                        // response.data
                     ]
                 };
             }
 
         case actionTypes.removeFromWishlist:
-            // console.log("removeFromWishlist :: ", action.payload.product)
-            // console.log("state.data :: ", state.data)
             return {
                 data: state.data.filter(item => item.product_id !== action.payload.product.product_id)
-                // data: state.data.filter(item => item.product_id !== 438)
             };
 
         case actionTypes.refreshStore:
