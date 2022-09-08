@@ -120,26 +120,6 @@ $primary-color: #ee3124;
   }
 
   .isotopeSelector {
-    float: left;
-    width: 100%;
-    position: relative;
-
-    .overlay {
-      &:before {
-        content: "";
-      }
-
-      opacity: 1;
-      position: relative;
-    }
-
-    img {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  .isotopeSelector {
     .imgSliderStyle {
       transition: all 0.4s ease;
     }

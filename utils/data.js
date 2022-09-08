@@ -888,7 +888,7 @@ export const projectReferenceInnerSlider = {
       items: 4,
     },
     1360: {
-      items: 6,
+      items: 5,
     },
   },
 };

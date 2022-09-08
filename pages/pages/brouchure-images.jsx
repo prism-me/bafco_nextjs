@@ -10,7 +10,7 @@ import ContactForm from "../contact-form/contact-form";
 
 function BrouchureImages(props) {
   const [brochuresList, setBrochuresList] = useState();
-  const [selectedCategory, setSelectedCategory] = useState("chairs");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
 
   useEffect(() => {
@@ -95,6 +95,14 @@ function BrouchureImages(props) {
                 className="nav nav-pills nav-border-anim justify-content-center"
                 role="tablist"
               >
+                <li
+                  className={`nav-item ${
+                    selectedCategory === "all" ? "show" : ""
+                  }`}
+                  onClick={() => setSelectedCategory("all")}
+                >
+                  <span className="nav-link">All</span>
+                </li>
                 {categoryList?.length > 0 &&
                   categoryList.map((item, index) => (
                     <li

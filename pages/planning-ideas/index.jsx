@@ -1,31 +1,37 @@
 import { useEffect, useState } from "react";
 import ALink from "~/components/features/alink";
-import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 import withApollo from "~/server/apollo";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ContactForm from "../contact-form/contact-form";
 import { actions as demoAction } from "~/store/demo";
+import { API } from "~/http/API";
 import { fadeIn } from "~/utils/data";
 import Reveal from "react-awesome-reveal";
 import { connect } from "react-redux";
 
-const axios = require("axios");
-
 function PlaningIdeas() {
-  const [resourcesdata, setResourcesdata] = useState();
+  const [planningList, setPlanningList] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [categoryList, setCategoryList] = useState("");
 
   useEffect(() => {
-    axios
-      .get(
-        "https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/resources?en"
-      )
-      .then(function (response) {
-        setResourcesdata(response.data.content);
+    API.get(`/plan-category-list/`)
+      .then((response) => {
+        setCategoryList(response?.data);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    API.get(`/plan-filter/${selectedCategory}`)
+      .then((response) => {
+        setPlanningList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [selectedCategory]);
 
   return (
     <div className="main planing-ideas-page">
@@ -42,65 +48,83 @@ function PlaningIdeas() {
 
       <div className="page-content pb-0">
         <div className="container">
-          <div className="application-heading text-center mb-3">
-            <h3>Lorem ipsum</h3>
-          </div>
-
-          <div className="top-management-application-tabs">
-            <Tabs defaultIndex={0} selectedTabClassName="show">
-              <TabList
-                className="nav nav-pills justify-content-center mb-3"
-                id="tabs-6"
+          <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
+            <div className="heading heading-center mb-3">
+              <h2 className="title">Planning Ideas</h2>
+            </div>
+            <div className="top-collection  mb-3">
+              <ul
+                className="nav nav-pills nav-border-anim justify-content-center"
                 role="tablist"
               >
-                {/* <Tab className="nav-item">
-                                    <span className="nav-link">All Products</span>
-                                </Tab> */}
-                {resourcesdata?.brochures?.map((item, index) => (
-                  <Tab className="nav-item" key={index}>
-                    <span className="nav-link">{item.categorie}</span>
-                  </Tab>
-                ))}
-              </TabList>
-              <div className="tab-pane tab-content">
-                {resourcesdata?.brochures?.map((item, index) => (
-                  <TabPanel key={index}>
-                    <div className="mb-5">
-                      <ResponsiveMasonry
-                        columnsCountBreakPoints={{
-                          1100: 3,
-                          700: 2,
-                          500: 1,
-                        }}
-                      >
-                        <Masonry gutter="2rem">
-                          {item.categorieBrochures.map((item2, index2) => (
-                            <div className="furnitureWrper">
-                              <ALink href={`/planning-ideas/${item2.route}`}>
-                                <img
-                                  key={index2}
-                                  src={item2.image}
-                                  style={{
-                                    width: "100%",
-                                    height: "250px",
-                                    display: "block",
-                                  }}
-                                />
-                              </ALink>
-                              <div className="furnitureContent">
-                                <p className="lead">Category</p>
-                                <h3>{item2.title}</h3>
-                              </div>
-                            </div>
-                          ))}
-                        </Masonry>
-                      </ResponsiveMasonry>
+                <li
+                  className={`nav-item ${
+                    selectedCategory === "all" ? "show" : ""
+                  }`}
+                  onClick={() => setSelectedCategory("all")}
+                >
+                  <span className="nav-link">All</span>
+                </li>
+                {categoryList?.length > 0 &&
+                  categoryList.map((item, index) => (
+                    <li
+                      key={index}
+                      className={`nav-item ${
+                        selectedCategory === `${item.route}` ? "show" : ""
+                      }`}
+                      onClick={() => setSelectedCategory(`${item.route}`)}
+                    >
+                      <span className="nav-link">{item.name}</span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+            <div className="products mb-5">
+              <div className="row">
+                {planningList?.length > 0 ? (
+                  planningList.map((x, i) => (
+                    <div className="col-6 col-md-6 col-lg-4" key={i}>
+                      <div className="furnitureWrper">
+                        <ALink href={`/project-references/${x.id}`}>
+                          <img
+                            key={i}
+                            src={x.thumbnail_img}
+                            style={{
+                              width: "100%",
+                              // height: "250px",
+                              display: "block",
+                            }}
+                          />
+                        </ALink>
+                        <div className="furnitureContent">
+                          <p className="lead">
+                            {x.project_category.map((t, ind) => (
+                              <span key={ind} className="mr-2">
+                                {t.name},
+                              </span>
+                            ))}
+                          </p>
+                          <h3>{x.title}</h3>
+                        </div>
+                      </div>
                     </div>
-                  </TabPanel>
-                ))}
+                  ))
+                ) : (
+                  <p
+                    style={{
+                      fontSize: "20px",
+                      textAlign: "center",
+                      fontWeight: "bold",
+                      display: "block",
+                      width: "100%",
+                    }}
+                  >
+                    No Item found.
+                  </p>
+                )}
               </div>
-            </Tabs>
-          </div>
+            </div>
+          </Reveal>
         </div>
         <ContactForm />
         <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>

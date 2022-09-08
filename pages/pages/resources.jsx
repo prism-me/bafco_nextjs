@@ -291,7 +291,7 @@ function Resources(props) {
                     }`}
                     onClick={() => setSelectedCategory("all")}
                   >
-                    <span className="nav-link">All Products</span>
+                    <span className="nav-link">All</span>
                   </li>
                   {categoryList?.length > 0 &&
                     categoryList.map((item, index) => (

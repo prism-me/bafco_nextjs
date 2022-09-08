@@ -14,11 +14,21 @@ import {
   PinterestShareButton,
   PinterestIcon,
 } from "react-share";
-
-const axios = require("axios");
+import { API } from "~/http/API";
 
 function PlaningIdeasInner(props) {
   const slug = useRouter().query.slug;
+  const [planDetail, setPlanDetail] = useState("");
+
+  useEffect(() => {
+    API.get(`/plan-detail/${slug}`)
+      .then((response) => {
+        setPlanDetail(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [slug]);
 
   return (
     <div className="main planingIdeasInner-page">
@@ -31,7 +41,7 @@ function PlaningIdeasInner(props) {
             <li className="breadcrumb-item">
               <ALink href="/planning-ideas/">Planning Ideas</ALink>
             </li>
-            <li className="breadcrumb-item active">Planning Ideas Details</li>
+            <li className="breadcrumb-item active">{planDetail?.title}</li>
           </ol>
         </div>
       </nav>
@@ -46,35 +56,42 @@ function PlaningIdeasInner(props) {
                 </div>
 
                 <div className="mb-3">
-                  <p>
-                    <span className="prefresubtitle">Concept : </span>Private
-                    Office, Sit-to-stand{" "}
+                  <p dangerouslySetInnerHTML={{ __html: planDetail?.concept }}>
+                    {/* <span className="prefresubtitle">Concept : </span>Private
+                    Office, Sit-to-stand{" "} */}
                   </p>
-                  <p>
+                  {/* <p>
                     <span className="prefresubtitle">Collection : </span>
                     Adjustable tables
                   </p>
                   <p>
                     <span className="prefresubtitle">Space type : </span>{" "}
                     Private Office, Sit-to-stand
-                  </p>
+                  </p> */}
                 </div>
 
                 <p className="subtitle mb-3">Available formats</p>
 
                 <div className="btnWrapper mb-3">
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Autocad 2D (47.92 KB)</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Autocad 3D (2.28 MB)</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Sketch Up (4.58 MB)</span>
-                  </button>
+                  {planDetail.files &&
+                    planDetail.files.length > 0 &&
+                    planDetail.files.map((t, ind) => (
+                      <a
+                        href={t.url}
+                        without
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        // download
+                      >
+                        <button
+                          className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                          key={ind}
+                        >
+                          <i className="icon-arrow-down"></i>
+                          <span>{t.name}</span>
+                        </button>
+                      </a>
+                    ))}
                 </div>
 
                 <p className="subtitle mb-3">Documentation</p>
