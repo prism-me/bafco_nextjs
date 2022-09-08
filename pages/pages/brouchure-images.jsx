@@ -33,54 +33,6 @@ function BrouchureImages(props) {
       });
   }, [selectedCategory]);
 
-  const productData = [
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-  ];
-
   return (
     <div className="main brouchure-images-page">
       <nav className="breadcrumb-nav">
@@ -155,61 +107,13 @@ function BrouchureImages(props) {
                       <span className="nav-link">{item.name}</span>
                     </li>
                   ))}
-                {/* <li
-                  className={`nav-item ${
-                    selectedCategory === "executive-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("executive-chairs")}
-                >
-                  <span className="nav-link">3D and 2D blocks</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "ergonomic-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("ergonomic-chairs")}
-                >
-                  <span className="nav-link">Textures</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "conference-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("conference-chairs")}
-                >
-                  <span className="nav-link">Fabric</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "visitor-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("visitor-chairs")}
-                >
-                  <span className="nav-link">Moodboard</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "stools" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("stools")}
-                >
-                  <span className="nav-link">Projects</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "multi-functional-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("multi-functional-chairs")}
-                >
-                  <span className="nav-link">Order swatches</span>
-                </li> */}
               </ul>
             </div>
           </div>
           <div className="products">
             <div className="container">
               <div className="row">
-                <div className="col-12 col-md-12 col-lg-12">
+                {/* <div className="col-12 col-md-12 col-lg-12">
                   <div className="mb-3 d-flex justify-content-between align-items-center brochureImagesWrapper">
                     <p className="subtitle">
                       Sed pretium, ligula sollicitudin laoreet viverra, tortor
@@ -225,14 +129,14 @@ function BrouchureImages(props) {
                       </div>
                     </form>
                   </div>
-                </div>
+                </div> */}
                 {brochuresList?.length > 0 ? (
                   brochuresList?.map((x, i) => (
                     <div className="col-6 col-md-6 col-lg-4" key={i}>
                       <div className="downloadWrper">
                         <img
                           key={i}
-                          src={x?.featured_img}
+                          src={x?.thumbnail_img}
                           style={{ width: "100%", display: "block" }}
                         />
                         <div className="downloadContent">
@@ -242,13 +146,13 @@ function BrouchureImages(props) {
                               x.files.length > 0 &&
                               x.files.map((t, ind) => (
                                 <a
-                                  href={t.url}
+                                  href={t.url === null ? t?.file_link : t?.url}
                                   without
                                   rel="noopener noreferrer"
                                   target="_blank"
                                 >
                                   <button
-                                    className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                                    className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-2"
                                     key={ind}
                                   >
                                     <span>{t.name}</span>
@@ -256,34 +160,6 @@ function BrouchureImages(props) {
                                   </button>
                                 </a>
                               ))}
-                            {/* <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>2D dwg</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>3D dwg</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>3D 3ds</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>Catalogue</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>Dimensions</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>Skp</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>3D dwg</span>
-                              <i className="icon-arrow-down"></i>
-                            </button> */}
                           </div>
                         </div>
                       </div>

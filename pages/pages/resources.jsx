@@ -318,7 +318,7 @@ function Resources(props) {
               >
                 <Masonry gutter="15px">
                   {brochuresList?.length > 0 ? (
-                    brochuresList?.map((x, i) => (
+                    brochuresList?.slice(0, 9)?.map((x, i) => (
                       <div className="workspaceWrper">
                         <img
                           key={i}
@@ -327,7 +327,13 @@ function Resources(props) {
                         />
                         <div className="worspaceContent">
                           <h3>{x.title}</h3>
-                          <p className="lead">Lorem Ipsum</p>
+                          <p className="lead">
+                            {x?.broucher_category &&
+                              x?.broucher_category?.length > 0 &&
+                              x?.broucher_category?.map((cat, ind) => (
+                                <span key={ind}>{cat?.name}, </span>
+                              ))}
+                          </p>
                         </div>
                       </div>
                     ))
