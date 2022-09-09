@@ -85,7 +85,7 @@ function PlaningIdeas() {
                   planningList.map((x, i) => (
                     <div className="col-6 col-md-6 col-lg-4" key={i}>
                       <div className="furnitureWrper">
-                        <ALink href={`/project-references/${x.id}`}>
+                        <ALink href={`/planning-ideas/${x.id}`}>
                           <img
                             key={i}
                             src={x.thumbnail_img}
@@ -97,13 +97,7 @@ function PlaningIdeas() {
                           />
                         </ALink>
                         <div className="furnitureContent">
-                          <p className="lead">
-                            {x.project_category.map((t, ind) => (
-                              <span key={ind} className="mr-2">
-                                {t.name},
-                              </span>
-                            ))}
-                          </p>
+                          <p className="lead">{x?.plan_category?.name}</p>
                           <h3>{x.title}</h3>
                         </div>
                       </div>

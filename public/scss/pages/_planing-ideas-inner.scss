@@ -36,7 +36,8 @@ $primary-color: #ee3124;
           margin-right: 0;
         }
 
-        &:hover {
+        &:hover,
+        &.active {
           color: $primary-color;
           border-color: $primary-color;
           background: #fff;

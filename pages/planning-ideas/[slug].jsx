@@ -30,6 +30,27 @@ function PlaningIdeasInner(props) {
       });
   }, [slug]);
 
+  //featured image change on button click
+
+  let featImg = "";
+  if (planDetail.featured_img) {
+    featImg = planDetail.featured_img[0];
+  }
+
+  const [featuredImg, setFeaturedImg] = useState(featImg);
+
+  useEffect(() => {
+    setFeaturedImg(featImg);
+  }, [featImg]);
+
+  const changeTab = (tabtext) => {
+    planDetail.featured_img.forEach((item) => {
+      if (item.name === tabtext) {
+        setFeaturedImg(item);
+      }
+    });
+  };
+
   return (
     <div className="main planingIdeasInner-page">
       <nav className="breadcrumb-nav">
@@ -60,14 +81,6 @@ function PlaningIdeasInner(props) {
                     {/* <span className="prefresubtitle">Concept : </span>Private
                     Office, Sit-to-stand{" "} */}
                   </p>
-                  {/* <p>
-                    <span className="prefresubtitle">Collection : </span>
-                    Adjustable tables
-                  </p>
-                  <p>
-                    <span className="prefresubtitle">Space type : </span>{" "}
-                    Private Office, Sit-to-stand
-                  </p> */}
                 </div>
 
                 <p className="subtitle mb-3">Available formats</p>
@@ -84,7 +97,7 @@ function PlaningIdeasInner(props) {
                         // download
                       >
                         <button
-                          className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                          className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-3"
                           key={ind}
                         >
                           <i className="icon-arrow-down"></i>
@@ -194,23 +207,21 @@ function PlaningIdeasInner(props) {
                 </div>
               </div>
               <div className="col-lg-6 col-sm-6 col-xs-12">
-                <img
-                  src="images/projectreferencesinner/planinginner.png"
-                  className="img-fluid mb-2"
-                />
+                <img src={featuredImg?.img} className="img-fluid mb-2" />
                 <div className="btnWrapper">
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>3D SHAPE</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>3D LINE</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>Plan</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>3D Viewers</span>
-                  </button>
+                  {planDetail.featured_img &&
+                    planDetail.featured_img.length > 0 &&
+                    planDetail.featured_img.map((name, index) => (
+                      <button
+                        className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${
+                          featuredImg?.name === name?.name && "active"
+                        }`}
+                        key={index}
+                        onClick={() => changeTab(name.name)}
+                      >
+                        <span>{name.name}</span>
+                      </button>
+                    ))}
                 </div>
               </div>
             </div>
