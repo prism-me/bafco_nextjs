@@ -79,67 +79,22 @@ function Resources(props) {
       });
   }, [selectedCategory]);
 
+  const [videoList, setVideoList] = useState();
+
+  useEffect(() => {
+    API.get(`/front-videos`)
+      .then((response) => {
+        setVideoList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   function openVideoModal(e) {
     e.preventDefault();
     props?.showVideo();
   }
-
-  const videoList = [
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      video_link: "https://youtu.be/vBPgmASQ1A0",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-  ];
 
   return (
     <div className="main resources-page">
@@ -423,7 +378,7 @@ function Resources(props) {
                       <img src={x?.thumbnail} className="img-fluid" />
                       <div className="videoContent">
                         <a
-                          href={x?.video_link}
+                          href={x?.link}
                           className="btn-iframe"
                           onClick={openVideoModal}
                         >

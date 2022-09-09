@@ -90,7 +90,7 @@ function PlaningIdeasInner(props) {
                     planDetail.files.length > 0 &&
                     planDetail.files.map((t, ind) => (
                       <a
-                        href={t.url}
+                        href={t.url === null ? t?.file_link : t?.url}
                         without
                         rel="noopener noreferrer"
                         target="_blank"
