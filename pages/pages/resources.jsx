@@ -1,57 +1,39 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
 import ALink from "~/components/features/alink";
 import PageHeader from "~/components/features/page-header";
-import { GET_HOME_DATA } from "~/server/queries";
 import withApollo from "~/server/apollo";
 import Reveal from "react-awesome-reveal";
 import { connect } from "react-redux";
 import { actions as demoAction } from "~/store/demo";
 import OwlCarousel from "~/components/features/owl-carousel";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import BlogCollection from "~/components/partials/home/blog-collection";
 import { API } from "~/http/API";
 import { fadeIn } from "~/utils/data";
-
-import {
-  introSlider,
-  fadeInUpShorter,
-  fabricFinishedSlider,
-} from "~/utils/data";
-const axios = require("axios");
+import { introSlider, fabricFinishedSlider } from "~/utils/data";
 
 function Resources(props) {
-  const { data, loading, error } = useQuery(GET_HOME_DATA);
-  const posts = data && data.homeData.posts;
-
   const [resourcesdata, setResourcesdata] = useState();
+  const [projectsData, setProjectsData] = useState();
+  const [plansData1, setPlansData1] = useState();
+  const [plansData2, setPlansData2] = useState();
+  const [plansData3, setPlansData3] = useState();
+  const [blogsData, setBlogsData] = useState();
+  const [videosData, setVideosData] = useState();
 
   useEffect(() => {
-    axios
-      .get(
-        "https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/pages/resources?en"
-      )
-      .then(function (response) {
-        console.log(response.data.content);
-        setResourcesdata(response.data.content);
+    API.get(`/home-resource`)
+      .then((response) => {
+        setProjectsData(response?.data?.project);
+        setPlansData1(response?.data?.plans[0]);
+        setPlansData2(response?.data?.plans[1]);
+        setPlansData3(response?.data?.plans[2]);
+        setVideosData(response?.data?.videos);
+        setBlogsData(response?.data?.blog);
+        setResourcesdata(response?.data?.page?.content);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
-
-  const [bloglist, setBlogList] = useState();
-  useEffect(() => {
-    axios
-      .get("https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/home?en")
-      .then(function (response) {
-        // handle success
-        setBlogList(response.data.blogs);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -78,18 +60,6 @@ function Resources(props) {
         console.log(err);
       });
   }, [selectedCategory]);
-
-  const [videoList, setVideoList] = useState();
-
-  useEffect(() => {
-    API.get(`/front-videos`)
-      .then((response) => {
-        setVideoList(response?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   function openVideoModal(e) {
     e.preventDefault();
@@ -136,19 +106,19 @@ function Resources(props) {
             adClass="owl-simple owl-light owl-nav-inside mb-5 project-references"
             options={introSlider}
           >
-            {resourcesdata?.projectReferences?.map((item, index) => (
+            {projectsData?.slice(0, 1)?.map((item, index) => (
               <div
                 className="intro-slide slide1"
                 key={index}
                 style={{
                   backgroundColor: "#EDF2F0",
-                  backgroundImage: `url(${item.image})`,
+                  backgroundImage: `url(${item.featured_img})`,
                 }}
               >
                 <div className="container intro-content">
                   <div className="project-reference-slider-cont">
-                    <p className="lead text-primary">{item.sub_heading}</p>
-                    <h2 className="title">{item.heading}</h2>
+                    <p className="lead text-primary">{item.sub_title}</p>
+                    <h2 className="title">{item.title}</h2>
                     <div
                       className="mb-2"
                       dangerouslySetInnerHTML={{ __html: item.description }}
@@ -182,12 +152,16 @@ function Resources(props) {
             <div className="col-lg-8 col-sm-8 col-xs-12">
               <div className="planning-imgs imageWrapper">
                 <img
-                  src={resourcesdata?.planingIdeas[0]?.image}
-                  style={{ height: "445px" }}
+                  src={
+                    // plansData &&
+                    // plansData.lenth > 0 &&
+                    plansData1?.thumbnail_img
+                  }
+                  style={{ height: "500px" }}
                 />
                 <div className="planingContent">
-                  <p className="lead">Lorem Ipsum</p>
-                  <h2 className="title">Lorem ipsum dolor sit amet</h2>
+                  <p className="lead">{plansData1?.sub_title}</p>
+                  <h2 className="title">{plansData1?.title}</h2>
                   <ALink
                     href={"/planning-ideas/"}
                     className="btn btn-sm btn-minwidth btn-outline-primary-2"
@@ -200,10 +174,13 @@ function Resources(props) {
             </div>
             <div className="col-lg-4 col-sm-4 col-xs-12">
               <div className="planning-imgs mb-2 imageWrapper2">
-                <img src={resourcesdata?.planingIdeas[1]?.image} />
+                <img
+                  src={plansData2?.thumbnail_img}
+                  style={{ height: "240px" }}
+                />
                 <div className="planingContent2">
-                  <p className="lead">Lorem Ipsum</p>
-                  <h2 className="title">Lorem ipsum dolor sit amet</h2>
+                  <p className="lead">{plansData2?.sub_title}</p>
+                  <h2 className="title">{plansData2?.title}</h2>
                   <ALink
                     href={"/planning-ideas/"}
                     className="btn btn-sm btn-minwidth btn-outline-primary-2"
@@ -214,10 +191,13 @@ function Resources(props) {
                 </div>
               </div>
               <div className="planning-imgs imageWrapper3">
-                <img src={resourcesdata?.planingIdeas[2]?.image} />
+                <img
+                  src={plansData3?.thumbnail_img}
+                  style={{ height: "240px" }}
+                />
                 <div className="planingContent3">
-                  <p className="lead">Lorem Ipsum</p>
-                  <h2 className="title">Lorem ipsum dolor sit amet</h2>
+                  <p className="lead">{plansData3?.sub_title}</p>
+                  <h2 className="title">{plansData3?.title}</h2>
                   <ALink
                     href={"/planning-ideas/"}
                     className="btn btn-sm btn-minwidth btn-outline-primary-2"
@@ -370,8 +350,8 @@ function Resources(props) {
         </div>
         <div className="container">
           <div className="row video-gallery mb-3">
-            {videoList?.length > 0 ? (
-              videoList?.slice(0, 8)?.map((x, i) =>
+            {videosData?.length > 0 ? (
+              videosData?.slice(0, 8)?.map((x, i) =>
                 i <= 6 ? (
                   <div className="col-lg-3 col-sm-6 col-xs-12" key={i}>
                     <div className="planning-imgs videoWrapper">
@@ -415,7 +395,7 @@ function Resources(props) {
           </div>
         </div>
 
-        <BlogCollection posts={bloglist} />
+        <BlogCollection posts={blogsData} />
       </div>
     </div>
   );
