@@ -1029,3 +1029,33 @@ div.intro-slide {
 .fabric_finished.owl-simple .owl-dots .owl-dot span {
 	border: 0.1rem solid #C4C4C4 !important;
 }
+
+.verification {
+	margin: 50px 0;
+
+	.modal-content {
+		box-shadow: none;
+
+		.modal-body {
+			padding: 1rem;
+
+			.form-code-box {
+				margin: 3rem 0 5rem 0;
+			}
+
+			input[type="number"] {
+				color: #EE3124;
+				font-size: 35px;
+				font-weight: 600;
+				width: 100%;
+				border: 1px solid #ccc;
+				text-align: center;
+				margin: 0 7px;
+				line-height: normal;
+				letter-spacing: 3rem;
+				height: 50px;
+			}
+		}
+	}
+
+}

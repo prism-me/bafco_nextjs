@@ -82,6 +82,7 @@ function Header() {
                         <ALink href="/" className="logo">
                             <img src="images/bafco-logo.png" alt="Molla Logo" width={150} />
                         </ALink>
+                        
                     </div>
 
                     <div className="header-center">

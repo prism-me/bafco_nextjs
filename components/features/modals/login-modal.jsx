@@ -79,9 +79,9 @@ function LoginModal(props) {
                 if (response?.status === 200) {
                     closeModal();
                     toast.success(response?.data?.message);
-                    console.log(response);
+                    router.push('/verification');
+
                 }
-                // router.push('/account/');
                 // localStorage.setItem("userData", JSON.stringify(response.data));
             })
                 .catch((error) => { console.log(error) });
