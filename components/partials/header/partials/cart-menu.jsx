@@ -20,7 +20,7 @@ function CartMenu(props) {
                 <p>Cart</p>
             </ALink>
 
-            <div className={`dropdown-menu dropdown-menu-right ${cartlist.length === 0 ? 'text-center' : ''}`} >
+            {/* <div className={`dropdown-menu dropdown-menu-right ${cartlist.length === 0 ? 'text-center' : ''}`} >
                 {
                     0 === cartlist.length ?
                         <p>No products in the cart.</p> :
@@ -55,7 +55,7 @@ function CartMenu(props) {
                             </div>
                         </>
                 }
-            </div>
+            </div> */}
         </div>
     );
 }

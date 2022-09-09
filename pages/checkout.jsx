@@ -59,6 +59,7 @@ function Checkout(props) {
     const [isPromoCodeValid, setIsPromoCodeValid] = useState(false);
     const [isShipDifferent, setIsShipDifferent] = useState(false);
     const [error, setError] = useState([]);
+    const [UserIdData, setUserIdData] = useState('');
 
     useEffect(() => {
 
@@ -77,37 +78,53 @@ function Checkout(props) {
         let xauthtoken = localStorage.getItem('authtoken');
         let UserId = localStorage.getItem('UserData');
 
+        setUserIdData(UserId);
+
+        let GuestUserDetail = localStorage.getItem('GuestUserData');
+
         let header = {
             headers: {
                 'Authorization': `Bearer ${xauthtoken}`,
             }
         }
 
-        API.get(`/addresses/${UserId}`, header).then((response) => {
+        if (UserId !== null) {
 
-            setUserAddressList(response?.data);
+            API.get(`/addresses/${UserId}`, header).then((response) => {
 
-            let dataID = response?.data.find(element => { return element.default === 1 })
+                setUserAddressList(response?.data);
 
-            setDefaultAddressID(dataID?.id);
+                let dataID = response?.data.find(element => { return element.default === 1 })
 
-            setBillingAddress(dataID);
+                setDefaultAddressID(dataID?.id);
 
-        }).catch((err) => console.log(err));
+                setBillingAddress(dataID);
+
+            }).catch((err) => console.log(err));
 
 
-        API.get(`/auth/me`, header).then((response) => {
+            API.get(`/auth/me`, header).then((response) => {
 
-            setEmail(response.data.email);
+                setEmail(response.data.email);
 
-        }).catch((err) => console.log(err));
+            }).catch((err) => console.log(err));
 
-        API.get(`/auth/cart-total/${UserId}`, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
-            setCartTotal(response?.data);
-            setCuponCode(response?.data?.coupon);
-        }).catch((err) => {
-            console.log(err);
-        });
+            API.get(`/auth/cart-total/${UserId}`, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
+                setCartTotal(response?.data);
+                setCuponCode(response?.data?.coupon);
+            }).catch((err) => {
+                console.log(err);
+            });
+
+        } else {
+
+            API.get(`/guest-cart-total/${GuestUserDetail}`).then((response) => {
+                setCartTotal(response?.data);
+                setCuponCode(response?.data?.coupon);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
 
     }, [])
 
@@ -136,6 +153,9 @@ function Checkout(props) {
         setIsCheckDefault(true);
     }
 
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    }
     const handleBillingAddressChange = (e) => {
         let formdata = { ...billing_address }
         formdata[e.target.name] = e.target.value;
@@ -205,6 +225,13 @@ function Checkout(props) {
 
         if (billing_address?.name === '') {
             alert('Please enter a name before submitting.');
+            return;
+        }
+        if (email === '') {
+            alert('Please enter a email before submitting.');
+            return;
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+            alert('Invalid email address.');
             return;
         }
         if (billing_address?.phone_number === '') {
@@ -371,7 +398,23 @@ function Checkout(props) {
 
                                         <div className="col-sm-6">
                                             <label>Email *</label>
-                                            <input type="text" name="email" value={email} readOnly className="form-control" />
+                                            {UserIdData !== null ?
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    value={email}
+                                                    readOnly
+                                                    className="form-control"
+                                                /> :
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    value={email}
+                                                    onChange={handleEmailChange}
+                                                    className="form-control"
+                                                    required
+                                                />
+                                            }
                                         </div>
                                     </div>
 
@@ -627,31 +670,34 @@ function Checkout(props) {
                                             ></textarea>
                                         </div>
                                     </div>
-
-                                    <h2 className="checkout-title">Addresses</h2>
-                                    <div className="row checkout_address_section">
-                                        {userAddressList?.map((address, index) => (
-                                            <div className="col-sm-6" key={index}>
-                                                <div className="card card-dashboard" key={index}>
-                                                    <div className="card-body">
-                                                        <input
-                                                            type="radio"
-                                                            name="default_address"
-                                                            onChange={(e) => handleChangeSetDefault(e, address.id)}
-                                                            defaultChecked={address.default === 1 ? true : isdefault}
-                                                        />
-                                                        <div>
-                                                            <h3 className="card-title">{address.name}</h3>
-                                                            <p> {address.address_line1}<br />
-                                                                {address.address_line2}, {address.postal_code}, {address.city}<br />
-                                                                {address.state}, {address.country}<br />
-                                                                {address.phone_number}<br /></p>
+                                    {userAddressList &&
+                                        <>
+                                            <h2 className="checkout-title">Addresses</h2>
+                                            <div className="row checkout_address_section">
+                                                {userAddressList?.map((address, index) => (
+                                                    <div className="col-sm-6" key={index}>
+                                                        <div className="card card-dashboard" key={index}>
+                                                            <div className="card-body">
+                                                                <input
+                                                                    type="radio"
+                                                                    name="default_address"
+                                                                    onChange={(e) => handleChangeSetDefault(e, address.id)}
+                                                                    defaultChecked={address.default === 1 ? true : isdefault}
+                                                                />
+                                                                <div>
+                                                                    <h3 className="card-title">{address.name}</h3>
+                                                                    <p> {address.address_line1}<br />
+                                                                        {address.address_line2}, {address.postal_code}, {address.city}<br />
+                                                                        {address.state}, {address.country}<br />
+                                                                        {address.phone_number}<br /></p>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                ))}
                                             </div>
-                                        ))}
-                                    </div>
+                                        </>
+                                    }
 
                                 </div>
 
@@ -689,12 +735,12 @@ function Checkout(props) {
 
                                             <tbody>
 
-                                                {cartlist.map((item, index) =>
+                                                {/* {cartlist.map((item, index) =>
                                                     <tr key={index}>
                                                         <td> <ALink href={`/product/default/${item.slug}`}>{item.name}</ALink></td>
                                                         <td>AED {item.sum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                                     </tr>
-                                                )}
+                                                )} */}
                                                 <tr className="summary-subtotal">
                                                     <td>Subtotal:</td>
                                                     <td>{cartTotal?.sub_total}</td>

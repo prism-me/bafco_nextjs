@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import { takeEvery } from "redux-saga/effects";
 import { toast } from 'react-toastify';
 import { API } from '~/http/API';
+import uuid from 'react-uuid';
 
 export const actionTypes = {
     addToCart: "ADD_TO_CART",
@@ -46,8 +47,8 @@ const cartReducer = (state = initialState, action) => {
                     ]
                 }
             } else {
+
                 if (UserDetail !== null) {
-                    let productForCart = {}
                     let productData = {
                         user_id: UserDetail,
                         product_id: action?.payload?.product?.product_id,
@@ -58,46 +59,57 @@ const cartReducer = (state = initialState, action) => {
 
                         console.log("cart :: ", response);
 
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+
+                    return {
+
+                        data: [
+                            ...state.data,
+                            {
+                                ...action.payload.product,
+                                qty: qty,
+                            }
+                        ]
+                    };
+
+                } else {
+
+                    let GuestUserDetail = localStorage.getItem('GuestUserData');
+
+                    if (GuestUserDetail === null) {
+                        localStorage.setItem('GuestUserData', uuid());
+                        GuestUserDetail = localStorage.getItem('GuestUserData');
+                    }
+
+                    if (GuestUserDetail !== null) {
+                        let productData = {
+                            user_id: GuestUserDetail,
+                            product_id: action?.payload?.product?.product_id,
+                            product_variation_id: action?.payload?.product?.product_variation_id,
+                            qty: qty.toString()
+                        };
+                        API.post(`/guest-cart`, productData).then((response) => {
+
+                            console.log("cart :: ", response);
+
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+
                         return {
 
                             data: [
                                 ...state.data,
                                 {
-                                    ...action.payload.response.data,
+                                    ...action.payload.product,
                                     qty: qty,
                                 }
                             ]
                         };
 
-                    }).catch((err) => {
-                        console.log(err);
-                    });
-
-                    // return {
-
-                    //     data: [
-                    //         ...state.data,
-                    //         {
-                    //             ...action.payload.product,
-                    //             qty: qty,
-                    //         }
-                    //     ]
-                    // };
-
-                } else {
-
-                    console.log("action.payload.product :: ", action.payload.product)
-
-                    // return {
-
-                    //     data: [
-                    //         ...state.data,
-                    //         {
-                    //             ...action.payload.product,
-                    //             qty: qty,
-                    //         }
-                    //     ]
-                    // };
+                    }
                 }
             }
 

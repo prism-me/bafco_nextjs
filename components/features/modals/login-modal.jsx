@@ -102,15 +102,6 @@ function LoginModal(props) {
                 return false;
             }
         }
-
-        // API.post(`/auth/register`, updatedData, {
-        //     "Accept": `application/json`,
-        // }).then((response) => {
-        //     closeModal();
-        //     toast.success(response?.data);
-        //     router.push('/account/');
-
-        // }).catch((err) => toast.error(err));
     }
 
 

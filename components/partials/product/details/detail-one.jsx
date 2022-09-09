@@ -24,15 +24,25 @@ function DetailOne(props) {
 
     useEffect(() => {
 
+        console.log("dropDown :: ", product?.dropDown)
+
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
             [])
         );
 
+        console.log("setVariationTypeGroup :: ", product?.dropDown?.reduce((acc, curr) =>
+        acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
+        []))
+
         setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
             [])
         );
+
+        console.log("setVariationGroup :: ", product?.dropDown?.reduce((acc, curr) =>
+        acc.find((v) => v?.name === curr?.name) ? acc : [...acc, curr],
+        []))
 
         let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
             let productVariation = {

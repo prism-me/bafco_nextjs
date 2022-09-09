@@ -18,8 +18,22 @@ function Cart(props) {
         let authtoken = localStorage.getItem('authtoken');
         let UserDetail = localStorage.getItem('UserData');
 
+        let GuestUserDetail = localStorage.getItem('GuestUserData');
+
         if (authtoken === "" || authtoken === null || authtoken === undefined) {
-            setCartList(props.cartItems);
+
+            API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
+                setCartList(response?.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+
+            API.get(`/guest-cart-total/${GuestUserDetail}`).then((response) => {
+                setCartTotal(response?.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+
         } else {
             API.get(`/auth/cart/${UserDetail}`, {
                 headers: {
@@ -48,21 +62,44 @@ function Cart(props) {
         setShippingCost(value);
     }
 
-    function changeQty(value, index) {
-        setCartList(
-            cartList.map((item, ind) => {
-                if (ind == index)
-                    return {
-                        ...item,
-                        qty: value,
-                        // sum:
-                        //     (item.sale_price
-                        //         ? item.sale_price
-                        //         : item.price) * value
-                    };
-                return item;
-            })
-        )
+    function changeQty(value, item) {
+
+        let authtoken = localStorage.getItem('authtoken');
+
+        let data = {
+            'cart_id': item?.cart[0]?.id,
+            'qty': value
+        };
+
+        if (authtoken !== null) {
+
+            API.post(`/auth/cart-qty/`, data, {
+                headers: { 'Authorization': `Bearer ${authtoken}` }
+            }).then((response) => {
+                console.log("response :: ",response)
+                // setCartList(
+                //     cartList.map((item, ind) => {
+                //         if (ind == index)
+                //             return {
+                //                 ...item,
+                //                 qty: value,
+                //             };
+                //         return item;
+                //     })
+                // )
+
+            }).catch((err) => {
+                console.log(err);
+            });
+        } else {
+            API.post(`/guest-cart-qty/`, data).then((response) => {
+                console.log("response :: ",response)
+
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
     }
 
     function updateCart(e) {
@@ -78,18 +115,32 @@ function Cart(props) {
     function deleteFromCart(product) {
         let authtoken = localStorage.getItem('authtoken');
 
-        API.delete(`/auth/remove-cart/${product?.cart[0]?.id}`, {
-            headers: { 'Authorization': `Bearer ${authtoken}` }
-        }).then((response) => {
-            let data = {
-                'product_id': product?.productData[0]?.id,
-                'product_variation_id': product?.variation[0].product_variation_name[0]?.product_variation_id
-            };
-            props.removeFromCart(data);
+        if (authtoken !== null) {
 
-        }).catch((err) => {
-            console.log(err);
-        });
+            API.delete(`/auth/remove-cart/${product?.cart[0]?.id}`, {
+                headers: { 'Authorization': `Bearer ${authtoken}` }
+            }).then((response) => {
+                let data = {
+                    'product_id': product?.productData[0]?.id,
+                    'product_variation_id': product?.variation[0].product_variation_name[0]?.product_variation_id
+                };
+                props.removeFromCart(data);
+
+            }).catch((err) => {
+                console.log(err);
+            });
+        } else {
+            API.delete(`/guest-remove-cart/${product?.cart[0]?.id}`).then((response) => {
+                let data = {
+                    'product_id': product?.productData[0]?.id,
+                    'product_variation_id': product?.variation[0].product_variation_name[0]?.product_variation_id
+                };
+                props.removeFromCart(data);
+
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
     }
 
     return (
@@ -162,7 +213,7 @@ function Cart(props) {
                                                             <td className="quantity-col">
                                                                 <Qty
                                                                     value={item?.qty}
-                                                                    changeQty={current => changeQty(current, index)}
+                                                                    changeQty={current => changeQty(current, item)}
                                                                     adClass="cart-product-quantity"
                                                                 ></Qty>
                                                             </td>

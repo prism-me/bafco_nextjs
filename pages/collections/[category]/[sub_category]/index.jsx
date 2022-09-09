@@ -110,8 +110,10 @@ function ShopGrid() {
             .classList.remove('sidebar-filter-active');
     }
 
-    function onAttrClick(e, attr, value) {
-        setBrandValue(value);
+    function onAttrClick(e) {
+        let newlist = [...brandValue];
+        newlist.push(e.target.value);
+        setBrandValue(newlist);
         // handelSelectFilter();
     }
 
@@ -127,9 +129,6 @@ function ShopGrid() {
             "max": priceRange.max,
             "route": currentPageRoute
         };
-
-        console.log("handelSelectFilter :: ", formdata);
-        return
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
             setProducts(response?.data?.products)
@@ -281,11 +280,6 @@ function ShopGrid() {
                                     <div className={toggle ? 'sidebar-filter-wrapper' : ''}>
                                         <div className="widget widget-clean">
                                             <label>Filters:</label>
-                                            {/* <ALink
-                                                href={{
-                                                    pathname: router.pathname,
-                                                    query: { type: query.type }
-                                                }} className="sidebar-filter-clear" scroll={false}>Clean All</ALink> */}
                                             <button
                                                 onClick={handelSelectFilter}
                                                 className="pr-2 sidebar-filter-clear"
@@ -296,7 +290,13 @@ function ShopGrid() {
                                         <SlideToggle collapsed={false}>
                                             {({ onToggle, setCollapsibleElement, toggleState }) => (
                                                 <div className="widget widget-collapsible">
-                                                    <h3 className="widget-title mb-2"><a href="#brand" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Brand</a></h3>
+                                                    <h3 className="widget-title mb-2">
+                                                        <a
+                                                            href="#brand"
+                                                            className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`}
+                                                            onClick={(e) => { onToggle(e); e.preventDefault() }}
+                                                        >Brand</a>
+                                                    </h3>
                                                     <div ref={setCollapsibleElement}>
                                                         <div className="widget-body pt-0">
                                                             <div className="filter-items">
@@ -306,7 +306,8 @@ function ShopGrid() {
                                                                             <input type="checkbox"
                                                                                 className="custom-control-input"
                                                                                 id={`brand-${index + 1}`}
-                                                                                onChange={e => onAttrClick(e, 'brand', item.brand)}
+                                                                                value={item.brand}
+                                                                                onChange={e => onAttrClick(e)}
                                                                             // checked={containsAttrInUrl('brand', item.brand) ? true : false}
                                                                             />
                                                                             <label className="custom-control-label" htmlFor={`brand-${index + 1}`}>{item.brand}</label>
