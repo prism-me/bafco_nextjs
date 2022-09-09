@@ -66,6 +66,18 @@ function Resources(props) {
     props?.showVideo();
   }
 
+  const fabricList = [
+    {
+      img: "images/resources/Fabric-and-Finishes01.png",
+    },
+    {
+      img: "images/resources/Fabric-and-Finishes02.png",
+    },
+    {
+      img: "images/resources/Fabric-and-Finishes03.png",
+    },
+  ];
+
   return (
     <div className="main resources-page">
       <PageHeader
@@ -332,13 +344,11 @@ function Resources(props) {
                   adClass="owl-simple owl-light owl-nav-inside mb-3 fabric_finished"
                   options={fabricFinishedSlider}
                 >
-                  {resourcesdata?.fabricFinished?.fabricFinished_images?.map(
-                    (item, index) => (
-                      <div key={index}>
-                        <img src={item.avatar} style={{ height: "325px" }} />
-                      </div>
-                    )
-                  )}
+                  {fabricList?.map((item, index) => (
+                    <div key={index}>
+                      <img src={item.img} style={{ height: "325px" }} />
+                    </div>
+                  ))}
                 </OwlCarousel>
               </div>
             </div>
