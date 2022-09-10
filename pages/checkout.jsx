@@ -221,7 +221,7 @@ function Checkout(props) {
     const handlePlaceOrderSubmit = () => {
 
         let xauthtoken = localStorage.getItem('authtoken');
-        let UserId = localStorage.getItem('UserData');
+        let UserId = xauthtoken === null ? localStorage.getItem('GuestUserData') : localStorage.getItem('UserData');
 
         if (billing_address?.name === '') {
             alert('Please enter a name before submitting.');
@@ -340,8 +340,7 @@ function Checkout(props) {
                 ]
             }
 
-            API.post(`/authCheckout`, formdata, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
-                console.log(response);
+            API.post(`/authCheckout`, formdata).then((response) => {
                 if (response?.data?.error) {
                     setError(response?.data?.error?.detail);
                     toast.error("Please fill in the required fields.");

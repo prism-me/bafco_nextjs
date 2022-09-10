@@ -1,189 +1,132 @@
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
-import SlideToggle from 'react-slide-toggle';
-
+// import SlideToggle from 'react-slide-toggle';
 import ALink from '~/components/features/alink';
 import Qty from '~/components/features/qty';
-
+import { actions as globalAction } from '~/store/global';
 import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
-
 import { canAddToCart, isInWishlist } from '~/utils';
 
 function DetailOne(props) {
     const router = useRouter();
     const ref = useRef(null);
-    const { product } = props;
+    const { product, subCategory } = props;
     const [qty, setQty] = useState(1);
     const [qty2, setQty2] = useState(1);
-    const [colorArray, setColorArray] = useState([]);
-    const [sizeArray, setSizeArray] = useState([]);
     const [variationGroup, setVariationGroup] = useState([]);
-    const [selectedVariant, setSelectedVariant] = useState({ color: null, colorName: null, price: null, size: "" });
-    const [showClear, setShowClear] = useState(false);
-    const [showVariationPrice, setShowVariationPrice] = useState(false);
-    const [maxPrice, setMaxPrice] = useState(product?.product_single_variation?.product_variation_details?.upper_price);
-    const [minPrice, setMinPrice] = useState(product?.product_single_variation?.product_variation_details?.lower_price);
+    const [variationTypeGroup, setVariationTypeGroup] = useState([]);
+    // const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
+    const [authtoken, setAuthtoken] = useState('');
+    const [selectedVariant, setSelectedVariant] = useState();
+    const [variantCombGroup, setvariantCombGroup] = useState();
 
     useEffect(() => {
-        window.addEventListener('scroll', scrollHandler, { passive: true });
 
-        return () => { window.removeEventListener('scroll', scrollHandler); }
-        
-    }, [])
+        console.log("dropDown :: ", product?.dropDown)
 
-    useEffect(() => {
-        let min = 99999;
-        let max = 0;
+        setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
+            acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
+            [])
+        );
 
-        setVariationGroup(product.variations.reduce((acc, cur) => {
-            cur.variationItems.map(item => {
-                acc.push({
-                    color: cur.color,
-                    colorName: cur.color_name,
-                    size: item.name,
-                    price: cur.price
+        console.log("setVariationTypeGroup :: ", product?.dropDown?.reduce((acc, curr) =>
+        acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
+        []))
+
+        setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
+            acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
+            [])
+        );
+
+        console.log("setVariationGroup :: ", product?.dropDown?.reduce((acc, curr) =>
+        acc.find((v) => v?.name === curr?.name) ? acc : [...acc, curr],
+        []))
+
+        let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
+            let productVariation = {
+                "name": item.variation_values.name,
+                "variation_value_id": item.variation_values.id,
+                "type": item.variation_values.variant.name,
+                "product_variation_id": item.product_variation_id
+            }
+            return productVariation;
+        });
+
+        setSelectedVariant(currentProductVariation);
+
+        let comb = [];
+
+        product?.dropDown.reduce((acc, item) => {
+            let ifExist = comb.find((f) => f.variation_id === item.product_variation_id);
+            if (ifExist) {
+                ifExist[item.variant.name] = item.name;
+            } else {
+                comb.push({
+                    [item.variant.name]: item.name,
+                    variation_id: item.product_variation_id,
                 });
-            });
-            if (min > cur.price) min = cur.lower_price;
-            if (max < cur.price) max = cur.upper_price;
-            return acc;
-        }, []));
+            }
+            return item.product_variation_id;
+        }, 0);
 
-        setMinPrice(min);
-        setMaxPrice(max);
+        setvariantCombGroup(comb)
+
     }, [product])
 
-    useEffect(() => {
-        setSelectedVariant({ color: null, colorName: null, price: null, size: "" });
-        setQty(1);
-        setQty2(1);
-    }, [router.query.slug])
+    // useEffect(() => {
+
+    //     setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
+
+    //     setQty(1);
+
+    //     setQty2(1);
+
+    // }, [router.query.slug])
 
     useEffect(() => {
-        refreshSelectableGroup();
-    }, [variationGroup, selectedVariant])
 
-    useEffect(() => {
-        scrollHandler();
-    }, [router.pathname])
+        setAuthtoken(localStorage.getItem('authtoken'));
 
-    useEffect(() => {
-        setShowClear((selectedVariant.color || selectedVariant.size != "") ? true : false);
-        setShowVariationPrice((selectedVariant.color && selectedVariant.size != "") ? true : false);
-        let toggle = ref.current.querySelector('.variation-toggle');
+        // window.addEventListener('scroll', scrollHandler, { passive: true });
 
-        if (toggle) {
-            if ((selectedVariant.color && selectedVariant.size != "") && toggle.classList.contains('collapsed')) {
-                toggle.click();
-            }
+        // return () => { window.removeEventListener('scroll', scrollHandler); }
 
-            if ((!(selectedVariant.color && selectedVariant.size != "")) && !toggle.classList.contains('collapsed')) {
-                toggle.click();
-            }
-        }
-    }, [selectedVariant])
+    }, [])
 
-    function scrollHandler() {
-        if (router.pathname.includes('/product/default')) {
-            let stickyBar = ref.current.querySelector('.sticky-bar');
-            if (stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom < 0) {
-                stickyBar.classList.remove('d-none');
-                return;
-            }
-            if (!stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom > 0) {
-                stickyBar.classList.add('d-none');
-            }
-        }
-    }
+    // useEffect(() => {
+    //     scrollHandler();
+    // }, [router.pathname])
+
+    // function scrollHandler() {
+    //     if (router.pathname.includes('/collections/')) {
+    //         let stickyBar = ref.current.querySelector('.sticky-bar');
+    //         if (stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom < 0) {
+    //             stickyBar.classList.remove('d-none');
+    //             return;
+    //         }
+    //         if (!stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom > 0) {
+    //             stickyBar.classList.add('d-none');
+    //         }
+    //     }
+    // }
+
 
     function onWishlistClick(e) {
         e.preventDefault();
         if (!isInWishlist(props.wishlist, product)) {
-            props.addToWishlist(product);
-        } else {
-            router.push('/pages/wishlist');
-        }
-    }
-
-    function refreshSelectableGroup() {
-        let tempArray = [...variationGroup];
-        if (selectedVariant.color) {
-            tempArray = variationGroup.reduce((acc, cur) => {
-                if (selectedVariant.color !== cur.color) {
-                    return acc;
-                }
-                return [...acc, cur];
-            }, []);
-        }
-
-        setSizeArray(tempArray.reduce((acc, cur) => {
-            if (acc.findIndex(item => item.size == cur.size) !== -1)
-                return acc;
-            return [...acc, cur];
-        }, []));
-
-        tempArray = [...variationGroup];
-        if (selectedVariant.size) {
-            tempArray = variationGroup.reduce((acc, cur) => {
-                if (selectedVariant.size !== cur.size) {
-                    return acc;
-                }
-                return [...acc, cur];
-            }, []);
-        }
-
-        setColorArray(product?.variations?.reduce((acc, cur) => {
-            if (
-                tempArray.findIndex(item => item.color == cur.color) == -1
-            ) {
-                return [
-                    ...acc,
-                    {
-                        color: cur.color,
-                        colorName: cur.color_name,
-                        price: cur.price,
-                        disabled: true
-                    }
-                ];
+            if (authtoken === "" || authtoken === null || authtoken === undefined) {
+                props.showPopup(true);
+            } else {
+                let data = {
+                    'product_id': product?.single_product_details?.product?.id,
+                    'product_variation_id': product?.product_single_variation?.variation_value_details[0]?.product_variation_id,
+                };
+                props.addToWishlist(data);
             }
-            return [
-                ...acc,
-                {
-                    color: cur.color,
-                    colorName: cur.color_name,
-                    price: cur.price,
-                    disabled: false
-                }
-            ];
-        }, []));
-    }
-
-    function selectColor(e, item) {
-        e.preventDefault()
-        if (item.color == selectedVariant.color) {
-            setSelectedVariant({
-                ...selectedVariant,
-                color: null,
-                colorName: null,
-                price: item.price
-            });
         } else {
-            setSelectedVariant({
-                ...selectedVariant,
-                color: item.color,
-                colorName: item.colorName,
-                price: item.price
-            });
-        }
-    }
-
-    function selectSize(e) {
-        if (e.target.value == "") {
-            setSelectedVariant({ ...selectedVariant, size: "" });
-        } else {
-            setSelectedVariant({ ...selectedVariant, size: e.target.value });
+            router.push('/wishlist');
         }
     }
 
@@ -191,20 +134,9 @@ function DetailOne(props) {
         setQty(current);
     }
 
-    function onChangeQty2(current) {
-        setQty2(current);
-    }
-
-    function clearSelection(e) {
-        e.preventDefault();
-        setSelectedVariant(({
-            ...selectedVariant,
-            color: null,
-            colorName: null,
-            size: ""
-        }));
-        refreshSelectableGroup();
-    }
+    // function onChangeQty2(current) {
+    //     setQty2(current);
+    // }
 
     function onCartClick(e, index = 0) {
         e.preventDefault();
@@ -214,19 +146,103 @@ function DetailOne(props) {
         if (product?.variations?.length > 0) {
             newProduct = {
                 ...product,
-                name:
-                    product.name +
-                    ' - ' +
-                    selectedVariant.colorName +
-                    ', ' +
-                    selectedVariant.size,
-                price: selectedVariant.price
+                name: product.name + ' - ' + selectedColorVariant.colorName + ', ' + selectedColorVariant.size,
+                price: selectedColorVariant.price
             };
         }
         props.addToCart(
             newProduct,
             index == 0 ? qty : qty2
         );
+    }
+
+    function handelSelectVariantChange(e, item) {
+
+        e.preventDefault();
+
+        if (!e.target.value) {
+            const newState = selectedVariant.map(obj => {
+
+                if (obj.type === item.variant.name) {
+                    return {
+                        name: item.name,
+                        type: item.variant.name,
+                        variation_value_id: item.id,
+                        product_variation_id: item.product_variation_id
+                    };
+                }
+                return obj;
+
+            });
+
+            setSelectedVariant(newState);
+
+            let comb = [];
+
+            newState.map((acc) => {
+                comb.push({ [acc.type]: acc.name });
+                return acc;
+            });
+
+            let resultNewComb = comb.reduce(function (result, item) {
+                var key = Object.keys(item)[0];
+                result[key] = item[key];
+                return result;
+
+            }, {});
+
+            let getVariationId = variantCombGroup.filter(function (entry) {
+                return Object.keys(resultNewComb).every(function (key) {
+                    return entry[key] === resultNewComb[key];
+                });
+            });
+
+            props.handelselectedVariation(getVariationId[0].variation_id);
+
+        } else {
+            const newState = selectedVariant.map(obj => {
+                if (obj.variation_value_id === e.target.value) {
+                    return {
+                        name: item.name,
+                        type: item.variant.name,
+                        variation_value_id: item.id,
+                        product_variation_id: item.product_variation_id
+                    };
+                }
+                return obj;
+
+            });
+
+            let currentVariation = newState.map((item) => {
+                let VariationID = [];
+                VariationID = item.variation_value_id
+                return VariationID;
+            });
+
+            setSelectedVariant(newState);
+
+            let comb = [];
+
+            newState.map((acc) => {
+                comb.push({ [acc.type]: acc.name });
+                return acc;
+            });
+
+            let resultNewComb = comb.reduce(function (result, item) {
+                var key = Object.keys(item)[0];
+                result[key] = item[key];
+                return result;
+
+            }, {});
+
+            let getVariationId = variantCombGroup.find(element => {
+                console.log("element :: ", element)
+                return element === resultNewComb;
+            });
+
+
+        }
+
     }
 
     if (!product) {
@@ -237,143 +253,100 @@ function DetailOne(props) {
         <div className="product-details" ref={ref}>
             <h1 className="product-title">{product?.single_product_details?.product?.name}</h1>
 
-            {/* <div className="ratings-container">
+            <div className="ratings-container">
                 <div className="ratings">
-                    <div className="ratings-val" style={{ width: product.ratings * 20 + '%' }}></div>
-                    <span className="tooltip-text">{product.ratings}</span>
+                    <div className="ratings-val" style={{ width: 3.4 * 20 + '%' }}></div>
+                    <span className="tooltip-text">{3.4}</span>
                 </div>
-                <span className="ratings-text">( {product.review} Reviews )</span>
-            </div> */}
-
-            {
-                product?.single_product_details?.product?.stock == 0 ?
-                    <div className="product-price">
-                        <span className="out-price">
-                            {
-                                minPrice == maxPrice ?
-                                    <span>AED {product.price}</span>
-                                    :
-                                    <span>AED {minPrice}&ndash;AED {maxPrice}</span>
-                            }
-                        </span>
-                    </div>
-                    :
-                    minPrice == maxPrice ?
-                        <div className="product-price">AED {minPrice}</div>
-                        :
-                        product?.variations?.length == 0 ?
-                            <div className="product-price">
-                                <span className="new-price">AED {minPrice}</span>
-                                <span className="old-price">AED {maxPrice}</span>
-                            </div>
-                            :
-                            <div className="product-price">AED {minPrice}&ndash;AED {maxPrice}</div>
-            }
-
-            <div className="product-content">
-                <p>{product.short_desc}</p>
+                <span className="ratings-text">( {3.4} Reviews )</span>
             </div>
 
-            {
-                product?.variations?.length > 0 ?
-                    <>
-                        <div className="details-filter-row details-row-size">
-                            <label htmlFor="size">Upholstery:</label>
-                            <div className="select-custom">
-                                <select
-                                    name="size"
-                                    className="form-control"
-                                    value={selectedVariant.size}
-                                    onChange={selectSize}
-                                >
-                                    <option value="">Select a Upholstery</option>
-                                    {
-                                        sizeArray.map((item, index) => (
-                                            <option
-                                                value={item.size}
-                                                key={index}
-                                            >{item.size}</option>
-                                        ))
-                                    }
-                                </select>
-                            </div>
-
-                            {
-                                showClear ?
-                                    <a href="#" onClick={clearSelection}>clear</a>
-                                    : ""
-                            }
-                        </div >
-                        <div className="details-filter-row details-row-size">
-                            <label htmlFor="size">Frame:</label>
-                            <div className="select-custom">
-                                <select
-                                    name="size"
-                                    className="form-control"
-                                    value={selectedVariant.size}
-                                    onChange={selectSize}
-                                >
-                                    <option value="">Select a Frame</option>
-                                    {
-                                        sizeArray.map((item, index) => (
-                                            <option
-                                                value={item.size}
-                                                key={index}
-                                            >{item.size}</option>
-                                        ))
-                                    }
-                                </select>
-                            </div>
-
-                            {
-                                showClear ?
-                                    <a href="#" onClick={clearSelection}>clear</a>
-                                    : ""
-                            }
-                        </div >
-                        <SlideToggle collapsed={true}>
-                            {({ onToggle, setCollapsibleElement, toggleState }) => (
-                                <div>
-                                    <button className={`d-none variation-toggle ${toggleState.toLowerCase()}`} onClick={onToggle}></button>
-                                    <div ref={setCollapsibleElement} style={{ overflow: 'hidden' }}>
-                                        <div className="product-price">
-                                            AED {selectedVariant.price ? selectedVariant.price : 0}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </SlideToggle>
-                        <div className="details-filter-row details-row-size">
-                            <label>Color:</label>
-
-                            <div className="product-nav product-nav-dots">
-                                {
-                                    colorArray.map((item, index) => (
-                                        <a
-                                            href="#"
-                                            className={`${(item.color == selectedVariant.color ? 'active ' : '') + (item.disabled ? 'disabled' : '')}`}
-                                            style={{ backgroundColor: item.color }}
-                                            key={index}
-                                            onClick={e => selectColor(e, item)}
-                                        ></a>
-                                    ))
-                                }
-                            </div>
-                        </div>
-
-                    </>
-                    : ""
+            {product?.product_single_variation?.product_variation_details?.in_stock === 0 ?
+                <div className="product-price">
+                    <span className="out-price">
+                        {product?.product_single_variation?.product_variation_details?.limit >= qty ?
+                            <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
+                            :
+                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
+                        }
+                    </span>
+                </div>
+                :
+                product?.product_single_variation?.product_variation_details?.limit >= qty ?
+                    <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.upper_price}</div>
+                    :
+                    <div className="product-price">AED {product?.product_single_variation?.product_variation_details?.lower_price}</div>
             }
 
-            <div className="details-filter-row details-row-size">
-                <label htmlFor="qty">Quantity:</label>
-                <Qty changeQty={onChangeQty} max={product.stock} value={qty}></Qty>
-            </div >
+            <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
+
+            <div className="row">
+                {variationTypeGroup !== null &&
+                    variationTypeGroup?.map((item, index) => (
+                        <div className="col-md-6" key={index}>
+                            <div className="details-filter-row details-row-size">
+                                <label htmlFor={`${item?.variant?.name}`}>{item?.variant?.name}: </label>
+                                {item?.type === "1" ?
+                                    <div className="select-custom">
+                                        <select
+                                            name={`${item?.variant?.name}`}
+                                            className="form-control"
+                                            value={selectedVariant[index]?.variation_value_id}
+                                            onChange={(e) => handelSelectVariantChange(e, item)}
+                                        >
+                                            <option value="">Select a {item?.variant?.name}</option>
+                                            {variationGroup &&
+                                                variationGroup.map((item2, index2) => (
+                                                    item?.variant?.name === item2?.variant?.name &&
+                                                    <option value={item2?.id} key={index2}>{item2?.type_value}</option>
+                                                ))
+                                            }
+                                        </select>
+                                    </div> :
+                                    <div className="product-nav product-nav-dots">
+                                        {variationGroup &&
+                                            variationGroup.map((item2, index2) => (
+                                                item?.variant?.name === item2?.variant?.name &&
+                                                <span
+                                                    className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                    style={{ backgroundImage: `url(${item2?.type_value})` }}
+                                                    key={index2}
+                                                    onClick={(e) => handelSelectVariantChange(e, item2)}
+                                                >
+                                                </span>
+                                            ))
+                                        }
+                                    </div>
+                                }
+                            </div >
+                        </div>
+                    ))
+                }
+            </div>
+
+            {/* <div className="product product-7 text-center w-100">
+                <figure className="product-media">
+                    <span className="product-label label-out">Out of Stock</span>
+                </figure>
+            </div> */}
+
+            {product?.product_single_variation?.product_variation_details?.in_stock !== 0 ?
+
+                <div className="details-filter-row details-row-size">
+                    <label htmlFor="qty">Quantity: </label>
+                    <Qty changeQty={onChangeQty} max={100} value={qty}></Qty>
+                    {/* <Qty changeQty={onChangeQty} max={product?.product_single_variation?.product_variation_details?.in_stock} value={qty}></Qty> */}
+                </div >
+                :
+                <div className="details-filter-row details-row-size">
+                    <span className="product-label-out">Out of Stock</span>
+                </div >
+            }
 
             <div className="product-details-action">
                 <a
                     href="#"
-                    className={`btn-product btn-cart ${(!canAddToCart(props.cartlist, product, qty) || (product?.variations?.length > 0 && !showVariationPrice)) ? 'btn-disabled' : ''}`}
+                    className={`btn-product btn-cart ${product?.product_single_variation?.product_variation_details?.in_stock !== 1 ? 'btn-disabled' : ''}`}
                     onClick={e => onCartClick(e, 0)}
                 >
                     <span>add to cart</span>
@@ -390,58 +363,35 @@ function DetailOne(props) {
             </div >
 
             <div className="product-details-footer">
-                {/* <div className="product-cat text-truncate">
-                    <span>Brand:</span>
-                    {
-                        product.brands.map((brand, index) => (
-                            <span key={index}>
-                                {brand.name}
-                                {index < product.brands.length - 1 ? ',' : ''}
-                            </span>
-                        ))
-                    }
-                </div > */}
+                <div className="product-cat text-truncate">
+                    <span>Brand:</span><span>{product?.single_product_details?.product?.brand}</span>
+                </div >
 
                 <div className="product-cat text-truncate">
-                    <span>Type of Seating: </span><span>Office Chairs</span>
+                    <span>Type of Seating: </span><span style={{ textTransform: 'capitalize' }}>{subCategory}</span>
                 </div>
-                {/* <div className="product-cat w-100 text-truncate">
-                    <span>Category:</span>
-                    {
-                        product.category.map((cat, index) => (
-                            <span key={index}>
-                                <ALink
-                                    href={{ pathname: `/collections/${cat.slug}`, query: { category: cat.slug } }}
-                                >{cat.name}</ALink>
-                                {index < product.category.length - 1 ? ',' : ''}
-                            </span>
-                        ))
-                    }
-                </div > */}
 
                 <div className="social-icons social-icons-sm">
                     <span className="social-label">Share:</span>
-                    <ALink href="#" className="social-icon" title="Instagram">
-                        <i className="icon-instagram"></i>
-                    </ALink>
-                    <ALink href="#" className="social-icon" title="Facebook">
-                        <i className="icon-facebook-f"></i>
-                    </ALink>
-                    <ALink href="#" className="social-icon" title="linkedin">
-                        <i className="icon-linkedin"></i>
-                    </ALink>
-
-                    <ALink href="#" className="social-icon" title="Twitter">
-                        <i className="icon-twitter"></i>
-                    </ALink>
+                    <ALink href="https://www.instagram.com/bafco/" className="social-icon" rel="noopener noreferrer" title="Instagram" target="_blank"><i className="icon-instagram"></i></ALink>
+                    <ALink href="https://www.facebook.com/bafcointeriors" className="social-icon" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
+                    <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
+                    <ALink href="https://twitter.com/Bafco" className="social-icon" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
+                    <ALink href="https://www.pinterest.com/bafcointeriors/" className="social-icon" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>
                 </div>
             </div >
             <div className="product-details-adv">
                 <ul>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY.png" /></li>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY1.png" /></li>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY2.png" /></li>
-                    <li><img src="images/icons/unsplash_xJkTCbtuqAY3.png" /></li>
+                    {product?.single_product_details?.product?.promotional_images.map((item, index) => (
+                        <li key={index}>
+                            <img src={item.avatar} />
+                        </li>
+                    ))}
+                    {product?.product_single_variation?.product_variation_details?.lead_img &&
+                        <li>
+                            <img src={product?.product_single_variation?.product_variation_details?.lead_img} />
+                        </li>
+                    }
                 </ul>
             </div>
             <div className="sticky-bar d-none">
@@ -449,23 +399,21 @@ function DetailOne(props) {
                     <div className="row">
                         <div className="col-6">
                             <figure className="product-media">
-                                <ALink href={`/product/default/${product.slug}`}>
+                                <ALink href={`/product/default/${product?.single_product_details?.product?.route}`}>
                                     <img
-                                        src={""} alt="product"
-                                        // width={product.sm_pictures[0].width}
-                                        // height={product.sm_pictures[0].height}
+                                        src={product?.product_single_variation?.product_variation_details?.images[0]?.avatar} alt="product"
                                     />
                                 </ALink>
                             </figure>
                             <h3 className="product-title">
-                                <ALink href={`/product/default/${product.slug}`}>{product.name}</ALink>
+                                <ALink href={`/product/default/${product?.single_product_details?.product?.route}`}>{product?.single_product_details?.product?.name}</ALink>
                             </h3>
                         </div>
-                        <div className="col-6 justify-content-end">
+                        {/* <div className="col-6 justify-content-end">
                             {
-                                (selectedVariant.color && selectedVariant.size != "") ?
+                                (selectedColorVariant.color && selectedColorVariant.size != "") ?
                                     <div className="product-price">
-                                        ${selectedVariant.price ? selectedVariant.price : 0}
+                                        ${selectedColorVariant.price ? selectedColorVariant.price : 0}
                                     </div>
                                     :
                                     product.stock == 0 ?
@@ -473,16 +421,16 @@ function DetailOne(props) {
                                             <span className="out-price">AED {product.price}</span>
                                         </div>
                                         :
-                                        minPrice == maxPrice ?
-                                            <div className="product-price">AED {minPrice}</div>
+                                        product?.product_single_variation?.product_variation_details.lower_price == product?.product_single_variation?.product_variation_details.upper_price ?
+                                            <div className="product-price">AED {product?.product_single_variation?.product_variation_details.lower_price}</div>
                                             :
                                             product?.variations?.length == 0 ?
                                                 <div className="product-price">
-                                                    <span className="new-price">AED {minPrice}</span>
-                                                    <span className="old-price">AED {maxPrice}</span>
+                                                    <span className="new-price">AED {product?.product_single_variation?.product_variation_details.lower_price}</span>
+                                                    <span className="old-price">AED {product?.product_single_variation?.product_variation_details.upper_price}</span>
                                                 </div>
                                                 :
-                                                <div className="product-price">AED {minPrice} &ndash; AED {maxPrice}</div>
+                                                <div className="product-price">AED {product?.product_single_variation?.product_variation_details.lower_price} &ndash; AED {product?.product_single_variation?.product_variation_details.upper_price}</div>
                             }
                             <Qty changeQty={onChangeQty2} max={product.stock} value={qty2}></Qty>
                             <div className="product-details-action">
@@ -501,7 +449,7 @@ function DetailOne(props) {
 
                                 }
                             </div >
-                        </div >
+                        </div > */}
                     </div >
                 </div >
             </div >
@@ -516,4 +464,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { ...wishlistAction, ...cartAction })(DetailOne);
+export default connect(mapStateToProps, { ...wishlistAction, ...cartAction, ...globalAction })(DetailOne);

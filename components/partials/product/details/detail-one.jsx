@@ -24,25 +24,15 @@ function DetailOne(props) {
 
     useEffect(() => {
 
-        console.log("dropDown :: ", product?.dropDown)
-
         setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
             [])
         );
 
-        console.log("setVariationTypeGroup :: ", product?.dropDown?.reduce((acc, curr) =>
-        acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
-        []))
-
         setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
             [])
         );
-
-        console.log("setVariationGroup :: ", product?.dropDown?.reduce((acc, curr) =>
-        acc.find((v) => v?.name === curr?.name) ? acc : [...acc, curr],
-        []))
 
         let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
             let productVariation = {
@@ -70,8 +60,10 @@ function DetailOne(props) {
             }
             return item.product_variation_id;
         }, 0);
-
         setvariantCombGroup(comb)
+
+        // setVariationBoxGroup()
+
 
     }, [product])
 
@@ -160,6 +152,8 @@ function DetailOne(props) {
 
         e.preventDefault();
 
+        const currentTargetId = `${e.target.value}`;
+
         if (!e.target.value) {
             const newState = selectedVariant.map(obj => {
 
@@ -200,50 +194,69 @@ function DetailOne(props) {
             props.handelselectedVariation(getVariationId[0].variation_id);
 
         } else {
-            const newState = selectedVariant.map(obj => {
-                if (obj.variation_value_id === e.target.value) {
-                    return {
-                        name: item.name,
-                        type: item.variant.name,
-                        variation_value_id: item.id,
-                        product_variation_id: item.product_variation_id
-                    };
-                }
-                return obj;
 
-            });
+            let found = variationGroup.find((v) => v?.id === currentTargetId);
 
-            let currentVariation = newState.map((item) => {
-                let VariationID = [];
-                VariationID = item.variation_value_id
-                return VariationID;
-            });
+            console.log("item :: ", item)
 
-            setSelectedVariant(newState);
+            console.log("found :: ", found)
 
-            let comb = [];
+            // props.handelselectedVariation(found?.product_variation_id);
 
-            newState.map((acc) => {
-                comb.push({ [acc.type]: acc.name });
-                return acc;
-            });
 
-            let resultNewComb = comb.reduce(function (result, item) {
-                var key = Object.keys(item)[0];
-                result[key] = item[key];
-                return result;
+            // const newState = selectedVariant.map(obj => {
 
-            }, {});
+            //     if (obj.type === item.variant.name) {
+            //         return {
+            //             name: item.name,
+            //             type: item.variant.name,
+            //             variation_value_id: item.id,
+            //             product_variation_id: item.product_variation_id
+            //         };
+            //     }
+            //     return obj;
 
-            let getVariationId = variantCombGroup.find(element => {
-                console.log("element :: ", element)
-                return element === resultNewComb;
-            });
+            // });
+
+            // console.log(" setSelectedVariant :: ", newState);
+            // return
+
+            // setSelectedVariant(newState);
+
+            // let comb = [];
+
+            // newState.map((acc) => {
+            //     comb.push({ [acc.type]: acc.name });
+            //     return acc;
+            // });
+
+            // let resultNewComb = comb.reduce(function (result, item) {
+            //     var key = Object.keys(item)[0];
+            //     result[key] = item[key];
+            //     return result;
+
+            // }, {});
+
+            // let getVariationId = variantCombGroup.filter(function (entry) {
+            //     return Object.keys(resultNewComb).every(function (key) {
+            //         return entry[key] === resultNewComb[key];
+            //     });
+            // });
 
 
         }
 
     }
+
+    // function handelSelectVariantDropdownChange(e, item) {
+    //     console.log("handelSelectVariantDropdownChange :: ", e.target.value)
+    //     console.log("handelSelectVariantDropdownChange item :: ", item)
+    //     console.log("handelSelectVariantDrop down :: ", variantCombGroup.filter(function (entry) {
+    //         return Object.keys(resultNewComb).every(function (key) {
+    //             return entry[key] === resultNewComb[key];
+    //         });
+    //     }))
+    // }
 
     if (!product) {
         return <div></div>;
@@ -293,6 +306,7 @@ function DetailOne(props) {
                                             className="form-control"
                                             value={selectedVariant[index]?.variation_value_id}
                                             onChange={(e) => handelSelectVariantChange(e, item)}
+                                        // onChange={(e) => handelSelectVariantDropdownChange(e, item)}
                                         >
                                             <option value="">Select a {item?.variant?.name}</option>
                                             {variationGroup &&
@@ -305,15 +319,19 @@ function DetailOne(props) {
                                     </div> :
                                     <div className="product-nav product-nav-dots">
                                         {variationGroup &&
-                                            variationGroup.map((item2, index2) => (
-                                                item?.variant?.name === item2?.variant?.name &&
-                                                <span
-                                                    className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                                                    style={{ backgroundImage: `url(${item2?.type_value})` }}
-                                                    key={index2}
-                                                    onClick={(e) => handelSelectVariantChange(e, item2)}
-                                                >
-                                                </span>
+                                            variantCombGroup.map((variantcom) => (
+                                                variantcom.Material === selectedVariant[index - 1]?.name &&
+                                                variationGroup.map((item2, index2) => (
+                                                    variantcom?.Color === item2.name &&
+                                                    item?.variant?.name === item2?.variant?.name &&
+                                                    <span
+                                                        className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                        style={{ backgroundImage: `url(${item2?.type_value})` }}
+                                                        key={index2}
+                                                        onClick={(e) => handelSelectVariantChange(e, item2)}
+                                                    >
+                                                    </span>
+                                                ))
                                             ))
                                         }
                                     </div>
