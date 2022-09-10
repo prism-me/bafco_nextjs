@@ -870,7 +870,7 @@ export const projectReferenceInnerSlider = {
   nav: true,
   dots: true,
   margin: 20,
-  loop: true,
+  loop: false,
   responsive: {
     0: {
       items: 1,
@@ -888,7 +888,7 @@ export const projectReferenceInnerSlider = {
       items: 4,
     },
     1360: {
-      items: 4,
+      items: 5,
     },
   },
 };
@@ -915,7 +915,7 @@ export const projectRelatedProductsInnerSlider = {
       items: 4,
     },
     1360: {
-      items: 4,
+      items: 5,
     },
   },
 };

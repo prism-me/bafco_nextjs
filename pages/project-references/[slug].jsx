@@ -11,6 +11,7 @@ import {
 } from "~/utils/data";
 import { API } from "~/http/API";
 import RelatedProducts from "./related-products";
+import Lightbox from "react-image-lightbox";
 
 function ProjectReferencesInner(props) {
   const slug = useRouter().query.slug;
@@ -27,6 +28,9 @@ function ProjectReferencesInner(props) {
         console.log(err);
       });
   }, [slug]);
+
+  const initilindex = { index: 0 };
+  const [photoIndex, setPhotoIndex] = useState(initilindex);
 
   return (
     <div className="main prefrencesInner-page">
@@ -85,6 +89,7 @@ function ProjectReferencesInner(props) {
                         without
                         rel="noopener noreferrer"
                         target="_blank"
+                        // download
                       >
                         <button
                           className="btn btn-sm btn-minwidth btn-outline-primary-2"
@@ -95,27 +100,96 @@ function ProjectReferencesInner(props) {
                         </button>
                       </a>
                     ))}
-
-                  {/* <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Autocad 2D (47.92 KB)</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Autocad 3D (2.28 MB)</span>
-                  </button> */}
                 </div>
               </div>
             </div>
           </div>
-          <div className="top-management-application-slider mb-5">
+          <div className="top-management-application-slider isotopeSelector mb-5">
             <OwlCarousel
               adClass="owl-simple owl-light"
               options={projectReferenceInnerSlider}
             >
               {projectDetail?.additional_img?.map((x, i) => (
-                <div className="top-management-application" key={i}>
-                  <img src={x.avatar} />
+                // <div className="top-management-application" key={i}>
+                //   <img src={x.avatar} />
+                // </div>
+                <div className="overlay">
+                  <div className="border-portfolio">
+                    <div
+                      className="zoom_gallery"
+                      data-source={
+                        projectDetail?.additional_img[photoIndex.index]?.avatar
+                      }
+                      title=""
+                    >
+                      <div
+                        className="overlay-background"
+                        onClick={() =>
+                          setPhotoIndex({
+                            ...photoIndex,
+                            index: i,
+                            isOpen: true,
+                          })
+                        }
+                      >
+                        <i className="icon-plus iconStyle"></i>
+                      </div>
+                      <img
+                        alt=""
+                        className="img-fluid blur-up lazyload imgSliderStyle"
+                        src={x.avatar}
+                      />
+                      {photoIndex.isOpen && (
+                        <Lightbox
+                          mainSrc={
+                            projectDetail?.additional_img[photoIndex.index]
+                              ?.avatar
+                          }
+                          nextSrc={
+                            projectDetail?.additional_img[
+                              (photoIndex.index + 1) %
+                                projectDetail?.additional_img.length
+                            ]
+                          }
+                          prevSrc={
+                            projectDetail?.additional_img[
+                              (photoIndex.index +
+                                projectDetail?.additional_img.length -
+                                1) %
+                                projectDetail?.additional_img.length
+                            ]
+                          }
+                          imageTitle={
+                            photoIndex.index +
+                            1 +
+                            "/" +
+                            projectDetail?.additional_img.length
+                          }
+                          onCloseRequest={() =>
+                            setPhotoIndex({ ...photoIndex, isOpen: false })
+                          }
+                          onMovePrevRequest={() =>
+                            setPhotoIndex({
+                              ...photoIndex,
+                              index:
+                                (photoIndex.index +
+                                  projectDetail?.additional_img.length -
+                                  1) %
+                                projectDetail?.additional_img.length,
+                            })
+                          }
+                          onMoveNextRequest={() =>
+                            setPhotoIndex({
+                              ...photoIndex,
+                              index:
+                                (photoIndex.index + 1) %
+                                projectDetail?.additional_img.length,
+                            })
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
               ))}
             </OwlCarousel>
@@ -137,21 +211,6 @@ function ProjectReferencesInner(props) {
                   <RelatedProducts product={product} key={index} />
                 ))}
             </OwlCarousel>
-            {/* <OwlCarousel
-              adClass="owl-simple owl-light"
-              options={projectReferenceInnerSlider}
-            >
-              {relatedProduct &&
-                relatedProduct.length > 0 &&
-                relatedProduct.map((product, index) => (
-                  <ProductTwelve product={product} key={index} />
-                  // <div className="top-management-application" key={index}>
-                  //   <img src={product.featured_image} />
-                  //   <h3>{product.brand}</h3>
-                  //   <p>{product.name}</p>
-                  // </div>
-                ))}
-            </OwlCarousel> */}
           </div>
         </div>
       </div>
