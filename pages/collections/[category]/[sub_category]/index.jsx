@@ -110,11 +110,15 @@ function ShopGrid() {
             .classList.remove('sidebar-filter-active');
     }
 
-    function onAttrClick(e) {
-        let newlist = [...brandValue];
-        newlist.push(e.target.value);
-        setBrandValue(newlist);
-        // handelSelectFilter();
+    function onAttrClick(event, index) {
+
+        var updatedList = [...brandValue];
+        if (event.target.checked) {
+            updatedList = [...brandValue, event.target.value];
+        } else {
+            updatedList.splice(brandValue.indexOf(event.target.value), 1);
+        }
+        setBrandValue(updatedList);
     }
 
     function onChangePriceRange(value) {
@@ -307,7 +311,7 @@ function ShopGrid() {
                                                                                 className="custom-control-input"
                                                                                 id={`brand-${index + 1}`}
                                                                                 value={item.brand}
-                                                                                onChange={e => onAttrClick(e)}
+                                                                                onChange={e => onAttrClick(e, index)}
                                                                             // checked={containsAttrInUrl('brand', item.brand) ? true : false}
                                                                             />
                                                                             <label className="custom-control-label" htmlFor={`brand-${index + 1}`}>{item.brand}</label>
