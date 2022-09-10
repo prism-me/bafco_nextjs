@@ -111,7 +111,7 @@ function ProjectReferences() {
                           <ALink href={`/project-references/${x.id}`}>
                             <img
                               key={i}
-                              src={x.featured_img}
+                              src={x.thumbnail_img}
                               style={{
                                 width: "100%",
                                 // height: "250px",

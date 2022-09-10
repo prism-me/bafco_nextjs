@@ -14,11 +14,42 @@ import {
   PinterestShareButton,
   PinterestIcon,
 } from "react-share";
-
-const axios = require("axios");
+import { API } from "~/http/API";
 
 function PlaningIdeasInner(props) {
   const slug = useRouter().query.slug;
+  const [planDetail, setPlanDetail] = useState("");
+
+  useEffect(() => {
+    API.get(`/plan-detail/${slug}`)
+      .then((response) => {
+        setPlanDetail(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [slug]);
+
+  //featured image change on button click
+
+  let featImg = "";
+  if (planDetail.featured_img) {
+    featImg = planDetail.featured_img[0];
+  }
+
+  const [featuredImg, setFeaturedImg] = useState(featImg);
+
+  useEffect(() => {
+    setFeaturedImg(featImg);
+  }, [featImg]);
+
+  const changeTab = (tabtext) => {
+    planDetail.featured_img.forEach((item) => {
+      if (item.name === tabtext) {
+        setFeaturedImg(item);
+      }
+    });
+  };
 
   return (
     <div className="main planingIdeasInner-page">
@@ -31,7 +62,7 @@ function PlaningIdeasInner(props) {
             <li className="breadcrumb-item">
               <ALink href="/planning-ideas/">Planning Ideas</ALink>
             </li>
-            <li className="breadcrumb-item active">Planning Ideas Details</li>
+            <li className="breadcrumb-item active">{planDetail?.title}</li>
           </ol>
         </div>
       </nav>
@@ -46,35 +77,34 @@ function PlaningIdeasInner(props) {
                 </div>
 
                 <div className="mb-3">
-                  <p>
-                    <span className="prefresubtitle">Concept : </span>Private
-                    Office, Sit-to-stand{" "}
-                  </p>
-                  <p>
-                    <span className="prefresubtitle">Collection : </span>
-                    Adjustable tables
-                  </p>
-                  <p>
-                    <span className="prefresubtitle">Space type : </span>{" "}
-                    Private Office, Sit-to-stand
+                  <p dangerouslySetInnerHTML={{ __html: planDetail?.concept }}>
+                    {/* <span className="prefresubtitle">Concept : </span>Private
+                    Office, Sit-to-stand{" "} */}
                   </p>
                 </div>
 
                 <p className="subtitle mb-3">Available formats</p>
 
                 <div className="btnWrapper mb-3">
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Autocad 2D (47.92 KB)</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Autocad 3D (2.28 MB)</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <i className="icon-arrow-down"></i>
-                    <span>Sketch Up (4.58 MB)</span>
-                  </button>
+                  {planDetail.files &&
+                    planDetail.files.length > 0 &&
+                    planDetail.files.map((t, ind) => (
+                      <a
+                        href={t.url === null ? t?.file_link : t?.url}
+                        without
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        // download
+                      >
+                        <button
+                          className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-3"
+                          key={ind}
+                        >
+                          <i className="icon-arrow-down"></i>
+                          <span>{t.name}</span>
+                        </button>
+                      </a>
+                    ))}
                 </div>
 
                 <p className="subtitle mb-3">Documentation</p>
@@ -177,23 +207,21 @@ function PlaningIdeasInner(props) {
                 </div>
               </div>
               <div className="col-lg-6 col-sm-6 col-xs-12">
-                <img
-                  src="images/projectreferencesinner/planinginner.png"
-                  className="img-fluid mb-2"
-                />
+                <img src={featuredImg?.img} className="img-fluid mb-2" />
                 <div className="btnWrapper">
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>3D SHAPE</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>3D LINE</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>Plan</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                    <span>3D Viewers</span>
-                  </button>
+                  {planDetail.featured_img &&
+                    planDetail.featured_img.length > 0 &&
+                    planDetail.featured_img.map((name, index) => (
+                      <button
+                        className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${
+                          featuredImg?.name === name?.name && "active"
+                        }`}
+                        key={index}
+                        onClick={() => changeTab(name.name)}
+                      >
+                        <span>{name.name}</span>
+                      </button>
+                    ))}
                 </div>
               </div>
             </div>

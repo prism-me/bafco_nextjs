@@ -9,66 +9,29 @@ import { API } from "~/http/API";
 import ContactForm from "../contact-form/contact-form";
 
 function BrouchureImages(props) {
-  const [productList, setProductList] = useState();
-  const [selectedCategory, setSelectedCategory] = useState("executive-chairs");
+  const [brochuresList, setBrochuresList] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [categoryList, setCategoryList] = useState("");
 
   useEffect(() => {
-    API.get(`/front-products/${selectedCategory}`)
+    API.get(`/brochure-category-list`)
       .then((response) => {
-        setProductList(response?.data?.products);
+        setCategoryList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    API.get(`/brochure-filter/${selectedCategory}`)
+      .then((response) => {
+        setBrochuresList(response?.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [selectedCategory]);
-
-  const productData = [
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-      thumbnail:
-        "https://d-themes.com/react_asset_api/molla/uploads/product_12_1_300x300_b966955471.jpg",
-    },
-  ];
 
   return (
     <div className="main brouchure-images-page">
@@ -134,59 +97,31 @@ function BrouchureImages(props) {
               >
                 <li
                   className={`nav-item ${
-                    selectedCategory === "executive-chairs" ? "show" : ""
+                    selectedCategory === "all" ? "show" : ""
                   }`}
-                  onClick={() => setSelectedCategory("executive-chairs")}
+                  onClick={() => setSelectedCategory("all")}
                 >
-                  <span className="nav-link">3D and 2D blocks</span>
+                  <span className="nav-link">All</span>
                 </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "ergonomic-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("ergonomic-chairs")}
-                >
-                  <span className="nav-link">Textures</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "conference-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("conference-chairs")}
-                >
-                  <span className="nav-link">Fabric</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "visitor-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("visitor-chairs")}
-                >
-                  <span className="nav-link">Moodboard</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "stools" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("stools")}
-                >
-                  <span className="nav-link">Projects</span>
-                </li>
-                <li
-                  className={`nav-item ${
-                    selectedCategory === "multi-functional-chairs" ? "show" : ""
-                  }`}
-                  onClick={() => setSelectedCategory("multi-functional-chairs")}
-                >
-                  <span className="nav-link">Order swatches</span>
-                </li>
+                {categoryList?.length > 0 &&
+                  categoryList.map((item, index) => (
+                    <li
+                      key={index}
+                      className={`nav-item ${
+                        selectedCategory === `${item.route}` ? "show" : ""
+                      }`}
+                      onClick={() => setSelectedCategory(`${item.route}`)}
+                    >
+                      <span className="nav-link">{item.name}</span>
+                    </li>
+                  ))}
               </ul>
             </div>
           </div>
           <div className="products">
             <div className="container">
               <div className="row">
-                <div className="col-12 col-md-12 col-lg-12">
+                {/* <div className="col-12 col-md-12 col-lg-12">
                   <div className="mb-3 d-flex justify-content-between align-items-center brochureImagesWrapper">
                     <p className="subtitle">
                       Sed pretium, ligula sollicitudin laoreet viverra, tortor
@@ -202,47 +137,37 @@ function BrouchureImages(props) {
                       </div>
                     </form>
                   </div>
-                </div>
-                {productData?.length > 0 ? (
-                  productData?.map((item1, index1) => (
-                    <div className="col-6 col-md-6 col-lg-4" key={index1}>
+                </div> */}
+                {brochuresList?.length > 0 ? (
+                  brochuresList?.map((x, i) => (
+                    <div className="col-6 col-md-6 col-lg-4" key={i}>
                       <div className="downloadWrper">
                         <img
-                          key={index1}
-                          src={item1?.thumbnail}
+                          key={i}
+                          src={x?.thumbnail_img}
                           style={{ width: "100%", display: "block" }}
                         />
                         <div className="downloadContent">
-                          <p className="subtitle">lorem</p>
+                          <p className="subtitle">{x?.title}</p>
                           <div className="downloadbtnWrapper">
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>2D dwg</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>3D dwg</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>3D 3ds</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>Catalogue</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>Dimensions</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>Skp</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                              <span>3D dwg</span>
-                              <i className="icon-arrow-down"></i>
-                            </button>
+                            {x.files &&
+                              x.files.length > 0 &&
+                              x.files.map((t, ind) => (
+                                <a
+                                  href={t.url === null ? t?.file_link : t?.url}
+                                  without
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
+                                  <button
+                                    className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-2"
+                                    key={ind}
+                                  >
+                                    <span>{t.name}</span>
+                                    <i className="icon-arrow-down"></i>
+                                  </button>
+                                </a>
+                              ))}
                           </div>
                         </div>
                       </div>
