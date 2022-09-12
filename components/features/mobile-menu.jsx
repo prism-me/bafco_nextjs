@@ -2,48 +2,61 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import SlideToggle from 'react-slide-toggle';
-
+import { API } from '~/http/API';
 import ALink from '~/components/features/alink';
 
-function MobileMenu () {
+function MobileMenu() {
     const router = useRouter();
-    const [ searchTerm, setSearchTerm ] = useState( "" );
+    const [searchTerm, setSearchTerm] = useState("");
+    const [categoryList, setCategoryList] = useState();
 
-    useEffect( () => {
-        router.events.on( 'routeChangeComplete', hideMobileMenu );
-    }, [] )
+    useEffect(() => {
 
-    function hideMobileMenu () {
-        document.querySelector( 'body' ).classList.remove( 'mmenu-active' );
+        API.get(`header-category`).then((response) => {
+
+            setCategoryList(response.data)
+
+        }).catch((err) => {
+            console.log(err);
+        });
+
+    }, []);
+
+    useEffect(() => {
+        router.events.on('routeChangeComplete', hideMobileMenu);
+    }, [])
+
+    function hideMobileMenu() {
+        document.querySelector('body').classList.remove('mmenu-active');
     }
 
-    function onSearchChange ( e ) {
-        setSearchTerm( e.target.value );
+    function onSearchChange(e) {
+        setSearchTerm(e.target.value);
     }
 
-    function onSubmitSearchForm ( e ) {
+    function onSubmitSearchForm(e) {
         e.preventDefault();
-        router.push( {
+        router.push({
             pathname: '/shop/sidebar/list',
             query: {
                 searchTerm: searchTerm,
                 category: ""
             }
-        } );
+        });
     }
 
     return (
         <div className="mobile-menu-container mobile-menu-light">
             <div className="mobile-menu-wrapper">
-                <span className="mobile-menu-close" onClick={ hideMobileMenu }><i className="icon-close"></i></span>
+                <span className="mobile-menu-close" onClick={hideMobileMenu}><i className="icon-close"></i></span>
 
-                <form action="#" method="get" onSubmit={ onSubmitSearchForm } className="mobile-search">
+                <form action="#" method="get" onSubmit={onSubmitSearchForm} className="mobile-search">
                     <label htmlFor="mobile-search" className="sr-only">Search</label>
-                    <input type="text" className="form-control" value={ searchTerm } onChange={ onSearchChange } name="mobile-search" id="mobile-search" placeholder="Search product ..." required />
+                    <input type="text" className="form-control" value={searchTerm} onChange={onSearchChange} name="mobile-search" id="mobile-search" placeholder="Search product ..." required />
                     <button className="btn btn-primary" type="submit"><i className="icon-search"></i></button>
                 </form>
 
-                <Tabs defaultIndex={ 0 } selectedTabClassName="show">
+                <Tabs defaultIndex={0} selectedTabClassName="show">
                     <TabList className="nav nav-pills-mobile" role="tablist">
                         <Tab className="nav-item text-center">
                             <span className="nav-link">Menu</span>
@@ -58,15 +71,15 @@ function MobileMenu () {
                         <TabPanel>
                             <nav className="mobile-nav">
                                 <ul className="mobile-menu">
-                                    <SlideToggle collapsed={ true }>
-                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
+                                    <SlideToggle collapsed={true}>
+                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
                                                 <ALink href="/">
                                                     Home
-                                                    <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span>
+                                                    <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span>
                                                 </ALink>
 
-                                                <ul ref={ setCollapsibleElement }>
+                                                <ul ref={setCollapsibleElement}>
                                                     <li><a href="https://d-themes.com/react/molla/demo-1/" target="_blank">01 - furniture store</a></li>
                                                     <li><a href="https://d-themes.com/react/molla/demo-2/" target="_blank">02 - furniture store</a></li>
                                                     <li><a href="https://d-themes.com/react/molla/demo-3/" target="_blank">03 - electronic store</a></li>
@@ -100,17 +113,17 @@ function MobileMenu () {
                                                     <li><a href="https://d-themes.com/react/molla/demo-31/" target="_blank">31 - yoga store</a></li>
                                                 </ul>
                                             </li>
-                                        ) }
+                                        )}
                                     </SlideToggle>
-                                    <SlideToggle collapsed={ true }>
-                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
+                                    <SlideToggle collapsed={true}>
+                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
                                                 <ALink href="/shop/sidebar/list">
                                                     Shop
-                                                    <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span>
+                                                    <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span>
                                                 </ALink>
 
-                                                <ul ref={ setCollapsibleElement }>
+                                                <ul ref={setCollapsibleElement}>
                                                     <li><ALink href="/shop/sidebar/list">Shop List</ALink></li>
                                                     <li><ALink href="/shop/sidebar/2cols">Shop Grid 2 Columns</ALink></li>
                                                     <li><ALink href="/shop/sidebar/3cols">Shop Grid 3 Columns</ALink></li>
@@ -127,16 +140,16 @@ function MobileMenu () {
                                                     <li><ALink href="#">Lookbook</ALink></li>
                                                 </ul>
                                             </li>
-                                        ) }
+                                        )}
                                     </SlideToggle>
-                                    <SlideToggle collapsed={ true }>
-                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
+                                    <SlideToggle collapsed={true}>
+                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
                                                 <ALink href="/product/default/dark-yellow-lace-cut-out-swing-dress" className="sf-with-ul">
                                                     Product
-                                                    <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span>
+                                                    <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span>
                                                 </ALink>
-                                                <ul ref={ setCollapsibleElement }>
+                                                <ul ref={setCollapsibleElement}>
                                                     <li><ALink href="/product/default/dark-yellow-lace-cut-out-swing-dress">Default</ALink></li>
                                                     <li><ALink href="/product/centered/beige-ring-handle-circle-cross-body-bag">Centered</ALink></li>
                                                     <li><ALink href="/product/extended/yellow-tie-strap-block-heel-sandals"><span>Extended Info<span className="tip tip-new">New</span></span></ALink></li>
@@ -147,40 +160,40 @@ function MobileMenu () {
                                                     <li><ALink href="/product/masonry/black-denim-dungaree-dress">Masonry Sticky Info</ALink></li>
                                                 </ul>
                                             </li>
-                                        ) }
+                                        )}
                                     </SlideToggle>
-                                    <SlideToggle collapsed={ true }>
-                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
+                                    <SlideToggle collapsed={true}>
+                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
                                                 <ALink href="#">
                                                     Pages
-                                                    <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span>
+                                                    <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span>
                                                 </ALink>
-                                                <ul ref={ setCollapsibleElement }>
-                                                    <SlideToggle collapsed={ true }>
-                                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
-                                                                <ALink href="/pages/about" className="sf-with-ul">About <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span></ALink>
+                                                <ul ref={setCollapsibleElement}>
+                                                    <SlideToggle collapsed={true}>
+                                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
+                                                                <ALink href="/pages/about" className="sf-with-ul">About <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span></ALink>
 
-                                                                <ul ref={ setCollapsibleElement }>
+                                                                <ul ref={setCollapsibleElement}>
                                                                     <li><ALink href="/pages/about">About 01</ALink></li>
                                                                     <li><ALink href="/pages/about-2">About 02</ALink></li>
                                                                 </ul>
                                                             </li>
 
-                                                        ) }
+                                                        )}
                                                     </SlideToggle>
-                                                    <SlideToggle collapsed={ true }>
-                                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
-                                                                <ALink href="/pages/contact" className="sf-with-ul">Contact <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span></ALink>
+                                                    <SlideToggle collapsed={true}>
+                                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
+                                                                <ALink href="/pages/contact" className="sf-with-ul">Contact <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span></ALink>
 
-                                                                <ul ref={ setCollapsibleElement }>
+                                                                <ul ref={setCollapsibleElement}>
                                                                     <li><ALink href="/pages/contact">Contact 01</ALink></li>
                                                                     <li><ALink href="/pages/contact-2">Contact 02</ALink></li>
                                                                 </ul>
                                                             </li>
-                                                        ) }
+                                                        )}
                                                     </SlideToggle>
                                                     <li><ALink href="/pages/login">Login</ALink></li>
                                                     <li><ALink href="/pages/faq">FAQs</ALink></li>
@@ -188,81 +201,81 @@ function MobileMenu () {
                                                     <li><ALink href="/pages/coming-soon">Coming Soon</ALink></li>
                                                 </ul>
                                             </li>
-                                        ) }
+                                        )}
                                     </SlideToggle>
-                                    <SlideToggle collapsed={ true }>
-                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
+                                    <SlideToggle collapsed={true}>
+                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
                                                 <ALink href="/blog/classic">
                                                     Blog
-                                                    <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span>
+                                                    <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span>
                                                 </ALink>
 
-                                                <ul ref={ setCollapsibleElement }>
+                                                <ul ref={setCollapsibleElement}>
                                                     <li><ALink href="/blog/classic">Classic</ALink></li>
                                                     <li><ALink href="/blog/listing" >Listing</ALink></li>
-                                                    <SlideToggle collapsed={ true }>
-                                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
-                                                                <ALink href="#" className="sf-with-ul">Grid <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span></ALink>
-                                                                <ul ref={ setCollapsibleElement }>
+                                                    <SlideToggle collapsed={true}>
+                                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
+                                                                <ALink href="#" className="sf-with-ul">Grid <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span></ALink>
+                                                                <ul ref={setCollapsibleElement}>
                                                                     <li><ALink href="/blog/grid/2cols">Grid 2 columns</ALink></li>
                                                                     <li><ALink href="/blog/grid/3cols">Grid 3 columns</ALink></li>
                                                                     <li><ALink href="/blog/grid/4cols">Grid 4 columns</ALink></li>
                                                                     <li><ALink href="/blog/grid/sidebar">Grid sidebar</ALink></li>
                                                                 </ul>
                                                             </li>
-                                                        ) }
+                                                        )}
                                                     </SlideToggle>
-                                                    <SlideToggle collapsed={ true }>
-                                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
-                                                                <ALink href="#" className="sf-with-ul">Masonry <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span></ALink>
-                                                                <ul ref={ setCollapsibleElement }>
+                                                    <SlideToggle collapsed={true}>
+                                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
+                                                                <ALink href="#" className="sf-with-ul">Masonry <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span></ALink>
+                                                                <ul ref={setCollapsibleElement}>
                                                                     <li><ALink href="/blog/masonry/2cols">Masonry 2 columns</ALink></li>
                                                                     <li><ALink href="/blog/masonry/3cols">Masonry 3 columns</ALink></li>
                                                                     <li><ALink href="/blog/masonry/4cols">Masonry 4 columns</ALink></li>
                                                                     <li><ALink href="/blog/masonry/sidebar">Masonry sidebar</ALink></li>
                                                                 </ul>
                                                             </li>
-                                                        ) }
+                                                        )}
                                                     </SlideToggle>
-                                                    <SlideToggle collapsed={ true }>
-                                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
-                                                                <ALink href="#" className="sf-with-ul">Mask <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span></ALink>
-                                                                <ul ref={ setCollapsibleElement }>
+                                                    <SlideToggle collapsed={true}>
+                                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
+                                                                <ALink href="#" className="sf-with-ul">Mask <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span></ALink>
+                                                                <ul ref={setCollapsibleElement}>
                                                                     <li><ALink href="/blog/mask/grid">Blog Mask Grid</ALink></li>
                                                                     <li><ALink href="/blog/mask/masonry">Blog Mask Masonry</ALink></li>
                                                                 </ul>
                                                             </li>
-                                                        ) }
+                                                        )}
                                                     </SlideToggle>
-                                                    <SlideToggle collapsed={ true }>
-                                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
-                                                                <ALink href="/blog/single/default/cras-ornare-tristique-elit." className="sf-with-ul">Single Post <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span></ALink>
-                                                                <ul ref={ setCollapsibleElement }>
+                                                    <SlideToggle collapsed={true}>
+                                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
+                                                                <ALink href="/blog/single/default/cras-ornare-tristique-elit." className="sf-with-ul">Single Post <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span></ALink>
+                                                                <ul ref={setCollapsibleElement}>
                                                                     <li><ALink href="/blog/single/default/cras-ornare-tristique-elit.">Default with sidebar</ALink></li>
                                                                     <li><ALink href="/blog/single/fullwidth/fusce-pellentesque-suscipit.">Fullwidth no sidebar</ALink></li>
                                                                     <li><ALink href="/blog/single/sidebar/utaliquam-sollicitzdvudin-leo">Fullwidth with sidebar</ALink></li>
                                                                 </ul>
                                                             </li>
-                                                        ) }
+                                                        )}
                                                     </SlideToggle>
                                                 </ul>
                                             </li>
-                                        ) }
+                                        )}
                                     </SlideToggle>
-                                    <SlideToggle collapsed={ true }>
-                                        { ( { onToggle, setCollapsibleElement, toggleState } ) => (
-                                            <li className={ toggleState.toLowerCase() == 'expanded' ? 'open' : '' }>
+                                    <SlideToggle collapsed={true}>
+                                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                            <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
                                                 <ALink href="/elements" className="sf-with-ul">
                                                     Elements
-                                                    <span className="mmenu-btn" onClick={ ( e ) => { onToggle( e ); e.preventDefault() } }></span>
+                                                    <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span>
                                                 </ALink>
 
-                                                <ul ref={ setCollapsibleElement }>
+                                                <ul ref={setCollapsibleElement}>
                                                     <li><ALink href="/elements/products">Products</ALink></li>
                                                     <li><ALink href="/elements/typography">Typography</ALink></li>
                                                     <li><ALink href="/elements/titles">Titles</ALink></li>
@@ -278,7 +291,7 @@ function MobileMenu () {
                                                     <li><ALink href="/elements/icon-boxes">Icon Boxes</ALink></li>
                                                 </ul>
                                             </li>
-                                        ) }
+                                        )}
                                     </SlideToggle>
                                 </ul>
                             </nav>
@@ -287,17 +300,27 @@ function MobileMenu () {
                         <TabPanel>
                             <nav className="mobile-cats-nav">
                                 <ul className="mobile-cats-menu">
-                                    <li className="item-cats-lead"><ALink href="/shop/sidebar/3cols?category=electronics">Electronics</ALink></li>
-                                    <li className="item-cats-lead"><ALink href="/shop/sidebar/3cols?category=gift-idea">Gift Ideas</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=beds">Beds</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=lighting">Lighting</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=sofas-and-sleeper-sofas">Sofas & Sleeper sofas</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=storage">Storage</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=armchairs-and-chaises">Armchairs & Chaises</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=decoration">Decoration </ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=kitchen-cabinets">Kitchen Cabinets</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=coffee-and-tables">Coffee & Tables</ALink></li>
-                                    <li><ALink href="/shop/sidebar/3cols?category=furniture">Outdoor Furniture </ALink></li>
+                                    {categoryList?.map((category, index) => (
+                                        category?.parent_id === null &&
+                                        <SlideToggle collapsed={true} key={index}>
+                                            {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                <li className={toggleState.toLowerCase() == 'expanded' ? 'open' : ''}>
+                                                    <ALink href={`/collections/${category.route}`}>
+                                                        {category.name}
+                                                        <span className="mmenu-btn" onClick={(e) => { onToggle(e); e.preventDefault() }}></span>
+                                                    </ALink>
+
+                                                    <ul ref={setCollapsibleElement}>
+                                                        {category?.header_child?.map((item, index2) => (
+                                                            <li key={index2}>
+                                                                <ALink href={`/collections/${category.route}/${item.route}`}>{item.name}</ALink>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </li>
+                                            )}
+                                        </SlideToggle>
+                                    ))}
                                 </ul>
                             </nav>
                         </TabPanel>
@@ -305,14 +328,15 @@ function MobileMenu () {
                 </Tabs>
 
                 <div className="social-icons">
-                    <ALink href="#" className="social-icon" title="Facebook"><i className="icon-facebook-f"></i></ALink>
-                    <ALink href="#" className="social-icon" title="Twitter"><i className="icon-twitter"></i></ALink>
-                    <ALink href="#" className="social-icon" title="Instagram"><i className="icon-instagram"></i></ALink>
-                    <ALink href="#" className="social-icon" title="Youtube"><i className="icon-youtube"></i></ALink>
+                    <ALink href="https://www.instagram.com/bafco/" className="social-icon" rel="noopener noreferrer" title="Instagram" target="_blank"><i className="icon-instagram"></i></ALink>
+                    <ALink href="https://www.facebook.com/bafcointeriors" className="social-icon" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
+                    <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
+                    <ALink href="https://twitter.com/Bafco" className="social-icon" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
+                    <ALink href="https://www.pinterest.com/bafcointeriors/" className="social-icon" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>
                 </div>
             </div>
         </div>
     )
 }
 
-export default React.memo( MobileMenu );
+export default React.memo(MobileMenu);

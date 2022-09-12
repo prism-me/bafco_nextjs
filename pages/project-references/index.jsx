@@ -12,7 +12,7 @@ function ProjectReferences() {
   const [categoryList, setCategoryList] = useState("");
 
   useEffect(() => {
-    API.get(`/project-category-list/`)
+    API.get(`/project-category-list`)
       .then((response) => {
         setCategoryList(response?.data);
       })

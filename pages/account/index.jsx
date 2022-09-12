@@ -49,11 +49,13 @@ function MyAccount() {
     const [useraddressList, setUserAddressList] = useState();
     const [isuserdetail, setIsuserdetail] = useState(true);
     const [open, setOpen] = useState(false);
+    const [openOrderDetail, setOpenOrderDetail] = useState(false);
     const [isdefault, setIsDefault] = useState(false);
     const [countryList, setCountryList] = useState();
     const [stateList, setStateList] = useState();
     const [editAddressID, setEditAddressID] = useState();
     const [isEdit, setIsEdit] = useState(false);
+    const [orderList, setOrderList] = useState([])
 
     let timer;
 
@@ -75,7 +77,7 @@ function MyAccount() {
         return () => {
             if (timer) clearTimeout(timer);
         }
-    });
+    }, []);
 
     function closeModal() {
         document.getElementById("address-modal").classList.remove("ReactModal__Content--after-open");
@@ -93,6 +95,23 @@ function MyAccount() {
     function openModal(e) {
         e.preventDefault();
         setOpen(true);
+    }
+    function closeOrderDetailModal() {
+        document.getElementById("address-modal").classList.remove("ReactModal__Content--after-open");
+
+        if (document.querySelector(".ReactModal__Overlay")) {
+            document.querySelector(".ReactModal__Overlay").style.opaarea = '0';
+        }
+
+        timer = setTimeout(() => {
+            setOpenOrderDetail(false);
+        }, 350);
+
+    }
+
+    function openOrderDetailModal(e) {
+        e.preventDefault();
+        setOpenOrderDetail(true);
     }
 
     useEffect(() => {
@@ -137,11 +156,16 @@ function MyAccount() {
                 localStorage.setItem('UserData', response?.data.id);
                 setUserData(response?.data);
                 setIsuserdetail(false);
-
             }).catch((err) => console.log(err));
 
             API.get(`/addresses/${UserId}`, header).then((response) => {
                 setUserAddressList(response?.data);
+
+            }).catch((err) => console.log(err));
+
+            API.get(`/user-order-detail/${UserId}`, header).then((response) => {
+                setOrderList(response?.data);
+                console.log("user-order-detail :: ", response?.data);
 
             }).catch((err) => console.log(err));
         }
@@ -506,9 +530,9 @@ function MyAccount() {
                                                 <span className="nav-link">Orders</span>
                                             </Tab>
 
-                                            <Tab className="nav-item">
+                                            {/* <Tab className="nav-item">
                                                 <span className="nav-link">Downloads</span>
-                                            </Tab>
+                                            </Tab> */}
 
                                             <Tab className="nav-item">
                                                 <span className="nav-link">Addresses</span>
@@ -537,14 +561,50 @@ function MyAccount() {
                                             </TabPanel>
 
                                             <TabPanel>
-                                                <p>No order has been made yet.</p>
-                                                <ALink href="/collections/category/executive-chairs" className="btn btn-outline-primary-2"><span>GO SHOP</span><i className="icon-long-arrow-right"></i></ALink>
+                                                {orderList?.length < 0 ?
+                                                    <>
+                                                        <p>No order has been made yet.</p>
+                                                        <ALink href="/" className="btn btn-outline-primary-2"><span>GO SHOP</span><i className="icon-long-arrow-right"></i></ALink>
+                                                    </> :
+                                                    <div class="order-list orderDetailsOrderList">
+                                                        <div class="list_box orderDetailsTableDiv">
+                                                            <p>View your order history.</p>
+                                                            <table className="table table-striped  justify-content-center">
+                                                                <thead className="text-center">
+                                                                    <tr>
+                                                                        <th>Order Number</th>
+                                                                        <th>Shipment Status</th>
+                                                                        <th>Total</th>
+                                                                        <th>View Details</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody className="text-center">
+                                                                    {orderList?.map((order, index) => (
+                                                                        <tr key={index}>
+                                                                            <td class="td_product"><span>{order?.order_number}</span></td>
+                                                                            <td class="td_product"><span>{order?.status}</span></td>
+                                                                            <td class="td_product"><span>{order?.total}</span></td>
+                                                                            <td class="td_product">
+                                                                                <span onClick={openOrderDetailModal}>
+                                                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" class="action-icon-details" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z">
+                                                                                        </path>
+                                                                                    </svg>
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                }
                                             </TabPanel>
 
-                                            <TabPanel>
+                                            {/* <TabPanel>
                                                 <p>No downloads available yet.</p>
                                                 <ALink href="/collections/category/executive-chairs" className="btn btn-outline-primary-2"><span>GO SHOP</span><i className="icon-long-arrow-right"></i></ALink>
-                                            </TabPanel>
+                                            </TabPanel> */}
 
                                             <TabPanel>
                                                 <p>The following addresses will be used on the checkout page by default.</p>
@@ -897,9 +957,9 @@ function MyAccount() {
                             </Tabs>
                         </ul>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div >
+            </div >
+        </div >
     )
 }
 
