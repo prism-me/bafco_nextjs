@@ -196,6 +196,7 @@ input:checked+.slider:before {
 			td {
 				svg {
 					cursor: pointer;
+					color: #008482;
 				}
 			}
 		}
@@ -207,10 +208,6 @@ div#order-modal {
 
 	.orderdetailbody {
 		padding: 30px;
-	}
-
-	.td_product svg {
-		color: #008482;
 	}
 
 	div#contained-modal-title-vcenter {

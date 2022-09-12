@@ -36,7 +36,7 @@ let addressData = {
     country: "",
     state: "",
     city: "",
-    address_type: "",
+    address_type: "Billing",
 }
 
 Modal.setAppElement('body');
@@ -260,7 +260,6 @@ function MyAccount() {
         let formdata = {
             'user_id': UserId,
         };
-
 
         API.put(`/set-default/${id}`, formdata, {
             headers: {
@@ -966,7 +965,7 @@ function MyAccount() {
                                                                             />
 
                                                                         </div>
-                                                                        <div className="form-group">
+                                                                        {/* <div className="form-group">
                                                                             <label htmlFor="singin-email-2">Address Type *</label>
                                                                             <input
                                                                                 type="text"
@@ -978,7 +977,7 @@ function MyAccount() {
                                                                                 onChange={handleAddressChange}
                                                                             />
 
-                                                                        </div>
+                                                                        </div> */}
 
                                                                         <div className="form-footer" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                                                             <button

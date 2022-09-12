@@ -315,6 +315,7 @@ function Checkout(props) {
                     },
                 },
                 "billing_address": {
+                    "id": billing_address?.id,
                     "name": billing_address?.name,
                     "phone": billing_address?.phone_number,
                     "alt_phone": billing_address?.phone_number,
