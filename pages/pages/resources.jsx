@@ -332,7 +332,7 @@ function Resources(props) {
                   }}
                 />
                 <ALink
-                  href={"/fabric-finishes/sidebar/4cols/"}
+                  href={"/fabric-finishes/"}
                   className="btn btn-outline-darker btn-more"
                 >
                   <span>View All Fabric & Finishes</span>
