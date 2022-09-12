@@ -152,7 +152,7 @@ function DetailOne(props) {
 
         e.preventDefault();
 
-        const currentTargetId = `${e.target.value}`;
+        let storeitemId = e.target.value;
 
         if (!e.target.value) {
             const newState = selectedVariant.map(obj => {
@@ -195,54 +195,15 @@ function DetailOne(props) {
 
         } else {
 
-            let found = variationGroup.find((v) => v?.id === currentTargetId);
-
             console.log("item :: ", item)
+            console.log("e.target.value :: ", storeitemId)
+            console.log("variationGroup :: ", variationGroup)
+
+            let found = variationGroup.filter((v) => v?.id === storeitemId);
 
             console.log("found :: ", found)
 
             // props.handelselectedVariation(found?.product_variation_id);
-
-
-            // const newState = selectedVariant.map(obj => {
-
-            //     if (obj.type === item.variant.name) {
-            //         return {
-            //             name: item.name,
-            //             type: item.variant.name,
-            //             variation_value_id: item.id,
-            //             product_variation_id: item.product_variation_id
-            //         };
-            //     }
-            //     return obj;
-
-            // });
-
-            // console.log(" setSelectedVariant :: ", newState);
-            // return
-
-            // setSelectedVariant(newState);
-
-            // let comb = [];
-
-            // newState.map((acc) => {
-            //     comb.push({ [acc.type]: acc.name });
-            //     return acc;
-            // });
-
-            // let resultNewComb = comb.reduce(function (result, item) {
-            //     var key = Object.keys(item)[0];
-            //     result[key] = item[key];
-            //     return result;
-
-            // }, {});
-
-            // let getVariationId = variantCombGroup.filter(function (entry) {
-            //     return Object.keys(resultNewComb).every(function (key) {
-            //         return entry[key] === resultNewComb[key];
-            //     });
-            // });
-
 
         }
 
