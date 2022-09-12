@@ -15,16 +15,14 @@ function FabricGrid(props) {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // function onQuickView(e) {
-  //   e.preventDefault();
-  //   props?.showFabric(product.slug);
-  // }
+  // console.log("product ::", product);
+
   return (
     <div className="product product-7 text-center w-100">
       <figure className="product-media">
         <LazyLoadImage
           alt="product"
-          src={"images/fabric/fabric.png"}
+          src={product?.featured_img}
           threshold={500}
           effect="black and white"
           wrapperClassName="product-image"
@@ -33,21 +31,21 @@ function FabricGrid(props) {
             console.log("opennnn");
           }}
         />
-        {product.sm_pictures.length >= 2 ? (
+        {/* {product?.featured_img ? (
           <LazyLoadImage
             alt="product"
-            src={process.env.NEXT_PUBLIC_ASSET_URI + product.sm_pictures[1].url}
+            src={product?.featured_img}
             threshold={500}
             effect="black and white"
             wrapperClassName="product-image-hover"
           />
         ) : (
           ""
-        )}
+        )} */}
       </figure>
 
       <div className="product-body">
-        <h3 className="product-title">{product.name}</h3>
+        <h3 className="product-title">{product?.title}</h3>
       </div>
       <FabricModal show={isOpen} onHide={() => setIsOpen(false)} />
     </div>

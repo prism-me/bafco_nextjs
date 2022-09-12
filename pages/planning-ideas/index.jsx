@@ -14,7 +14,7 @@ function PlaningIdeas() {
   const [categoryList, setCategoryList] = useState("");
 
   useEffect(() => {
-    API.get(`/plan-category-list/`)
+    API.get(`/plan-category-list`)
       .then((response) => {
         setCategoryList(response?.data);
       })
