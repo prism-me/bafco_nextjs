@@ -152,7 +152,7 @@ function DetailOne(props) {
 
         e.preventDefault();
 
-        let storeitemId = e.target.value;
+        const storeitemId = e.target.value;
 
         if (!e.target.value) {
             const newState = selectedVariant.map(obj => {
@@ -199,11 +199,9 @@ function DetailOne(props) {
             console.log("e.target.value :: ", storeitemId)
             console.log("variationGroup :: ", variationGroup)
 
-            let found = variationGroup.filter((v) => v?.id === storeitemId);
+            const found = variationGroup?.filter((v) => v?.id == storeitemId);
 
-            console.log("found :: ", found)
-
-            // props.handelselectedVariation(found?.product_variation_id);
+            props.handelselectedVariation(found[0]?.product_variation_id);
 
         }
 
