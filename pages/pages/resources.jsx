@@ -124,7 +124,7 @@ function Resources(props) {
                 key={index}
                 style={{
                   backgroundColor: "#EDF2F0",
-                  backgroundImage: `url(${item.featured_img})`,
+                  backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${item.featured_img})`,
                 }}
               >
                 <div className="container intro-content">
