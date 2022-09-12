@@ -195,10 +195,6 @@ function DetailOne(props) {
 
         } else {
 
-            console.log("item :: ", item)
-            console.log("e.target.value :: ", storeitemId)
-            console.log("variationGroup :: ", variationGroup)
-
             const found = variationGroup?.filter((v) => v?.id == storeitemId);
 
             props.handelselectedVariation(found[0]?.product_variation_id);
@@ -265,7 +261,6 @@ function DetailOne(props) {
                                             className="form-control"
                                             value={selectedVariant[index]?.variation_value_id}
                                             onChange={(e) => handelSelectVariantChange(e, item)}
-                                        // onChange={(e) => handelSelectVariantDropdownChange(e, item)}
                                         >
                                             <option value="">Select a {item?.variant?.name}</option>
                                             {variationGroup &&
@@ -279,18 +274,34 @@ function DetailOne(props) {
                                     <div className="product-nav product-nav-dots">
                                         {variationGroup &&
                                             variantCombGroup.map((variantcom) => (
-                                                variantcom.Material === selectedVariant[index - 1]?.name &&
-                                                variationGroup.map((item2, index2) => (
-                                                    variantcom?.Color === item2.name &&
-                                                    item?.variant?.name === item2?.variant?.name &&
-                                                    <span
-                                                        className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                                                        style={{ backgroundImage: `url(${item2?.type_value})` }}
-                                                        key={index2}
-                                                        onClick={(e) => handelSelectVariantChange(e, item2)}
-                                                    >
-                                                    </span>
-                                                ))
+                                                <>
+                                                    {variantcom.Material === selectedVariant[index - 1]?.name &&
+                                                        variationGroup.map((item2, index2) => (
+                                                            variantcom?.Color === item2.name &&
+                                                            item?.variant?.name === item2?.variant?.name &&
+                                                            <span
+                                                                className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
+                                                                key={index2}
+                                                                onClick={(e) => handelSelectVariantChange(e, item2)}
+                                                            >
+                                                            </span>
+                                                        ))
+                                                    }
+                                                    {variantcom.Frame === selectedVariant[index - 1]?.name &&
+                                                        variationGroup.map((item2, index2) => (
+                                                            variantcom?.Color === item2.name &&
+                                                            item?.variant?.name === item2?.variant?.name &&
+                                                            <span
+                                                                className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
+                                                                key={index2}
+                                                                onClick={(e) => handelSelectVariantChange(e, item2)}
+                                                            >
+                                                            </span>
+                                                        ))
+                                                    }
+                                                </>
                                             ))
                                         }
                                     </div>

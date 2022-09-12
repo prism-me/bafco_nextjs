@@ -190,4 +190,47 @@ input:checked+.slider:before {
 	th {
 		font-weight: 600;
 	}
+
+	tbody {
+		tr {
+			td {
+				svg {
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}
+
+div#order-modal {
+	max-width: 1000px;
+
+	.orderdetailbody {
+		padding: 30px;
+	}
+
+	.td_product svg {
+		color: #008482;
+	}
+
+	div#contained-modal-title-vcenter {
+		margin-bottom: 0;
+	}
+
+	.orderdetailModelheader.modal-header {
+		padding: 15px 30px;
+	}
+
+	.modal-header span {
+		font-size: 34px;
+	}
+
+	.orderDetailsTableClient {
+		thead {
+			td {
+				font-weight: 600;
+				padding: 1rem 0;
+			}
+		}
+	}
 }
