@@ -2,16 +2,15 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useLazyQuery } from "@apollo/react-hooks";
 import StickyBox from "react-sticky-box";
-
 import ALink from "~/components/features/alink";
 import FabricListOne from "~/pages/fabric-finishes/list/fabric-list-one";
-import Pagination from "~/components/features/pagination";
+// import Pagination from "~/components/features/pagination";
 import FabricSidebarOne from "~/pages/fabric-finishes/sidebar/fabric-sidebar-one";
-
 import withApollo from "~/server/apollo";
 import { GET_PRODUCTS } from "~/server/queries";
 import { scrollToPageContent } from "~/utils";
 import FabricTopBar from "./FabricTopBar";
+import { API } from "~/http/API";
 
 function FabricGrid() {
   const router = useRouter();
@@ -25,6 +24,32 @@ function FabricGrid() {
   const [toggle, setToggle] = useState(false);
   const products = data && data.products.data;
   const totalCount = data && data.products.totalCount;
+
+  const [fabricList, setFabricList] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("Leather");
+  const [categoryList, setCategoryList] = useState("");
+
+  console.log("selectedCategory ::", selectedCategory);
+
+  useEffect(() => {
+    API.get(`/material-list`)
+      .then((response) => {
+        setCategoryList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    API.get(`/finishes-filter-list/${selectedCategory}`)
+      .then((response) => {
+        setFabricList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [selectedCategory]);
 
   useEffect(() => {
     window.addEventListener("resize", resizeHandle);
@@ -131,7 +156,11 @@ function FabricGrid() {
 
       <div className="page-content">
         <div className="container">
-          <FabricTopBar />
+          <FabricTopBar
+            categoryList={categoryList}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
           <div className="row skeleton-body">
             <div
               className={`col-lg-9 skel-shop-products ${
@@ -139,16 +168,16 @@ function FabricGrid() {
               }`}
             >
               <FabricListOne
-                products={products}
+                products={fabricList?.finishesData}
                 perPage={perPage}
                 loading={loading}
               ></FabricListOne>
 
-              {totalCount > perPage ? (
+              {/* {totalCount > perPage ? (
                 <Pagination perPage={perPage} total={totalCount}></Pagination>
               ) : (
                 ""
-              )}
+              )} */}
             </div>
 
             <aside

@@ -20,6 +20,7 @@ function Resources(props) {
   const [plansData3, setPlansData3] = useState();
   const [blogsData, setBlogsData] = useState();
   const [videosData, setVideosData] = useState();
+  const [fabricData, setFabricData] = useState();
 
   useEffect(() => {
     API.get(`/home-resource`)
@@ -31,6 +32,7 @@ function Resources(props) {
         setVideosData(response?.data?.videos);
         setBlogsData(response?.data?.blog);
         setResourcesdata(response?.data?.page?.content);
+        setFabricData(response?.data?.fabrics);
       })
       .catch((err) => {
         console.log(err);
@@ -65,18 +67,6 @@ function Resources(props) {
     e.preventDefault();
     props?.showVideo();
   }
-
-  const fabricList = [
-    {
-      img: "images/resources/Fabric-and-Finishes01.png",
-    },
-    {
-      img: "images/resources/Fabric-and-Finishes02.png",
-    },
-    {
-      img: "images/resources/Fabric-and-Finishes03.png",
-    },
-  ];
 
   return (
     <div className="main resources-page">
@@ -124,7 +114,7 @@ function Resources(props) {
                 key={index}
                 style={{
                   backgroundColor: "#EDF2F0",
-                  backgroundImage: `url(${item.featured_img})`,
+                  backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${item.featured_img})`,
                 }}
               >
                 <div className="container intro-content">
@@ -332,7 +322,7 @@ function Resources(props) {
                   }}
                 />
                 <ALink
-                  href={"/fabric-finishes/sidebar/4cols/"}
+                  href={"/fabric-finishes/"}
                   className="btn btn-outline-darker btn-more"
                 >
                   <span>View All Fabric & Finishes</span>
@@ -344,11 +334,15 @@ function Resources(props) {
                   adClass="owl-simple owl-light owl-nav-inside mb-3 fabric_finished"
                   options={fabricFinishedSlider}
                 >
-                  {fabricList?.map((item, index) => (
-                    <div key={index}>
-                      <img src={item.img} style={{ height: "325px" }} />
-                    </div>
-                  ))}
+                  {fabricData?.length > 0 &&
+                    fabricData?.slice(0, 9)?.map((item, index) => (
+                      <div key={index}>
+                        <img
+                          src={item.featured_img}
+                          style={{ height: "325px" }}
+                        />
+                      </div>
+                    ))}
                 </OwlCarousel>
               </div>
             </div>

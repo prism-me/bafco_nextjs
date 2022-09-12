@@ -5,15 +5,23 @@ import ALink from "~/components/features/alink";
 function FabricTopBar(props) {
   const router = useRouter();
   const type = router.query.type;
-
+  const { categoryList, selectedCategory, setSelectedCategory } = props;
   return (
     <>
       <div className="fabric-top-bar mb-5">
         <div className="btnWrapper">
-          <button className="btn btn-sm btn-minwidth btn-outline-primary-2 active">
-            <span>Leather</span>
-          </button>
-          <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+          {categoryList?.length > 0 &&
+            categoryList.map((item, index) => (
+              <button
+                className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${
+                  selectedCategory === `${item.name}` ? "active" : ""
+                }`}
+                onClick={() => setSelectedCategory(`${item.name}`)}
+              >
+                <span>{item.name}</span>
+              </button>
+            ))}
+          {/* <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
             <span>Fabric</span>
           </button>
           <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
@@ -24,7 +32,7 @@ function FabricTopBar(props) {
           </button>
           <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
             <span>Nanotec</span>
-          </button>
+          </button> */}
           <button className="btn btn-sm btn-minwidth btn-outline-primary-2 downloadbtn">
             <i className="icon-arrow-down"></i>
             <span>Download Collections</span>
