@@ -670,7 +670,7 @@ function MyAccount() {
                                                                                 <h6 className="h6title">Paid Amount</h6>
                                                                             </div>
                                                                             <div className="col-lg-3 col-md-6 col-sm-6 col-12">
-                                                                                <p>0</p>
+                                                                                <p>{singleOrderDetails?.total}</p>
                                                                             </div>
                                                                         </div>
                                                                         <div className="row">
@@ -678,54 +678,58 @@ function MyAccount() {
                                                                                 <h6 className="h6title">Date</h6>
                                                                             </div>
                                                                             <div className="col-lg-3 col-md-6 col-sm-6 col-12">
-                                                                                <p>9/12/2022</p>
+                                                                                <p>{new Date(singleOrderDetails?.created_at).toLocaleDateString()}</p>
                                                                             </div>
                                                                             <div className="col-lg-3 col-md-6 col-sm-6 col-12">
                                                                                 <h6 className="h6title">Status</h6>
                                                                             </div>
-                                                                            <div className="col-lg-3 col-md-6 col-sm-6 col-12">ORDERPLACED</div>
+                                                                            <div className="col-lg-3 col-md-6 col-sm-6 col-12">{singleOrderDetails?.status}</div>
                                                                         </div>
                                                                         <div className="row">
                                                                         </div>
                                                                     </div>
                                                                     <h6 className="h6title">Products List</h6>
-                                                                    <div className="mt-2 tableScroll">
-                                                                        <table className="orderDetailsTableClient table">
-                                                                            <thead>
-                                                                                <td>Image</td>
-                                                                                <td>Name</td>
-                                                                                <td>Product Code</td>
-                                                                                <td>Quantity</td>
-                                                                                <td>Price</td>
-                                                                                <td>Sub Total</td>
-                                                                            </thead>
-                                                                            <tbody className="orderDetailModelTableBody">
-                                                                                <tr>
-                                                                                    <td className="td_product td_productImg">
-                                                                                        <img src="https://pigeon.b-cdn.net/album1%2FNipple%20Puller%201.jpeg" alt="" className="orderdetailImg" width="150" />
-                                                                                    </td>
-                                                                                    <td className="td_product">
-                                                                                        <span>
-                                                                                            <span className="productNameStyle">Nipple Puller with Case
-                                                                                            </span>
-                                                                                        </span>
-                                                                                    </td>
-                                                                                    <td className="td_product_code">
-                                                                                        <span>16661</span>
-                                                                                    </td>
+                                                                    <div className="mt-2 tableScroll" id="table-wrapper">
+                                                                        <div id="table-scroll">
+                                                                            <table className="orderDetailsTableClient table">
+                                                                                <thead>
+                                                                                    <td>Image</td>
+                                                                                    <td>Name</td>
+                                                                                    <td>Product Code</td>
+                                                                                    <td>Quantity</td>
+                                                                                    <td>Price</td>
+                                                                                    <td>Sub Total</td>
+                                                                                </thead>
+                                                                                <tbody className="orderDetailModelTableBody">
+                                                                                    {singleOrderDetails?.order_details?.map((item, index) => (
+                                                                                        <tr key={index}>
+                                                                                            <td className="td_product td_productImg">
+                                                                                                <img src={item?.variation_detail?.images[0]?.avatar} alt="" className="orderdetailImg" width="100" />
+                                                                                            </td>
+                                                                                            <td className="td_product">
+                                                                                                <span>
+                                                                                                    <span className="productNameStyle">{item?.product_detail?.name}</span>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                            <td className="td_product_code">
+                                                                                                <span>{item?.variation_detail?.code}</span>
+                                                                                            </td>
 
-                                                                                    <td className="td_product">
-                                                                                        <span>1</span>
-                                                                                    </td>
-                                                                                    <td className="td_product">
-                                                                                        <span>26.30</span>
-                                                                                    </td>
-                                                                                    <td className="td_product">
-                                                                                        <span>26.30</span>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
+                                                                                            <td className="td_product">
+                                                                                                <span>{item?.qty}</span>
+                                                                                            </td>
+                                                                                            <td className="td_product">
+                                                                                                <span>{item?.price}</span>
+                                                                                            </td>
+                                                                                            <td className="td_product">
+                                                                                                <span>{item?.total}</span>
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                    ))}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

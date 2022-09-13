@@ -28,6 +28,8 @@ function LoginModal(props) {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [userFormData, setUserFormData] = useState({ ...userForm });
+    const [openForgotPasswordForm, setOpenForgotPasswordForm] = useState(false);
+    const [forgotPasswordemail, setForgotPasswordEmail] = useState('');
     let timer;
 
     useEffect(() => {
@@ -51,6 +53,15 @@ function LoginModal(props) {
 
     }
 
+    function handelOpenForgotPasswordForm(e) {
+        e.preventDefault();
+        setOpenForgotPasswordForm(true);
+    }
+    function handelCloseForgotPasswordForm(e) {
+        e.preventDefault();
+        setOpenForgotPasswordForm(false);
+    }
+
     function openModal(e) {
         e.preventDefault();
         // setOpen(true);
@@ -61,6 +72,10 @@ function LoginModal(props) {
         let formdata = { ...userFormData }
         formdata[e.target.name] = e.target.value;
         setUserFormData(formdata);
+    }
+
+    const handleForgotPasswordemailInit = (e) => {
+        setForgotPasswordEmail(e.target.value);
     }
 
     const handleRigistrationSubmit = (e) => {
@@ -126,6 +141,23 @@ function LoginModal(props) {
 
     };
 
+    const handleForgotePasswordSubmit = async () => {
+        let formdata = {
+            "email": `${forgotPasswordemail}`,
+            "redirect_url": "http://bafco-next.herokuapp.com/"
+        };
+
+        API.post(`/forget-password`, formdata).then((response) => {
+            console.log("response :: ", response)
+            if (response?.data?.errors) {
+                toast.warning(response?.data?.errors?.email[0]);
+            } else {
+                toast.success(response?.data);
+                closeModal();
+            }
+        }).catch((error) => { toast.error(error?.response?.data); });
+
+    };
     return (
         <div className="account" onClick={openModal}>
             <ALink href="#">
@@ -167,33 +199,34 @@ function LoginModal(props) {
 
                                             <div className="tab-content">
                                                 <TabPanel style={{ paddingTop: "2rem" }}>
-                                                    <div>
-                                                        <form method="post">
-                                                            <div className="form-group">
-                                                                <label htmlFor="singin-email-2">Email address *</label>
-                                                                <input type="text" className="form-control" id="singin-email-2" name="email" onChange={handleInit} required />
-                                                            </div>
-
-                                                            <div className="form-group">
-                                                                <label htmlFor="singin-password-2">Password *</label>
-                                                                <input type="password" className="form-control" id="singin-password-2" name="password" onChange={handleInit} required />
-                                                            </div>
-
-                                                            <div className="form-footer">
-                                                                <button type="button" onClick={handleLoginSubmit} className="btn btn-outline-primary-2">
-                                                                    <span>LOG IN</span>
-                                                                    <i className="icon-long-arrow-right"></i>
-                                                                </button>
-
-                                                                <div className="custom-control custom-checkbox">
-                                                                    <input type="checkbox" className="custom-control-input" id="signin-remember-2" />
-                                                                    <label className="custom-control-label" htmlFor="signin-remember-2">Remember Me</label>
+                                                    {openForgotPasswordForm !== true ?
+                                                        <div>
+                                                            <form method="post">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="singin-email-2">Email address *</label>
+                                                                    <input type="text" className="form-control" id="singin-email-2" name="email" onChange={handleInit} required />
                                                                 </div>
 
-                                                                <ALink href="#" className="forgot-link">Forgot Your Password?</ALink>
-                                                            </div>
-                                                        </form>
-                                                        {/* <div className="form-choice">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="singin-password-2">Password *</label>
+                                                                    <input type="password" className="form-control" id="singin-password-2" name="password" onChange={handleInit} required />
+                                                                </div>
+
+                                                                <div className="form-footer">
+                                                                    <button type="button" onClick={handleLoginSubmit} className="btn btn-outline-primary-2">
+                                                                        <span>LOG IN</span>
+                                                                        <i className="icon-long-arrow-right"></i>
+                                                                    </button>
+
+                                                                    <div className="custom-control custom-checkbox">
+                                                                        <input type="checkbox" className="custom-control-input" id="signin-remember-2" />
+                                                                        <label className="custom-control-label" htmlFor="signin-remember-2">Remember Me</label>
+                                                                    </div>
+
+                                                                    <span onClick={(e) => handelOpenForgotPasswordForm(e)} className="forgot-link">Forgot Your Password?</span>
+                                                                </div>
+                                                            </form>
+                                                            {/* <div className="form-choice">
                                                             <p className="text-center">or sign in with</p>
                                                             <div className="row">
                                                                 <div className="col-sm-6">
@@ -210,7 +243,24 @@ function LoginModal(props) {
                                                                 </div>
                                                             </div>
                                                         </div> */}
-                                                    </div>
+                                                        </div> :
+                                                        <div>
+                                                            <form method="post">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="singin-email-2">Email address *</label>
+                                                                    <input type="text" className="form-control" id="singin-email-2" name="email" value={forgotPasswordemail} onChange={handleForgotPasswordemailInit} required />
+                                                                </div>
+
+                                                                <div className="form-footer">
+                                                                    <button type="button" onClick={handleForgotePasswordSubmit} className="btn btn-outline-primary-2">
+                                                                        <span>Forgot Password</span>
+                                                                        <i className="icon-long-arrow-right"></i>
+                                                                    </button>
+                                                                    <span onClick={(e) => handelCloseForgotPasswordForm(e)} className="forgot-link" style={{ color: '#EE3124', fontWeight: '600' }}><i className="icon-long-arrow-left"></i>Back To Login</span>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    }
                                                 </TabPanel>
 
                                                 <TabPanel>
@@ -260,6 +310,7 @@ function LoginModal(props) {
                                                         </div>
                                                     </div> */}
                                                 </TabPanel>
+
                                             </div>
                                         </Tabs>
                                     </div>
