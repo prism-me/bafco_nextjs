@@ -17,7 +17,6 @@ function DetailOne(props) {
     const [qty2, setQty2] = useState(1);
     const [variationGroup, setVariationGroup] = useState([]);
     const [variationTypeGroup, setVariationTypeGroup] = useState([]);
-    // const [selectedColorVariant, setselectedColorVariant] = useState({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
     const [authtoken, setAuthtoken] = useState('');
     const [selectedVariant, setSelectedVariant] = useState();
     const [variantCombGroup, setvariantCombGroup] = useState();
@@ -62,20 +61,7 @@ function DetailOne(props) {
         }, 0);
         setvariantCombGroup(comb)
 
-        // setVariationBoxGroup()
-
-
     }, [product])
-
-    // useEffect(() => {
-
-    //     setselectedColorVariant({ color: null, colorName: null, colorId: null, variationId: null, fabricImage: "" });
-
-    //     setQty(1);
-
-    //     setQty2(1);
-
-    // }, [router.query.slug])
 
     useEffect(() => {
 
@@ -86,24 +72,6 @@ function DetailOne(props) {
         // return () => { window.removeEventListener('scroll', scrollHandler); }
 
     }, [])
-
-    // useEffect(() => {
-    //     scrollHandler();
-    // }, [router.pathname])
-
-    // function scrollHandler() {
-    //     if (router.pathname.includes('/collections/')) {
-    //         let stickyBar = ref.current.querySelector('.sticky-bar');
-    //         if (stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom < 0) {
-    //             stickyBar.classList.remove('d-none');
-    //             return;
-    //         }
-    //         if (!stickyBar.classList.contains('d-none') && ref.current.getBoundingClientRect().bottom > 0) {
-    //             stickyBar.classList.add('d-none');
-    //         }
-    //     }
-    // }
-
 
     function onWishlistClick(e) {
         e.preventDefault();
@@ -125,10 +93,6 @@ function DetailOne(props) {
     function onChangeQty(current) {
         setQty(current);
     }
-
-    // function onChangeQty2(current) {
-    //     setQty2(current);
-    // }
 
     function onCartClick(e, index = 0) {
         e.preventDefault();
@@ -203,16 +167,6 @@ function DetailOne(props) {
 
     }
 
-    // function handelSelectVariantDropdownChange(e, item) {
-    //     console.log("handelSelectVariantDropdownChange :: ", e.target.value)
-    //     console.log("handelSelectVariantDropdownChange item :: ", item)
-    //     console.log("handelSelectVariantDrop down :: ", variantCombGroup.filter(function (entry) {
-    //         return Object.keys(resultNewComb).every(function (key) {
-    //             return entry[key] === resultNewComb[key];
-    //         });
-    //     }))
-    // }
-
     if (!product) {
         return <div></div>;
     }
@@ -271,24 +225,16 @@ function DetailOne(props) {
                                             }
                                         </select>
                                     </div> :
-                                    <div className="product-nav product-nav-dots">
+                                    <div className="product-nav product-nav-dots" style={{ display: "block" }}>
+                                        {console.log("variantCombGroup :: ", variantCombGroup)}
+                                        {console.log("variationGroup :: ", variationGroup)}
+                                        {console.log("selectedVariant[index - 1]?.name :: ", selectedVariant[index - 1])}
+
+
                                         {variationGroup &&
                                             variantCombGroup.map((variantcom) => (
                                                 <>
-                                                    {variantcom.Material === selectedVariant[index - 1]?.name &&
-                                                        variationGroup.map((item2, index2) => (
-                                                            variantcom?.Color === item2.name &&
-                                                            item?.variant?.name === item2?.variant?.name &&
-                                                            <span
-                                                                className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
-                                                                key={index2}
-                                                                onClick={(e) => handelSelectVariantChange(e, item2)}
-                                                            >
-                                                            </span>
-                                                        ))
-                                                    }
-                                                    {variantcom.Frame === selectedVariant[index - 1]?.name &&
+                                                    {variantcom[selectedVariant[index - 1]?.type] === selectedVariant[index - 1]?.name &&
                                                         variationGroup.map((item2, index2) => (
                                                             variantcom?.Color === item2.name &&
                                                             item?.variant?.name === item2?.variant?.name &&
