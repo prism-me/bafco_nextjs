@@ -297,21 +297,38 @@ function Checkout(props) {
                 "total_amount": cartTotal?.decimal_amount,
                 "tax_amount": "0",
                 "currency": "AED",
+                // "shipping": {
+                //     "id": "shipping-01",
+                //     "name": "BAFCO Delivery",
+                //     "amount": "0",
+                //     "address": {
+                //         "name": isShipDifferent === true ? shipping?.address?.name : billing_address?.name,
+                //         "phone_number": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
+                //         "alt_phone": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
+                //         // "country": isShipDifferent === true ? shipping?.address?.country : billing_address?.country,
+                //         "country": "AE",
+                //         "state": isShipDifferent === true ? shipping?.address?.state : billing_address?.state,
+                //         "city": isShipDifferent === true ? shipping?.address?.city : billing_address?.city,
+                //         "postal_code": isShipDifferent === true ? shipping?.address?.postal_code : billing_address?.postal_code,
+                //         "line1": isShipDifferent === true ? shipping?.address?.address_line1 : billing_address?.address_line1,
+                //         "line2": isShipDifferent === true ? shipping?.address?.address_line2 : billing_address?.address_line2,
+                //     },
+                // },
                 "shipping": {
                     "id": "shipping-01",
                     "name": "BAFCO Delivery",
                     "amount": "0",
                     "address": {
-                        "name": isShipDifferent === true ? shipping?.address?.name : billing_address?.name,
-                        "phone_number": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
-                        "alt_phone": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
+                        "name": billing_address?.name,
+                        "phone_number": billing_address?.phone_number,
+                        "alt_phone": billing_address?.phone_number,
                         // "country": isShipDifferent === true ? shipping?.address?.country : billing_address?.country,
                         "country": "AE",
-                        "state": isShipDifferent === true ? shipping?.address?.state : billing_address?.state,
-                        "city": isShipDifferent === true ? shipping?.address?.city : billing_address?.city,
-                        "postal_code": isShipDifferent === true ? shipping?.address?.postal_code : billing_address?.postal_code,
-                        "line1": isShipDifferent === true ? shipping?.address?.address_line1 : billing_address?.address_line1,
-                        "line2": isShipDifferent === true ? shipping?.address?.address_line2 : billing_address?.address_line2,
+                        "state": billing_address?.state,
+                        "city": billing_address?.city,
+                        "postal_code": billing_address?.postal_code,
+                        "line1": billing_address?.address_line1,
+                        "line2": billing_address?.address_line2,
                     },
                 },
                 "billing_address": {
@@ -518,7 +535,7 @@ function Checkout(props) {
                                             <label className="custom-control-label" htmlFor="checkout-create-acc">Create an account?</label>
                                         </div> */}
 
-                                        <SlideToggle duration={300} collapsed>
+                                        {/* <SlideToggle duration={300} collapsed>
                                             {({ onToggle, setCollapsibleElement }) => (
                                                 <div className="form-group">
                                                     <div className="custom-control custom-checkbox mt-0 address-box" onChange={() => setIsShipDifferent(true)}>
@@ -655,7 +672,7 @@ function Checkout(props) {
                                                     </div>
                                                 </div>
                                             )}
-                                        </SlideToggle >
+                                        </SlideToggle > */}
                                     </>
                                     <div className="row">
                                         <div className="col-lg-12">

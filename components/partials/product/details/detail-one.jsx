@@ -226,11 +226,6 @@ function DetailOne(props) {
                                         </select>
                                     </div> :
                                     <div className="product-nav product-nav-dots" style={{ display: "block" }}>
-                                        {console.log("variantCombGroup :: ", variantCombGroup)}
-                                        {console.log("variationGroup :: ", variationGroup)}
-                                        {console.log("selectedVariant[index - 1]?.name :: ", selectedVariant[index - 1])}
-
-
                                         {variationGroup &&
                                             variantCombGroup.map((variantcom) => (
                                                 <>

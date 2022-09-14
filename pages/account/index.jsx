@@ -570,7 +570,7 @@ function MyAccount() {
                                             <TabPanel>
                                                 <p>Hello <span className="text-dark" style={{ textDecoration: "underline", fontWeight: "bold" }}>{userData?.name}</span> (not <span className="font-weight-normal text-dark">User</span>? <ALink href="/">Log out</ALink>)
                                                     <br />
-                                                    From your account dashboard you can view your <a href="#tab-orders" onClick={toOrder} className="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" onClick={toAddress} className="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" onClick={toAccount} className="tab-trigger-link">edit your password and account details</a>.</p>
+                                                    From your account dashboard you can view your <a href="#tab-orders" onClick={toOrder} className="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-addresses" onClick={toAddress} className="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" onClick={toAccount} className="tab-trigger-link">edit your password and account details</a>.</p>
                                             </TabPanel>
 
                                             <TabPanel>
@@ -595,7 +595,9 @@ function MyAccount() {
                                                                     {orderList?.map((order, index) => (
                                                                         <tr key={index}>
                                                                             <td className="td_product"><span>{order?.order_number}</span></td>
-                                                                            <td className="td_product"><span>{order?.status}</span></td>
+                                                                            <td className="td_product"><span>{order?.status === "ORDERPLACED" ? "Order Placed" :
+                                                                                order?.status === "ORDERDISPATCHED" ? "Order Dispatched" :
+                                                                                    order?.status === "ORDERDELIVERED" ? "Order Delivered" : "Order Canceled"}</span></td>
                                                                             <td className="td_product"><span>{order?.total}</span></td>
                                                                             <td className="td_product">
                                                                                 <span onClick={() => {
@@ -607,6 +609,7 @@ function MyAccount() {
                                                                                         </path>
                                                                                     </svg>
                                                                                 </span>
+                                                                                <a href={`/account/order/${order?.order_number}`} className="track_order">Track shipment</a>
                                                                             </td>
                                                                         </tr>
                                                                     ))}
@@ -683,7 +686,9 @@ function MyAccount() {
                                                                             <div className="col-lg-3 col-md-6 col-sm-6 col-12">
                                                                                 <h6 className="h6title">Status</h6>
                                                                             </div>
-                                                                            <div className="col-lg-3 col-md-6 col-sm-6 col-12">{singleOrderDetails?.status}</div>
+                                                                            <div className="col-lg-3 col-md-6 col-sm-6 col-12">{singleOrderDetails?.status === "ORDERPLACED" ? "Order Placed" :
+                                                                                singleOrderDetails?.status === "ORDERDISPATCHED" ? "Order Dispatched" :
+                                                                                    singleOrderDetails?.status === "ORDERDELIVERED" ? "Order Delivered" : "Order Canceled"}</div>
                                                                         </div>
                                                                         <div className="row">
                                                                         </div>

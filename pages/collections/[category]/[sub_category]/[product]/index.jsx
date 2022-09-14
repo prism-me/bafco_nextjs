@@ -14,6 +14,7 @@ import { GET_PRODUCT } from '~/server/queries';
 import withApollo from '~/server/apollo';
 import ALink from '~/components/features/alink';
 import { API } from '~/http/API';
+import LightBox from 'react-image-lightbox';
 
 function ProductInner() {
     const router = useRouter();
@@ -28,6 +29,8 @@ function ProductInner() {
     const [pageTitle, setPageTitle] = useState("");
     const [selectedVariation, setSelectedVariation] = useState("");
     const [randomProducts, setRandomProducts] = useState();
+    const [isOpen, setIsOpen] = useState(false);
+    const [photoIndex, setPhotoIndex] = useState(0);
 
     // useEffect(() => {
     //     // setQuery(router.query);
@@ -100,6 +103,28 @@ function ProductInner() {
 
     }, [selectedVariation])
 
+    function moveNextPhoto() {
+        setPhotoIndex((photoIndex + 1) % product?.single_product_details?.product?.album.length);
+    }
+
+    function movePrevPhoto() {
+        setPhotoIndex((photoIndex + product?.single_product_details?.product?.album.length - 1) % product?.single_product_details?.product?.album.length);
+    }
+
+    function openLightBox() {
+        let index = parseInt(document.querySelector(".product-main-image").getAttribute("index"));
+
+        if (!index) {
+            index = 0;
+        }
+        setIsOpen(true);
+        setPhotoIndex(index);
+    }
+
+    function closeLightBox() {
+        setIsOpen(false);
+    }
+
     return (
         <div className="main">
             {/* <PageHeader
@@ -151,23 +176,35 @@ function ProductInner() {
                     {product?.single_product_details?.product?.album?.length === 0 ? "" :
                         <div className="product-lg position-relative mb-5">
                             <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>
-                                {product?.single_product_details?.product?.album.map((item, index) =>
-                                    <Magnifier
-                                        imageSrc={item.avatar}
-                                        imageAlt="product"
-                                        largeImageSrc={item.avatar} // Optional
-                                        dragToMove={false}
-                                        mouseActivation="hover"
-                                        cursorStyleActive="crosshair"
-                                        id="product-zoom"
-                                        className="zoom-image position-relative overflow-hidden"
-                                        width={449}
-                                        height={569}
-                                        // style={{ paddingTop: `${569 / 449 * 100}%` }}
-                                    />
-                                    // <img src={item.avatar} alt={`product_${index}`} key={index} />
+                                {product?.single_product_details?.product?.album.map((item, index2) =>
+                                    <figure className="product-main-image" index="0" key={index2}>
+                                        <img src={item.avatar} alt={`product_${index2}`} />
+                                        <button id="btn-product-gallery" className="btn-product-gallery"
+                                            onClick={openLightBox}>
+                                            <i className="icon-arrows"></i>
+                                        </button>
+
+                                    </figure>
                                 )}
                             </OwlCarousel>
+                            {isOpen ?
+                                <LightBox
+                                    mainSrc={product?.single_product_details?.product?.album[photoIndex]?.avatar}
+                                    nextSrc={product?.single_product_details?.product?.album[(photoIndex + 1) % product?.single_product_details?.product?.album?.length].avatar}
+                                    prevSrc={product?.single_product_details?.product?.album[(photoIndex + product?.single_product_details?.product?.album?.length - 1) % product?.single_product_details?.product?.album?.length].avatar}
+                                    onCloseRequest={closeLightBox}
+                                    onMovePrevRequest={moveNextPhoto}
+                                    onMoveNextRequest={movePrevPhoto}
+                                    reactModalStyle={{
+                                        overlay: {
+                                            zIndex: 1041
+                                        },
+                                    }
+                                    }
+                                />
+                                : ''
+                            }
+
                         </div>
                     }
                     <InfoOne product={product?.single_product_details} dimension={product?.dimensions} />
