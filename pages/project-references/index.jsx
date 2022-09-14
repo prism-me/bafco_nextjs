@@ -49,22 +49,18 @@ function ProjectReferences() {
           <div className="application-heading mb-5 text-center">
             <h3>Project Gallery</h3>
             <p className="subtitle">
-              Workspaces as unique as the people who work in them.
+              Workspaces are as unique as the people who work in them.
+            </p>
+            <p className="mb-0">
+              We know that your workspace is a reflection of your business and
+              your story, which is why we ensure that all of our client's
+              projects are customized according to their specific needs.
             </p>
             <p>
-              Sed pretium, ligula sollicitudin laoreet viverra, tortor libero
-              sodales leo, eget blandit nunc tortor eu nibh. Suspendisse
-              potenti. Sed egestas, ante et vulputate volutpat, uctus metus
-              libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra,
-              tortor libero sodales leo, eget blandit nunc tortor eu nibh.
-              Suspendisse potenti. Sed egestas, ante et vulputate volutpat,
-              uctus metus libero eu augue.Sed pretium, ligula sollicitudin
-              laoreet viverra, tortor libero sodales leo, eget blandit nunc
-              tortor eu nibh. Suspendisse potenti. Sed egestas, ante et
-              vulputate volutpat, uctus metus libero eu augue.Sed pretium,
-              ligula sollicitudin laoreet viverra, tortor libero sodales leo,
-              eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed
-              egestas, ante et vulputate volutpat, uctus metus libero eu
+              Whether you need a space that's cozy, industrial, modern or
+              minimalist, we can help you create a workspace that reflects your
+              team's culture and create a space focused on productivity and
+              well-being.
             </p>
           </div>
 

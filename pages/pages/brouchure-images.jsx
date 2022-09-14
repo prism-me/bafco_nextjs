@@ -7,6 +7,7 @@ import { actions as demoAction } from "~/store/demo";
 import { fadeIn } from "~/utils/data";
 import { API } from "~/http/API";
 import ContactForm from "../contact-form/contact-form";
+import { saveAs } from "file-saver";
 
 function BrouchureImages(props) {
   const [brochuresList, setBrochuresList] = useState();
@@ -32,6 +33,12 @@ function BrouchureImages(props) {
         console.log(err);
       });
   }, [selectedCategory]);
+
+  const downloadImg = (downloadImg) => {
+    if (downloadImg) {
+      saveAs(downloadImg, "image.jpg");
+    }
+  };
 
   return (
     <div className="main brouchure-images-page">
@@ -153,20 +160,18 @@ function BrouchureImages(props) {
                             {x.files &&
                               x.files.length > 0 &&
                               x.files.map((t, ind) => (
-                                <a
-                                  href={t.url === null ? t?.file_link : t?.url}
-                                  without
-                                  rel="noopener noreferrer"
-                                  target="_blank"
+                                <button
+                                  className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-2"
+                                  key={ind}
+                                  onClick={() =>
+                                    downloadImg(
+                                      t.url === null ? t?.file_link : t?.url
+                                    )
+                                  }
                                 >
-                                  <button
-                                    className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-2"
-                                    key={ind}
-                                  >
-                                    <span>{t.name}</span>
-                                    <i className="icon-arrow-down"></i>
-                                  </button>
-                                </a>
+                                  <span>{t.name}</span>
+                                  <i className="icon-arrow-down"></i>
+                                </button>
                               ))}
                           </div>
                         </div>

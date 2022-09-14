@@ -1,21 +1,16 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { connect } from "react-redux";
+// import { useRouter } from "next/router";
+// import { connect } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import { actions as wishlistAction } from "~/store/wishlist";
-import { actions as cartAction } from "~/store/cart";
-import { actions as compareAction } from "~/store/compare";
-import { actions as demoAction } from "~/store/demo";
-import FabricModal from "~/components/features/modals/fabric-modal";
+// import { actions as wishlistAction } from "~/store/wishlist";
+// import { actions as cartAction } from "~/store/cart";
+// import { actions as compareAction } from "~/store/compare";
+// import { actions as demoAction } from "~/store/demo";
 
 function FabricGrid(props) {
-  const router = useRouter();
-  const { product } = props;
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  // console.log("product ::", product);
+  // const router = useRouter();
+  const { product, setIsOpen, setProductId } = props;
 
   return (
     <div className="product product-7 text-center w-100">
@@ -28,7 +23,7 @@ function FabricGrid(props) {
           wrapperClassName="product-image"
           onClick={() => {
             setIsOpen(true);
-            console.log("opennnn");
+            setProductId(product?.id);
           }}
         />
         {/* {product?.featured_img ? (
@@ -47,21 +42,22 @@ function FabricGrid(props) {
       <div className="product-body">
         <h3 className="product-title">{product?.title}</h3>
       </div>
-      <FabricModal show={isOpen} onHide={() => setIsOpen(false)} />
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    wishlist: state.wishlist.data,
-    comparelist: state.comparelist.data,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     wishlist: state.wishlist.data,
+//     comparelist: state.comparelist.data,
+//   };
+// };
 
-export default connect(mapStateToProps, {
-  ...wishlistAction,
-  ...cartAction,
-  ...compareAction,
-  ...demoAction,
-})(FabricGrid);
+export default // connect(mapStateToProps, {
+//   ...wishlistAction,
+//   ...cartAction,
+//   ...compareAction,
+//   ...demoAction,
+// })(
+FabricGrid;
+// );

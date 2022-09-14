@@ -26,10 +26,30 @@ function FabricGrid() {
   const totalCount = data && data.products.totalCount;
 
   const [fabricList, setFabricList] = useState();
+  const [filterList, setFilterList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("Leather");
   const [categoryList, setCategoryList] = useState("");
 
-  console.log("selectedCategory ::", selectedCategory);
+  const [matId, setMatId] = useState("");
+
+  useEffect(() => {
+    if ((query?.collection || query?.color || query?.finishes) && matId) {
+      let formdata = {
+        finishes_id:
+          Number(query?.collection) ||
+          Number(query?.color) ||
+          Number(query?.finishes),
+        material_id: matId,
+      };
+      API.post(`/finishes-filter-data`, formdata)
+        .then((response) => {
+          setFabricList(response?.data?.finishesData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [query, matId]);
 
   useEffect(() => {
     API.get(`/material-list`)
@@ -44,7 +64,8 @@ function FabricGrid() {
   useEffect(() => {
     API.get(`/finishes-filter-list/${selectedCategory}`)
       .then((response) => {
-        setFabricList(response?.data);
+        setFabricList(response?.data?.finishesData);
+        setFilterList(response?.data?.finishesList);
       })
       .catch((err) => {
         console.log(err);
@@ -160,6 +181,7 @@ function FabricGrid() {
             categoryList={categoryList}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            setMatId={setMatId}
           />
           <div className="row skeleton-body">
             <div
@@ -168,7 +190,7 @@ function FabricGrid() {
               }`}
             >
               <FabricListOne
-                products={fabricList?.finishesData}
+                products={fabricList}
                 perPage={perPage}
                 loading={loading}
               ></FabricListOne>
@@ -190,7 +212,10 @@ function FabricGrid() {
               <div className="skel-widget"></div>
               <div className="skel-widget"></div>
               <StickyBox className="sticky-content" offsetTop={70}>
-                <FabricSidebarOne toggle={toggle}></FabricSidebarOne>
+                <FabricSidebarOne
+                  toggle={toggle}
+                  filterData={filterList}
+                ></FabricSidebarOne>
               </StickyBox>
               {toggle ? (
                 <button

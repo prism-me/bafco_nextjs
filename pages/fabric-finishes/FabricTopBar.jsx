@@ -1,11 +1,26 @@
 import { useRouter } from "next/router";
 import React from "react";
-import ALink from "~/components/features/alink";
+import { useEffect } from "react";
+// import ALink from "~/components/features/alink";
+import { saveAs } from "file-saver";
 
 function FabricTopBar(props) {
   const router = useRouter();
-  const type = router.query.type;
-  const { categoryList, selectedCategory, setSelectedCategory } = props;
+  // const type = router.query.type;
+  const { categoryList, selectedCategory, setSelectedCategory, setMatId } =
+    props;
+
+  useEffect(() => {
+    if (categoryList.length > 0) {
+      setMatId(categoryList[0].id);
+    }
+  }, [categoryList.length]);
+
+  const downloadImg = (downloadImg) => {
+    if (downloadImg) {
+      saveAs(downloadImg, "image.jpg");
+    }
+  };
   return (
     <>
       <div className="fabric-top-bar mb-5">
@@ -16,24 +31,20 @@ function FabricTopBar(props) {
                 className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${
                   selectedCategory === `${item.name}` ? "active" : ""
                 }`}
-                onClick={() => setSelectedCategory(`${item.name}`)}
+                onClick={() => {
+                  setSelectedCategory(`${item.name}`);
+                  setMatId(`${item.id}`);
+                }}
               >
                 <span>{item.name}</span>
               </button>
             ))}
-          {/* <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-            <span>Fabric</span>
-          </button>
-          <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-            <span>Laminate</span>
-          </button>
-          <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-            <span>Veneer</span>
-          </button>
-          <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-            <span>Nanotec</span>
-          </button> */}
-          <button className="btn btn-sm btn-minwidth btn-outline-primary-2 downloadbtn">
+          <button
+            className="btn btn-sm btn-minwidth btn-outline-primary-2 downloadbtn"
+            onClick={() =>
+              downloadImg("http://www.africau.edu/images/default/sample.pdf")
+            }
+          >
             <i className="icon-arrow-down"></i>
             <span>Download Collections</span>
           </button>

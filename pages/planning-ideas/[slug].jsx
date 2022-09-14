@@ -15,6 +15,7 @@ import {
   PinterestIcon,
 } from "react-share";
 import { API } from "~/http/API";
+import { saveAs } from "file-saver";
 
 function PlaningIdeasInner(props) {
   const slug = useRouter().query.slug;
@@ -51,6 +52,12 @@ function PlaningIdeasInner(props) {
     });
   };
 
+  const downloadImg = (downloadImg) => {
+    if (downloadImg) {
+      saveAs(downloadImg, "image.jpg");
+    }
+  };
+
   return (
     <div className="main planingIdeasInner-page">
       <nav className="breadcrumb-nav">
@@ -83,29 +90,30 @@ function PlaningIdeasInner(props) {
                   </p>
                 </div>
 
-                <p className="subtitle mb-3">Available formats</p>
-
-                <div className="btnWrapper mb-3">
-                  {planDetail.files &&
-                    planDetail.files.length > 0 &&
-                    planDetail.files.map((t, ind) => (
-                      <a
-                        href={t.url === null ? t?.file_link : t?.url}
-                        without
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        // download
-                      >
-                        <button
-                          className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-3"
-                          key={ind}
-                        >
-                          <i className="icon-arrow-down"></i>
-                          <span>{t.name}</span>
-                        </button>
-                      </a>
-                    ))}
-                </div>
+                {planDetail.files &&
+                  planDetail.files.length > 0 &&
+                  (planDetail.files[0].url !== null ||
+                    planDetail.files[0].file_link !== null) && (
+                    <>
+                      <p className="subtitle mb-3">Available formats</p>
+                      <div className="btnWrapper mb-3">
+                        {planDetail.files.map((t, ind) => (
+                          <button
+                            className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-3"
+                            key={ind}
+                            onClick={() =>
+                              downloadImg(
+                                t.url === null ? t?.file_link : t?.url
+                              )
+                            }
+                          >
+                            <i className="icon-arrow-down"></i>
+                            <span>{t.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
 
                 <p className="subtitle mb-3">Documentation</p>
 

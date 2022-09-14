@@ -1,10 +1,11 @@
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import FabricGrid from "./fabric-grid";
+import FabricModal from "~/components/features/modals/fabric-modal";
 
 function FabricListOne(props) {
   const { loading, products = [], perPage } = props;
-  const router = useRouter();
+  // const router = useRouter();
   const [fakeArray, setFakeArray] = useState([]);
   const [gridClass, setGridClass] = useState("col-6");
   const type = "4cols";
@@ -23,6 +24,10 @@ function FabricListOne(props) {
     if (type === "4cols") setGridClass("col-6 col-md-4 col-lg-4 col-xl-3");
   }, [type]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [productId, setProductId] = useState(false);
+
   return (
     <div className="products mb-3">
       {products.length == 0 && !loading ? (
@@ -37,11 +42,21 @@ function FabricListOne(props) {
               ))
             : products.map((product, index) => (
                 <div className={gridClass} key={index}>
-                  <FabricGrid product={product} />
+                  <FabricGrid
+                    product={product}
+                    setProductId={setProductId}
+                    setIsOpen={setIsOpen}
+                  />
                 </div>
               ))}
         </div>
       )}
+
+      <FabricModal
+        show={isOpen}
+        onHide={() => setIsOpen(false)}
+        productId={productId}
+      />
     </div>
   );
 }
