@@ -10,6 +10,18 @@ import ContactForm from "../contact-form/contact-form";
 import { saveAs } from "file-saver";
 
 function BrouchureImages(props) {
+  const [brochuredata, setBrochuredata] = useState();
+
+  useEffect(() => {
+    API.get(`/pages/brochure-page?en`)
+      .then((response) => {
+        setBrochuredata(response.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [brochuresList, setBrochuresList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
@@ -60,18 +72,14 @@ function BrouchureImages(props) {
               <div className="col-lg-12 col-sm-12 col-xs-12">
                 <div className="imgWrapper">
                   <img
-                    src="images/brochureImages/brochureimg.png"
+                    src={brochuredata?.profile?.image}
                     className="img-fluid mb-2"
                   />
                   <div className="bottom-left">
-                    BAFCO <br />
-                    Company Profile
+                    {brochuredata?.profile?.heading}
                   </div>
                   <div className="top-right">
-                    Sed pretium, ligula sollicitudin laoreet viverra, tortor
-                    libero sodales leo, eget blandit nunc tortor eu nibh.
-                    Suspendisse potenti. Sed egestas, ante et vulputate
-                    volutpat, uctus metus libero eu augue.Sed pretium,
+                    {brochuredata?.profile?.sub_heading}
                   </div>
                 </div>
                 <div className="btnWrapper">

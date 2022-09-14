@@ -7,6 +7,18 @@ import { fadeIn } from "~/utils/data";
 import Reveal from "react-awesome-reveal";
 
 function ProjectReferences() {
+  const [projectdata, setProjectdata] = useState();
+
+  useEffect(() => {
+    API.get(`/pages/project-references-page?en`)
+      .then((response) => {
+        setProjectdata(response.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [projectsList, setProjectsList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
@@ -47,21 +59,14 @@ function ProjectReferences() {
       <div className="page-content pb-0">
         <div className="container">
           <div className="application-heading mb-5 text-center">
-            <h3>Project Gallery</h3>
-            <p className="subtitle">
-              Workspaces are as unique as the people who work in them.
-            </p>
-            <p className="mb-0">
-              We know that your workspace is a reflection of your business and
-              your story, which is why we ensure that all of our client's
-              projects are customized according to their specific needs.
-            </p>
-            <p>
-              Whether you need a space that's cozy, industrial, modern or
-              minimalist, we can help you create a workspace that reflects your
-              team's culture and create a space focused on productivity and
-              well-being.
-            </p>
+            <h3>{projectdata?.intro?.title}</h3>
+            <p className="subtitle">{projectdata?.intro?.sub_title}</p>
+            <p
+              className="descr"
+              dangerouslySetInnerHTML={{
+                __html: projectdata?.intro?.description,
+              }}
+            ></p>
           </div>
 
           <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
