@@ -186,7 +186,7 @@ function PlaningIdeasInner(props) {
                 <div className="shareBtnWrape">
                   <div className="shareBtn">
                     <FacebookShareButton
-                      url={`https://bafco-next.herokuapp.com//planning-ideas/`}
+                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
                       hashtag={"#BAFCO"}
                       quote={"Planning Ideas"}
                     >
@@ -195,7 +195,7 @@ function PlaningIdeasInner(props) {
                   </div>
                   <div className="shareBtn">
                     <LinkedinShareButton
-                      url={`https://bafco-next.herokuapp.com//planning-ideas/`}
+                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
                       title={"Planning Ideas"}
                       summary={"Planning Ideas"}
                       source={"BAFCO"}
@@ -205,8 +205,8 @@ function PlaningIdeasInner(props) {
                   </div>
                   <div className="shareBtn">
                     <PinterestShareButton
-                      url={`https://bafco-next.herokuapp.com//planning-ideas/`}
-                      media={`https://bafco-next.herokuapp.com//planning-ideas/`}
+                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
+                      media={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
                       description={"Planning Ideas"}
                     >
                       <PinterestIcon size={36} />

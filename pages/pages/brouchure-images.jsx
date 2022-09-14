@@ -82,8 +82,11 @@ function BrouchureImages(props) {
                     {brochuredata?.profile?.sub_heading}
                   </div>
                 </div>
-                <div className="btnWrapper">
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                {/* <div className="btnWrapper">
+                  <button
+                    className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                    onClick={() => downloadImg(brochuredata?.profile?.image)}
+                  >
                     <i className="icon-arrow-down"></i>
                     <span>Download Bafco Company Profile</span>
                   </button>
@@ -91,7 +94,7 @@ function BrouchureImages(props) {
                     <i className="icon-eye"></i>
                     <span>View Bafco Company Profile (via ISSUU)</span>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

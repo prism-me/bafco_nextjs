@@ -17,7 +17,7 @@ function FabricGrid(props) {
       <figure className="product-media">
         <LazyLoadImage
           alt="product"
-          src={product?.featured_img}
+          src={product?.value?.featured_img}
           threshold={500}
           effect="black and white"
           wrapperClassName="product-image"
@@ -40,7 +40,7 @@ function FabricGrid(props) {
       </figure>
 
       <div className="product-body">
-        <h3 className="product-title">{product?.title}</h3>
+        <h3 className="product-title">{product?.name}</h3>
       </div>
     </div>
   );

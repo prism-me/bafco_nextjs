@@ -43,7 +43,7 @@ function FabricGrid() {
       };
       API.post(`/finishes-filter-data`, formdata)
         .then((response) => {
-          setFabricList(response?.data?.finishesData);
+          setFabricList(response?.data?.finishesData[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -64,7 +64,7 @@ function FabricGrid() {
   useEffect(() => {
     API.get(`/finishes-filter-list/${selectedCategory}`)
       .then((response) => {
-        setFabricList(response?.data?.finishesData);
+        setFabricList(response?.data?.finishesData[0]);
         setFilterList(response?.data?.finishesList);
       })
       .catch((err) => {
@@ -193,6 +193,7 @@ function FabricGrid() {
                 products={fabricList}
                 perPage={perPage}
                 loading={loading}
+                matId={matId}
               ></FabricListOne>
 
               {/* {totalCount > perPage ? (
@@ -215,6 +216,7 @@ function FabricGrid() {
                 <FabricSidebarOne
                   toggle={toggle}
                   filterData={filterList}
+                  matId={matId}
                 ></FabricSidebarOne>
               </StickyBox>
               {toggle ? (

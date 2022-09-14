@@ -4,7 +4,7 @@ import FabricGrid from "./fabric-grid";
 import FabricModal from "~/components/features/modals/fabric-modal";
 
 function FabricListOne(props) {
-  const { loading, products = [], perPage } = props;
+  const { loading, products = [], perPage, matId } = props;
   // const router = useRouter();
   const [fakeArray, setFakeArray] = useState([]);
   const [gridClass, setGridClass] = useState("col-6");
@@ -40,15 +40,17 @@ function FabricListOne(props) {
                   <div className="skel-pro"></div>
                 </div>
               ))
-            : products.map((product, index) => (
-                <div className={gridClass} key={index}>
-                  <FabricGrid
-                    product={product}
-                    setProductId={setProductId}
-                    setIsOpen={setIsOpen}
-                  />
-                </div>
-              ))}
+            : products?.child_value[0]?.child
+                ?.filter((item) => item.value.material_id === matId)
+                ?.map((product, index) => (
+                  <div className={gridClass} key={index}>
+                    <FabricGrid
+                      product={product}
+                      setProductId={setProductId}
+                      setIsOpen={setIsOpen}
+                    />
+                  </div>
+                ))}
         </div>
       )}
 
