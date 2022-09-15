@@ -27,13 +27,13 @@ function FabricGrid() {
 
   const [fabricList, setFabricList] = useState();
   const [filterList, setFilterList] = useState();
-  const [selectedCategory, setSelectedCategory] = useState("Leather");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryList, setCategoryList] = useState("");
 
   const [matId, setMatId] = useState("");
 
   // console.log("matId::", matId);
-  // console.log("Leather::", selectedCategory);
+  // console.log("tab::", selectedCategory);
 
   // console.log(
   //   "Leather::",
@@ -74,6 +74,7 @@ function FabricGrid() {
   useEffect(() => {
     API.get(`/finishes-filter-list/${selectedCategory}`)
       .then((response) => {
+        // debugger;
         setFabricList(response?.data?.finishesData[0]);
         setFilterList(response?.data?.finishesList);
       })

@@ -13,6 +13,7 @@ function FabricTopBar(props) {
   useEffect(() => {
     if (categoryList.length > 0) {
       setMatId(categoryList[0].id);
+      setSelectedCategory(categoryList[0].name);
     }
   }, [categoryList.length]);
 
