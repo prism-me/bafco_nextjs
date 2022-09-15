@@ -91,4 +91,24 @@ $primary-color: #ee3124;
       }
     }
   }
+  .btn {
+    color: #fff;
+    border-color: $primary-color;
+    background: $primary-color;
+    font-size: 15px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    min-width: fit-content;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover,
+    &.active {
+      color: $primary-color;
+      border-color: $primary-color;
+      background: #fff;
+    }
+  }
 }

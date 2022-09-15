@@ -32,6 +32,16 @@ function FabricGrid() {
 
   const [matId, setMatId] = useState("");
 
+  // console.log("matId::", matId);
+  // console.log("Leather::", selectedCategory);
+
+  // console.log(
+  //   "Leather::",
+  //   fabricList?.child_value[0]?.child?.filter(
+  //     (item) => item.value.material_id === matId
+  //   )
+  // );
+
   useEffect(() => {
     if ((query?.collection || query?.color || query?.finishes) && matId) {
       let formdata = {

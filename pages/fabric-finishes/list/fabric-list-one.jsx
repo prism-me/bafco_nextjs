@@ -1,11 +1,13 @@
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import FabricGrid from "./fabric-grid";
 import FabricModal from "~/components/features/modals/fabric-modal";
 
 function FabricListOne(props) {
   const { loading, products = [], perPage, matId } = props;
-  // const router = useRouter();
+  const router = useRouter();
+  const query = Object.keys(router.query);
+
   const [fakeArray, setFakeArray] = useState([]);
   const [gridClass, setGridClass] = useState("col-6");
   const type = "4cols";
@@ -34,23 +36,51 @@ function FabricListOne(props) {
         <p className="no-results">No products matching your selection.</p>
       ) : (
         <div className="row">
-          {loading
-            ? fakeArray.map((item, index) => (
+          {loading ? (
+            fakeArray.map((item, index) => (
+              <div className={gridClass} key={index}>
+                <div className="skel-pro"></div>
+              </div>
+            ))
+          ) : products?.child_value?.length == 0 && !loading ? (
+            <p className="no-results">No products matching your selection.</p>
+          ) : query[0] === "collection" ? (
+            products?.child_value
+              ?.filter((item) => item.value.material_id === matId)
+              ?.map((product, index) => (
                 <div className={gridClass} key={index}>
-                  <div className="skel-pro"></div>
+                  <FabricGrid
+                    product={product}
+                    setProductId={setProductId}
+                    setIsOpen={setIsOpen}
+                  />
                 </div>
               ))
-            : products?.child_value[0]?.child
-                ?.filter((item) => item.value.material_id === matId)
-                ?.map((product, index) => (
-                  <div className={gridClass} key={index}>
-                    <FabricGrid
-                      product={product}
-                      setProductId={setProductId}
-                      setIsOpen={setIsOpen}
-                    />
-                  </div>
-                ))}
+          ) : query[0] === "color" ? (
+            products?.child_value
+              ?.filter((item) => item.value.material_id === matId)
+              ?.map((product, index) => (
+                <div className={gridClass} key={index}>
+                  <FabricGrid
+                    product={product}
+                    setProductId={setProductId}
+                    setIsOpen={setIsOpen}
+                  />
+                </div>
+              ))
+          ) : (
+            products?.child_value[0]?.child
+              ?.filter((item) => item.value.material_id === matId)
+              ?.map((product, index) => (
+                <div className={gridClass} key={index}>
+                  <FabricGrid
+                    product={product}
+                    setProductId={setProductId}
+                    setIsOpen={setIsOpen}
+                  />
+                </div>
+              ))
+          )}
         </div>
       )}
 
