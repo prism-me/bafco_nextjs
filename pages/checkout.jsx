@@ -11,6 +11,8 @@ import CountryRegionData from '~/utils/countrydata.json';
 import { cartPriceTotal } from '~/utils/index';
 import { toast } from 'react-toastify';
 import Joi from 'joi';
+import Modal from 'react-modal';
+// import { SuccessIcon } from '../public/images/icons/success-icon.png';
 
 let billingAddressData = {
     name: "",
@@ -41,6 +43,13 @@ let shippingAddressData = {
     },
 }
 
+const customStyles = {
+    overlay: {
+        backgroundColor: 'rgba(77,77,77,0.6)',
+        zIndex: '9000'
+    }
+}
+
 function Checkout(props) {
     const { cartlist } = props;
     const router = useRouter();
@@ -62,6 +71,30 @@ function Checkout(props) {
     const [UserIdData, setUserIdData] = useState('');
     const [xauthtokenUser, setXAuthTokenUser] = useState();
     const [cartList, setCartList] = useState([]);
+    const [isOpenThankyouModel, setIsOpenThankyouModel] = useState(false);
+
+    let timer;
+
+    useEffect(() => {
+
+        if (router?.query?.status == 'success') {
+            setIsOpenThankyouModel(true);
+        }
+
+    }, [router?.query?.status]);
+
+    const closeThankyouModel = () => {
+        document.getElementById("success-modal").classList.remove("ReactModal__Content--after-open");
+
+        if (document.querySelector(".ReactModal__Overlay")) {
+            document.querySelector(".ReactModal__Overlay").style.opaarea = '0';
+        }
+
+        timer = setTimeout(() => {
+            setIsOpenThankyouModel(false);
+            router.push('/checkout');
+        }, 350);
+    }
 
     useEffect(() => {
         setXAuthTokenUser(localStorage.getItem('authtoken'))
@@ -177,6 +210,12 @@ function Checkout(props) {
             }).catch((err) => console.log(err));
         }
     }, [defaultAddressID])
+
+    useEffect(() => {
+        return () => {
+            if (timer) clearTimeout(timer);
+        }
+    }, []);
 
     const handleChangeSetDefault = (e, id) => {
         setDefaultAddressID(id);
@@ -908,6 +947,37 @@ function Checkout(props) {
                                     </div>
 
                                 </aside>
+
+                                {isOpenThankyouModel &&
+                                    <Modal
+                                        isOpen={isOpenThankyouModel}
+                                        style={customStyles}
+                                        contentLabel="order Modal"
+                                        className="modal-dialog"
+                                        overlayClassName="d-flex align-items-center justify-content-center"
+                                        id="success-modal"
+                                        onRequestClose={closeThankyouModel}
+                                        closeTimeoutMS={10}
+                                    >
+                                        <div className="modal-content">
+                                            {console.log("isOpenThankyouModel :: ", isOpenThankyouModel)}
+                                            <div className="orderdetailModelheader modal-header mb-2">
+                                                {/* <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div> */}
+                                                <button type="button" className="close" onClick={closeThankyouModel}>
+                                                    <span aria-hidden="true">×</span>
+                                                    <span className="sr-only">Close</span>
+                                                </button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <div className="orderdetailbody text-center mb-6">
+                                                    <img className="mb-6" src='images/icons/success-icon.png' width='100px' style={{ margin: '0 auto' }} alt="Success" />
+                                                    <h2>Thank you!</h2>
+                                                    <h6>Your order has been placed successfully!</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal>
+                                }
                             </div>
                         </form>
                     </div>

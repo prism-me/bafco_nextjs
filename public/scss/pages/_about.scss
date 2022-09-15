@@ -16,6 +16,9 @@
 	right: 13rem;
 	top: 0;
 	z-index: 1;
+	@media (max-width: 767px) {
+		right: 0rem;
+	}
 }
 
 .brands-text {

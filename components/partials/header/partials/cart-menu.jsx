@@ -1,21 +1,46 @@
 import { connect } from 'react-redux';
-
+import { useEffect, useState } from "react";
 import ALink from '~/components/features/alink';
-
+import { API } from '~/http/API';
 import { actions } from '~/store/cart';
 import { cartQtyTotal, cartPriceTotal } from '~/utils/index';
 
 function CartMenu(props) {
     const { cartlist } = props;
+    const [cartCount, setCartCount] = useState(0);
 
     console.log("cartlist :: ", cartlist)
+
+    useEffect(() => {
+        let authtoken = localStorage.getItem('authtoken');
+        let UserDetail = localStorage.getItem('UserData');
+        let GuestUserDetail = localStorage.getItem('GuestUserData');
+
+        if (authtoken === "" || authtoken === null || authtoken === undefined) {
+
+            API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
+                setCartCount(response?.data?.length);
+            }).catch((err) => {
+                console.log(err);
+            });
+
+        } else {
+            API.get(`/auth/cart/${UserDetail}`, {headers: {'Authorization': `Bearer ${authtoken}`}}).then((response) => {
+                setCartCount(response?.data?.length);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
+    }, [props.cartlist])
 
     return (
         <div className="dropdown cart-dropdown">
             <ALink href="/cart" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                 <div className="icon">
                     <i className="icon-shopping-cart"></i>
-                    <span className="cart-count">{cartQtyTotal(cartlist)}</span>
+                    {/* <span className="cart-count">{cartQtyTotal(cartlist)}</span> */}
+                    <span className="cart-count">{cartCount}</span>
                 </div>
                 <p>Cart</p>
             </ALink>

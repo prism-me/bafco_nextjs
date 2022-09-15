@@ -99,6 +99,9 @@
 	padding-bottom: 1.15rem;
 	min-width: 230px;
 	text-transform: uppercase;
+	@media (max-width: 767px) {
+		min-width: 165px;
+	}
 }
 
 .btn-link {
