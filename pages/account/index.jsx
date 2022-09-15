@@ -625,7 +625,8 @@ function MyAccount() {
                                     <div className="col-md-8 col-lg-9" style={{ marginTop: "1rem" }}>
                                         <div className="tab-pane">
                                             <TabPanel>
-                                                <p>Hello <span className="text-dark" style={{ textDecoration: "underline", fontWeight: "bold" }}>{userData?.name}</span> (not <span className="font-weight-normal text-dark">User</span>? <ALink href="/">Log out</ALink>)
+                                                <p>Hello <span className="text-dark" style={{ textDecoration: "underline", fontWeight: "bold" }}>{userData?.name}.</span> 
+                                                {/* (not <span className="font-weight-normal text-dark">User</span>? <ALink href="/">Log out</ALink>) */}
                                                     <br />
                                                     From your account dashboard you can view your <a href="#tab-orders" onClick={toOrder} className="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-addresses" onClick={toAddress} className="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" onClick={toAccount} className="tab-trigger-link">edit your password and account details</a>.</p>
                                             </TabPanel>
