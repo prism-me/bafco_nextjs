@@ -57,22 +57,24 @@ const cartReducer = (state = initialState, action) => {
                     };
                     API.post(`/auth/cart`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
 
-                        console.log("cart :: ", response);
+                        if (response.status === 200) {
+                            return {
+
+                                data: [
+                                    ...state.data,
+                                    {
+                                        ...action.payload.product,
+                                        qty: qty,
+                                    }
+                                ]
+                            };
+                        }
 
                     }).catch((err) => {
                         console.log(err);
                     });
 
-                    return {
 
-                        data: [
-                            ...state.data,
-                            {
-                                ...action.payload.product,
-                                qty: qty,
-                            }
-                        ]
-                    };
 
                 } else {
 
@@ -91,9 +93,17 @@ const cartReducer = (state = initialState, action) => {
                             qty: qty.toString()
                         };
                         API.post(`/guest-cart`, productData).then((response) => {
-
-                            console.log("cart :: ", response);
                             if (response.status === 200) {
+                                return {
+
+                                    data: [
+                                        ...state.data,
+                                        {
+                                            ...action.payload.product,
+                                            qty: qty,
+                                        }
+                                    ]
+                                };
                                 // API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
                                 //     state.cartTotal = response.data.length;
                                 //     console.log("state.cartTotal :: ", state.cartTotal)
@@ -106,16 +116,7 @@ const cartReducer = (state = initialState, action) => {
                             console.log(err);
                         });
 
-                        return {
 
-                            data: [
-                                ...state.data,
-                                {
-                                    ...action.payload.product,
-                                    qty: qty,
-                                }
-                            ]
-                        };
 
                     }
                 }

@@ -35,7 +35,6 @@ function ShopGrid() {
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
             setProducts(response?.data?.products);
-            console.log(response)
             setPageTitle(response?.data?.name);
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {

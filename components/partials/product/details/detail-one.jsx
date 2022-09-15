@@ -93,24 +93,37 @@ function DetailOne(props) {
     function onChangeQty(current) {
         setQty(current);
     }
+    
+    function onCartClick(e) {
 
-    function onCartClick(e, index = 0) {
         e.preventDefault();
-        if (e.currentTarget.classList.contains('btn-disabled')) return;
 
-        let newProduct = { ...product };
-        if (product?.variations?.length > 0) {
-            newProduct = {
-                ...product,
-                name: product.name + ' - ' + selectedColorVariant.colorName + ', ' + selectedColorVariant.size,
-                price: selectedColorVariant.price
-            };
-        }
-        props.addToCart(
-            newProduct,
-            index == 0 ? qty : qty2
-        );
+        let data = {
+            'product_id': product?.single_product_details?.product?.id,
+            'product_variation_id': product?.product_single_variation?.product_variation_details?.id,
+        };
+
+        props.addToCart(data);
+
     }
+
+    // function onCartClick(e, index = 0) {
+    //     e.preventDefault();
+    //     if (e.currentTarget.classList.contains('btn-disabled')) return;
+
+    //     let newProduct = { ...product };
+    //     if (product?.variations?.length > 0) {
+    //         newProduct = {
+    //             ...product,
+    //             name: product.name + ' - ' + selectedColorVariant.colorName + ', ' + selectedColorVariant.size,
+    //             price: selectedColorVariant.price
+    //         };
+    //     }
+    //     props.addToCart(
+    //         newProduct,
+    //         index == 0 ? qty : qty2
+    //     );
+    // }
 
     function handelSelectVariantChange(e, item) {
 
