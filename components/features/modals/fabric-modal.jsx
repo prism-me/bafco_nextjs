@@ -1,11 +1,12 @@
 import Modal from "react-modal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import React, { useState, useEffect } from "react";
-import DetailOne from "~/components/partials/product/details/detail-one";
 import { GET_PRODUCTS } from "~/server/queries";
 import { useLazyQuery } from "@apollo/react-hooks";
-
+import { API } from "~/http/API";
 import withApollo from "~/server/apollo";
+import ALink from "~/components/features/alink";
+import { saveAs } from "file-saver";
 
 const customStyles = {
   overlay: {
@@ -17,7 +18,29 @@ const customStyles = {
 Modal.setAppElement("body");
 
 function FabricModal(props) {
-  const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
+  const [{ loading }] = useLazyQuery(GET_PRODUCTS);
+
+  const { productId } = props;
+
+  const [ModalData, setModalData] = useState();
+
+  useEffect(() => {
+    if (productId) {
+      API.get(`/finishes-filter-detail/${productId}`)
+        .then((response) => {
+          setModalData(response?.data?.detailData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [productId]);
+
+  const downloadImg = (downloadImg) => {
+    if (downloadImg) {
+      saveAs(downloadImg, "image.jpg");
+    }
+  };
 
   return (
     <>
@@ -46,10 +69,11 @@ function FabricModal(props) {
                       <figure className="mb-3">
                         <LazyLoadImage
                           alt="Thumbnail"
-                          src={"images/fabric/fabric.png"}
+                          src={ModalData?.featured_img}
                           width="100%"
                           height={100}
                           className="d-block"
+                          style={{ height: "400px" }}
                         />
                       </figure>
                       <center>
@@ -73,28 +97,48 @@ function FabricModal(props) {
                   {!loading ? (
                     <>
                       <div className="mb-5">
-                        <h3 className="mb-3">W-SD01 grey</h3>
-                        <p className="title">Type</p>
-                        <p className="subtitle">Leather</p>
-                        <p className="title">Color Range</p>
-                        <p className="subtitle mb-0">Lorem Ipsum</p>
-                        <p className="subtitle">Lorem Ipsum</p>
-                        <p className="title">Finish</p>
-                        <p className="subtitle">Leather</p>
+                        <h3 className="mb-3">{ModalData?.title}</h3>
+
+                        {ModalData?.values?.parent && (
+                          <>
+                            <p className="title">Type</p>
+                            <p className="subtitle">
+                              {ModalData?.values?.parent?.name}
+                            </p>
+                          </>
+                        )}
+
+                        {ModalData?.code && (
+                          <>
+                            <p className="title">Color Range</p>
+                            {/* <p className="subtitle">{ModalData?.code}</p> */}
+                            <ALink
+                              href="#"
+                              style={{ backgroundColor: "pink" }}
+                              scroll={false}
+                              className="colorStyle"
+                            >
+                              <span className="sr-only">Color Name</span>
+                            </ALink>
+                          </>
+                        )}
+
+                        {ModalData?.values && (
+                          <>
+                            <p className="title">Finish</p>
+                            <p className="subtitle">
+                              {ModalData?.values?.name}
+                            </p>
+                          </>
+                        )}
                       </div>
-                      <a
-                        href={
-                          "http://www.africau.edu/images/default/sample.pdf"
-                        }
-                        without
-                        rel="noopener noreferrer"
-                        target="_blank"
+                      <button
+                        className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                        onClick={() => downloadImg(ModalData?.featured_img)}
                       >
-                        <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                          <span>Download</span>
-                          <i className="icon-arrow-down"></i>
-                        </button>
-                      </a>
+                        <span>Download</span>
+                        <i className="icon-arrow-down"></i>
+                      </button>
                     </>
                   ) : (
                     ""

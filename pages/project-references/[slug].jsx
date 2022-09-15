@@ -12,6 +12,7 @@ import {
 import { API } from "~/http/API";
 import RelatedProducts from "./related-products";
 import Lightbox from "react-image-lightbox";
+import { saveAs } from "file-saver";
 
 function ProjectReferencesInner(props) {
   const slug = useRouter().query.slug;
@@ -28,6 +29,12 @@ function ProjectReferencesInner(props) {
         console.log(err);
       });
   }, [slug]);
+
+  const downloadImg = (downloadImg) => {
+    if (downloadImg) {
+      saveAs(downloadImg, "image.jpg");
+    }
+  };
 
   const initilindex = { index: 0 };
   const [photoIndex, setPhotoIndex] = useState(initilindex);
@@ -80,27 +87,22 @@ function ProjectReferencesInner(props) {
                   src={projectDetail.featured_img}
                   className="img-fluid mb-2"
                 />
-                <div className="btnWrapper">
-                  {projectDetail.files &&
-                    projectDetail.files.length > 0 &&
-                    projectDetail.files.map((t, ind) => (
-                      <a
-                        href={t.url}
-                        without
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        // download
-                      >
+                {projectDetail.files &&
+                  projectDetail.files.length > 0 &&
+                  projectDetail.files[0].url !== null && (
+                    <div className="btnWrapper">
+                      {projectDetail.files.map((t, ind) => (
                         <button
                           className="btn btn-sm btn-minwidth btn-outline-primary-2"
                           key={ind}
+                          onClick={() => downloadImg(t?.url)}
                         >
                           <i className="icon-arrow-down"></i>
                           <span>{t.name}</span>
                         </button>
-                      </a>
-                    ))}
-                </div>
+                      ))}
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -110,9 +112,6 @@ function ProjectReferencesInner(props) {
               options={projectReferenceInnerSlider}
             >
               {projectDetail?.additional_img?.map((x, i) => (
-                // <div className="top-management-application" key={i}>
-                //   <img src={x.avatar} />
-                // </div>
                 <div className="overlay">
                   <div className="border-portfolio">
                     <div

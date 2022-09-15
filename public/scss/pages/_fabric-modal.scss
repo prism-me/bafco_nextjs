@@ -38,4 +38,17 @@ $primary-color: #ee3124;
       background: #fff;
     }
   }
+  .colorStyle {
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: none;
+    margin: 0 0 1rem 0;
+    -webkit-transition: -webkit-box-shadow 0.35s ease;
+    transition: -webkit-box-shadow 0.35s ease;
+    -moz-transition: box-shadow 0.35s ease;
+    transition: box-shadow 0.35s ease;
+    transition: box-shadow 0.35s ease, -webkit-box-shadow 0.35s ease;
+  }
 }

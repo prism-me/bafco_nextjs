@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import ALink from "~/components/features/alink";
-import withApollo from "~/server/apollo";
-import { actions as demoAction } from "~/store/demo";
 import Reveal from "react-awesome-reveal";
 import { fadeIn } from "~/utils/data";
 import {
@@ -15,9 +13,47 @@ import {
   PinterestIcon,
 } from "react-share";
 import { API } from "~/http/API";
+import { saveAs } from "file-saver";
+import { actions as globalAction } from "~/store/global";
+import { toast } from "react-toastify";
 
 function PlaningIdeasInner(props) {
   const slug = useRouter().query.slug;
+
+  //login api
+
+  const userForm = {
+    name: "",
+    email: "",
+    password: "",
+  };
+  const [userFormData, setUserFormData] = useState({ ...userForm });
+
+  const handleInit = (e) => {
+    let formdata = { ...userFormData };
+    formdata[e.target.name] = e.target.value;
+    setUserFormData(formdata);
+  };
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    let formdata = { ...userFormData };
+
+    API.post(`/auth/login`, formdata)
+      .then((response) => {
+        console.log("response :: ", response);
+        if (response?.status === 200) {
+          window.location.reload(false);
+          toast.success(response?.data);
+          localStorage.setItem("authtoken", response?.headers?.x_auth_token);
+        } else {
+          toast.warning("Somthing went wrong !");
+        }
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data);
+      });
+  };
+
   const [planDetail, setPlanDetail] = useState("");
 
   useEffect(() => {
@@ -51,6 +87,25 @@ function PlaningIdeasInner(props) {
     });
   };
 
+  const downloadImg = (downloadImg) => {
+    if (downloadImg) {
+      saveAs(downloadImg, "image.jpg");
+    }
+  };
+
+  //auth login
+  const [authtoken, setAuthtoken] = useState("");
+
+  useEffect(() => {
+    setAuthtoken(localStorage.getItem("authtoken"));
+  }, [authtoken]);
+
+  function openModal(e) {
+    e.preventDefault();
+    // setOpen(true);
+    props.showPopup(true);
+  }
+
   return (
     <div className="main planingIdeasInner-page">
       <nav className="breadcrumb-nav">
@@ -82,103 +137,140 @@ function PlaningIdeasInner(props) {
                     Office, Sit-to-stand{" "} */}
                   </p>
                 </div>
-
-                <p className="subtitle mb-3">Available formats</p>
-
-                <div className="btnWrapper mb-3">
-                  {planDetail.files &&
-                    planDetail.files.length > 0 &&
-                    planDetail.files.map((t, ind) => (
-                      <a
-                        href={t.url === null ? t?.file_link : t?.url}
-                        without
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        // download
-                      >
-                        <button
-                          className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-3"
-                          key={ind}
-                        >
-                          <i className="icon-arrow-down"></i>
-                          <span>{t.name}</span>
-                        </button>
-                      </a>
-                    ))}
-                </div>
+                {console.log("authtoken ::", authtoken)}
+                {authtoken === "" ||
+                authtoken === null ||
+                authtoken === undefined ? (
+                  ""
+                ) : (
+                  <>
+                    {planDetail.files &&
+                      planDetail.files.length > 0 &&
+                      (planDetail.files[0].url !== null ||
+                        planDetail.files[0].file_link !== null) && (
+                        <>
+                          <p className="subtitle mb-3">Available formats</p>
+                          <div className="btnWrapper mb-3">
+                            {planDetail.files.map((t, ind) => (
+                              <button
+                                className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-3"
+                                key={ind}
+                                onClick={() =>
+                                  downloadImg(
+                                    t.url === null ? t?.file_link : t?.url
+                                  )
+                                }
+                              >
+                                <i className="icon-arrow-down"></i>
+                                <span>{t.name}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                  </>
+                )}
 
                 <p className="subtitle mb-3">Documentation</p>
 
-                <div className="docWrape mb-3">
-                  <div className="row">
-                    <div className="col-lg-6 col-sm-12 col-xs-12 colStyle">
-                      <div className="colSpace">
-                        <p>I’m already an Bafco member</p>
-                        <form>
-                          <div className="form-group">
-                            <label for="email">Email</label>
-                            <input
-                              type="email"
-                              className="form-control"
-                              id="email"
-                              placeholder="E-mail *"
-                              required
-                            />
-                          </div>
-                          <div className="form-group">
-                            <label for="password">Password</label>
-                            <input
-                              type="password"
-                              className="form-control"
-                              id="password"
-                              placeholder="Password *"
-                              required
-                            />
-                            <p style={{ color: "#ee3124" }}>
-                              <small>Forgot your password?</small>
-                            </p>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div className="form-group form-check mb-0">
+                {authtoken === "" ||
+                authtoken === null ||
+                authtoken === undefined ? (
+                  <div className="docWrape mb-3">
+                    <div className="row">
+                      <div className="col-lg-6 col-sm-12 col-xs-12 colStyle">
+                        <div className="colSpace">
+                          <p>I’m already an Bafco member</p>
+                          <form onSubmit={handleLoginSubmit}>
+                            <div className="form-group">
+                              <label for="email">Email</label>
                               <input
-                                type="checkbox"
-                                className="form-check-input"
-                                id="exampleCheck1"
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                placeholder="E-mail *"
+                                required
+                                name="email"
+                                value={userFormData.email}
+                                onChange={handleInit}
                               />
-                              <label
-                                className="form-check-label ml-3"
-                                for="exampleCheck1"
-                              >
-                                Remember Me
-                              </label>
                             </div>
-                            <button className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-2">
-                              <span>Sign in</span>
-                            </button>
-                          </div>
-                        </form>
+                            <div className="form-group">
+                              <label for="password">Password</label>
+                              <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                placeholder="Password *"
+                                required
+                                name="password"
+                                value={userFormData.password}
+                                onChange={handleInit}
+                              />
+                              {/* <p style={{ color: "#ee3124" }}>
+                                <small>Forgot your password?</small>
+                              </p> */}
+                            </div>
+                            <div
+                            // className="d-flex justify-content-between align-items-center"
+                            >
+                              {/* <div className="form-group form-check mb-0">
+                                <input
+                                  type="checkbox"
+                                  className="form-check-input"
+                                  id="exampleCheck1"
+                                />
+                                <label
+                                  className="form-check-label ml-3"
+                                  for="exampleCheck1"
+                                >
+                                  Remember Me
+                                </label>
+                              </div> */}
+                              <button className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-2">
+                                <span>Sign in</span>
+                              </button>
+                            </div>
+                          </form>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-lg-6 col-sm-12 col-xs-12">
-                      <div className="colSpace">
-                        <p>I don't have an account yet.</p>
-                        <p>
-                          Obtaining an account takes up to 72 hours (business
-                          days only, Customer service opening hours, from Monday
-                          to Friday, between 8 A.M. and 5 P.M.).
-                        </p>
-                        <button className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-2">
-                          <span>Request an access</span>
-                        </button>
+                      <div className="col-lg-6 col-sm-12 col-xs-12">
+                        <div className="colSpace">
+                          <p>I don't have an account yet.</p>
+                          <p>
+                            Obtaining an account takes up to 72 hours (business
+                            days only, Customer service opening hours, from
+                            Monday to Friday, between 8 A.M. and 5 P.M.).
+                          </p>
+                          <button
+                            className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-2"
+                            onClick={openModal}
+                          >
+                            <span>Request an access</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <button
+                    className="btn btn-sm btn-minwidth btn-outline-primary-2 mb-3"
+                    onClick={() =>
+                      downloadImg(
+                        "http://www.africau.edu/images/default/sample.pdf"
+                      )
+                    }
+                  >
+                    <i className="icon-arrow-down"></i>
+                    <span>Download Document</span>
+                  </button>
+                )}
+
                 <p className="subtitle mb-3">Share</p>
                 <div className="shareBtnWrape">
                   <div className="shareBtn">
                     <FacebookShareButton
-                      url={`https://bafco-next.herokuapp.com//planning-ideas/`}
+                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
                       hashtag={"#BAFCO"}
                       quote={"Planning Ideas"}
                     >
@@ -187,7 +279,7 @@ function PlaningIdeasInner(props) {
                   </div>
                   <div className="shareBtn">
                     <LinkedinShareButton
-                      url={`https://bafco-next.herokuapp.com//planning-ideas/`}
+                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
                       title={"Planning Ideas"}
                       summary={"Planning Ideas"}
                       source={"BAFCO"}
@@ -197,8 +289,8 @@ function PlaningIdeasInner(props) {
                   </div>
                   <div className="shareBtn">
                     <PinterestShareButton
-                      url={`https://bafco-next.herokuapp.com//planning-ideas/`}
-                      media={`https://bafco-next.herokuapp.com//planning-ideas/`}
+                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
+                      media={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
                       description={"Planning Ideas"}
                     >
                       <PinterestIcon size={36} />
@@ -275,6 +367,10 @@ function PlaningIdeasInner(props) {
   );
 }
 
-export default withApollo({ ssr: typeof window == undefined })(
-  connect(null, { ...demoAction })(PlaningIdeasInner)
-);
+const mapStateToProps = (state) => {
+  return {
+    LoginModal: state.globalReducer.popupShow,
+  };
+};
+
+export default connect(mapStateToProps, { ...globalAction })(PlaningIdeasInner);

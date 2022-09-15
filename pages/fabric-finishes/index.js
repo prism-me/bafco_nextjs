@@ -26,10 +26,40 @@ function FabricGrid() {
   const totalCount = data && data.products.totalCount;
 
   const [fabricList, setFabricList] = useState();
-  const [selectedCategory, setSelectedCategory] = useState("Leather");
+  const [filterList, setFilterList] = useState();
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryList, setCategoryList] = useState("");
 
-  console.log("selectedCategory ::", selectedCategory);
+  const [matId, setMatId] = useState("");
+
+  // console.log("matId::", matId);
+  // console.log("tab::", selectedCategory);
+
+  // console.log(
+  //   "Leather::",
+  //   fabricList?.child_value[0]?.child?.filter(
+  //     (item) => item.value.material_id === matId
+  //   )
+  // );
+
+  useEffect(() => {
+    if ((query?.collection || query?.color || query?.finishes) && matId) {
+      let formdata = {
+        finishes_id:
+          Number(query?.collection) ||
+          Number(query?.color) ||
+          Number(query?.finishes),
+        material_id: matId,
+      };
+      API.post(`/finishes-filter-data`, formdata)
+        .then((response) => {
+          setFabricList(response?.data?.finishesData[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [query, matId]);
 
   useEffect(() => {
     API.get(`/material-list`)
@@ -44,7 +74,9 @@ function FabricGrid() {
   useEffect(() => {
     API.get(`/finishes-filter-list/${selectedCategory}`)
       .then((response) => {
-        setFabricList(response?.data);
+        // debugger;
+        setFabricList(response?.data?.finishesData[0]);
+        setFilterList(response?.data?.finishesList);
       })
       .catch((err) => {
         console.log(err);
@@ -160,6 +192,7 @@ function FabricGrid() {
             categoryList={categoryList}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            setMatId={setMatId}
           />
           <div className="row skeleton-body">
             <div
@@ -168,9 +201,10 @@ function FabricGrid() {
               }`}
             >
               <FabricListOne
-                products={fabricList?.finishesData}
+                products={fabricList}
                 perPage={perPage}
                 loading={loading}
+                matId={matId}
               ></FabricListOne>
 
               {/* {totalCount > perPage ? (
@@ -190,7 +224,11 @@ function FabricGrid() {
               <div className="skel-widget"></div>
               <div className="skel-widget"></div>
               <StickyBox className="sticky-content" offsetTop={70}>
-                <FabricSidebarOne toggle={toggle}></FabricSidebarOne>
+                <FabricSidebarOne
+                  toggle={toggle}
+                  filterData={filterList}
+                  matId={matId}
+                ></FabricSidebarOne>
               </StickyBox>
               {toggle ? (
                 <button

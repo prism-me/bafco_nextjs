@@ -82,8 +82,9 @@ $forest-green: #008482;
     }
   }
   .product-body {
-    padding: 1rem 0;
+    padding: 1rem 0.5rem;
     background: transparent;
+    z-index: 999;
   }
   .product {
     background: transparent;

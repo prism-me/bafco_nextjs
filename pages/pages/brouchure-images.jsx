@@ -7,8 +7,21 @@ import { actions as demoAction } from "~/store/demo";
 import { fadeIn } from "~/utils/data";
 import { API } from "~/http/API";
 import ContactForm from "../contact-form/contact-form";
+import { saveAs } from "file-saver";
 
 function BrouchureImages(props) {
+  const [brochuredata, setBrochuredata] = useState();
+
+  useEffect(() => {
+    API.get(`/pages/brochure-page?en`)
+      .then((response) => {
+        setBrochuredata(response.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [brochuresList, setBrochuresList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
@@ -33,6 +46,12 @@ function BrouchureImages(props) {
       });
   }, [selectedCategory]);
 
+  const downloadImg = (downloadImg) => {
+    if (downloadImg) {
+      saveAs(downloadImg, "image.jpg");
+    }
+  };
+
   return (
     <div className="main brouchure-images-page">
       <nav className="breadcrumb-nav">
@@ -53,22 +72,21 @@ function BrouchureImages(props) {
               <div className="col-lg-12 col-sm-12 col-xs-12">
                 <div className="imgWrapper">
                   <img
-                    src="images/brochureImages/brochureimg.png"
+                    src={brochuredata?.profile?.image}
                     className="img-fluid mb-2"
                   />
                   <div className="bottom-left">
-                    BAFCO <br />
-                    Company Profile
+                    {brochuredata?.profile?.heading}
                   </div>
                   <div className="top-right">
-                    Sed pretium, ligula sollicitudin laoreet viverra, tortor
-                    libero sodales leo, eget blandit nunc tortor eu nibh.
-                    Suspendisse potenti. Sed egestas, ante et vulputate
-                    volutpat, uctus metus libero eu augue.Sed pretium,
+                    {brochuredata?.profile?.sub_heading}
                   </div>
                 </div>
-                <div className="btnWrapper">
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                {/* <div className="btnWrapper">
+                  <button
+                    className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                    onClick={() => downloadImg(brochuredata?.profile?.image)}
+                  >
                     <i className="icon-arrow-down"></i>
                     <span>Download Bafco Company Profile</span>
                   </button>
@@ -76,13 +94,13 @@ function BrouchureImages(props) {
                     <i className="icon-eye"></i>
                     <span>View Bafco Company Profile (via ISSUU)</span>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
         <div className="mb-5">
-          <ContactForm />
+          <ContactForm type={"brochure_and_images_form"} />
         </div>
 
         <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
@@ -153,20 +171,18 @@ function BrouchureImages(props) {
                             {x.files &&
                               x.files.length > 0 &&
                               x.files.map((t, ind) => (
-                                <a
-                                  href={t.url === null ? t?.file_link : t?.url}
-                                  without
-                                  rel="noopener noreferrer"
-                                  target="_blank"
+                                <button
+                                  className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-2"
+                                  key={ind}
+                                  onClick={() =>
+                                    downloadImg(
+                                      t.url === null ? t?.file_link : t?.url
+                                    )
+                                  }
                                 >
-                                  <button
-                                    className="btn btn-sm btn-minwidth btn-outline-primary-2 mr-2"
-                                    key={ind}
-                                  >
-                                    <span>{t.name}</span>
-                                    <i className="icon-arrow-down"></i>
-                                  </button>
-                                </a>
+                                  <span>{t.name}</span>
+                                  <i className="icon-arrow-down"></i>
+                                </button>
                               ))}
                           </div>
                         </div>

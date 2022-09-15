@@ -1,6 +1,43 @@
+import React, { useState } from "react";
 import withApollo from "~/server/apollo";
+import { toast } from "react-toastify";
+import { API } from "~/http/API";
 
-function ContactForm() {
+function ContactForm({ type }) {
+  const defaultState = {
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    type: `${type}`,
+  };
+
+  const [formValues, setFormValues] = useState(defaultState);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let updatedData = { ...formValues };
+    setLoading(true);
+    API.post("/enquiries", updatedData)
+      .then((response) => {
+        if (response.status === 200 || response.status === 201) {
+          setLoading(false);
+          toast.success("Data has been Submitted Successfully!");
+          setFormValues({ ...defaultState });
+        }
+      })
+      .catch((err) => {
+        alert("Something went wrong.");
+        console.log(err);
+      });
+  };
+  const handleChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div className="contactform">
       <div className="formwrapper">
@@ -21,19 +58,27 @@ function ContactForm() {
               </div>
               <p className="fbsubtitle">Architects Support</p>
               <p className="fbsubtitle">
-                e: info@bafco.eu <br />
-                t: +12 345 67 89 01
+                <a href="mailto:info@bafco.eu" className="cinfo">
+                  e: info@bafco.eu
+                </a>{" "}
+                <br />
+                <a href="tel:+12345678901" className="cinfo">
+                  t: +12 345 67 89 01
+                </a>
               </p>
             </div>
             <div className="col-lg-6 col-sm-6 col-xs-12">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
                     type="text"
                     className="form-control"
                     id="name"
                     placeholder="Name & Surname *"
+                    name="name"
                     required
+                    value={formValues.name}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
@@ -42,7 +87,10 @@ function ContactForm() {
                     className="form-control"
                     id="email"
                     placeholder="E-mail *"
+                    name="email"
                     required
+                    value={formValues.email}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
@@ -51,7 +99,10 @@ function ContactForm() {
                     className="form-control"
                     id="subject"
                     placeholder="Subject"
+                    name="subject"
                     required
+                    value={formValues.subject}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="form-group">
@@ -59,12 +110,15 @@ function ContactForm() {
                     class="form-control"
                     id="message"
                     rows="3"
-                    required
                     placeholder="Message"
                     style={{ resize: "none" }}
+                    name="message"
+                    required
+                    value={formValues.message}
+                    onChange={handleChange}
                   ></textarea>
                 </div>
-                <div className="form-group form-check">
+                {/* <div className="form-group form-check">
                   <input
                     type="checkbox"
                     className="form-check-input"
@@ -83,11 +137,25 @@ function ContactForm() {
                   <label className="form-check-label ml-3" for="exampleCheck1">
                     I have read and accept the Privacy Policy
                   </label>
-                </div>
-                <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
-                  <span>Send</span>
-                  <i className="icon-long-arrow-right"></i>
-                </button>
+                </div> */}
+                {loading ? (
+                  <div
+                    className="loader"
+                    style={{
+                      borderTopColor: "white",
+                      borderRightColor: "white",
+                      borderBottomColor: "white",
+                      borderLeftColor: "#008482",
+                      width: "sm" ? "6em" : "md" ? "10em" : "10em",
+                      height: "sm" ? "6em" : "md" ? "10em" : "10em",
+                    }}
+                  />
+                ) : (
+                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                    <span>Send</span>
+                    <i className="icon-long-arrow-right"></i>
+                  </button>
+                )}
               </form>
             </div>
           </div>

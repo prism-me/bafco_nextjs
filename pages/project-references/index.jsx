@@ -7,6 +7,18 @@ import { fadeIn } from "~/utils/data";
 import Reveal from "react-awesome-reveal";
 
 function ProjectReferences() {
+  const [projectdata, setProjectdata] = useState();
+
+  useEffect(() => {
+    API.get(`/pages/project-references-page?en`)
+      .then((response) => {
+        setProjectdata(response.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [projectsList, setProjectsList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
@@ -47,25 +59,14 @@ function ProjectReferences() {
       <div className="page-content pb-0">
         <div className="container">
           <div className="application-heading mb-5 text-center">
-            <h3>Project Gallery</h3>
-            <p className="subtitle">
-              Workspaces as unique as the people who work in them.
-            </p>
-            <p>
-              Sed pretium, ligula sollicitudin laoreet viverra, tortor libero
-              sodales leo, eget blandit nunc tortor eu nibh. Suspendisse
-              potenti. Sed egestas, ante et vulputate volutpat, uctus metus
-              libero eu augue.Sed pretium, ligula sollicitudin laoreet viverra,
-              tortor libero sodales leo, eget blandit nunc tortor eu nibh.
-              Suspendisse potenti. Sed egestas, ante et vulputate volutpat,
-              uctus metus libero eu augue.Sed pretium, ligula sollicitudin
-              laoreet viverra, tortor libero sodales leo, eget blandit nunc
-              tortor eu nibh. Suspendisse potenti. Sed egestas, ante et
-              vulputate volutpat, uctus metus libero eu augue.Sed pretium,
-              ligula sollicitudin laoreet viverra, tortor libero sodales leo,
-              eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed
-              egestas, ante et vulputate volutpat, uctus metus libero eu
-            </p>
+            <h3>{projectdata?.intro?.title}</h3>
+            <p className="subtitle">{projectdata?.intro?.sub_title}</p>
+            <p
+              className="descr"
+              dangerouslySetInnerHTML={{
+                __html: projectdata?.intro?.description,
+              }}
+            ></p>
           </div>
 
           <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
@@ -150,7 +151,7 @@ function ProjectReferences() {
             </div>
           </Reveal>
         </div>
-        <ContactForm />
+        <ContactForm type={"project_references_form"} />
       </div>
     </div>
   );

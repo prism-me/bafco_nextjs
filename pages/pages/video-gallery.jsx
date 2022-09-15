@@ -58,8 +58,9 @@ function VideoGallery(props) {
                           style={{
                             width: "100%",
                             display: "block",
-                            height: "500px",
+                            // height: "500px",
                           }}
+                          className="videoImg1"
                         />
                         <div className="videoContent">
                           <a

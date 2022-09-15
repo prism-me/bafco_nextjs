@@ -120,7 +120,7 @@ function PlaningIdeas() {
             </div>
           </Reveal>
         </div>
-        <ContactForm />
+        <ContactForm type={"planning_ideas_form"} />
         <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
           <div
             className="footer-newsletter bg-image"
