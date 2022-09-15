@@ -151,7 +151,7 @@ function ProjectReferences() {
             </div>
           </Reveal>
         </div>
-        <ContactForm />
+        <ContactForm type={"project_references_form"} />
       </div>
     </div>
   );

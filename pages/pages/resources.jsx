@@ -159,7 +159,7 @@ function Resources(props) {
                     // plansData.lenth > 0 &&
                     plansData1?.thumbnail_img
                   }
-                  style={{ height: "500px" }}
+                  style={{ height: "500px", objectFit: "cover", width: "100%" }}
                 />
                 <div className="planingContent">
                   <p className="lead">{plansData1?.sub_title}</p>
@@ -178,7 +178,7 @@ function Resources(props) {
               <div className="planning-imgs mb-2 imageWrapper2">
                 <img
                   src={plansData2?.thumbnail_img}
-                  style={{ height: "240px" }}
+                  style={{ height: "240px", objectFit: "cover", width: "100%" }}
                 />
                 <div className="planingContent2">
                   <p className="lead">{plansData2?.sub_title}</p>
@@ -195,7 +195,7 @@ function Resources(props) {
               <div className="planning-imgs imageWrapper3">
                 <img
                   src={plansData3?.thumbnail_img}
-                  style={{ height: "240px" }}
+                  style={{ height: "240px", objectFit: "cover", width: "100%" }}
                 />
                 <div className="planingContent3">
                   <p className="lead">{plansData3?.sub_title}</p>

@@ -100,7 +100,7 @@ function BrouchureImages(props) {
           </div>
         </div>
         <div className="mb-5">
-          <ContactForm />
+          <ContactForm type={"brochure_and_images_form"} />
         </div>
 
         <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>

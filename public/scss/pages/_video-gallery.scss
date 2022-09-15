@@ -15,6 +15,13 @@ $primary-color: #ee3124;
     line-height: normal;
   }
 
+  .videoImg1 {
+    height: 500px;
+    @media (max-width: 767px) {
+      height: 300px;
+    }
+  }
+
   .videowrapper {
     position: relative;
     color: white;
