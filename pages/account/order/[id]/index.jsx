@@ -69,13 +69,13 @@ function TrackingOrder() {
                                             <p>Order Placed, Your Order will be updated Soon</p>
                                         </div>
                                     }
-                                    {trackingprocess === "ORDERCANCELED" &&
+                                    {trackingprocess === "ORDERCANCELLED" &&
                                         <div className="order_placed_note">
                                             <p>No Record Found Please Try Again</p>
                                         </div>
                                     }
                                     <div className="steps d-flex flex-wrap flex-sm-nowrap justify-content-between mt-3 padding-top-2x padding-bottom-1x">
-                                        <div className={`step ${trackingprocess === "ORDERPLACED" ? "" :
+                                        <div className={`step ${trackingprocess === "ORDERCONFIRMED" ? "completed" :
                                             trackingprocess === "ORDERDISPATCHED" ? "completed" :
                                                 trackingprocess === "ORDERDELIVERED" ? "completed" : ""}`}>
                                             <div className="step-icon-wrap">

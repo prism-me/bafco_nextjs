@@ -60,8 +60,11 @@ function Checkout(props) {
     const [isShipDifferent, setIsShipDifferent] = useState(false);
     const [error, setError] = useState([]);
     const [UserIdData, setUserIdData] = useState('');
+    const [xauthtokenUser, setXAuthTokenUser] = useState();
+    const [cartList, setCartList] = useState([]);
 
     useEffect(() => {
+        setXAuthTokenUser(localStorage.getItem('authtoken'))
 
         // let country = [];
         // CountryRegionData?.map((item) => {
@@ -129,6 +132,33 @@ function Checkout(props) {
     }, [])
 
     useEffect(() => {
+        let authtoken = localStorage.getItem('authtoken');
+        let UserDetail = localStorage.getItem('UserData');
+
+        let GuestUserDetail = localStorage.getItem('GuestUserData');
+
+        if (authtoken === "" || authtoken === null || authtoken === undefined) {
+
+            API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
+                setCartList(response?.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        } else {
+            API.get(`/auth/cart/${UserDetail}`, {
+                headers: {
+                    'Authorization': `Bearer ${authtoken}`
+                }
+            }).then((response) => {
+                setCartList(response?.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
+    }, [])
+
+    useEffect(() => {
         if (ischeckdefault) {
             let xauthtoken = localStorage.getItem('authtoken');
             let UserId = localStorage.getItem('UserData');
@@ -186,11 +216,6 @@ function Checkout(props) {
                 if (response.data.status === 200 || response.status === 201) {
                     console.log(response.data)
                     toast.success(response.data.message);
-                    // let obj = {
-                    //     promo_code_id: promoCode,
-                    //     discount: response?.data?.data
-                    // }
-                    // setCuponCode(obj);
                     setCartTotal(response?.data?.data);
                     setIsPromoCodeValid(true);
                 } else {
@@ -221,7 +246,8 @@ function Checkout(props) {
     const handlePlaceOrderSubmit = () => {
 
         let xauthtoken = localStorage.getItem('authtoken');
-        let UserId = xauthtoken === null ? localStorage.getItem('GuestUserData') : localStorage.getItem('UserData');
+        let UserId = localStorage.getItem('UserData');
+        let GuestUserId = localStorage.getItem('GuestUserData');
 
         if (billing_address?.name === '') {
             alert('Please enter a name before submitting.');
@@ -292,7 +318,7 @@ function Checkout(props) {
         if (UserId) {
 
             let formdata = {
-                "user_id": 27,
+                "user_id": UserId,
                 "coupon_code": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
                 "total_amount": cartTotal?.decimal_amount,
                 "tax_amount": "0",
@@ -346,6 +372,88 @@ function Checkout(props) {
                 },
                 "customer": {
                     "id": UserId,
+                    "email": email,
+                    "name": isShipDifferent === true ? shipping?.name : billing_address?.name,
+                },
+                "discounts": [
+                    {
+                        "code": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
+                        "name": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
+                        "amount": cartTotal?.total
+                    }
+                ]
+            }
+
+            API.post(`/authCheckout`, formdata).then((response) => {
+                console.log("Success :: ", response)
+                if (response?.data?.error) {
+                    setError(response?.data?.error?.detail);
+                    toast.error("Please fill in the required fields.");
+                } else {
+                    router.push(response?.data?.redirect_url);
+                }
+                // setError()
+            }).catch((error) => {
+                toast.error("Somthing went wrong !");
+            });
+
+        } else if (GuestUserId) {
+
+            let formdata = {
+                "guest_id": GuestUserId,
+                "coupon_code": isPromoCodeValid === true ? cuponCode : "BAFCOTest",
+                "total_amount": cartTotal?.decimal_amount,
+                "tax_amount": "0",
+                "currency": "AED",
+                // "shipping": {
+                //     "id": "shipping-01",
+                //     "name": "BAFCO Delivery",
+                //     "amount": "0",
+                //     "address": {
+                //         "name": isShipDifferent === true ? shipping?.address?.name : billing_address?.name,
+                //         "phone_number": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
+                //         "alt_phone": isShipDifferent === true ? shipping?.address?.phone_number : billing_address?.phone_number,
+                //         // "country": isShipDifferent === true ? shipping?.address?.country : billing_address?.country,
+                //         "country": "AE",
+                //         "state": isShipDifferent === true ? shipping?.address?.state : billing_address?.state,
+                //         "city": isShipDifferent === true ? shipping?.address?.city : billing_address?.city,
+                //         "postal_code": isShipDifferent === true ? shipping?.address?.postal_code : billing_address?.postal_code,
+                //         "line1": isShipDifferent === true ? shipping?.address?.address_line1 : billing_address?.address_line1,
+                //         "line2": isShipDifferent === true ? shipping?.address?.address_line2 : billing_address?.address_line2,
+                //     },
+                // },
+                "shipping": {
+                    "id": "shipping-01",
+                    "name": "BAFCO Delivery",
+                    "amount": "0",
+                    "address": {
+                        "name": billing_address?.name,
+                        "phone_number": billing_address?.phone_number,
+                        "alt_phone": billing_address?.phone_number,
+                        // "country": isShipDifferent === true ? shipping?.address?.country : billing_address?.country,
+                        "country": "AE",
+                        "state": billing_address?.state,
+                        "city": billing_address?.city,
+                        "postal_code": billing_address?.postal_code,
+                        "line1": billing_address?.address_line1,
+                        "line2": billing_address?.address_line2,
+                    },
+                },
+                "billing_address": {
+                    "id": billing_address?.id,
+                    "name": billing_address?.name,
+                    "phone": billing_address?.phone_number,
+                    "alt_phone": billing_address?.phone_number,
+                    "line1": billing_address?.address_line1,
+                    "line2": billing_address?.address_line2,
+                    "city": billing_address?.city,
+                    "state": billing_address?.state,
+                    "country": "AE",
+                    "postal_code": billing_address?.postal_code,
+                    "order_notes": billing_address?.billing_address?.postal_code,
+                },
+                "customer": {
+                    "id": 1,
                     "email": email,
                     "name": isShipDifferent === true ? shipping?.name : billing_address?.name,
                 },
@@ -720,26 +828,28 @@ function Checkout(props) {
 
                                 <aside className="col-lg-3">
                                     <div className="summary">
-                                        <div className="checkout-discount mb-3">
-                                            <form id="checkout-discount-form">
-                                                <input
-                                                    type="text"
-                                                    name="coupon_code"
-                                                    className="form-control"
-                                                    required
-                                                    id="checkout-discount-input"
-                                                    value={cuponCode}
-                                                    onChange={handelCuponCode}
-                                                    placeholder="Have a coupon? Click here to enter your code"
-                                                />
-                                                {cuponCode &&
-                                                    <label>Hurray! You got a discount!</label>
-                                                }
-                                                <button type="button" className="btn btn-outline-primary-2 btn-order btn-block" onClick={handlePromoCodeSubmit}>
-                                                    Use Promo Code
-                                                </button>
-                                            </form>
-                                        </div>
+                                        {xauthtokenUser !== null &&
+                                            <div className="checkout-discount mb-3">
+                                                <form id="checkout-discount-form">
+                                                    <input
+                                                        type="text"
+                                                        name="coupon_code"
+                                                        className="form-control"
+                                                        required
+                                                        id="checkout-discount-input"
+                                                        value={cuponCode}
+                                                        onChange={handelCuponCode}
+                                                        placeholder="Have a coupon? Click here to enter your code"
+                                                    />
+                                                    {cuponCode &&
+                                                        <label>Hurray! You got a discount!</label>
+                                                    }
+                                                    <button type="button" className="btn btn-outline-primary-2 btn-order btn-block" onClick={() => handlePromoCodeSubmit()}>
+                                                        Use Promo Code
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        }
                                         <h3 className="summary-title">Your Order</h3>
 
                                         <table className="table table-summary">
@@ -752,12 +862,24 @@ function Checkout(props) {
 
                                             <tbody>
 
-                                                {/* {cartlist.map((item, index) =>
+                                                {cartList.map((item, index) =>
                                                     <tr key={index}>
-                                                        <td> <ALink href={`/product/default/${item.slug}`}>{item.name}</ALink></td>
-                                                        <td>AED {item.sum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                        <td className="product-col">
+                                                            <div className="product">
+                                                                <img src={item?.variation[0]?.images[0]?.avatar} width="50px" alt="product" />
+                                                                <p>
+                                                                    <ALink href={`/collections/${item?.productData[0]?.product_category?.parent_category?.route}/${item?.productData[0]?.product_category?.route}/${item?.productData[0]?.route}`}>{item?.productData[0]?.name}</ALink>
+                                                                </p>
+                                                                <p>{item?.qty}</p>
+                                                            </div>
+                                                        </td>
+                                                        <td className="total-col">
+                                                            <div className="product">
+                                                                <p>AED {item?.total}</p>
+                                                            </div>
+                                                        </td>
                                                     </tr>
-                                                )} */}
+                                                )}
                                                 <tr className="summary-subtotal">
                                                     <td>Subtotal:</td>
                                                     <td>{cartTotal?.sub_total}</td>

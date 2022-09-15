@@ -89,7 +89,7 @@ export function* wishlistSaga() {
 }
 
 const persistConfig = {
-    keyPrefix: "molla-",
+    keyPrefix: "",
     key: 'wishlist',
     storage,
 }

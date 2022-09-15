@@ -58,6 +58,8 @@ function MyAccount() {
     const [orderList, setOrderList] = useState([]);
     const [singleOrderID, setSingleOrderID] = useState();
     const [singleOrderDetails, setSingleOrderDetails] = useState();
+    const [cartList, setCartList] = useState([]);
+    const [isGuestUserCartListOpen, setIsGuestUserCartListOpen] = useState(false);
 
     let timer;
 
@@ -73,7 +75,49 @@ function MyAccount() {
             return item.countryName === "United Arab Emirates";
         });
         setStateList(stateList);
+
+        let GuestUserId = localStorage.getItem('GuestUserData');
+        let xauthtoken = localStorage.getItem('authtoken');
+
+
+        if (GuestUserId !== null && xauthtoken !== null) {
+            API.get(`/guest-cart/${GuestUserId}`, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
+                setCartList(response?.data);
+                if (response?.data?.length > 0) {
+                    setIsGuestUserCartListOpen(true);
+                }
+                console.log("guest-cart ::", response);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
     }, []);
+
+    function handelContinueWithCart(e, status) {
+        e.preventDefault();
+        let xauthtoken = localStorage.getItem('authtoken');
+        let GuestUserId = localStorage.getItem('GuestUserData');
+        let formdata = {
+            'status': status,
+            "user_id": GuestUserId
+        };
+
+        API.post(`/auth/get-guest-cart`, formdata, { headers: { 'Authorization': `Bearer ${xauthtoken}` } }).then((response) => {
+            console.log(response);
+            if (response?.status === 200) {
+                localStorage.removeItem("GuestUserData");
+                // toast.success(response?.data)
+                window.location.reload(false);
+            } else {
+                toast.warning("Somthing went wrong !");
+            }
+            closeGuestUserCartListModal();
+        }).catch((error) => {
+            toast.error("Somthing went wrong !");
+        });
+
+    }
 
     useEffect(() => {
         return () => {
@@ -102,6 +146,19 @@ function MyAccount() {
 
         timer = setTimeout(() => {
             setOpen(false);
+        }, 350);
+
+    }
+
+    function closeGuestUserCartListModal() {
+        document.getElementById("order-modal").classList.remove("ReactModal__Content--after-open");
+
+        if (document.querySelector(".ReactModal__Overlay")) {
+            document.querySelector(".ReactModal__Overlay").style.opaarea = '0';
+        }
+
+        timer = setTimeout(() => {
+            setOpenOrderDetail(false);
         }, 350);
 
     }
@@ -1093,6 +1150,85 @@ function MyAccount() {
                                             <TabPanel>
                                                 <div></div>
                                             </TabPanel>
+                                            {isGuestUserCartListOpen &&
+                                                <Modal
+                                                    isOpen={isGuestUserCartListOpen}
+                                                    style={customStyles}
+                                                    contentLabel="order Modal"
+                                                    className="modal-dialog"
+                                                    overlayClassName="d-flex align-items-center justify-content-center"
+                                                    id="order-modal"
+                                                    onRequestClose={closeGuestUserCartListModal}
+                                                    closeTimeoutMS={10}
+                                                >
+                                                    <div className="modal-content">
+                                                        <div className="orderdetailModelheader modal-header">
+                                                            <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div>
+                                                            <button type="button" className="close" onClick={closeGuestUserCartListModal}>
+                                                                <span aria-hidden="true">×</span>
+                                                                <span className="sr-only">Close</span>
+                                                            </button>
+                                                        </div>
+                                                        <div className="modal-body">
+                                                            <div className="orderdetailbody">
+                                                                <div className="mt-2 tableScroll" id="table-wrapper">
+                                                                    <div id="table-scroll">
+                                                                        <table className="orderDetailsTableClient table">
+                                                                            <thead>
+                                                                                <td>Image</td>
+                                                                                <td>Product Name</td>
+                                                                                <td>Price</td>
+                                                                                <td>Quantity</td>
+                                                                                <td>Sub Total</td>
+                                                                            </thead>
+                                                                            <tbody className="orderDetailModelTableBody">
+                                                                                {cartList?.map((item, index) => (
+                                                                                    <tr key={index}>
+                                                                                        <td className="td_product td_productImg">
+                                                                                            <img src={item?.variation[0]?.images[0]?.avatar} alt="" className="orderdetailImg" width="100" />
+                                                                                        </td>
+                                                                                        <td className="td_product">
+                                                                                            <span className="productNameStyle">{item?.productData[0]?.name}</span>
+                                                                                        </td>
+                                                                                        <td className="td_product">
+                                                                                            <span>{item?.variation[0]?.upper_price}</span>
+                                                                                        </td>
+                                                                                        <td className="td_product">
+                                                                                            <span>{item?.qty}</span>
+                                                                                        </td>
+                                                                                        <td className="td_product">
+                                                                                            <span>{item?.total}</span>
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                ))}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="orderdetailModelheader modal-footer">
+                                                            <a
+                                                                href="#"
+                                                                class="btn btn-outline-primary-2 btn-order btn-block"
+                                                                style={{ width: '200px' }}
+                                                                onClick={(e) => handelContinueWithCart(e, true)}
+                                                            >
+                                                                Continue with cart
+                                                            </a>
+                                                            <a
+                                                                href="#"
+                                                                class="btn btn-outline-primary-2 btn-order btn-block"
+                                                                onClick={(e) => handelContinueWithCart(e, false)}
+                                                                style={{ width: '200px' }}
+                                                            >
+                                                                Cancel
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </Modal>
+                                            }
                                         </div>
                                     </div>
                                 </div>

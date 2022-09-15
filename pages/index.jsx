@@ -1077,14 +1077,15 @@ function Home(props) {
                                 <div className="banner banner-large banner-overlay banner-overlay-light banner-lg banner-1 lazy-media">
                                     <div className="lazy-overlay"></div>
 
-                                    <LazyLoadImage
+                                    {/* <LazyLoadImage
                                         alt="banner"
                                         src={homedata?.collections[0]?.image}
                                         threshold={200}
                                         width="100%"
                                         height="auto"
                                         effect="blur"
-                                    />
+                                    /> */}
+                                    <img src={homedata?.collections[0]?.image} alt="banner" />
 
                                     <div className="banner-content banner-content-top">
                                         <h4 className="banner-subtitle">{homedata?.collections[0]?.sub_heading}</h4>
@@ -1101,14 +1102,16 @@ function Home(props) {
                                 <div className="banner banner-overlay banner-lg banner-2 lazy-media">
                                     <div className="lazy-overlay"></div>
 
-                                    <LazyLoadImage
+                                    {/* <LazyLoadImage
                                         alt="banner"
                                         src={homedata?.collections[1]?.image}
                                         threshold={200}
                                         height="auto"
                                         width="100%"
                                         effect="blur"
-                                    />
+                                    /> */}
+
+                                    <img src={homedata?.collections[1]?.image} alt="banner" />
 
                                     <div className="banner-content banner-content-top">
                                         <h4 className="banner-subtitle text-grey">{homedata?.collections[1]?.sub_heading}</h4>
@@ -1127,14 +1130,15 @@ function Home(props) {
                                         <div className="banner banner-3 banner-overlay lazy-media">
                                             <div className="lazy-overlay"></div>
 
-                                            <LazyLoadImage
+                                            {/* <LazyLoadImage
                                                 alt="banner"
                                                 src={homedata?.collections[2]?.image}
                                                 threshold={200}
                                                 height="auto"
                                                 width="100%"
                                                 effect="blur"
-                                            />
+                                            /> */}
+                                            <img src={homedata?.collections[2]?.image} alt="banner" />
 
                                             <div className="banner-content banner-content-top">
                                                 <h4 className="banner-subtitle">{homedata?.collections[2]?.sub_heading}</h4>
@@ -1148,14 +1152,15 @@ function Home(props) {
                                         <div className="banner banner-4 banner-overlay banner-overlay-light lazy-media">
                                             <div className="lazy-overlay"></div>
 
-                                            <LazyLoadImage
+                                            {/* <LazyLoadImage
                                                 alt="banner"
                                                 src={homedata?.collections[3]?.image}
                                                 threshold={200}
                                                 width="100%"
                                                 height="auto"
                                                 effect="blur"
-                                            />
+                                            /> */}
+                                            <img src={homedata?.collections[3]?.image} alt="banner" />
 
                                             <div className="banner-content banner-content-top">
                                                 <h4 className="banner-subtitle text-grey">{homedata?.collections[3]?.sub_heading}</h4>

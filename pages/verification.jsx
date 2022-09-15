@@ -19,8 +19,9 @@ function Verification(props) {
             if (response?.data?.error) {
                 toast.error(response?.data?.error);
             } else {
+                localStorage.setItem('authtoken', response?.headers?.x_auth_token);
                 toast.success(response?.data);
-                router.push('/');
+                router.push('/account');
                 setOpen(props.LoginModal)
             }
         }).catch((error) => { toast.error(error?.response?.data); });
@@ -61,7 +62,7 @@ function Verification(props) {
 
 const mapStateToProps = (state) => {
     return {
-        LoginModal: state.globalReducer.popupShow
+        LoginModal: state.globalReducer.hidePopup
     }
 }
 

@@ -143,6 +143,10 @@ div.intro-slide {
 			background-color: rgba(255, 255, 255, 0.7);
 			padding: 30px;
 			max-width: max-content;
+
+			@media (max-width: 767px) {
+				padding: 15px;
+			}
 		}
 
 		img {
@@ -166,6 +170,10 @@ div.intro-slide {
 		background: $forest-green;
 		font-size: 15px;
 
+		@media (max-width: 767px) {
+			padding: 5px;
+		}
+
 		&:hover {
 			color: $forest-green;
 			border-color: #fff;
@@ -187,12 +195,20 @@ div.intro-slide {
 	font-weight: 600;
 	color: #000;
 	letter-spacing: -.01em;
+
+	@media (max-width: 767px) {
+		font-size: 1.3rem;
+	}
 }
 
 .intro-title {
 	font-weight: 600;
 	color: #000;
 	letter-spacing: -.025em;
+
+	@media (max-width: 767px) {
+		font-size: 2.3rem;
+	}
 
 	sup {
 		vertical-align: top;

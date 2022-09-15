@@ -73,7 +73,7 @@ function Cart(props) {
 
         if (authtoken !== null) {
 
-            API.post(`/auth/cart-qty/`, data, {
+            API.post(`/auth/cart-qty`, data, {
                 headers: { 'Authorization': `Bearer ${authtoken}` }
             }).then((response) => {
                 console.log("response :: ",response)
@@ -92,7 +92,7 @@ function Cart(props) {
                 console.log(err);
             });
         } else {
-            API.post(`/guest-cart-qty/`, data).then((response) => {
+            API.post(`/guest-cart-qty`, data).then((response) => {
                 console.log("response :: ",response)
 
             }).catch((err) => {

@@ -13,7 +13,8 @@ export const actionTypes = {
 };
 
 const initialState = {
-    data: []
+    data: [],
+    cartTotal: "",
 }
 
 const cartReducer = (state = initialState, action) => {
@@ -26,7 +27,6 @@ const cartReducer = (state = initialState, action) => {
             var findIndex = state.data.findIndex(item => item.product_id == action.payload.product.product_id);
             let qty = action.payload.qty ? action.payload.qty : 1;
 
-            console.log("findIndex :: ", findIndex)
 
             if (findIndex !== -1) {
 
@@ -93,6 +93,14 @@ const cartReducer = (state = initialState, action) => {
                         API.post(`/guest-cart`, productData).then((response) => {
 
                             console.log("cart :: ", response);
+                            if (response.status === 200) {
+                                // API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
+                                //     state.cartTotal = response.data.length;
+                                //     console.log("state.cartTotal :: ", state.cartTotal)
+                                // }).catch((err) => {
+                                //     console.log(err);
+                                // });
+                            }
 
                         }).catch((err) => {
                             console.log(err);
@@ -177,7 +185,7 @@ export function* cartSaga() {
 }
 
 const persistConfig = {
-    keyPrefix: "molla-",
+    keyPrefix: "",
     key: "cart",
     storage
 }

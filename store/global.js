@@ -57,7 +57,7 @@ export const actions = {
 }
 
 const persistConfig = {
-    keyPrefix: "molla-",
+    keyPrefix: "",
     key: "login",
     storage
 }
