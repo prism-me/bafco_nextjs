@@ -207,9 +207,9 @@ function Footer() {
                   <li>
                     <ALink href="/pages/services/">Services</ALink>
                   </li>
-                  <li>
+                  {/* <li>
                     <ALink href="/pages/innovations/">Innovations</ALink>
-                  </li>
+                  </li> */}
                   <li>
                     <ALink href="/pages/resources/">Resources</ALink>
                   </li>
