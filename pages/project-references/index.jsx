@@ -22,7 +22,13 @@ function ProjectReferences() {
   const [projectsList, setProjectsList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
-  const [loadItems, setLoadItems] = useState(6);
+
+  const projectsPerRow = 6;
+  const [loadItems, setLoadItems] = useState(projectsPerRow);
+
+  const handleLoadMore = () => {
+    setLoadItems(loadItems + projectsPerRow);
+  };
 
   useEffect(() => {
     API.get(`/project-category-list`)
@@ -148,21 +154,21 @@ function ProjectReferences() {
                     </p>
                   )}
                 </div>
-                {projectsList?.length >= loadItems &&
-                  loadItems != projectsList?.length && (
-                    <div
-                      className={
-                        "d-flex justify-content-center align-items-center mt-3"
-                      }
+                {loadItems < projectsList?.length && (
+                  <div
+                    className={
+                      "d-flex justify-content-center align-items-center mt-3"
+                    }
+                  >
+                    <button
+                      onClick={handleLoadMore}
+                      className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
                     >
-                      <button
-                        onClick={() => setLoadItems(projectsList?.length)}
-                        className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
-                      >
-                        <span>Load More</span>
-                      </button>
-                    </div>
-                  )}
+                      <span>Load More</span>
+                      <i className="icon-long-arrow-right"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </Reveal>

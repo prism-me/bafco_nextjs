@@ -12,7 +12,13 @@ function PlaningIdeas() {
   const [planningList, setPlanningList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
-  const [loadItems, setLoadItems] = useState(6);
+
+  const planningPerRow = 6;
+  const [loadItems, setLoadItems] = useState(planningPerRow);
+
+  const handleLoadMore = () => {
+    setLoadItems(loadItems + planningPerRow);
+  };
 
   useEffect(() => {
     API.get(`/plan-category-list`)
@@ -83,7 +89,7 @@ function PlaningIdeas() {
             <div className="products mb-5">
               <div className="row">
                 {planningList?.length > 0 ? (
-                  planningList.map((x, i) => (
+                  planningList?.slice(0, loadItems)?.map((x, i) => (
                     <div className="col-6 col-md-6 col-lg-4" key={i}>
                       <div className="furnitureWrper">
                         <ALink href={`/planning-ideas/${x.id}`}>
@@ -118,21 +124,21 @@ function PlaningIdeas() {
                   </p>
                 )}
               </div>
-              {planningList?.length >= loadItems &&
-                loadItems != planningList?.length && (
-                  <div
-                    className={
-                      "d-flex justify-content-center align-items-center mt-3"
-                    }
+              {loadItems < planningList?.length && (
+                <div
+                  className={
+                    "d-flex justify-content-center align-items-center mt-3"
+                  }
+                >
+                  <button
+                    onClick={handleLoadMore}
+                    className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
                   >
-                    <button
-                      onClick={() => setLoadItems(planningList?.length)}
-                      className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
-                    >
-                      <span>Load More</span>
-                    </button>
-                  </div>
-                )}
+                    <span>Load More</span>
+                    <i className="icon-long-arrow-right"></i>
+                  </button>
+                </div>
+              )}
             </div>
           </Reveal>
         </div>
