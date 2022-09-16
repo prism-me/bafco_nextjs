@@ -47,6 +47,7 @@ const demoReducer = (state = initialState, action) => {
         fabricShow: false,
         single: null,
       };
+      
     case actionTypes.showVideo:
       return { ...state, videoShow: true };
 
@@ -104,6 +105,7 @@ export const actions = {
   hideFabric: () => ({
     type: actionTypes.hideFabric,
   }),
+
 };
 
 const persistConfig = {

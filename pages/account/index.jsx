@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import Modal from 'react-modal';
 import CountryRegionData from '../../utils/countrydata.json';
 
-
 let userProfileData = {
     name: "",
     email: "",
@@ -41,7 +40,7 @@ let addressData = {
 
 Modal.setAppElement('body');
 
-function MyAccount() {
+function MyAccount(props) {
     const router = useRouter();
     const [userData, setUserData] = useState({ ...userProfileData });
     const [userResetPassData, setUserResetPassData] = useState({ ...userResetPasswordData });

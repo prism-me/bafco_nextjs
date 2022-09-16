@@ -27,6 +27,10 @@ function Verification(props) {
         }).catch((error) => { toast.error(error?.response?.data); });
     }
 
+    if (props.VerificationPage === false) {
+        return window.history.back()
+    }
+
     return (
         <div className="verification">
             <div className="modal-content">
@@ -62,7 +66,8 @@ function Verification(props) {
 
 const mapStateToProps = (state) => {
     return {
-        LoginModal: state.globalReducer.hidePopup
+        LoginModal: state.globalReducer.hidePopup,
+        VerificationPage: state.globalReducer.verificationshow
     }
 }
 

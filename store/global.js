@@ -4,11 +4,14 @@ import storage from 'redux-persist/lib/storage';
 export const actionTypes = {
     showPopup: 'SHOW_POPUP',
     hidePopup: 'HIDE_POPUP',
+    verificationPageShow: 'VERIFICATION_PAGE_SHOW',
+    verificationPageHide: 'VERIFICATION_PAGE_HIDE',
     refreshStore: 'REFRESH_STORE'
 };
 
 let initialState = {
     popupShow: false,
+    verificationshow: false,
 };
 const GlobalReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -23,11 +26,23 @@ const GlobalReducer = (state = initialState, action) => {
                 ...state,
                 popupShow: false,
             }
+        case actionTypes.verificationPageShow:
+            return {
+                ...state,
+                verificationshow: true,
+            };
+
+        case actionTypes.verificationPageHide:
+            return {
+                ...state,
+                verificationshow: false,
+            };
 
         case actionTypes.refreshStore:
             return {
                 ...state,
                 popupShow: false,
+                verificationshow: false,
             }
 
         default:
@@ -36,23 +51,35 @@ const GlobalReducer = (state = initialState, action) => {
 }
 
 export const actions = {
-    refreshStore: (popupShow) => ({
+    refreshStore: (popupShow, verificationshow) => ({
         type: actionTypes.refreshStore,
         payload: {
-            popupShow: popupShow
+            popupShow: popupShow,
+            verificationshow: verificationshow
         }
     }),
 
     showPopup: popupShow => ({
 
-            type: actionTypes.showPopup,
-            payload: {
-                popupShow
-            }
-        }),
+        type: actionTypes.showPopup,
+        payload: {
+            popupShow
+        }
+    }),
 
     hidePopup: () => ({
         type: actionTypes.hidePopup,
+    }),
+    
+    verificationPageShow: verificationshow => ({
+        type: actionTypes.verificationPageShow,
+        payload: {
+            verificationshow: verificationshow,
+        },
+    }),
+
+    verificationPageHide: () => ({
+        type: actionTypes.verificationPageHide,
     }),
 }
 

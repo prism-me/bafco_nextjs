@@ -76,7 +76,7 @@ function Cart(props) {
             API.post(`/auth/cart-qty`, data, {
                 headers: { 'Authorization': `Bearer ${authtoken}` }
             }).then((response) => {
-                console.log("response :: ",response)
+                console.log("response :: ", response)
                 // setCartList(
                 //     cartList.map((item, ind) => {
                 //         if (ind == index)
@@ -93,7 +93,7 @@ function Cart(props) {
             });
         } else {
             API.post(`/guest-cart-qty`, data).then((response) => {
-                console.log("response :: ",response)
+                console.log("response :: ", response)
 
             }).catch((err) => {
                 console.log(err);
@@ -167,83 +167,82 @@ function Cart(props) {
             <div className="page-content pb-5">
                 <div className="cart">
                     <div className="container">
-                        {
-                            cartList.length > 0 ?
-                                <div className="row">
-                                    <div className="col-lg-9">
-                                        <table className="table table-cart table-mobile">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th>Quantity</th>
-                                                    <th>Total</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
+                        {cartList.length > 0 ?
+                            <div className="row">
+                                <div className="col-lg-9">
+                                    <table className="table table-cart table-mobile">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
 
-                                            <tbody>
-                                                {cartList.length > 0 ?
-                                                    cartList.map((item, index) =>
-                                                        <tr key={index}>
-                                                            <td className="product-col">
-                                                                <div className="product">
-                                                                    <figure className="product-media">
-                                                                        <ALink href={`/collections/${item?.productData[0]?.product_category?.parent_category?.route}/${item?.productData[0]?.product_category?.route}/${item?.productData[0]?.route}`} className="product-image">
-                                                                            <img src={item?.variation[0]?.images[0]?.avatar} alt="product" />
-                                                                        </ALink>
-                                                                    </figure>
+                                        <tbody>
+                                            {cartList.length > 0 ?
+                                                cartList.map((item, index) =>
+                                                    <tr key={index}>
+                                                        <td className="product-col">
+                                                            <div className="product">
+                                                                <figure className="product-media">
+                                                                    <ALink href={`/collections/${item?.productData[0]?.product_category?.parent_category?.route}/${item?.productData[0]?.product_category?.route}/${item?.productData[0]?.route}`} className="product-image">
+                                                                        <img src={item?.variation[0]?.images[0]?.avatar} alt="product" />
+                                                                    </ALink>
+                                                                </figure>
 
-                                                                    <h4 className="product-title">
-                                                                        <ALink href={`/collections/${item?.productData[0]?.product_category?.parent_category?.route}/${item?.productData[0]?.product_category?.route}/${item?.productData[0]?.route}`}>{item?.productData[0]?.name}</ALink>
-                                                                    </h4>
+                                                                <h4 className="product-title">
+                                                                    <ALink href={`/collections/${item?.productData[0]?.product_category?.parent_category?.route}/${item?.productData[0]?.product_category?.route}/${item?.productData[0]?.route}`}>{item?.productData[0]?.name}</ALink>
+                                                                </h4>
+                                                            </div>
+                                                        </td>
+
+                                                        <td className="price-col">
+                                                            {item?.variation[0]?.in_stock === 0 ?
+                                                                <div className="product-price d-inline-block mb-0">
+                                                                    <span className="out-price">AED {item?.variation[0]?.upper_price}</span>
                                                                 </div>
-                                                            </td>
+                                                                :
+                                                                <div className="product-price d-inline-block mb-0">AED {item?.variation[0]?.upper_price}</div>
+                                                            }
+                                                        </td>
 
-                                                            <td className="price-col">
-                                                                {item?.variation[0]?.in_stock === 0 ?
-                                                                    <div className="product-price d-inline-block mb-0">
-                                                                        <span className="out-price">AED {item?.variation[0]?.upper_price}</span>
-                                                                    </div>
-                                                                    :
-                                                                    <div className="product-price d-inline-block mb-0">AED {item?.variation[0]?.upper_price}</div>
-                                                                }
-                                                            </td>
+                                                        <td className="quantity-col">
+                                                            <Qty
+                                                                value={item?.qty}
+                                                                changeQty={current => changeQty(current, item)}
+                                                                adClass="cart-product-quantity"
+                                                            ></Qty>
+                                                        </td>
 
-                                                            <td className="quantity-col">
-                                                                <Qty
-                                                                    value={item?.qty}
-                                                                    changeQty={current => changeQty(current, item)}
-                                                                    adClass="cart-product-quantity"
-                                                                ></Qty>
-                                                            </td>
+                                                        <td className="total-col">
+                                                            AED {item?.total}
+                                                        </td>
 
-                                                            <td className="total-col">
-                                                                AED {item?.total}
-                                                            </td>
-
-                                                            <td className="remove-col">
-                                                                <button
-                                                                    className="btn-remove"
-                                                                    onClick={() => deleteFromCart(item)}
-                                                                >
-                                                                    <i className="icon-close"></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    ) :
-                                                    <tr>
-                                                        <td>
-                                                            <p className="pl-2 pt-1 pb-1"> No Products in Cart </p>
+                                                        <td className="remove-col">
+                                                            <button
+                                                                className="btn-remove"
+                                                                onClick={() => deleteFromCart(item)}
+                                                            >
+                                                                <i className="icon-close"></i>
+                                                            </button>
                                                         </td>
                                                     </tr>
-                                                }
+                                                ) :
+                                                <tr>
+                                                    <td>
+                                                        <p className="pl-2 pt-1 pb-1"> No Products in Cart </p>
+                                                    </td>
+                                                </tr>
+                                            }
 
-                                            </tbody>
-                                        </table>
+                                        </tbody>
+                                    </table>
 
-                                        <div className="cart-bottom">
-                                            {/* <div className="cart-discount">
+                                    <div className="cart-bottom">
+                                        {/* <div className="cart-discount">
                                                 <form action="#">
                                                     <div className="input-group">
                                                         <input type="text" className="form-control" required placeholder="coupon code" />
@@ -253,37 +252,37 @@ function Cart(props) {
                                                     </div>
                                                 </form>
                                             </div> */}
-                                            {/* <button className="btn btn-outline-dark-2" onClick={updateCart}><span>Clear Cart</span><i className="icon-refresh"></i></button> */}
+                                        {/* <button className="btn btn-outline-dark-2" onClick={updateCart}><span>Clear Cart</span><i className="icon-refresh"></i></button> */}
 
 
-                                            <button className="btn btn-outline-dark-2" onClick={updateCart}><span>UPDATE CART</span><i className="icon-refresh"></i></button>
-                                        </div>
+                                        <button className="btn btn-outline-dark-2" onClick={updateCart}><span>UPDATE CART</span><i className="icon-refresh"></i></button>
                                     </div>
-                                    <aside className="col-lg-3">
-                                        <div className="summary summary-cart">
-                                            <h3 className="summary-title">Cart Total</h3>
+                                </div>
+                                <aside className="col-lg-3">
+                                    <div className="summary summary-cart">
+                                        <h3 className="summary-title">Cart Total</h3>
 
-                                            <table className="table table-summary">
-                                                <tbody>
-                                                    <tr className="summary-subtotal">
-                                                        <td>Subtotal:</td>
-                                                        <td>AED {cartTotal?.sub_total}</td>
-                                                        {/* <td>AED {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td> */}
+                                        <table className="table table-summary">
+                                            <tbody>
+                                                <tr className="summary-subtotal">
+                                                    <td>Subtotal:</td>
+                                                    <td>AED {cartTotal?.sub_total}</td>
+                                                    {/* <td>AED {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td> */}
+                                                </tr>
+
+                                                {cartTotal?.discounted_price &&
+                                                    <tr className="summary-shipping">
+                                                        <td>Discount:</td>
+                                                        <td>AED {cartTotal?.discounted_price}</td>
                                                     </tr>
+                                                }
 
-                                                    {cartTotal?.discounted_price &&
-                                                        <tr className="summary-shipping">
-                                                            <td>Discount:</td>
-                                                            <td>AED {cartTotal?.discounted_price}</td>
-                                                        </tr>
-                                                    }
+                                                <tr>
+                                                    <td>Shipping Fee:</td>
+                                                    <td>{cartTotal?.shipping_charges === 'Free' ? cartTotal?.shipping_charges : `AED ${cartTotal?.shipping_charges}`}</td>
+                                                </tr>
 
-                                                    <tr>
-                                                        <td>Shipping Fee:</td>
-                                                        <td>{cartTotal?.shipping_charges === 'Free' ? cartTotal?.shipping_charges : `AED ${cartTotal?.shipping_charges}`}</td>
-                                                    </tr>
-
-                                                    {/* <tr className="summary-shipping-row">
+                                                {/* <tr className="summary-shipping-row">
                                                         <td>
                                                             <div className="custom-control custom-radio">
                                                                 <input type="radio"
@@ -313,47 +312,47 @@ function Cart(props) {
                                                         <td>AED 20.00</td>
                                                     </tr> */}
 
-                                                    {/* <tr className="summary-shipping-estimate">
+                                                {/* <tr className="summary-shipping-estimate">
                                                         <td>Estimate for Your Country<br /> <ALink href="/shop/dashboard">Change address</ALink></td>
                                                         <td>&nbsp;</td>
                                                     </tr> */}
 
-                                                    <tr className="summary-total">
-                                                        <td>Total:</td>
-                                                        <td>AED {cartTotal?.total}</td>
-                                                        {/* <td>
+                                                <tr className="summary-total">
+                                                    <td>Total:</td>
+                                                    <td>AED {cartTotal?.total}</td>
+                                                    {/* <td>
                                                             AED {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </td> */}
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
+                                        <ALink
+                                            className="btn btn-outline-primary-2 btn-order btn-block"
+                                            href="/checkout"
+                                        >
+                                            PROCEED TO CHECKOUT
+                                        </ALink>
+                                    </div>
+
+                                    <ALink href="/" className="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i className="icon-refresh"></i></ALink>
+                                </aside>
+                            </div>
+                            :
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="cart-empty-page text-center">
+                                        <i className="cart-empty icon-shopping-cart" style={{ lineHeight: 1, fontSize: '15rem' }}></i>
+                                        <p className="px-3 py-2 cart-empty mb-3">No products added to the cart</p>
+                                        <p className="return-to-shop mb-0">
                                             <ALink
-                                                className="btn btn-outline-primary-2 btn-order btn-block"
-                                                href="/checkout"
-                                            >
-                                                PROCEED TO CHECKOUT
-                                            </ALink>
-                                        </div>
-
-                                        <ALink href="/" className="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i className="icon-refresh"></i></ALink>
-                                    </aside>
-                                </div>
-                                :
-                                <div className="row">
-                                    <div className="col-12">
-                                        <div className="cart-empty-page text-center">
-                                            <i className="cart-empty icon-shopping-cart" style={{ lineHeight: 1, fontSize: '15rem' }}></i>
-                                            <p className="px-3 py-2 cart-empty mb-3">No products added to the cart</p>
-                                            <p className="return-to-shop mb-0">
-                                                <ALink
-                                                    href="/"
-                                                    className="btn btn-primary"
-                                                >RETURN TO SHOP</ALink>
-                                            </p>
-                                        </div>
+                                                href="/"
+                                                className="btn btn-primary"
+                                            >RETURN TO SHOP</ALink>
+                                        </p>
                                     </div>
                                 </div>
+                            </div>
                         }
                     </div>
                 </div>

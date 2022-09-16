@@ -58,7 +58,7 @@ const cartReducer = (state = initialState, action) => {
                     API.post(`/auth/cart`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
 
                         if (response.status === 200) {
-                            window.location.reload(false);
+                            toast.success("Product added to Cart");
                             return {
 
                                 data: [
@@ -95,7 +95,7 @@ const cartReducer = (state = initialState, action) => {
                         };
                         API.post(`/guest-cart`, productData).then((response) => {
                             if (response.status === 200) {
-                                window.location.reload(false);
+                                toast.success("Product added to Cart");
                                 return {
 
                                     data: [
@@ -106,12 +106,6 @@ const cartReducer = (state = initialState, action) => {
                                         }
                                     ]
                                 };
-                                // API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
-                                //     state.cartTotal = response.data.length;
-                                //     console.log("state.cartTotal :: ", state.cartTotal)
-                                // }).catch((err) => {
-                                //     console.log(err);
-                                // });
                             }
 
                         }).catch((err) => {
@@ -175,7 +169,7 @@ export const actions = {
 
 export function* cartSaga() {
     yield takeEvery(actionTypes.addToCart, function* saga(e) {
-        toast.success("Product added to Cart");
+        // toast.success("Product added to Cart");
     });
 
     yield takeEvery(actionTypes.removeFromCart, function* saga(e) {

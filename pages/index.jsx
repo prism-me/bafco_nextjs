@@ -1272,11 +1272,8 @@ function Home(props) {
                     <div className="heading heading-center mb-3">
                         <h2 className="title">Top Selling Products</h2>
                     </div>
-                    <div className="top-collection  mb-3">
+                    {/* <div className="top-collection  mb-3">
                         <ul className="nav nav-pills nav-border-anim justify-content-center" role="tablist">
-                            {/* <li className={`nav-item ${selectedCategory === 'all' ? 'show' : ''}`} onClick={() => setSelectedCategory('all')}>
-                                <span className="nav-link">All</span>
-                            </li> */}
                             {categoryList?.map((item, index) => (
                                 <li
                                     className={`nav-item ${selectedCategory === item.subcategory[0].route ? 'show' : ''}`}
@@ -1287,7 +1284,7 @@ function Home(props) {
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </div> */}
                     <div className="products">
                         <div className="row">
                             {productList?.products?.length > 0 ?

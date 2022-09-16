@@ -32,6 +32,8 @@ function LoginModal(props) {
     const [forgotPasswordemail, setForgotPasswordEmail] = useState('');
     let timer;
 
+    console.log("VerificationPAge :: ", props)
+
     useEffect(() => {
         setOpen(props.LoginModal)
         return () => {
@@ -326,8 +328,9 @@ function LoginModal(props) {
 const mapStateToProps = (state) => {
     return {
         // wishlist: state.wishlist.data,
-        comparelist: state.comparelist.data,
-        LoginModal: state.globalReducer.popupShow
+        // comparelist: state.comparelist.data,
+        LoginModal: state.globalReducer.popupShow,
+        VerificationPage: state.globalReducer.verificationshow
     }
 }
 
