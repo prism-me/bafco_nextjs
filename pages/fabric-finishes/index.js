@@ -72,15 +72,17 @@ function FabricGrid() {
   }, []);
 
   useEffect(() => {
-    API.get(`/finishes-filter-list/${selectedCategory}`)
-      .then((response) => {
-        // debugger;
-        setFabricList(response?.data?.finishesData[0]);
-        setFilterList(response?.data?.finishesList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (selectedCategory) {
+      API.get(`/finishes-filter-list/${selectedCategory}`)
+        .then((response) => {
+          // debugger;
+          setFabricList(response?.data?.finishesData[0]);
+          setFilterList(response?.data?.finishesList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [selectedCategory]);
 
   useEffect(() => {
