@@ -25,7 +25,7 @@ function CartMenu(props) {
             });
 
         } else {
-            API.get(`/auth/cart/${UserDetail}`, {headers: {'Authorization': `Bearer ${authtoken}`}}).then((response) => {
+            API.get(`/auth/cart/${UserDetail}`, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
                 setCartCount(response?.data?.length);
             }).catch((err) => {
                 console.log(err);

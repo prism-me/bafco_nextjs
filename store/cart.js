@@ -58,6 +58,7 @@ const cartReducer = (state = initialState, action) => {
                     API.post(`/auth/cart`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
 
                         if (response.status === 200) {
+                            window.location.reload(false);
                             return {
 
                                 data: [
@@ -94,6 +95,7 @@ const cartReducer = (state = initialState, action) => {
                         };
                         API.post(`/guest-cart`, productData).then((response) => {
                             if (response.status === 200) {
+                                window.location.reload(false);
                                 return {
 
                                     data: [
