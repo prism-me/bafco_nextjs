@@ -12,13 +12,14 @@ function CartMenu(props) {
     console.log("cartlist :: ", cartlist)
 
     useEffect(() => {
+
         let authtoken = localStorage.getItem('authtoken');
         let UserDetail = localStorage.getItem('UserData');
         let GuestUserDetail = localStorage.getItem('GuestUserData');
 
         if (authtoken === "" || authtoken === null || authtoken === undefined) {
-
             API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
+                // setCartCount(1)
                 setCartCount(response?.data?.length);
             }).catch((err) => {
                 console.log(err);
