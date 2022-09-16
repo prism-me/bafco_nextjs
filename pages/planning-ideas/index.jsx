@@ -12,6 +12,7 @@ function PlaningIdeas() {
   const [planningList, setPlanningList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
+  const [loadItems, setLoadItems] = useState(6);
 
   useEffect(() => {
     API.get(`/plan-category-list`)
@@ -117,6 +118,21 @@ function PlaningIdeas() {
                   </p>
                 )}
               </div>
+              {planningList?.length >= loadItems &&
+                loadItems != planningList?.length && (
+                  <div
+                    className={
+                      "d-flex justify-content-center align-items-center mt-3"
+                    }
+                  >
+                    <button
+                      onClick={() => setLoadItems(planningList?.length)}
+                      className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
+                    >
+                      <span>Load More</span>
+                    </button>
+                  </div>
+                )}
             </div>
           </Reveal>
         </div>
