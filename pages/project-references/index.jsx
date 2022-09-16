@@ -23,6 +23,13 @@ function ProjectReferences() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
 
+  const projectsPerRow = 6;
+  const [loadItems, setLoadItems] = useState(projectsPerRow);
+
+  const handleLoadMore = () => {
+    setLoadItems(loadItems + projectsPerRow);
+  };
+
   useEffect(() => {
     API.get(`/project-category-list`)
       .then((response) => {
@@ -106,7 +113,7 @@ function ProjectReferences() {
               <div className="container">
                 <div className="row">
                   {projectsList?.length > 0 ? (
-                    projectsList.map((x, i) => (
+                    projectsList?.slice(0, loadItems).map((x, i) => (
                       <div className="col-6 col-md-6 col-lg-4" key={i}>
                         <div className="furnitureWrper">
                           <ALink href={`/project-references/${x.id}`}>
@@ -147,6 +154,21 @@ function ProjectReferences() {
                     </p>
                   )}
                 </div>
+                {loadItems < projectsList?.length && (
+                  <div
+                    className={
+                      "d-flex justify-content-center align-items-center mt-3"
+                    }
+                  >
+                    <button
+                      onClick={handleLoadMore}
+                      className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
+                    >
+                      <span>Load More</span>
+                      <i className="icon-long-arrow-right"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </Reveal>

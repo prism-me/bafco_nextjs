@@ -26,6 +26,13 @@ function BrouchureImages(props) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
 
+  const brochuresPerRow = 6;
+  const [loadItems, setLoadItems] = useState(brochuresPerRow);
+
+  const handleLoadMore = () => {
+    setLoadItems(loadItems + brochuresPerRow);
+  };
+
   useEffect(() => {
     API.get(`/brochure-category-list`)
       .then((response) => {
@@ -157,7 +164,7 @@ function BrouchureImages(props) {
                   </div>
                 </div> */}
                 {brochuresList?.length > 0 ? (
-                  brochuresList?.map((x, i) => (
+                  brochuresList?.slice(0, loadItems)?.map((x, i) => (
                     <div className="col-6 col-md-6 col-lg-4" key={i}>
                       <div className="downloadWrper">
                         <img
@@ -203,6 +210,21 @@ function BrouchureImages(props) {
                   </p>
                 )}
               </div>
+              {loadItems < brochuresList?.length && (
+                <div
+                  className={
+                    "d-flex justify-content-center align-items-center mt-3"
+                  }
+                >
+                  <button
+                    onClick={handleLoadMore}
+                    className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
+                  >
+                    <span>Load More</span>
+                    <i className="icon-long-arrow-right"></i>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </Reveal>

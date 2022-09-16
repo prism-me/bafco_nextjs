@@ -25,22 +25,50 @@ function FabricGrid() {
   const products = data && data.products.data;
   const totalCount = data && data.products.totalCount;
 
+  // finishes List data start
+
   const [fabricList, setFabricList] = useState();
   const [filterList, setFilterList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryList, setCategoryList] = useState("");
-
   const [matId, setMatId] = useState("");
 
-  // console.log("matId::", matId);
-  // console.log("tab::", selectedCategory);
+  useEffect(() => {
+    API.get(`/material-list`)
+      .then((response) => {
+        setCategoryList(response?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  // console.log(
-  //   "Leather::",
-  //   fabricList?.child_value[0]?.child?.filter(
-  //     (item) => item.value.material_id === matId
-  //   )
-  // );
+  useEffect(() => {
+    if (selectedCategory) {
+      API.get(`/finishes-filter-list/${selectedCategory}`)
+        .then((response) => {
+          // debugger;
+          setFabricList(response?.data?.finishesData[0]);
+          setFilterList(response?.data?.finishesList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [selectedCategory, matId]);
+  // finishes List data end
+
+  // filters data start
+
+  console.log("matId::", matId);
+  console.log("tab::", selectedCategory);
+
+  console.log(
+    "Leather::",
+    fabricList?.child_value[0]?.child?.filter(
+      (item) => item?.value?.material_id === 2
+    )
+  );
 
   useEffect(() => {
     if ((query?.collection || query?.color || query?.finishes) && matId) {
@@ -61,27 +89,7 @@ function FabricGrid() {
     }
   }, [query, matId]);
 
-  useEffect(() => {
-    API.get(`/material-list`)
-      .then((response) => {
-        setCategoryList(response?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    API.get(`/finishes-filter-list/${selectedCategory}`)
-      .then((response) => {
-        // debugger;
-        setFabricList(response?.data?.finishesData[0]);
-        setFilterList(response?.data?.finishesList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [selectedCategory]);
+  // filters data End
 
   useEffect(() => {
     window.addEventListener("resize", resizeHandle);
@@ -99,7 +107,6 @@ function FabricGrid() {
   useEffect(() => {
     getProducts({
       variables: {
-        searchTerm: query.searchTerm,
         color: query.color ? query.color.split(",") : [],
         size: query.size ? query.size.split(",") : [],
         brand: query.brand ? query.brand.split(",") : [],
@@ -136,18 +143,6 @@ function FabricGrid() {
     }
   }, [type]);
 
-  function onSortByChange(e) {
-    let queryObject = router.query;
-    let url = router.pathname.replace("[type]", query.type) + "?";
-    for (let key in queryObject) {
-      if (key !== "type" && key !== "sortBy") {
-        url += key + "=" + queryObject[key] + "&";
-      }
-    }
-
-    router.push(url + "sortBy=" + e.target.value);
-  }
-
   function toggleSidebar() {
     if (
       document.querySelector("body").classList.contains("sidebar-filter-active")
@@ -175,13 +170,6 @@ function FabricGrid() {
               <ALink href="/">Home</ALink>
             </li>
             <li className="breadcrumb-item active">Fabric & Finishes</li>
-            {query.search ? (
-              <li className="breadcrumb-item">
-                <span>Search - {query.searchTerm}</span>
-              </li>
-            ) : (
-              ""
-            )}
           </ol>
         </div>
       </nav>

@@ -13,6 +13,13 @@ function PlaningIdeas() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
 
+  const planningPerRow = 6;
+  const [loadItems, setLoadItems] = useState(planningPerRow);
+
+  const handleLoadMore = () => {
+    setLoadItems(loadItems + planningPerRow);
+  };
+
   useEffect(() => {
     API.get(`/plan-category-list`)
       .then((response) => {
@@ -82,7 +89,7 @@ function PlaningIdeas() {
             <div className="products mb-5">
               <div className="row">
                 {planningList?.length > 0 ? (
-                  planningList.map((x, i) => (
+                  planningList?.slice(0, loadItems)?.map((x, i) => (
                     <div className="col-6 col-md-6 col-lg-4" key={i}>
                       <div className="furnitureWrper">
                         <ALink href={`/planning-ideas/${x.id}`}>
@@ -117,6 +124,21 @@ function PlaningIdeas() {
                   </p>
                 )}
               </div>
+              {loadItems < planningList?.length && (
+                <div
+                  className={
+                    "d-flex justify-content-center align-items-center mt-3"
+                  }
+                >
+                  <button
+                    onClick={handleLoadMore}
+                    className={`btn btn-sm btn-minwidth btn-outline-primary-2`}
+                  >
+                    <span>Load More</span>
+                    <i className="icon-long-arrow-right"></i>
+                  </button>
+                </div>
+              )}
             </div>
           </Reveal>
         </div>
