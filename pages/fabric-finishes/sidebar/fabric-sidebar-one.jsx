@@ -20,16 +20,20 @@ function FabricSidebarOne(props) {
   }
 
   const collectionData = filterData
-    ?.filter((x) => x?.name === "Collection")[0]
-    ?.child_value[0]?.child?.filter((item) => item.value.material_id === matId);
+    ?.filter((x) => x?.name == "Collection")[0]
+    ?.child_value[0]?.child?.filter(
+      (item) => item?.value?.material_id == matId
+    );
 
   // const colorsData = filterData
-  //   ?.filter((x) => x?.name === "Color-Range")[0]
-  //   ?.child_value?.filter((item) => item.value.material_id === matId);
+  //   ?.filter((x) => x?.name == "Color-Range")[0]
+  //   ?.child_value?.filter((item) => item.value.material_id == matId);
 
   const finishesData = filterData
-    ?.filter((x) => x?.name === "Finishes")[0]
-    ?.child_value[0]?.child?.filter((item) => item.value.material_id === matId);
+    ?.filter((x) => x?.name == "Finishes")[0]
+    ?.child_value?.filter((item) =>
+      item?.child?.filter((x) => x?.value?.material_id == matId)
+    );
 
   // console.log("collectionfilter ::", finishesData);
 
@@ -111,7 +115,7 @@ function FabricSidebarOne(props) {
                   <div className="widget-body pt-0">
                     <div className="filter-colors">
                       {filterData
-                        ?.filter((x) => x?.name === "Color-Range")[0]
+                        ?.filter((x) => x?.name == "Color-Range")[0]
                         ?.child_value?.map((item, index) => (
                           <ALink
                             className={`${
@@ -160,7 +164,7 @@ function FabricSidebarOne(props) {
                   <div className="widget-body pt-0">
                     <div className="filter-items">
                       {filterData
-                        ?.filter((x) => x?.name === "Finishes")[0]
+                        ?.filter((x) => x?.name == "Finishes")[0]
                         ?.child_value?.map((item, index) => (
                           <div className="filter-item" key={index}>
                             <div className="custom-control custom-checkbox">

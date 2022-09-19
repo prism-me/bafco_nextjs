@@ -1,21 +1,50 @@
-import { useRouter } from "next/router";
-import React from "react";
+// import { useRouter } from "next/router";
+import React, { useRef } from "react";
 import { useEffect } from "react";
 // import ALink from "~/components/features/alink";
 import { saveAs } from "file-saver";
+import { useState } from "react";
 
 function FabricTopBar(props) {
-  const router = useRouter();
+  // const router = useRouter();
   // const type = router.query.type;
-  const { categoryList, selectedCategory, setSelectedCategory, setMatId } =
-    props;
+  const {
+    categoryList,
+    selectedCategory,
+    wrappersetSelectedCategory,
+    // setMatId,
+    wrappersetMatId,
+  } = props;
+
+  const childRef = useRef();
+  const [childState, setChildState] = useState("");
+
+  useEffect(() => {
+    wrappersetSelectedCategory(childState);
+  }, [wrappersetSelectedCategory, childState]);
+
+  const [childMatState, setChildMatState] = useState("");
+
+  useEffect(() => {
+    wrappersetMatId(childMatState);
+  }, [wrappersetMatId, childMatState]);
 
   useEffect(() => {
     if (categoryList.length > 0) {
-      setMatId(categoryList[0].id);
-      setSelectedCategory(categoryList[0].name);
+      setChildMatState(categoryList[0].id);
+      setChildState(categoryList[0].name);
     }
   }, [categoryList.length]);
+
+  const onSliderClickTab = (val) => {
+    //pass slider's event value to child's state
+    setChildState(val);
+  };
+
+  const onMatTab = (val) => {
+    //pass slider's event value to child's state
+    setChildMatState(val);
+  };
 
   const downloadImg = (downloadImg) => {
     if (downloadImg) {
@@ -30,12 +59,13 @@ function FabricTopBar(props) {
             categoryList.map((item, index) => (
               <button
                 className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${
-                  selectedCategory === `${item.name}` ? "active" : ""
+                  selectedCategory == `${item.name}` ? "active" : ""
                 }`}
                 onClick={() => {
-                  setSelectedCategory(`${item.name}`);
-                  setMatId(`${item.id}`);
+                  onSliderClickTab(`${item.name}`);
+                  onMatTab(`${item.id}`);
                 }}
+                ref={childRef}
               >
                 <span>{item.name}</span>
               </button>
