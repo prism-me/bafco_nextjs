@@ -406,6 +406,10 @@
 
 		span {
 			margin-right: .7rem;
+
+			&:first-child {
+				font-weight: 600;
+			}
 		}
 
 		a {
@@ -500,7 +504,7 @@
 	label {
 		display: inline-block;
 		width: 80px;
-		font-weight: 400;
+		font-weight: 600;
 		font-size: 1.4rem;
 		margin-bottom: 0;
 		color: #000;
@@ -617,6 +621,16 @@
 		&+.btn-product {
 			padding-left: 1.3rem;
 			margin-left: 1.6rem;
+		}
+	}
+}
+
+.product-details-adv {
+	ul {
+		li {
+			img {
+				width: 75px;
+			}
 		}
 	}
 }

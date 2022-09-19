@@ -119,11 +119,11 @@ function Contact() {
                                                     {item.address}
                                                 </li>
                                                 <li>
-                                                    <i className="icon-phone"></i>
+                                                    <i className="icon-phone" style={{color: '#008482'}}></i>
                                                     <a href={`tel:${item.number}`}>{item.number}</a>
                                                 </li>
                                                 <li>
-                                                    <i className="icon-envelope"></i>
+                                                    <i className="icon-envelope" style={{color: '#008482'}}></i>
                                                     <a href={`mailto:${item.email}`}>{item.email}</a>
                                                 </li>
                                             </ul>
@@ -132,7 +132,8 @@ function Contact() {
                                 ))}
                             </div>
                         </div>
-                        <div className="col-lg-6">
+                        <div class="col-lg-1"></div>
+                        <div className="col-lg-5">
                             <h2 className="title mb-1">{contactusdata?.getInTouch?.heading}</h2>
                             <p className="lead text-primary">{contactusdata?.getInTouch?.sub_heading}</p>
                             <div className="mb-3" dangerouslySetInnerHTML={{ __html: contactusdata?.getInTouch?.description }} />

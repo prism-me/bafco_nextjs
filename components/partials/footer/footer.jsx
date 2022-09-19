@@ -213,9 +213,9 @@ function Footer() {
                   <li>
                     <ALink href="/pages/resources/">Resources</ALink>
                   </li>
-                  <li>
+                  {/* <li>
                     <ALink href="/pages/team/">Our Team</ALink>
-                  </li>
+                  </li> */}
                   <li>
                     <ALink href="/pages/contact/">Contact Us</ALink>
                   </li>
@@ -223,7 +223,7 @@ function Footer() {
               </div>
             </div>
 
-            <div className="col-sm-6 col-lg-3">
+            <div className="col-sm-6 col-lg-3" style={{ paddingRight: '0' }}>
               <div className="widget">
                 <h4 className="widget-title">VISIT OUR SHOWROOM</h4>
                 <ul className="contact-list">
@@ -238,12 +238,12 @@ function Footer() {
                 </ul>
                 <ul className="contact-list contact-info">
                   <li>
-                    <i className="icon-phone"></i>
-                    <a href="tel:+9714 324 4424">+9714 324 4424</a>
+                    <i className="icon-phone" style={{ color: '#008482' }}></i>
+                    <a href="tel:+971 43 738 300">+971 43 738 300</a>
                   </li>
                   <li>
-                    <i className="icon-envelope"></i>
-                    <a href="mailto:hello@gmail.com">hello@gmail.com</a>
+                    <i className="icon-envelope" style={{ color: '#008482' }}></i>
+                    <a href="mailto:hello@bafco.com">hello@bafco.com</a>
                   </li>
                 </ul>
                 <ul className="contact-list">
@@ -258,12 +258,12 @@ function Footer() {
                 </ul>
                 <ul className="contact-list contact-info">
                   <li>
-                    <i className="icon-phone"></i>
-                    <a href="tel:+9714 324 4424">+9714 324 4424</a>
+                    <i className="icon-phone" style={{ color: '#008482' }}></i>
+                    <a href="tel:+971 26 317 008">+971 26 317 008</a>
                   </li>
                   <li>
-                    <i className="icon-envelope"></i>
-                    <a href="mailto:hello@gmail.com">hello@gmail.com</a>
+                    <i className="icon-envelope" style={{ color: '#008482' }}></i>
+                    <a href="mailto:auhoffice@bafco.com">auhoffice@bafco.com</a>
                   </li>
                 </ul>
               </div>

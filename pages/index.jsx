@@ -18,7 +18,7 @@ import { actions as demoAction } from '~/store/demo';
 import ProductTwelve from '~/components/features/products/product-twelve';
 import { API } from '~/http/API';
 // import { productdata } from "../data";
-import { homeData, introSlider, brandSlider, dealSlider, fadeInUpShorter, fadeInLeftShorter, fadeInRightShorter, fadeIn } from '~/utils/data';
+import { homeData, introSlider, brandSlider, dealSlider, fadeInUpShorter, fadeInLeftShorter, fadeInRightShorter, fadeIn, projectRelatedProductsInnerSlider } from '~/utils/data';
 
 const axios = require('axios');
 
@@ -949,8 +949,7 @@ function Home(props) {
     const [homedata, setHomedata] = useState();
     const [bloglist, setBlogList] = useState();
     const [productList, setProductList] = useState();
-    const [categoryList, setCategoryList] = useState();
-    const [selectedCategory, setSelectedCategory] = useState('executive-chairs');
+    // const [selectedCategory, setSelectedCategory] = useState('executive-chairs');
 
     function openVideoModal(e) {
         e.preventDefault();
@@ -960,18 +959,6 @@ function Home(props) {
     // if (error) {
     //     return <div></div>
     // }
-
-    useEffect(() => {
-        // API.get(`/front-products/${selectedCategory}`)
-        API.get(`/front-products/sofa`)
-            .then((response) => {
-                setProductList(response?.data)
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [selectedCategory])
-
     useEffect(() => {
 
         API.get(`/home`).then((response) => {
@@ -981,11 +968,14 @@ function Home(props) {
             console.log(err);
         });
 
-        API.get(`/top-selling-products-category-list`).then((response) => {
-            setCategoryList(response.data)
-        }).catch((err) => {
-            console.log(err);
-        });
+        API.get(`/top-selling-products`)
+            .then((response) => {
+                console.log(response)
+                setProductList(response?.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
     }, [])
 
@@ -1268,43 +1258,32 @@ function Home(props) {
 
             <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
                 {/* <TopCollection categories={categoryList} products={productList} setIsSelectedCategory={setSelectedCategory} loading={loading} /> */}
-                <div className="container">
+                <div className="container mb-7">
                     <div className="heading heading-center mb-3">
-                        <h2 className="title">Top Selling Products</h2>
+                        <h2 className="title">Top Seller</h2>
                     </div>
-                    {/* <div className="top-collection  mb-3">
-                        <ul className="nav nav-pills nav-border-anim justify-content-center" role="tablist">
-                            {categoryList?.map((item, index) => (
-                                <li
-                                    className={`nav-item ${selectedCategory === item.subcategory[0].route ? 'show' : ''}`}
-                                    onClick={() => setSelectedCategory(item.subcategory[0].route)}
-                                    key={index}
-                                >
-                                    <span className="nav-link">{item.name}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div> */}
                     <div className="products">
                         <div className="row">
-                            {productList?.products?.length > 0 ?
-                                productList?.products?.slice(0, 4).map((item1, index1) =>
-                                    <div className="col-6 col-md-6 col-lg-3" key={index1}>
-                                        <ProductTwelve
-                                            product={item1}
-                                            categoryName={productList?.parent_category?.route}
-                                            subCategoryName={productList?.route}
-                                        />
-                                    </div>
-                                ) :
-                                <p style={{ fontSize: '20px', textAlign: 'center', fontWeight: 'bold', display: 'block', width: '100%' }}>No product found.</p>
-                            }
+                            <OwlCarousel className="owl-simple owl-light owl-nav-inside" options={projectRelatedProductsInnerSlider}>
+                                {productList?.length > 0 ?
+                                    productList?.slice(0, 4).map((item1, index1) =>
+                                        <div className="slide1" key={index1}>
+                                            <ProductTwelve
+                                                product={item1}
+                                                categoryName={item1?.product_category?.parent_category?.route}
+                                                subCategoryName={item1?.product_category?.route}
+                                            />
+                                        </div>
+                                    ) :
+                                    <p style={{ fontSize: '20px', textAlign: 'center', fontWeight: 'bold', display: 'block', width: '100%' }}>No product found.</p>
+                                }
+                            </OwlCarousel>
                         </div>
                     </div>
                 </div>
-                <div className="text-center mb-7 mt-2">
+                {/* <div className="text-center mb-7 mt-2">
                     <ALink href="#" className="btn btn-outline-darker btn-more"><span>View more</span><i className="icon-long-arrow-right"></i></ALink>
-                </div>
+                </div> */}
             </Reveal>
             {homedata?.deal?.length > 0 &&
                 <div className="deal-container pt-5 mb-5">
@@ -1360,8 +1339,10 @@ function Home(props) {
                                     </div>
 
                                     <div className="col-lg-3">
-                                        <div className="banner banner-overlay banner-overlay-light d-none d-lg-block h-100 pb-2">
-                                            <ALink href="#" className="h-100">
+                                        <div className="banner banner-overlay banner-overlay-light d-none d-lg-block pb-2">
+                                            <ALink href="#"
+                                            // className="h-100"
+                                            >
                                                 <div className="lazy-overlay"></div>
 
                                                 <LazyLoadImage
@@ -1369,7 +1350,7 @@ function Home(props) {
                                                     src={item.slider_images.sub_image}
                                                     threshold="300"
                                                     effect="blur"
-                                                    className="h-100"
+                                                    // className="h-100"
                                                     width="100%"
                                                 />
                                             </ALink>

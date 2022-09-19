@@ -730,7 +730,7 @@ a:focus {
 .search-toggle:hover,
 .search-toggle:focus,
 .search-toggle.active {
-    color: $primary-color;
+    color: #808080;
 }
 
 /* Menu */
@@ -740,13 +740,13 @@ a:focus {
     li.show,
     li.active {
         >a {
-            color: $primary-color;
+            color: #808080;
         }
     }
 }
 
 .main-nav li.active a.link-active {
-    color: $primary-color;
+    color: #808080;
 }
 
 .demo-item {
@@ -766,7 +766,7 @@ a:focus {
 .header-bottom {
     .menu>li>a {
         &:before {
-            background-color: $primary-color;
+            background-color: #808080;
         }
     }
 }
@@ -813,7 +813,7 @@ a:focus {
     li.show,
     li.active {
         >a {
-            color: $primary-color;
+            color: #808080;
         }
     }
 
@@ -821,7 +821,7 @@ a:focus {
     >li.show,
     >li.active {
         >a {
-            color: $primary-color;
+            color: #808080;
         }
     }
 }

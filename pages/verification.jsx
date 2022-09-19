@@ -17,12 +17,13 @@ function Verification(props) {
         let formdata = { "code": verificationCode }
         API.post(`/auth/email-verification`, formdata).then((response) => {
             if (response?.data?.error) {
-                toast.error(response?.data?.error);
+                toast.error(response?.data?.message);
             } else {
                 localStorage.setItem('authtoken', response?.headers?.x_auth_token);
                 toast.success(response?.data);
-                router.push('/account');
-                setOpen(props.LoginModal)
+                // router.push('/account');
+                props.verificationPageHide(false);
+                props.hidePopup(false);
             }
         }).catch((error) => { toast.error(error?.response?.data); });
     }

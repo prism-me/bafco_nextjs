@@ -332,7 +332,7 @@ function DetailTwo ( props ) {
                         isInWishlist( props.wishlist, product ) ?
                             <ALink href="/shop/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>Go to Wishlist</span></ALink>
                             :
-                            <a href="#" className="btn-product btn-wishlist" onClick={ onWishlistClick }><span>Add to Wishlist</span></a>
+                            <a href="#" className="btn-product btn-wishlist" onClick={ onWishlistClick }><span>Save to Wishlist</span></a>
 
                     }
                 </div>

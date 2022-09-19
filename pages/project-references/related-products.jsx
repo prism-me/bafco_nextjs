@@ -83,7 +83,7 @@ function RelatedProducts(props) {
         {!product?.productvariations?.in_stock ||
         product?.productvariations?.in_stock === 0 ? (
           <span className="product-label label-circle label-out">
-            Out of Stock
+            Stocking
           </span>
         ) : (
           ""

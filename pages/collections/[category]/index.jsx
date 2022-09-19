@@ -13,7 +13,6 @@ function ProductSubCatInner() {
 
         API.get(`/front-category/${query?.category}`)
             .then((response) => {
-                console.log("cart :: ", response)
                 setCategoryData(response?.data[0])
             })
             .catch((err) => {

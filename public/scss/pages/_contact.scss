@@ -45,7 +45,7 @@ ul.contact-list.contact-info {
 }
 
 .contact-list {
-	max-width: 270px;
+	// max-width: 270px;
 	list-style: none;
 	padding-left: 0;
 	@media (min-width: 768px) and (max-width: 1024px) {
@@ -54,7 +54,7 @@ ul.contact-list.contact-info {
 
 	li {
 		position: relative;
-		padding-left: 25px;
+		padding-left: 22px;
 		margin-bottom: 1.4rem;
 	}
 

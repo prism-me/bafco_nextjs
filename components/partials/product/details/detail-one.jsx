@@ -9,6 +9,7 @@ import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
 import { canAddToCart, isInWishlist } from '~/utils';
 
+
 function DetailOne(props) {
     const router = useRouter();
     const ref = useRef(null);
@@ -20,6 +21,19 @@ function DetailOne(props) {
     const [authtoken, setAuthtoken] = useState('');
     const [selectedVariant, setSelectedVariant] = useState();
     const [variantCombGroup, setvariantCombGroup] = useState();
+
+    // const numberFormat = value =>
+    //     new Intl.NumberFormat("en-IN", {
+    //         style: "currency",
+    //         currency: "AED"
+    //     }).format(value);
+
+    // const numberFormat = (value) => {
+    //     new Intl.NumberFormat('en-IN', {
+    //         style: 'currency',
+    //         currency: 'AED'
+    //     }).format(value);
+    // }
 
     useEffect(() => {
 
@@ -93,7 +107,7 @@ function DetailOne(props) {
     function onChangeQty(current) {
         setQty(current);
     }
-    
+
     function onCartClick(e) {
 
         e.preventDefault();
@@ -200,9 +214,9 @@ function DetailOne(props) {
                 <div className="product-price">
                     <span className="out-price">
                         {product?.product_single_variation?.product_variation_details?.limit >= qty ?
-                            <span>AED {product?.product_single_variation?.product_variation_details?.upper_price}</span>
+                            <span> {product?.product_single_variation?.product_variation_details?.upper_price}</span>
                             :
-                            <span>AED {product?.product_single_variation?.product_variation_details?.lower_price}</span>
+                            <span> {product?.product_single_variation?.product_variation_details?.lower_price}</span>
                         }
                     </span>
                 </div>
@@ -268,7 +282,7 @@ function DetailOne(props) {
 
             {/* <div className="product product-7 text-center w-100">
                 <figure className="product-media">
-                    <span className="product-label label-out">Out of Stock</span>
+                    <span className="product-label label-out">Stocking</span>
                 </figure>
             </div> */}
 
@@ -281,7 +295,7 @@ function DetailOne(props) {
                 </div >
                 :
                 <div className="details-filter-row details-row-size">
-                    <span className="product-label-out">Out of Stock</span>
+                    <span className="product-label-out">Stocking</span>
                 </div >
             }
 
@@ -298,7 +312,7 @@ function DetailOne(props) {
                         isInWishlist(props.wishlist, product) ?
                             <ALink href="/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>Go to Wishlist</span></ALink>
                             :
-                            <a href="#" className="btn-product btn-wishlist" onClick={onWishlistClick}><span>Add to Wishlist</span></a>
+                            <a href="#" className="btn-product btn-wishlist" onClick={onWishlistClick}><span>Save to Wishlist</span></a>
 
                     }
                 </div>
@@ -310,17 +324,17 @@ function DetailOne(props) {
                 </div >
 
                 <div className="product-cat text-truncate">
-                    <span>Type of Seating: </span><span style={{ textTransform: 'capitalize' }}>{subCategory}</span>
+                    <span>Type : </span><span style={{ textTransform: 'capitalize' }}>{subCategory}</span>
                 </div>
 
-                <div className="social-icons social-icons-sm">
+                {/* <div className="social-icons social-icons-sm">
                     <span className="social-label">Share:</span>
                     <ALink href="https://www.instagram.com/bafco/" className="social-icon" rel="noopener noreferrer" title="Instagram" target="_blank"><i className="icon-instagram"></i></ALink>
                     <ALink href="https://www.facebook.com/bafcointeriors" className="social-icon" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
                     <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
                     <ALink href="https://twitter.com/Bafco" className="social-icon" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
                     <ALink href="https://www.pinterest.com/bafcointeriors/" className="social-icon" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>
-                </div>
+                </div> */}
             </div >
             <div className="product-details-adv">
                 <ul>
@@ -387,7 +401,7 @@ function DetailOne(props) {
                                     isInWishlist(props.wishlist, product) ?
                                         <ALink href="/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>Go to Wishlist</span></ALink>
                                         :
-                                        <a href="#" className="btn-product btn-wishlist" onClick={onWishlistClick}><span>Add to Wishlist</span></a>
+                                        <a href="#" className="btn-product btn-wishlist" onClick={onWishlistClick}><span>Save to Wishlist</span></a>
 
                                 }
                             </div >

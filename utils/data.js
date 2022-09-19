@@ -897,7 +897,7 @@ export const projectRelatedProductsInnerSlider = {
   nav: true,
   dots: true,
   margin: 20,
-  loop: false,
+  loop: true,
   responsive: {
     0: {
       items: 1,
@@ -915,7 +915,7 @@ export const projectRelatedProductsInnerSlider = {
       items: 4,
     },
     1360: {
-      items: 5,
+      items: 4,
     },
   },
 };
@@ -951,7 +951,7 @@ export const fabricFinishedSlider = {
 export const dealSlider = {
   nav: false,
   dots: true,
-  loop: true,
+  loop: false,
 };
 
 export const brandSlider = {

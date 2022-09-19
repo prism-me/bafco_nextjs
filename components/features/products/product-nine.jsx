@@ -88,7 +88,7 @@ function ProductSix ( props ) {
 
                         {
                             !product.stock || product.stock == 0 ?
-                                <span className="product-label label-out">Out of Stock</span>
+                                <span className="product-label label-out">Stocking</span>
                                 : ""
                         }
 

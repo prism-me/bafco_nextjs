@@ -32,7 +32,7 @@ function LoginModal(props) {
     const [forgotPasswordemail, setForgotPasswordEmail] = useState('');
     let timer;
 
-    console.log("VerificationPAge :: ", props)
+    // console.log("VerificationPAge :: ", props)
 
     useEffect(() => {
         setOpen(props.LoginModal)
@@ -93,11 +93,15 @@ function LoginModal(props) {
             API.post(`/auth/register`, formdata, {
                 "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
             }).then((response) => {
-                if (response?.status === 200) {
+                if (response?.data?.errors) {
+                    toast.error(response?.data?.message);
+                } else {
                     closeModal();
                     toast.success(response?.data?.message);
                     router.push('/verification');
-
+                    props.verificationPageShow(true);
+                    // props.showPopup(true);
+                    props.hidePopup(false);
                 }
                 // localStorage.setItem("userData", JSON.stringify(response.data));
             })
@@ -150,7 +154,6 @@ function LoginModal(props) {
         };
 
         API.post(`/forget-password`, formdata).then((response) => {
-            console.log("response :: ", response)
             if (response?.data?.errors) {
                 toast.warning(response?.data?.errors?.email[0]);
             } else {
