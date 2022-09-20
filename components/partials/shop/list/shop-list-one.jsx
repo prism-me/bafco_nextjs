@@ -35,14 +35,13 @@ function ShopListOne ( props ) {
                     >No products matching your selection.</p>
                     :
                     <>
-                        {
-                            type == 'list' ?
+                        {type == 'list' ?
                                 loading ?
-                                    fakeArray.map( ( item, index ) => (
+                                    fakeArray?.map( ( item, index ) => (
                                         <div className="skel-pro skel-pro-list" key={ index }></div>
                                     ) )
                                     :
-                                    products.map( ( product, index ) => (
+                                    products?.map( ( product, index ) => (
                                         <ProductNine
                                             product={ product }
                                             key={ index }
@@ -52,13 +51,13 @@ function ShopListOne ( props ) {
                                 <div className="row">
                                     {
                                         loading ?
-                                            fakeArray.map( ( item, index ) => (
+                                            fakeArray?.map( ( item, index ) => (
                                                 <div className={ gridClass } key={ index }>
                                                     <div className="skel-pro"></div>
                                                 </div>
                                             ) )
                                             :
-                                            products.map( ( product, index ) => (
+                                            products?.map( ( product, index ) => (
                                                 <div className={ gridClass } key={ index }>
                                                     <ProductEleven product={ product } />
                                                 </div>

@@ -48,7 +48,7 @@ function TopCollection(props) {
                 </div>
                 <div className="products">
                     <div className="row">
-                        {products.map((item1, index1) =>
+                        {products?.map((item1, index1) =>
                             <div className="col-6 col-md-6 col-lg-3" key={index1}>
                                 {/* <ProductTwelve
                                     product={item1} /> */}

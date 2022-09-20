@@ -18,12 +18,13 @@ function ShopGrid() {
     const query = router.query;
     const currentPageRoute = query?.sub_category;
     const [firstLoading, setFirstLoading] = useState(false);
-    const [perPage, setPerPage] = useState(12);
+    const [perPage, setPerPage] = useState(1200);
     const [pageTitle, setPageTitle] = useState("");
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState();
     const [subCategoryDetails, setsubCategoryDetails] = useState();
-    const totalCount = products && products?.length;
+    const [totalCount, setTotalCount] = useState();
+    // const totalCount = products && products?.length;
     const [totalProducts, setTotalProducts] = useState()
     const [filterValues, setFilterValues] = useState();
     const [filterByValue, setFilterByValue] = useState();
@@ -37,6 +38,7 @@ function ShopGrid() {
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
             setProducts(response?.data?.products);
             setPageTitle(response?.data?.name);
+            setTotalCount(response?.data?.products?.length)
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
             console.log(err);
@@ -135,6 +137,7 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
+            console.log(response)
             setProducts(response?.data?.products)
         }).catch((err) => {
             console.log(err);
@@ -186,15 +189,12 @@ function ShopGrid() {
             <div className="page-content">
                 <div className="container">
                     <div className="row skeleton-body">
-                        <div
-                            className={`col-lg-9 skel-shop-products`}
-                        >
+                        <div className={`col-lg-9 skel-shop-products`}>
                             <div className="toolbox">
                                 <div className="toolbox-left">
                                     {products ?
                                         <div className="toolbox-info">
-                                            Showing
-                                            <span> {totalProducts} of {totalCount}</span> Products
+                                            Showing <span> {totalProducts} of {totalCount}</span> Products
                                         </div>
                                         : ""
                                     }
@@ -218,65 +218,6 @@ function ShopGrid() {
                                             </select>
                                         </div>
                                     </div>
-                                    {/* <div className="toolbox-layout">
-                                        <ALink
-                                            href="/shop/sidebar/list"
-                                            className={ `btn-layout ${ type == 'list' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="16" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="10" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="10" height="4" />
-                                            </svg>
-                                        </ALink>
-
-                                        <ALink
-                                            href="/shop/sidebar/2cols"
-                                            className={ `btn-layout ${ type == '2cols' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="10" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="4" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="4" height="4" />
-                                            </svg>
-                                        </ALink>
-
-                                        <ALink
-                                            href="/shop/sidebar/3cols"
-                                            className={ `btn-layout ${ type == '3cols' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="16" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="4" height="4" />
-                                                <rect x="12" y="0" width="4" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="4" height="4" />
-                                                <rect x="12" y="6" width="4" height="4" />
-                                            </svg>
-                                        </ALink>
-
-                                        <ALink
-                                            href="/shop/sidebar/4cols"
-                                            className={ `btn-layout ${ type == '4cols' ? 'active' : '' }` }
-                                            scroll={ false }
-                                        >
-                                            <svg width="22" height="10">
-                                                <rect x="0" y="0" width="4" height="4" />
-                                                <rect x="6" y="0" width="4" height="4" />
-                                                <rect x="12" y="0" width="4" height="4" />
-                                                <rect x="18" y="0" width="4" height="4" />
-                                                <rect x="0" y="6" width="4" height="4" />
-                                                <rect x="6" y="6" width="4" height="4" />
-                                                <rect x="12" y="6" width="4" height="4" />
-                                                <rect x="18" y="6" width="4" height="4" />
-                                            </svg>
-                                        </ALink>
-                                    </div> */}
                                 </div>
                             </div >
 
@@ -286,10 +227,9 @@ function ShopGrid() {
                             // loading={loading}
                             />
 
-                            {
-                                totalCount > perPage ?
-                                    <Pagination perPage={perPage} total={totalCount}></Pagination>
-                                    : ""
+                            {totalCount > perPage ?
+                                <Pagination perPage={perPage} total={totalCount}></Pagination>
+                                : ""
                             }
                         </div >
 

@@ -8,29 +8,25 @@ function ShopListThree(props) {
 
     return (
         <div className={`products mb-3 skeleton-body skel-shop-products ${loading ? '' : 'loaded'}`}>
-            {
-                (products?.length == 0 && !loading) ?
-                    <p
-                        className="no-results"
-                    >No products matching your selection.</p>
-                    :
-                    <div className="row">
-                        {
-                            loading ?
-                                fakeArray.map((item, index) => (
-                                    <div className="col-6 col-md-4 col-xl-3 mb-2" key={index}>
-                                        <div className="skel-pro"></div>
-                                    </div>
-                                ))
-                                :
-                                products?.map((product, index) => (
-                                    product &&
-                                    <div className="col-6 col-md-4 col-xl-3" key={index}>
-                                        <ProductTwelve product={product} />
-                                    </div>
-                                ))
-                        }
-                    </div>
+            {(products?.length === 0 && !loading) ?
+                <p className="no-results">No products matching your selection.</p>
+                :
+                <div className="row">
+                    {loading ?
+                        fakeArray.map((item, index) => (
+                            <div className="col-6 col-md-4 col-xl-3 mb-2" key={index}>
+                                <div className="skel-pro"></div>
+                            </div>
+                        ))
+                        :
+                        products?.map((product, index) => (
+                            product &&
+                            <div className="col-6 col-md-4 col-xl-3" key={index}>
+                                <ProductTwelve product={product} />
+                            </div>
+                        ))
+                    }
+                </div>
             }
         </div>
     )

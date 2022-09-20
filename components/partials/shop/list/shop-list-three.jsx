@@ -24,13 +24,13 @@ function ShopListThree ( props ) {
                     <div className="row">
                         {
                             loading ?
-                                fakeArray.map( ( item, index ) => (
+                                fakeArray?.map( ( item, index ) => (
                                     <div className={ cols } key={ index }>
                                         <div className="skel-pro"></div>
                                     </div>
                                 ) )
                                 :
-                                products.map( ( product, index ) => (
+                                products?.map( ( product, index ) => (
                                     <div className={ cols } key={ index }>
                                         <ProductTen product={ product }></ProductTen>
                                     </div>
