@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLazyQuery } from "@apollo/react-hooks";
 import StickyBox from "react-sticky-box";
 import ALink from "~/components/features/alink";
@@ -29,9 +29,31 @@ function FabricGrid() {
 
   const [fabricList, setFabricList] = useState();
   const [filterList, setFilterList] = useState();
-  const [selectedCategory, setSelectedCategory] = useState("");
+  // const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryList, setCategoryList] = useState("");
+  // const [matId, setMatId] = useState("");
+
+  // the parentState will be set by its child slider component
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  // make wrapper function to give child
+  const wrappersetSelectedCategory = useCallback(
+    (val) => {
+      setSelectedCategory(val);
+    },
+    [setSelectedCategory]
+  );
+
+  // the parentState will be set by its child slider component
   const [matId, setMatId] = useState("");
+
+  // make wrapper function to give child
+  const wrappersetMatId = useCallback(
+    (val) => {
+      setMatId(val);
+    },
+    [setMatId]
+  );
 
   useEffect(() => {
     API.get(`/material-list`)
@@ -59,16 +81,6 @@ function FabricGrid() {
   // finishes List data end
 
   // filters data start
-
-  console.log("matId::", matId);
-  console.log("tab::", selectedCategory);
-
-  console.log(
-    "Leather::",
-    fabricList?.child_value[0]?.child?.filter(
-      (item) => item?.value?.material_id === 2
-    )
-  );
 
   useEffect(() => {
     if ((query?.collection || query?.color || query?.finishes) && matId) {
@@ -179,8 +191,9 @@ function FabricGrid() {
           <FabricTopBar
             categoryList={categoryList}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            setMatId={setMatId}
+            wrappersetSelectedCategory={wrappersetSelectedCategory}
+            // setMatId={setMatId}
+            wrappersetMatId={wrappersetMatId}
           />
           <div className="row skeleton-body">
             <div

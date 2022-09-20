@@ -44,9 +44,9 @@ function FabricListOne(props) {
             ))
           ) : products?.child_value?.length == 0 && !loading ? (
             <p className="no-results">No products matching your selection.</p>
-          ) : query[0] === "collection" ? (
+          ) : query[0] == "collection" ? (
             products?.child_value
-              ?.filter((item) => item.value.material_id === matId)
+              ?.filter((item) => item.value.material_id == matId)
               ?.map((product, index) => (
                 <div className={gridClass} key={index}>
                   <FabricGrid
@@ -56,9 +56,9 @@ function FabricListOne(props) {
                   />
                 </div>
               ))
-          ) : query[0] === "color" ? (
+          ) : query[0] == "color" ? (
             products?.child_value
-              ?.filter((item) => item.value.material_id === matId)
+              ?.filter((item) => item.value.material_id == matId)
               ?.map((product, index) => (
                 <div className={gridClass} key={index}>
                   <FabricGrid
@@ -70,7 +70,7 @@ function FabricListOne(props) {
               ))
           ) : (
             products?.child_value[0]?.child
-              ?.filter((item) => item.value.material_id === matId)
+              ?.filter((item) => item.value.material_id == matId)
               ?.map((product, index) => (
                 <div className={gridClass} key={index}>
                   <FabricGrid
