@@ -133,15 +133,15 @@ function LoginModal(props) {
         };
 
         API.post(`/auth/login`, formdata).then((response) => {
-            console.log("response :: ", response)
-            if (response?.status === 200) {
-
+            if (response?.data?.error) {
+                toast.error(response?.data?.error);
+            } else if (response?.data?.errors) {
+                toast.error(response?.data?.errors?.email[0]);
+            } else {
                 router.push('/account/');
                 toast.success(response?.data);
                 closeModal();
                 localStorage.setItem('authtoken', response?.headers?.x_auth_token);
-            } else {
-                toast.warning("Somthing went wrong !");
             }
         }).catch((error) => { toast.error(error?.response?.data); });
 

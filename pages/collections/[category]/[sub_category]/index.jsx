@@ -11,6 +11,7 @@ import { scrollToPageContent } from '~/utils';
 import InputRange from 'react-input-range';
 import SlideToggle from 'react-slide-toggle';
 import 'react-input-range/lib/css/index.css';
+import { shopData } from '~/utils/data';
 
 function ShopGrid() {
     const router = useRouter();
@@ -139,6 +140,25 @@ function ShopGrid() {
             console.log(err);
         });
 
+    }
+
+    function containsAttrInUrl(type, value) {
+        const currentQueries = query[type] ? query[type].split(',') : [];
+        return currentQueries && currentQueries.includes(value);
+    }
+
+    function getUrlForAttrs(type, value) {
+        let currentQueries = query[type] ? query[type].split(',') : [];
+        currentQueries = containsAttrInUrl(type, value) ? currentQueries.filter(item => item !== value) : [...currentQueries, value];
+
+        return {
+            pathname: router.pathname,
+            query: {
+                ...query,
+                page: 1,
+                [type]: currentQueries.join(',')
+            }
+        }
     }
 
 
@@ -287,8 +307,55 @@ function ShopGrid() {
                                                 onClick={handelSelectFilter}
                                                 className="pr-2 sidebar-filter-clear"
                                                 style={{ color: '#EE3124', fontWeight: 'bold' }}
-                                                scroll={false}>Filter</button>
+                                                scroll={false}>Apply</button>
                                         </div>
+
+                                        <SlideToggle collapsed={false}>
+                                            {({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                <div className="widget widget-collapsible">
+                                                    <h3 className="widget-title mb-2">
+                                                        <a href="#category" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Category</a>
+                                                    </h3>
+
+                                                    <div ref={setCollapsibleElement}>
+                                                        <div className="widget-body pt-0">
+                                                            <div className="filter-items filter-items-count">
+                                                                {shopData.categories.map((item, index) =>
+                                                                    <div className="filter-item" key={`cat_${index}`}>
+                                                                        <ALink className={`${query.category == item.slug ? 'active' : ''}`} href={{ pathname: router.pathname, query: { type: query.type, category: item.slug } }} scroll={false}>{item.name}</ALink>
+                                                                        <span className="item-count">{item.count}</span>
+                                                                    </div>
+                                                                )
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </SlideToggle>
+
+                                        <SlideToggle collapsed={false}>
+                                            {
+                                                ({ onToggle, setCollapsibleElement, toggleState }) => (
+                                                    <div className="widget widget-collapsible">
+                                                        <h3 className="widget-title mb-2"><a href="#colour" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Colour</a></h3>
+                                                        <div ref={setCollapsibleElement}>
+                                                            <div className="widget-body pt-0">
+                                                                <div className="filter-colors">
+                                                                    {
+                                                                        shopData.colors.map((item, index) => (
+                                                                            <ALink href={getUrlForAttrs('color', item.color_name)} className={containsAttrInUrl('color', item.color_name) ? 'selected' : ''} style={{ backgroundColor: item.color }} key={index} scroll={false}>
+                                                                                <span className="sr-only">Color Name</span>
+                                                                            </ALink>
+                                                                        ))
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                        </SlideToggle>
 
                                         <SlideToggle collapsed={false}>
                                             {({ onToggle, setCollapsibleElement, toggleState }) => (

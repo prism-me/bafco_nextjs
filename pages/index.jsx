@@ -18,7 +18,18 @@ import { actions as demoAction } from '~/store/demo';
 import ProductTwelve from '~/components/features/products/product-twelve';
 import { API } from '~/http/API';
 // import { productdata } from "../data";
-import { homeData, introSlider, brandSlider, dealSlider, fadeInUpShorter, fadeInLeftShorter, fadeInRightShorter, fadeIn, projectRelatedProductsInnerSlider } from '~/utils/data';
+import {
+    homeData,
+    introSlider,
+    brandSlider,
+    dealSlider,
+    fadeInUpShorter,
+    fadeInLeftShorter,
+    fadeInRightShorter,
+    fadeIn,
+    projectRelatedProductsInnerSlider,
+    productSlider
+} from '~/utils/data';
 
 const axios = require('axios');
 
@@ -1175,83 +1186,9 @@ function Home(props) {
                 <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce>
                     <div className="projects-list">
                         <img src={homedata?.projects?.image} alt="slide" />
-
-                        {/* <ul>
-                            <li className="icon-index1">
-                                <span className="icon-box-icon">
-                                    <i className="icon-plus"></i>
-                                </span>
-                                <div className="icon-index-detail-box">
-                                    <div className="row">
-                                        <div className="col-sm-6 col-lg-6">
-                                            <img src="images/home/projects/cubord.png" alt="" />
-                                        </div>
-                                        <div className="col-sm-6 col-lg-6">
-                                            <h3>Lorem Ipsum</h3>
-                                            <h6>Lorem Ipsum dolor sit</h6>
-                                            <p>Double-door wadrobe with built-in hanger. Showing an orderly space.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="icon-index2">
-                                <span className="icon-box-icon">
-                                    <i className="icon-plus"></i>
-                                </span>
-                                <div className="icon-index-detail-box">
-                                    <div className="row">
-                                        <div className="col-sm-6 col-lg-6">
-                                            <img src="images/home/projects/drower-image.png" alt="" />
-                                        </div>
-                                        <div className="col-sm-6 col-lg-6">
-                                            <h3>Lorem Ipsum</h3>
-                                            <h6>Lorem Ipsum dolor sit</h6>
-                                            <p>Double-door wadrobe with built-in hanger. Showing an orderly space.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="icon-index3">
-                                <span className="icon-box-icon">
-                                    <i className="icon-plus"></i>
-                                </span>
-                                <div className="icon-index-detail-box">
-                                    <div className="row">
-                                        <div className="col-sm-6 col-lg-6">
-                                            <img src="images/home/projects/drower-image.png" alt="" />
-                                        </div>
-                                        <div className="col-sm-6 col-lg-6">
-                                            <h3>Lorem Ipsum</h3>
-                                            <h6>Lorem Ipsum dolor sit</h6>
-                                            <p>Double-door wadrobe with built-in hanger. Showing an orderly space.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li className="icon-index4">
-                                <span className="icon-box-icon">
-                                    <i className="icon-plus"></i>
-                                </span>
-                            </li>
-                            <li className="icon-index5">
-                                <span className="icon-box-icon">
-                                    <i className="icon-plus"></i>
-                                </span>
-                            </li>
-                            <li className="icon-index6">
-                                <span className="icon-box-icon">
-                                    <i className="icon-plus"></i>
-                                </span>
-                            </li>
-                            <li className="icon-index7">
-                                <span className="icon-box-icon">
-                                    <i className="icon-plus"></i>
-                                </span>
-                            </li>
-                        </ul> */}
                     </div>
                     <div className="text-center mb-7 mt-2">
-                        <ALink href="/pages/innovations/" className="btn btn-outline-darker btn-more"><span>View All Projects</span><i className="icon-long-arrow-right"></i></ALink>
+                        <ALink href="/project-references/" className="btn btn-outline-darker btn-more"><span>View All Projects</span><i className="icon-long-arrow-right"></i></ALink>
                     </div>
                 </Reveal>
             </div>
@@ -1264,9 +1201,9 @@ function Home(props) {
                     </div>
                     <div className="products">
                         <div className="row">
-                            <OwlCarousel className="owl-simple owl-light owl-nav-inside" options={projectRelatedProductsInnerSlider}>
+                            <OwlCarousel adClass="owl-simple carousel-with-shadow cols-xxl-6 cols-xl-5 cols-lg-4 cols-md-3 cols-xs-2" options={productSlider}>
                                 {productList?.length > 0 ?
-                                    productList?.slice(0, 4).map((item1, index1) =>
+                                    productList?.map((item1, index1) =>
                                         <div className="slide1" key={index1}>
                                             <ProductTwelve
                                                 product={item1}
@@ -1359,7 +1296,7 @@ function Home(props) {
                                                 <h4 className="banner-subtitle text-white">{item.sub_heading_image2}</h4>
                                                 <h3 className="banner-title text-white">{item.heading_image2}</h3>
                                                 {/* <div className="banner-text text-primary">$49.99</div> */}
-                                                <ALink href="/shop/sidebar/3cols" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href="/" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1437,5 +1374,5 @@ function Home(props) {
     )
 }
 
-export default Home;
-// export default withApollo({ ssr: typeof window == undefined })(connect(null, { ...demoAction })(Home));
+// export default Home;
+export default connect(null, { ...demoAction })(Home);

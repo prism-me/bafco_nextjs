@@ -996,9 +996,10 @@ export const productSlider = {
     },
     1200: {
       items: 4,
+      nav: true,
     },
     1600: {
-      items: 5,
+      items: 4,
       nav: true,
       dots: false,
     },
