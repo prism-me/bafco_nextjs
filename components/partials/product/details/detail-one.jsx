@@ -33,6 +33,7 @@ function DetailOne(props) {
     //         currency: 'AED'
     //     }).format(value);
     // }
+    //     props//
 
     useEffect(() => {
 
