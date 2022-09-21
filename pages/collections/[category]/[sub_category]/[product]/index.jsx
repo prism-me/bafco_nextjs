@@ -93,7 +93,7 @@ function ProductInner() {
         // });
 
         API.get(`random-products`).then((response) => {
-            console.log(response)
+            // console.log(response)
             setRandomProducts(response.data.data)
         }).catch((err) => {
             console.log(err);

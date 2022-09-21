@@ -9,7 +9,6 @@ import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
 import { canAddToCart, isInWishlist } from '~/utils';
 
-
 function DetailOne(props) {
     const router = useRouter();
     const ref = useRef(null);
@@ -42,10 +41,14 @@ function DetailOne(props) {
             [])
         );
 
+        console.log("setVariationTypeGroup :: ", variationTypeGroup)
+
         setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
             acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
             [])
         );
+
+        console.log("setVariationGroup :: ", variationGroup)
 
         let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
             let productVariation = {
@@ -58,6 +61,8 @@ function DetailOne(props) {
         });
 
         setSelectedVariant(currentProductVariation);
+
+        console.log("setSelectedVariant :: ", selectedVariant)
 
         let comb = [];
 
@@ -74,6 +79,8 @@ function DetailOne(props) {
             return item.product_variation_id;
         }, 0);
         setvariantCombGroup(comb)
+
+        console.log("setvariantCombGroup :: ", variantCombGroup)
 
     }, [product])
 
@@ -258,8 +265,10 @@ function DetailOne(props) {
                                                 <>
                                                     {variantcom[selectedVariant[index - 1]?.type] === selectedVariant[index - 1]?.name &&
                                                         variationGroup.map((item2, index2) => (
-                                                            variantcom?.Color === item2.name &&
+
+                                                            variantcom[item2?.variant?.name] === item2.name &&
                                                             item?.variant?.name === item2?.variant?.name &&
+
                                                             <span
                                                                 className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
                                                                 style={{ backgroundImage: `url(${item2?.type_value})` }}

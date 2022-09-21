@@ -18,13 +18,13 @@ function ShopGrid() {
     const query = router.query;
     const currentPageRoute = query?.sub_category;
     const [firstLoading, setFirstLoading] = useState(false);
-    const [perPage, setPerPage] = useState(1200);
+    const [perPage, setPerPage] = useState(12);
     const [pageTitle, setPageTitle] = useState("");
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState();
     const [subCategoryDetails, setsubCategoryDetails] = useState();
-    const [totalCount, setTotalCount] = useState();
-    // const totalCount = products && products?.length;
+    // const [totalCount, setTotalCount] = useState();
+    const totalCount = products && products?.length;
     const [totalProducts, setTotalProducts] = useState()
     const [filterValues, setFilterValues] = useState();
     const [filterByValue, setFilterByValue] = useState();
@@ -38,7 +38,7 @@ function ShopGrid() {
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
             setProducts(response?.data?.products);
             setPageTitle(response?.data?.name);
-            setTotalCount(response?.data?.products?.length)
+            // setTotalCount(response?.data?.products?.length)
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
             console.log(err);
@@ -137,7 +137,6 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            console.log(response)
             setProducts(response?.data?.products)
         }).catch((err) => {
             console.log(err);
@@ -226,11 +225,10 @@ function ShopGrid() {
                                 perPage={perPage}
                             // loading={loading}
                             />
-
-                            {totalCount > perPage ?
+                            {/* {totalCount > perPage ?
                                 <Pagination perPage={perPage} total={totalCount}></Pagination>
                                 : ""
-                            }
+                            } */}
                         </div >
 
                         <aside className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${(firstLoading) ? 'loaded' : ''}`}>
