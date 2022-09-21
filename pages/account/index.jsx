@@ -897,7 +897,7 @@ function MyAccount(props) {
                                                                 <div className="form-box">
                                                                     <form>
                                                                         <div className="row">
-                                                                            <div className="col-lg-6">
+                                                                            <div className="col-lg-6 col-sm-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">Name *</label>
                                                                                     <input
@@ -911,7 +911,7 @@ function MyAccount(props) {
                                                                                     />
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="col-lg-6">
+                                                                            <div className="col-lg-6 col-sm-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">Phone Number *</label>
                                                                                     <input
@@ -927,7 +927,7 @@ function MyAccount(props) {
                                                                             </div>
                                                                         </div>
                                                                         <div className="row">
-                                                                            <div className="col-lg-6">
+                                                                            <div className="col-lg-6 col-sm-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">Country *</label>
                                                                                     <input
@@ -957,7 +957,7 @@ function MyAccount(props) {
                                                                                     </select> */}
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="col-lg-6">
+                                                                            <div className="col-lg-6 col-sm-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">State *</label>
                                                                                     {/* <input
@@ -989,7 +989,7 @@ function MyAccount(props) {
                                                                             </div>
                                                                         </div>
                                                                         <div className="row">
-                                                                            <div className="col-lg-6">
+                                                                            <div className="col-lg-6 col-sm-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">City *</label>
                                                                                     <input
@@ -1004,7 +1004,7 @@ function MyAccount(props) {
                                                                                     />
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="col-lg-6">
+                                                                            <div className="col-lg-6 col-sm-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="singin-email-2">Postal Code *</label>
                                                                                     <input

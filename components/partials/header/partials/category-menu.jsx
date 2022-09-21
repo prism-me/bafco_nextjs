@@ -51,9 +51,9 @@ function CategoryMenu() {
                             <ul className="menu-vertical sf-arrows hamburger_main_menu">
                                 <li><ALink href="/pages/about/">About Us</ALink></li>
                                 <li><ALink href="/pages/services/">Services</ALink></li>
-                                <li><ALink href="/pages/innovations/">Innovations</ALink></li>
+                                {/* <li><ALink href="/pages/innovations/">Innovations</ALink></li> */}
                                 <li><ALink href="/pages/resources/">Resources</ALink></li>
-                                <li><ALink href="/pages/team/">Our Team</ALink></li>
+                                {/* <li><ALink href="/pages/team/">Our Team</ALink></li> */}
                                 <li><ALink href="/pages/contact/">Contact Us</ALink></li>
                             </ul>
                         </nav>

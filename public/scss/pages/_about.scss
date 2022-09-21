@@ -9,6 +9,9 @@
 	position: relative;
 	z-index: 2;
 	border: 2rem solid #f9f9f9;
+	@media screen and (min-width: 768px) and (max-width: 1200px) {
+		margin: 0 auto;
+	}
 }
 
 .about-img-back {
@@ -16,8 +19,24 @@
 	right: 13rem;
 	top: 0;
 	z-index: 1;
+
 	@media (max-width: 767px) {
 		right: 0rem;
+	}
+	@media screen and (min-width: 768px) and (max-width: 1200px) {
+		right: 30rem;	
+	}
+}
+
+.about-text {
+	@media (max-width: 767px) {
+		margin-left: 0 !important;
+	}
+	img {
+		@media screen and (min-width: 768px) and (max-width: 1200px) {
+			text-align: center;
+			margin: 0 auto;	
+		}
 	}
 }
 

@@ -135,7 +135,7 @@ function InfoOne(props) {
                                     {dimension?.length !== 0 &&
                                         dimension?.map((dimension, i) => (
                                             <tr key={i}>
-                                                <td><img src={dimension.images.avatar} style={{ height: "90px", margin: "0px auto" }} /></td>
+                                                <td><img src={dimension.images[0].avatar} style={{ height: "90px", margin: "0px auto" }} /></td>
                                                 <td>{dimension.code}</td>
                                                 <td>{dimension.depth}</td>
                                                 <td>{dimension.width}</td>
