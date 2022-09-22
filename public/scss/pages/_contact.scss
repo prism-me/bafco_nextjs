@@ -58,6 +58,10 @@ ul.contact-list.contact-info {
 		max-width: 95%;
 	}
 
+	@media screen and (max-width: 767px) {
+		padding-right: 15px;
+	}
+
 	li {
 		position: relative;
 		padding-left: 22px;

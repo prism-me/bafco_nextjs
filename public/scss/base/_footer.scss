@@ -250,7 +250,7 @@
 	right: 50px;
 	bottom: 10rem;
 	z-index: 11;
-	color: #999;
+	color: #008482;
 	display: none;
 	align-items: center;
 	justify-content: center;
@@ -269,8 +269,8 @@
 
 #scroll-top:hover,
 #scroll-top:focus {
-	color: #777;
-	background-color: #eaeaea;
+	color: #fff;
+	background-color: #008482;
 }
 
 #scroll-top.show {
@@ -279,6 +279,7 @@
 	transform: translateY(0);
 	-webkit-transform: translateY(0);
 	-ms-transform: translateY(0);
+	border-radius: 50px;
 }
 
 
