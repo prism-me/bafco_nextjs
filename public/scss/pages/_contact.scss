@@ -42,12 +42,18 @@ ul.contact-list.contact-info {
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 0;
+
+	@media (min-width: 1024px) and (max-width: 1280px) {
+		display: block;
+	}
+
 }
 
 .contact-list {
 	// max-width: 270px;
 	list-style: none;
 	padding-left: 0;
+
 	@media (min-width: 768px) and (max-width: 1024px) {
 		max-width: 95%;
 	}

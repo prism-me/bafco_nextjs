@@ -3,10 +3,15 @@ import React, { useState, useEffect } from "react";
 
 import ALink from "~/components/features/alink";
 
-function Footer() {
+function Footer(props) {
   const router = useRouter("");
   const [isBottomSticky, setIsBottomSticky] = useState(false);
   const [containerClass, setContainerClass] = useState("container");
+  const [categoryList, setCategoryList] = useState();
+
+  useEffect(() => {
+    setCategoryList(props?.categoryData);
+  }, [props]);
 
   useEffect(() => {
     handleBottomSticky();
@@ -139,38 +144,32 @@ function Footer() {
                   <li>
                     <ALink href="/blogs/">BLOGS/ Insights</ALink>
                   </li>
+                  <li>
+                    <ALink href="/pages/faq">FAQs</ALink>
+                  </li>
+                  <li>
+                    <ALink href="/policies/terms-of-service">Terms & Condition</ALink>
+                  </li>
                 </ul>
               </div>
             </div>
 
-            <div className="col-sm-2 col-lg-1">
+            <div className="col-sm-2 col-lg-2">
               <div className="widget">
                 <h4 className="widget-title">SHOP</h4>
 
                 <ul className="widget-list">
-                  <li>
-                    <ALink href="#">Chairs</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Desks</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Collaborative</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Storages</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Accessories</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Materials</ALink>
-                  </li>
+                  {categoryList?.map((category, i) => (
+                    category?.parent_id === null &&
+                    <li>
+                      <ALink href={`/collections/${category.route}`} key={i}>{category.name}</ALink>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
 
-            <div className="col-sm-4 col-lg-2">
+            {/* <div className="col-sm-4 col-lg-2">
               <div className="widget">
                 <h4 className="widget-title">MY ACCOUNT</h4>
 
@@ -179,22 +178,17 @@ function Footer() {
                     <ALink href="#">My account</ALink>
                   </li>
                   <li>
-                    <ALink href="#">Login</ALink>
-                  </li>
-                  <li>
                     <ALink href="#">Order History</ALink>
                   </li>
                   <li>
-                    <ALink href="/policies/terms-of-service">
-                      Terms & Condition
-                    </ALink>
+                    <ALink href="/policies/terms-of-service">Terms & Condition</ALink>
                   </li>
                   <li>
                     <ALink href="/pages/faq">FAQs</ALink>
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
 
             <div className="col-sm-2 col-lg-1">
               <div className="widget">
@@ -223,7 +217,7 @@ function Footer() {
               </div>
             </div>
 
-            <div className="col-sm-6 col-lg-3" style={{ paddingRight: '0' }}>
+            <div className="col-sm-6 col-lg-4" style={{ paddingRight: '0' }}>
               <div className="widget">
                 <h4 className="widget-title">VISIT OUR SHOWROOM</h4>
                 <ul className="contact-list">

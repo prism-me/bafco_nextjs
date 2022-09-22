@@ -1,24 +1,16 @@
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import ALink from '~/components/features/alink';
-import { API } from '~/http/API';
 
-function MainMenu() {
+function MainMenu(props) {
     const router = useRouter();
     let path = router.query.slug;
     const [categoryList, setCategoryList] = useState();
 
     useEffect(() => {
+        setCategoryList(props?.category);
+    }, [props]);
 
-        API.get(`header-category`).then((response) => {
-
-            setCategoryList(response.data)
-
-        }).catch((err) => {
-            console.log(err);
-        });
-
-    }, []);
 
     return (
         <nav className="main-nav">

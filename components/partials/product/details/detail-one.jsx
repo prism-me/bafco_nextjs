@@ -12,7 +12,7 @@ import { canAddToCart, isInWishlist } from '~/utils';
 function DetailOne(props) {
     const router = useRouter();
     const ref = useRef(null);
-    const { product, subCategory } = props;
+    const { product, subCategory, wishlist } = props;
     const [qty, setQty] = useState(1);
     const [qty2, setQty2] = useState(1);
     const [variationGroup, setVariationGroup] = useState([]);
@@ -104,6 +104,7 @@ function DetailOne(props) {
                 let data = {
                     'product_id': product?.single_product_details?.product?.id,
                     'product_variation_id': product?.product_single_variation?.variation_value_details[0]?.product_variation_id,
+
                 };
                 props.addToWishlist(data);
             }
@@ -319,7 +320,7 @@ function DetailOne(props) {
                 </a>
                 <div className="details-action-wrapper">
                     {
-                        isInWishlist(props.wishlist, product) ?
+                        isInWishlist(wishlist, product) ?
                             <ALink href="/wishlist" className="btn-product btn-wishlist added-to-wishlist"><span>Go to Wishlist</span></ALink>
                             :
                             <a href="#" className="btn-product btn-wishlist" onClick={onWishlistClick}><span>Save to Wishlist</span></a>

@@ -208,6 +208,17 @@ function InfoOne(props) {
                         <div className="reviews">
                             <h3>Reviews (2)</h3>
                             <div className="review">
+                                <div id="stamped-main-widget"
+                                    data-product-id={`${product?.product?.id}`}
+                                    data-name={`${product?.product?.name}`}
+                                    data-url="##product.url##"
+                                    data-image-url="##product.image##"
+                                    data-description={`${product?.product?.long_description}`}
+                                    data-product-sku={`${product?.product?.brand}`}>
+                                </div>
+
+                                <span class="stamped-product-reviews-badge stamped-main-badge" data-id="##product.id##"></span>
+
                                 <div className="row no-gutters">
                                     <div className="col-auto">
                                         <h4><ALink href="#">Samanta J.</ALink></h4>
@@ -355,3 +366,5 @@ function InfoOne(props) {
 }
 
 export default React.memo(InfoOne);
+
+

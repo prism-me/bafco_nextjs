@@ -11,10 +11,11 @@ import MainMenu from '~/components/partials/header/partials/main-menu';
 import StickyHeader from '~/components/features/sticky-header';
 import AccountMenu from '~/components/partials/header/partials/account-menu';
 
-function Header() {
+function Header(props) {
     const router = useRouter();
     const [containerClass, setContainerClass] = useState('container');
     const [authtoken, setAuthtoken] = useState('');
+    const [categoryList, setCategoryList] = useState();
 
     function openMobileMenu() {
         document.querySelector('body').classList.add('mmenu-active');
@@ -24,6 +25,10 @@ function Header() {
         setContainerClass(router.asPath.includes('fullwidth') ? 'container-fluid' : 'container');
         setAuthtoken(localStorage.getItem('authtoken'));
     }, [router.asPath]);
+
+    useEffect(() => {
+        setCategoryList(props?.categoryData);
+    }, [props]);
 
     return (
         <header className="header header-2 header-intro-clearance">
@@ -82,7 +87,7 @@ function Header() {
                         <ALink href="/" className="logo">
                             <img src="images/bafco-logo.png" alt="Molla Logo" width={150} />
                         </ALink>
-                        
+
                     </div>
 
                     <div className="header-center">
@@ -118,7 +123,7 @@ function Header() {
                         </div>
 
                         <div className="header-center">
-                            <MainMenu />
+                            <MainMenu category={categoryList} />
                         </div>
 
                         {/* <div className="header-right overflow-hidden"> */}

@@ -13,14 +13,14 @@ function ShopListThree(props) {
                 <div className="row">
                     {loading ?
                         fakeArray.map((item, index) => (
-                            <div className="col-6 col-md-4 col-xl-3 mb-2" key={index}>
+                            <div className="col-6 col-md-4 col-xl-4 mb-2" key={index}>
                                 <div className="skel-pro"></div>
                             </div>
                         ))
                         :
                         products?.map((product, index) => (
                             product &&
-                            <div className="col-6 col-md-4 col-xl-3" key={index}>
+                            <div className="col-6 col-md-4 col-xl-4" key={index}>
                                 <ProductTwelve product={product} />
                             </div>
                         ))

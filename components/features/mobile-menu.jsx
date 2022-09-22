@@ -5,22 +5,17 @@ import SlideToggle from 'react-slide-toggle';
 import { API } from '~/http/API';
 import ALink from '~/components/features/alink';
 
-function MobileMenu() {
+function MobileMenu(props) {
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState("");
     const [categoryList, setCategoryList] = useState();
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
 
-        API.get(`header-category`).then((response) => {
+        setCategoryList(props?.categoryData)
 
-            setCategoryList(response.data)
-
-        }).catch((err) => {
-            console.log(err);
-        });
-
-    }, []);
+    }, [props]);
 
     useEffect(() => {
         router.events.on('routeChangeComplete', hideMobileMenu);
@@ -31,7 +26,8 @@ function MobileMenu() {
     }
 
     function onSearchChange(e) {
-        setSearchTerm(e.target.value);
+        var lowerCase = e.target.value.toLowerCase();
+        setSearchTerm(lowerCase);
     }
 
     function onSubmitSearchForm(e) {
@@ -45,15 +41,42 @@ function MobileMenu() {
         });
     }
 
+    useEffect(() => {
+        if (searchTerm?.length > 2)
+            API.get(`/search?query=${searchTerm}`)
+                .then((response) => {
+                    if (response.status === 200 || response.status === 201) {
+                        setProducts(response?.data);
+                    }
+                })
+                .catch((err) => console.log(err));
+    }, [searchTerm])
+
     return (
         <div className="mobile-menu-container mobile-menu-light">
             <div className="mobile-menu-wrapper">
                 <span className="mobile-menu-close" onClick={hideMobileMenu}><i className="icon-close"></i></span>
 
-                <form action="#" method="get" onSubmit={onSubmitSearchForm} className="mobile-search">
-                    <label htmlFor="mobile-search" className="sr-only">Search</label>
-                    <input type="text" className="form-control" value={searchTerm} onChange={onSearchChange} name="mobile-search" id="mobile-search" placeholder="Search product ..." required />
+                <form onSubmit={(e) => e.preventDefault()} className="mobile-search">
+                    <label htmlFor="mobile-search" value={searchTerm} required className="sr-only">Search</label>
+                    <input type="text" autoComplete="off" className="form-control" value={searchTerm} onChange={onSearchChange} name="mobile-search" id="mobile-search" placeholder="Search product ..." required />
                     <button className="btn btn-primary" type="submit"><i className="icon-search"></i></button>
+                    <div className="live-search-list">
+                        {(products?.length > 0 && searchTerm?.length > 2) ?
+                            <div className="autocomplete-suggestions">
+                                {products?.map((product, index) => (
+                                    <ALink
+                                        href={`/collections/${product?.category_route?.parent_catetory[0]?.route}/${product?.category_route?.route}/${product?.route}`}
+                                        className="autocomplete-suggestion"
+                                        key={`search-result-${index}`}
+                                    >
+                                        {product.name}
+                                    </ALink>
+                                ))}
+                            </div>
+                            : ""
+                        }
+                    </div>
                 </form>
 
                 <Tabs defaultIndex={0} selectedTabClassName="show">
