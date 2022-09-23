@@ -23,12 +23,12 @@ $link-color: $primary-color  !default;
 }
 
 a {
-    color: $link-color;
+    color: #008482;
 }
 
 a:hover,
 a:focus {
-    color: darken($link-color, 10%);
+    color: darken(#008482, 10%);
 }
 
 .link-underline {
@@ -106,7 +106,7 @@ a:focus {
 
 /* generated with mixins */
 .btn-primary {
-    @include button-variant(#fff, $primary-color, $primary-color, #fff, $secondary-color, $secondary-color);
+    @include button-variant(#fff, #008482, #008482, #fff, $secondary-color, $secondary-color);
 }
 
 .btn-secondary {
@@ -474,7 +474,7 @@ a:focus {
 .ratings-val {
 
     .ratings-primary & {
-        color: $primary-color;
+        color: #008482;
     }
 }
 
@@ -482,17 +482,17 @@ a:focus {
 
     &:hover,
     &:focus {
-        color: $primary-color;
+        color: #008482;
     }
 }
 
 .btn-product {
-    color: $primary-color;
+    color: #008482;
 
     &:hover,
     &:focus {
         span {
-            color: $primary-color;
+            color: #008482;
         }
     }
 }
@@ -520,14 +520,14 @@ a:focus {
 
     &:hover,
     &:focus {
-        color: $primary-color;
+        color: #008482;
     }
 }
 
 .btn-expandable {
 
     span {
-        background-color: $primary-color;
+        background-color: #008482;
     }
 }
 
@@ -610,7 +610,7 @@ a:focus {
 
     a:hover,
     a:focus {
-        color: $primary-color;
+        color: #008482;
     }
 }
 
@@ -1046,7 +1046,7 @@ a:focus {
 
         &:hover,
         &:focus {
-            color: $primary-color;
+            color: #008482;
         }
     }
 }
@@ -1056,8 +1056,8 @@ a:focus {
 
         &:hover,
         &:focus {
-            color: $primary-color;
-            box-shadow: 0 1px 0 $primary-color;
+            color: #008482;
+            box-shadow: 0 1px 0 #008482;
         }
     }
 }
@@ -1066,7 +1066,7 @@ a:focus {
 
     &:hover,
     &:focus {
-        box-shadow: 0 1px 0 0 $primary-color;
+        box-shadow: 0 1px 0 0 #008482;
     }
 }
 
@@ -1244,7 +1244,7 @@ a:focus {
 
         &:hover,
         &:focus {
-            color: $primary-color;
+            color: #008482;
         }
     }
 
@@ -1388,20 +1388,20 @@ a:focus {
 
     &:hover,
     &:focus {
-        color: $primary-color;
+        color: #008482;
     }
 }
 
 .product-details-action {
     .btn-cart {
-        color: $primary-color;
-        border-color: $primary-color;
+        color: #008482;
+        border-color: #008482;
 
         &:hover,
         &:focus {
             color: #fff;
-            border-color: $primary-color;
-            background-color: $primary-color;
+            border-color: #008482;
+            background-color: #008482;
         }
     }
 }
@@ -1412,8 +1412,8 @@ a:focus {
 
             &:hover,
             &:focus {
-                color: $primary-color;
-                border-bottom-color: $primary-color;
+                color: #008482;
+                border-bottom-color: #008482;
             }
         }
     }
@@ -1424,8 +1424,8 @@ a:focus {
 
         &:hover,
         &:focus {
-            color: $primary-color;
-            border-bottom-color: $primary-color;
+            color: #008482;
+            border-bottom-color: #008482;
         }
     }
 }

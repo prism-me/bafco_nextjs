@@ -21,8 +21,8 @@
   &:not(:disabled):not(.disabled).active,
   .show > &.dropdown-toggle  {
     color: $color-hover;
-    background-color: $hover-background;
-    border-color:  $hover-border;
+    background-color: #008482;
+    border-color:  #008482;
     box-shadow: $box-shadow-hover;
   }
 
@@ -54,9 +54,9 @@
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active,
   .show > &.dropdown-toggle  {
-    color: $color-hover;
-    background-color: $active-background;
-    border-color: $active-border;
+    color: #fff;
+    background-color: #008482;
+    border-color: #008482;
     box-shadow: $box-shadow-hover;
   }
 

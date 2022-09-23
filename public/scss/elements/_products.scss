@@ -3,7 +3,7 @@
 	position: relative;
 	margin-bottom: 1rem;
 	transition: box-shadow .35s ease;
-	background-color: #fff;
+	// background-color: #fff;
 
 	.owl-carousel & {
 		margin-bottom: 0 !important;
@@ -248,7 +248,7 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	color: inherit;
-	font-weight: 600;
+	font-weight: 900;
 
 	&:hover,
 	&:focus {
@@ -258,7 +258,7 @@
 
 .product-cat {
 	color: #000;
-	font-weight: 300;
+	font-weight: 600;
 	font-size: 1.3rem;
 	line-height: 1.2;
 	letter-spacing: -.01em;
@@ -566,7 +566,7 @@
 
 		span {
 			color: $primary-color;
-			border-bottom-color: $primary-color;
+			border-bottom-color: #008482;
 		}
 	}
 }
@@ -1617,7 +1617,7 @@
 
 	a:hover,
 	a:focus {
-		color: $primary-color;
+		color: #008482;
 	}
 
 	.btn-product-icon {
@@ -1626,8 +1626,8 @@
 		&:hover,
 		&:focus {
 			color: #fff;
-			background-color: $primary-color;
-			border-color: $primary-color;
+			background-color: #008482;
+			border-color: #008482;
 		}
 	}
 
@@ -1665,8 +1665,8 @@
 		&:hover,
 		&:focus {
 			color: #fff;
-			border-color: $primary-color;
-			background-color: $primary-color;
+			border-color: #008482;
+			background-color: #008482;
 
 			span {
 				color: #fff;

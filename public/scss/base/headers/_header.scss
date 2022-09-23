@@ -1706,7 +1706,8 @@
 		}
 
 		.menu>li:not(:hover):not(.active):not(.show)>a {
-			color: #333;
+			color: #000;
+			font-weight: 900;
 		}
 
 		.mobile-menu-toggler {
