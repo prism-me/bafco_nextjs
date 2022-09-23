@@ -90,13 +90,14 @@ function ProductTwelve(props) {
                 }
 
                 <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>
-                    <LazyLoadImage
+                    {/* <LazyLoadImage
                         alt="product"
                         src={product?.productvariations?.images.length > 0 ? product?.featured_image : product?.productvariations?.images[0]?.avatar}
                         threshold={500}
                         effect="black and white"
                         wrapperClassName="product-image"
-                    />
+                    /> */}
+                    <img src={product?.productvariations?.images.length > 0 ? product?.featured_image : product?.productvariations?.images[0]?.avatar} alt="product" />
                     {product?.variations?.length >= 2 ?
                         <LazyLoadImage
                             alt="product"
@@ -136,7 +137,7 @@ function ProductTwelve(props) {
                     <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>{product?.name}</ALink>
                 </h3>
 
-                {!product?.productvariations.in_stock || product?.productvariations.in_stock == 0 ?
+                {!product?.productvariations.in_stock || product?.productvariations.in_stock === 0 ?
                     <div className="product-price">
                         <span className="out-price">AED {product?.productvariations.upper_price}</span>
                     </div>

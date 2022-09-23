@@ -8,6 +8,8 @@ import { actions as globalAction } from '~/store/global';
 import { actions as wishlistAction } from '~/store/wishlist';
 import { actions as cartAction } from '~/store/cart';
 import { canAddToCart, isInWishlist } from '~/utils';
+// import "../../../../../utils/postpay.js";
+// import "../../../../utils/postpay";
 
 function DetailOne(props) {
     const router = useRouter();
@@ -154,6 +156,9 @@ function DetailOne(props) {
 
         const storeitemId = e.target.value;
 
+        console.log("item :: ", item);
+        console.log("e.target.value :: ", e.target.value);
+
         if (!e.target.value) {
             const newState = selectedVariant.map(obj => {
 
@@ -212,6 +217,7 @@ function DetailOne(props) {
             });
 
             setSelectedVariant(newState);
+            console.log("newState :: ", newState);
 
             let comb = [];
 
@@ -220,6 +226,8 @@ function DetailOne(props) {
                 return acc;
             });
 
+            console.log("comb :: ", comb);
+
             let resultNewComb = comb.reduce(function (result, item) {
                 var key = Object.keys(item)[0];
                 result[key] = item[key];
@@ -227,11 +235,15 @@ function DetailOne(props) {
 
             }, {});
 
+            console.log("resultNewComb :: ", resultNewComb);
+
             let getVariationId = variantCombGroup.filter(function (entry) {
                 return Object.keys(resultNewComb).every(function (key) {
                     return entry[key] === resultNewComb[key];
                 });
             });
+
+            console.log("getVariationId :: ", getVariationId);
 
             // props.handelselectedVariation(found[0]?.product_variation_id);
             props.handelselectedVariation(getVariationId[0].variation_id);
@@ -275,6 +287,15 @@ function DetailOne(props) {
 
             <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
 
+            {/* <div
+                class="postpay-widget"
+                data-type="product"
+                data-amount="100000"
+                data-currency="AED"
+                data-num-instalments="3"
+                data-locale="en"
+            ></div> */}
+
             <div className="row">
                 {variationTypeGroup !== null &&
                     variationTypeGroup?.map((item, index) => (
@@ -298,6 +319,7 @@ function DetailOne(props) {
                                             }
                                         </select>
                                     </div> :
+
                                     <div className="product-nav product-nav-dots" style={{ display: "block" }}>
                                         {variationGroup &&
                                             variantCombGroup.map((variantcom) => (
