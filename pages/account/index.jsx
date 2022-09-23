@@ -1022,6 +1022,7 @@ function MyAccount(props) {
                                                                             </div>
                                                                         </div>
                                                                         <div className="form-group">
+
                                                                             <label htmlFor="singin-email-2">Address Line 1 *</label>
                                                                             <input
                                                                                 type="text"
@@ -1036,6 +1037,7 @@ function MyAccount(props) {
 
                                                                         </div>
                                                                         <div className="form-group">
+                                                                            
                                                                             <label htmlFor="singin-email-2">Address Line 2</label>
                                                                             <input
                                                                                 type="text"

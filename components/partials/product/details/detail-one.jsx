@@ -197,7 +197,44 @@ function DetailOne(props) {
 
             const found = variationGroup?.filter((v) => v?.id == storeitemId);
 
-            props.handelselectedVariation(found[0]?.product_variation_id);
+            const newState = selectedVariant.map(obj => {
+
+                if (obj.type === found[0].variant.name) {
+                    return {
+                        name: found[0].name,
+                        type: found[0].variant.name,
+                        variation_value_id: found[0].id,
+                        product_variation_id: found[0].product_variation_id
+                    };
+                }
+                return obj;
+
+            });
+
+            setSelectedVariant(newState);
+
+            let comb = [];
+
+            newState.map((acc) => {
+                comb.push({ [acc.type]: acc.name });
+                return acc;
+            });
+
+            let resultNewComb = comb.reduce(function (result, item) {
+                var key = Object.keys(item)[0];
+                result[key] = item[key];
+                return result;
+
+            }, {});
+
+            let getVariationId = variantCombGroup.filter(function (entry) {
+                return Object.keys(resultNewComb).every(function (key) {
+                    return entry[key] === resultNewComb[key];
+                });
+            });
+
+            // props.handelselectedVariation(found[0]?.product_variation_id);
+            props.handelselectedVariation(getVariationId[0].variation_id);
 
         }
 
