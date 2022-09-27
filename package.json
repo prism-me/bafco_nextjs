@@ -7,9 +7,6 @@
         "build": "next build",
         "start": "next start"
     },
-    "engines": {
-        " node": "14.17.0"
-    },
     "dependencies": {
         "@apollo/client": "^3.4.16",
         "@apollo/react-hooks": "^4.0.0",
