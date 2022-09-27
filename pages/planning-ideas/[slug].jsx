@@ -28,6 +28,7 @@ function PlaningIdeasInner(props) {
     password: "",
   };
   const [userFormData, setUserFormData] = useState({ ...userForm });
+  const [loading, setLoading] = useState(false);
 
   const handleInit = (e) => {
     let formdata = { ...userFormData };
@@ -37,19 +38,22 @@ function PlaningIdeasInner(props) {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     let formdata = { ...userFormData };
-
+    setLoading(true);
     API.post(`/auth/login`, formdata)
       .then((response) => {
         console.log("response :: ", response);
         if (response?.status === 200) {
+          setLoading(false);
           window.location.reload(false);
           toast.success(response?.data);
           localStorage.setItem("authtoken", response?.headers?.x_auth_token);
         } else {
+          setLoading(false);
           toast.warning("Somthing went wrong !");
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error?.response?.data);
       });
   };
@@ -227,9 +231,31 @@ function PlaningIdeasInner(props) {
                                   Remember Me
                                 </label>
                               </div> */}
-                              <button className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-2">
-                                <span>Sign in</span>
-                              </button>
+                              {loading ? (
+                                <div
+                                  className="loader"
+                                  style={{
+                                    borderTopColor: "white",
+                                    borderRightColor: "white",
+                                    borderBottomColor: "white",
+                                    borderLeftColor: "#008482",
+                                    width: "sm"
+                                      ? "6em"
+                                      : "md"
+                                      ? "10em"
+                                      : "10em",
+                                    height: "sm"
+                                      ? "6em"
+                                      : "md"
+                                      ? "10em"
+                                      : "10em",
+                                  }}
+                                />
+                              ) : (
+                                <button className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-2">
+                                  <span>Sign in</span>
+                                </button>
+                              )}
                             </div>
                           </form>
                         </div>
