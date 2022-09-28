@@ -76,6 +76,10 @@ function Checkout(props) {
 
     let timer;
 
+    // if (isError) {
+    //     return router.push('/');
+    // }
+
     useEffect(() => {
         console.log("router?.query :: ", router?.query)
         if (router?.query?.status == 'success') {
@@ -179,7 +183,11 @@ function Checkout(props) {
         if (authtoken === "" || authtoken === null || authtoken === undefined) {
 
             API.get(`/guest-cart/${GuestUserDetail}`).then((response) => {
-                setCartList(response?.data);
+                if (response?.data?.error) {
+                    setCartList();
+                } else {
+                    setCartList(response?.data);
+                }
             }).catch((err) => {
                 console.log(err);
             });
@@ -189,7 +197,11 @@ function Checkout(props) {
                     'Authorization': `Bearer ${authtoken}`
                 }
             }).then((response) => {
-                setCartList(response?.data);
+                if (response?.data?.error) {
+                    setCartList();
+                } else {
+                    setCartList(response?.data);
+                }
             }).catch((err) => {
                 console.log(err);
             });
@@ -526,10 +538,6 @@ function Checkout(props) {
         } else {
             toast.warning("Please Login/Register First.");
         }
-    }
-
-    if (isError) {
-        // return router.push('/cart/');
     }
 
     return (
@@ -906,8 +914,8 @@ function Checkout(props) {
                                             </thead>
 
                                             <tbody>
-
-                                                {cartList.map((item, index) =>
+                                                {console.log("cartList :: ", cartList)}
+                                                {cartList?.map((item, index) =>
                                                     <tr key={index}>
                                                         <td className="product-col">
                                                             <div className="product">
