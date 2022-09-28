@@ -10,11 +10,8 @@ import { actions as cartAction } from "~/store/cart";
 import { canAddToCart, isInWishlist } from "~/utils";
 // import "../../../../../utils/postpay.js";
 import "../../../../utils/postpay.js";
-<<<<<<< HEAD
 import Tooltip from "react-simple-tooltip";
 // import { css } from "styled-components";
-=======
->>>>>>> 2874dd4850683fc59d05fb78bdcdc7655d3a0d2c
 
 function DetailOne(props) {
   const router = useRouter();
@@ -569,16 +566,7 @@ function DetailOne(props) {
         </a> */}
         <a
           href="#"
-<<<<<<< HEAD
           className={`btn-product btn-cart`}
-=======
-          className={`btn-product btn-cart ${
-            product?.product_single_variation?.product_variation_details
-              ?.in_stock !== 1
-              ? "btn-disabled"
-              : ""
-          }`}
->>>>>>> 2874dd4850683fc59d05fb78bdcdc7655d3a0d2c
           onClick={(e) => onCartClick(e, 0)}
         >
           <span>add to cart</span>

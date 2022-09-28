@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-<<<<<<< HEAD
-import ALink from '~/components/features/alink';
-import Qty from '~/components/features/qty';
-import PageHeader from '~/components/features/page-header';
-import { actions as cartAction } from '~/store/cart';
-import { cartPriceTotal } from '~/utils/index';
-import { API } from '~/http/API';
-import '~/utils/postpay';
-=======
 import ALink from "~/components/features/alink";
 import Qty from "~/components/features/qty";
 import PageHeader from "~/components/features/page-header";
@@ -18,7 +9,6 @@ import { actions as cartAction } from "~/store/cart";
 import { cartPriceTotal } from "~/utils/index";
 import { API } from "~/http/API";
 import { Head } from "next/document";
->>>>>>> 2874dd4850683fc59d05fb78bdcdc7655d3a0d2c
 
 function Cart(props) {
   const [cartList, setCartList] = useState([]);
@@ -420,49 +410,6 @@ function Cart(props) {
                           {/* <td>
                                                             AED {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </td> */}
-<<<<<<< HEAD
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                        <div
-                                            class="postpay-widget"
-                                            data-type="cart"
-                                            data-amount="100000"
-                                            data-currency="AED"
-                                            data-num-instalments="3"
-                                            data-locale="en"
-                                        ></div>
-
-                                        <ALink
-                                            className="btn btn-outline-primary-2 btn-order btn-block"
-                                            href="/checkout"
-                                        >
-                                            PROCEED TO CHECKOUT
-                                        </ALink>
-                                    </div>
-
-                                    <ALink href="/" className="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i className="icon-refresh"></i></ALink>
-                                </aside>
-                            </div>
-                            :
-                            <div className="row">
-                                <div className="col-12">
-                                    <div className="cart-empty-page text-center">
-                                        <i className="cart-empty icon-shopping-cart" style={{ lineHeight: 1, fontSize: '15rem' }}></i>
-                                        <p className="px-3 py-2 cart-empty mb-3">No products added to the cart</p>
-                                        <p className="return-to-shop mb-0">
-                                            <ALink
-                                                href="/"
-                                                className="btn btn-primary"
-                                            >RETURN TO SHOP</ALink>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-=======
                         </tr>
                       </tbody>
                     </table>
@@ -501,7 +448,6 @@ function Cart(props) {
                       </ALink>
                     </p>
                   </div>
->>>>>>> 2874dd4850683fc59d05fb78bdcdc7655d3a0d2c
                 </div>
               </div>
             )}
