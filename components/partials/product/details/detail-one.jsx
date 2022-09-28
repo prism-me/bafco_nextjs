@@ -10,8 +10,11 @@ import { actions as cartAction } from "~/store/cart";
 import { canAddToCart, isInWishlist } from "~/utils";
 // import "../../../../../utils/postpay.js";
 import "../../../../utils/postpay.js";
+<<<<<<< HEAD
 import Tooltip from "react-simple-tooltip";
 // import { css } from "styled-components";
+=======
+>>>>>>> 2874dd4850683fc59d05fb78bdcdc7655d3a0d2c
 
 function DetailOne(props) {
   const router = useRouter();
@@ -24,7 +27,7 @@ function DetailOne(props) {
   const [authtoken, setAuthtoken] = useState("");
   const [selectedVariant, setSelectedVariant] = useState();
   const [variantCombGroup, setvariantCombGroup] = useState();
-  const [variationValues, setVariationValues] = useState([])
+  const [variationValues, setVariationValues] = useState([]);
   const [selectedValues, setSelectedValues] = useState({});
 
   // const numberFormat = value =>
@@ -42,30 +45,38 @@ function DetailOne(props) {
   //     props//
 
   useEffect(() => {
-
-    setVariationTypeGroup(product?.dropDown?.reduce((acc, curr) =>
-      acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
-      [])
+    setVariationTypeGroup(
+      product?.dropDown?.reduce(
+        (acc, curr) =>
+          acc.find((v) => v?.variant?.name === curr?.variant?.name)
+            ? acc
+            : [...acc, curr],
+        []
+      )
     );
 
-    console.log("setVariationTypeGroup :: ", variationTypeGroup)
+    console.log("setVariationTypeGroup :: ", variationTypeGroup);
 
-    setVariationGroup(product?.dropDown?.reduce((acc, curr) =>
-      acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
-      [])
+    setVariationGroup(
+      product?.dropDown?.reduce(
+        (acc, curr) =>
+          acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
+        []
+      )
     );
 
-    console.log("setVariationGroup :: ", variationGroup)
+    console.log("setVariationGroup :: ", variationGroup);
 
-    let currentProductVariation = product?.product_single_variation?.variation_value_details.map((item) => {
-      let productVariation = {
-        "name": item.variation_values.name,
-        "variation_value_id": item.variation_values.id,
-        "type": item.variation_values.variant.name,
-        "product_variation_id": item.product_variation_id
-      }
-      return productVariation;
-    });
+    let currentProductVariation =
+      product?.product_single_variation?.variation_value_details.map((item) => {
+        let productVariation = {
+          name: item.variation_values.name,
+          variation_value_id: item.variation_values.id,
+          type: item.variation_values.variant.name,
+          product_variation_id: item.product_variation_id,
+        };
+        return productVariation;
+      });
 
     // let newObj = {}
     // currentProductVariation?.forEach((item) => {
@@ -76,32 +87,36 @@ function DetailOne(props) {
 
     setSelectedVariant(currentProductVariation);
 
+    console.log("setSelectedVariant 10 :: ", currentProductVariation);
 
-    console.log("setSelectedVariant 10 :: ", currentProductVariation)
+    let newvaria1 = product?.dropDown?.reduce(
+      (acc, curr) =>
+        acc.find((v) => v?.variant?.name === curr?.variant?.name)
+          ? acc
+          : [...acc, curr],
+      []
+    );
 
+    let colorsNew1 = currentProductVariation?.find((v) => v.type === "Color");
 
-    let newvaria1 = product?.dropDown?.reduce((acc, curr) =>
-      acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
-      []);
+    console.log("colorsNew1 :: ", colorsNew1);
 
-    let colorsNew1 = currentProductVariation?.find((v) => v.type === "Color")
+    console.log("variation product :: ", product?.product_all_varitaions);
 
-    console.log("colorsNew1 :: ", colorsNew1)
+    let newobjecom = product?.product_all_varitaions?.filter(
+      (v) => v.product_details.variation_value_details.name == colorsNew1.name
+    );
+    console.log(newobjecom, "newobjecom====== 87");
 
-    console.log("variation product :: ", product?.product_all_varitaions)
+    let newvaria = product?.dropDown?.reduce(
+      (acc, curr) =>
+        acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
+      []
+    );
 
-    let newobjecom = product?.product_all_varitaions?.filter(v => v.product_details.variation_value_details.name == colorsNew1.name)
-    console.log(newobjecom, "newobjecom====== 87")
-
-
-    let newvaria = product?.dropDown?.reduce((acc, curr) =>
-      acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
-      []);
-
-
-    console.log("newvaria :: ", newvaria)
+    console.log("newvaria :: ", newvaria);
     let newarray = [];
-    let colorObj = {}
+    let colorObj = {};
 
     // let colorsNew = currentProductVariation?.find((v) => v.type === "Color")
 
@@ -117,11 +132,11 @@ function DetailOne(props) {
       let newlist = {
         arrs: arr,
         type: type,
-        newName: newName
+        newName: newName,
       };
 
-      if (newName == 'Color') {
-        colorObj = newlist
+      if (newName == "Color") {
+        colorObj = newlist;
       } else {
         newarray.push(newlist);
       }
@@ -137,12 +152,12 @@ function DetailOne(props) {
 
     setVariationValues(newarray);
 
-
-
     let comb = [];
 
     product?.dropDown.reduce((acc, item) => {
-      let ifExist = comb.find((f) => f.variation_id === item.product_variation_id);
+      let ifExist = comb.find(
+        (f) => f.variation_id === item.product_variation_id
+      );
       if (ifExist) {
         ifExist[item.variant.name] = item.name;
       } else {
@@ -153,11 +168,10 @@ function DetailOne(props) {
       }
       return item.product_variation_id;
     }, 0);
-    setvariantCombGroup(comb)
+    setvariantCombGroup(comb);
 
-    console.log("setvariantCombGroup :: ", variantCombGroup)
-
-  }, [product])
+    console.log("setvariantCombGroup :: ", variantCombGroup);
+  }, [product]);
 
   useEffect(() => {
     setAuthtoken(localStorage.getItem("authtoken"));
@@ -230,18 +244,16 @@ function DetailOne(props) {
     console.log("e.target.value selectedVariant :: ", selectedVariant);
 
     if (!e.target.value) {
-      const newState = selectedVariant.map(obj => {
-
+      const newState = selectedVariant.map((obj) => {
         if (obj.type === item.variant.name) {
           return {
             name: item.name,
             type: item.variant.name,
             variation_value_id: item.id,
-            product_variation_id: item.product_variation_id
+            product_variation_id: item.product_variation_id,
           };
         }
         return obj;
-
       });
 
       setSelectedVariant(newState);
@@ -257,7 +269,6 @@ function DetailOne(props) {
         var key = Object.keys(item)[0];
         result[key] = item[key];
         return result;
-
       }, {});
 
       let getVariationId = variantCombGroup.filter(function (entry) {
@@ -267,40 +278,39 @@ function DetailOne(props) {
       });
 
       props.handelselectedVariation(getVariationId[0].variation_id);
-
     } else {
-
-      console.log("item :: :: ", item?.find((v) => v.id == e.target.value));
+      console.log(
+        "item :: :: ",
+        item?.find((v) => v.id == e.target.value)
+      );
 
       const found = item?.find((v) => v.id == e.target.value);
 
-      console.log("found :: ", found)
+      console.log("found :: ", found);
 
       if (selectedVariant.find((v) => v.type == found.variant.name)) {
         console.log("selected");
       } else {
         selectedVariant.push({
-          "name": found.name,
-          "variation_value_id": found.variation_id,
-          "type": found.variant.name,
-          "product_variation_id": found.product_variation_id
-        })
+          name: found.name,
+          variation_value_id: found.variation_id,
+          type: found.variant.name,
+          product_variation_id: found.product_variation_id,
+        });
       }
 
-      console.log("selected :: ", selectedVariant)
+      console.log("selected :: ", selectedVariant);
 
-      const newState = selectedVariant.map(obj => {
-
+      const newState = selectedVariant.map((obj) => {
         if (obj.type === found.variant.name) {
           return {
             name: found.name,
             type: found.variant.name,
             variation_value_id: found.id,
-            product_variation_id: found.product_variation_id
+            product_variation_id: found.product_variation_id,
           };
         }
         return obj;
-
       });
       setSelectedVariant(newState);
 
@@ -481,7 +491,7 @@ function DetailOne(props) {
             <div className="col-md-6" key={index}>
               <div className="details-filter-row details-row-size">
                 <label htmlFor={`${item?.newName}`}>{item?.newName}: </label>
-                {item?.type === "1" || item?.type === "4" ?
+                {item?.type === "1" || item?.type === "4" ? (
                   <div className="select-custom">
                     <select
                       name={`${item?.newName}`}
@@ -491,11 +501,17 @@ function DetailOne(props) {
                     >
                       <option value="">Select a {item?.newName}</option>
                       {item?.arrs?.map((item2, index2) => (
-                        <option value={item2?.id} key={index2}>{item2?.type_value}</option>
+                        <option value={item2?.id} key={index2}>
+                          {item2?.type_value}
+                        </option>
                       ))}
                     </select>
-                  </div> :
-                  <div className="product-nav product-nav-dots" style={{ display: "block" }}>
+                  </div>
+                ) : (
+                  <div
+                    className="product-nav product-nav-dots"
+                    style={{ display: "block" }}
+                  >
                     {item?.arrs?.map((item2, index2) => (
                       <Tooltip className="stocking_massage" content={item2?.name}>
                         <span
@@ -508,11 +524,10 @@ function DetailOne(props) {
                       </Tooltip>
                     ))}
                   </div>
-                }
-              </div >
+                )}
+              </div>
             </div>
-          ))
-        }
+          ))}
       </div>
 
       {/* <div className="product product-7 text-center w-100">
@@ -554,7 +569,16 @@ function DetailOne(props) {
         </a> */}
         <a
           href="#"
+<<<<<<< HEAD
           className={`btn-product btn-cart`}
+=======
+          className={`btn-product btn-cart ${
+            product?.product_single_variation?.product_variation_details
+              ?.in_stock !== 1
+              ? "btn-disabled"
+              : ""
+          }`}
+>>>>>>> 2874dd4850683fc59d05fb78bdcdc7655d3a0d2c
           onClick={(e) => onCartClick(e, 0)}
         >
           <span>add to cart</span>
@@ -604,15 +628,15 @@ function DetailOne(props) {
           )}
           {product?.product_single_variation?.product_variation_details
             ?.lead_img && (
-              <li>
-                <img
-                  src={
-                    product?.product_single_variation?.product_variation_details
-                      ?.lead_img
-                  }
-                />
-              </li>
-            )}
+            <li>
+              <img
+                src={
+                  product?.product_single_variation?.product_variation_details
+                    ?.lead_img
+                }
+              />
+            </li>
+          )}
         </ul>
       </div>
       <div className="sticky-bar d-none">
