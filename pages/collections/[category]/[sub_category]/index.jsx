@@ -26,10 +26,13 @@ function ShopGrid() {
     // const [totalCount, setTotalCount] = useState();
     const totalCount = products && products?.length;
     const [totalProducts, setTotalProducts] = useState()
-    const [filterValues, setFilterValues] = useState();
+    const [filterBrandValues, setFilterBrandValues] = useState();
+    const [filterColorValues, setFilterColorValues] = useState();
+    const [filterCategoryList, setFilterCategoryList] = useState();
     const [filterByValue, setFilterByValue] = useState();
     const [priceRange, setRange] = useState({ min: 0, max: 10000 });
     const [brandValue, setBrandValue] = useState([]);
+    const [colorValue, setColorValue] = useState([]);
 
     useEffect(() => {
 
@@ -45,7 +48,11 @@ function ShopGrid() {
         });
 
         API.get(`/category-filters-list/${currentPageRoute}`).then((response) => {
-            setFilterValues(response?.data?.reduce((acc, curr) =>
+            setFilterCategoryList(response?.data?.categories);
+            setFilterColorValues(response?.data?.variations?.reduce((acc, curr) =>
+                acc.find((v) => v?.value_name === curr?.value_name) ? acc : [...acc, curr],
+                []));
+            setFilterBrandValues(response?.data?.variations?.reduce((acc, curr) =>
                 acc.find((v) => v?.brand === curr?.brand) ? acc : [...acc, curr],
                 [])
             );
@@ -112,7 +119,7 @@ function ShopGrid() {
             .classList.remove('sidebar-filter-active');
     }
 
-    function onAttrClick(event, index) {
+    const onAttrClick = (event, type) => {
 
         var updatedList = [...brandValue];
         if (event.target.checked) {
@@ -121,6 +128,21 @@ function ShopGrid() {
             updatedList.splice(brandValue.indexOf(event.target.value), 1);
         }
         setBrandValue(updatedList);
+    }
+
+    const handelColor = (e, item) => {
+
+        e.preventDefault();
+
+        var updatedList = [...colorValue];
+
+        if (colorValue?.find((v => v === item.value_id))) {
+            updatedList.splice(colorValue.indexOf(item.value_id), 1);
+        } else {
+            updatedList = [...colorValue, item?.value_id];
+        }
+        setColorValue(updatedList);
+
     }
 
     function onChangePriceRange(value) {
@@ -133,11 +155,12 @@ function ShopGrid() {
             "brand": brandValue,
             "min": priceRange.min,
             "max": priceRange.max,
-            "route": currentPageRoute
+            "route": currentPageRoute,
+            "color": colorValue
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data?.products)
+            setProducts(response?.data)
         }).catch((err) => {
             console.log(err);
         });
@@ -258,13 +281,17 @@ function ShopGrid() {
                                                     <div ref={setCollapsibleElement}>
                                                         <div className="widget-body pt-0">
                                                             <div className="filter-items filter-items-count">
-                                                                {shopData.categories.map((item, index) =>
+                                                                {filterCategoryList?.map((item, index) =>
                                                                     <div className="filter-item" key={`cat_${index}`}>
-                                                                        <ALink className={`${query.category == item.slug ? 'active' : ''}`} href={{ pathname: router.pathname, query: { type: query.type, category: item.slug } }} scroll={false}>{item.name}</ALink>
-                                                                        <span className="item-count">{item.count}</span>
+                                                                        <ALink
+                                                                            className={`${currentPageRoute == item.route ? 'active' : ''}`}
+                                                                            href={`/collections/${query?.category}/${item?.route}`}
+                                                                            scroll={false}
+                                                                        >{item?.name}
+                                                                        </ALink>
+                                                                        <span className="item-count">{item?.products_count}</span>
                                                                     </div>
-                                                                )
-                                                                }
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -280,13 +307,28 @@ function ShopGrid() {
                                                         <div ref={setCollapsibleElement}>
                                                             <div className="widget-body pt-0">
                                                                 <div className="filter-colors">
-                                                                    {
-                                                                        shopData.colors.map((item, index) => (
-                                                                            <ALink href={getUrlForAttrs('color', item.color_name)} className={containsAttrInUrl('color', item.color_name) ? 'selected' : ''} style={{ backgroundColor: item.color }} key={index} scroll={false}>
+                                                                    {filterColorValues?.map((item, index) => (
+                                                                        item?.value_type !== "3" ?
+                                                                            <ALink
+                                                                                href='#color'
+                                                                                // className={containsAttrInUrl('color', item?.value_name) ? 'selected' : ''}
+                                                                                style={{ backgroundColor: item?.value_type_variation }}
+                                                                                key={index}
+                                                                                onClick={e => handelColor(e, item)}
+                                                                            >
                                                                                 <span className="sr-only">Color Name</span>
-                                                                            </ALink>
-                                                                        ))
-                                                                    }
+                                                                            </ALink> :
+
+                                                                            <a
+                                                                                href={item?.value_id}
+                                                                                // className={containsAttrInUrl('color', item?.value_name) ? 'selected' : ''}
+                                                                                style={{ backgroundImage: `url(${item?.value_type_variation})` }}
+                                                                                key={index}
+                                                                                onClick={e => handelColor(e, item)}
+                                                                            >
+                                                                                <span className="sr-only">Color Name</span>
+                                                                            </a>
+                                                                    ))}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -308,14 +350,14 @@ function ShopGrid() {
                                                     <div ref={setCollapsibleElement}>
                                                         <div className="widget-body pt-0">
                                                             <div className="filter-items">
-                                                                {filterValues?.map((item, index) => (
+                                                                {filterBrandValues?.map((item, index) => (
                                                                     <div className="filter-item" key={index}>
                                                                         <div className="custom-control custom-checkbox">
                                                                             <input type="checkbox"
                                                                                 className="custom-control-input"
                                                                                 id={`brand-${index + 1}`}
                                                                                 value={item.brand}
-                                                                                onChange={e => onAttrClick(e, index)}
+                                                                                onChange={e => onAttrClick(e, "Brand")}
                                                                             // checked={containsAttrInUrl('brand', item.brand) ? true : false}
                                                                             />
                                                                             <label className="custom-control-label" htmlFor={`brand-${index + 1}`}>{item.brand}</label>

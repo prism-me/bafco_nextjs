@@ -1037,7 +1037,7 @@ function MyAccount(props) {
 
                                                                         </div>
                                                                         <div className="form-group">
-                                                                            
+
                                                                             <label htmlFor="singin-email-2">Address Line 2</label>
                                                                             <input
                                                                                 type="text"
@@ -1213,7 +1213,7 @@ function MyAccount(props) {
                                                         <div className="orderdetailModelheader modal-footer">
                                                             <a
                                                                 href="#"
-                                                                class="btn btn-outline-primary-2 btn-order btn-block"
+                                                                className="btn btn-outline-primary-2 btn-order btn-block"
                                                                 style={{ width: '200px' }}
                                                                 onClick={(e) => handelContinueWithCart(e, true)}
                                                             >
@@ -1221,7 +1221,7 @@ function MyAccount(props) {
                                                             </a>
                                                             <a
                                                                 href="#"
-                                                                class="btn btn-outline-primary-2 btn-order btn-block"
+                                                                className="btn btn-outline-primary-2 btn-order btn-block"
                                                                 onClick={(e) => handelContinueWithCart(e, false)}
                                                                 style={{ width: '200px' }}
                                                             >

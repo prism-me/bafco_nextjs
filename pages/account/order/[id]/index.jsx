@@ -116,7 +116,7 @@ function TrackingOrder() {
                                     <input className="custom-control-input" type="checkbox" id="notify_me" defaultChecked="" />
                                     <label className="custom-control-label" htmlFor="notify_me">Notify me when order is delivered</label>
                                 </div> */}
-                                <div className="text-left text-sm-right"><a className="btn btn-outline-primary btn-rounded btn-sm" href="/account">View Order Details</a></div>
+                                <div className="text-left text-sm-right"><a className="btn btn-outline-primary btn-rounded btn-sm" href="/account"><i className="icon-long-arrow-left"></i>Back to your account</a></div>
                             </div>
                         </div>
 

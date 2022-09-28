@@ -165,7 +165,7 @@ function ProductInner() {
       </nav>
 
       <div
-        class="postpay-widget"
+        className="postpay-widget"
         data-type="product"
         data-amount="100000"
         data-currency="AED"

@@ -137,12 +137,12 @@ function ProductTwelve(props) {
                     <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>{product?.name}</ALink>
                 </h3>
 
-                {!product?.productvariations.in_stock || product?.productvariations.in_stock === 0 ?
+                {!product?.productvariations?.in_stock || product?.productvariations?.in_stock === 0 ?
                     <div className="product-price">
-                        <span className="out-price">AED {product?.productvariations.upper_price}</span>
+                        <span className="out-price">AED {product?.productvariations?.upper_price}</span>
                     </div>
                     :
-                    <div className="product-price">AED {product?.productvariations.upper_price}</div>
+                    <div className="product-price">AED {product?.productvariations?.upper_price}</div>
                 }
 
                 {product?.variants?.length > 0 ?

@@ -64,6 +64,8 @@ function Cart(props) {
 
     function changeQty(value, item) {
 
+        console.log("ChangeQty :: ", value, item);
+
         let authtoken = localStorage.getItem('authtoken');
 
         let data = {
@@ -77,17 +79,6 @@ function Cart(props) {
                 headers: { 'Authorization': `Bearer ${authtoken}` }
             }).then((response) => {
                 console.log("response :: ", response)
-                // setCartList(
-                //     cartList.map((item, ind) => {
-                //         if (ind == index)
-                //             return {
-                //                 ...item,
-                //                 qty: value,
-                //             };
-                //         return item;
-                //     })
-                // )
-
             }).catch((err) => {
                 console.log(err);
             });
@@ -211,10 +202,11 @@ function Cart(props) {
 
                                                         <td className="quantity-col">
                                                             <Qty
-                                                                value={item?.qty}
+                                                                value={item.qty}
                                                                 changeQty={current => changeQty(current, item)}
                                                                 adClass="cart-product-quantity"
-                                                            ></Qty>
+                                                            >
+                                                            </Qty>
                                                         </td>
 
                                                         <td className="total-col">

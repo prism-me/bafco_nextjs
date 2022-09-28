@@ -153,7 +153,7 @@ function BrouchureImages(props) {
                       libero sodales leo, eget blandit.
                     </p>
                     <form>
-                      <div class="form-group">
+                      <div className="form-group">
                         <select className="form-control" id="showall">
                           <option>Show: All</option>
                           <option>dummy</option>

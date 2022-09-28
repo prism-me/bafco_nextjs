@@ -140,8 +140,8 @@ a:focus {
 }
 
 .btn-outline-primary {
-    @include button-outline-variant($primary-color, $primary-color,
-        transparent, $primary-color,
+    @include button-outline-variant(#008482, #008482,
+        transparent, #008482,
         #ebebeb,
         none, 0 5px 10px rgba(0, 0, 0, .05));
 }

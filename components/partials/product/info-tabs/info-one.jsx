@@ -135,11 +135,11 @@ function InfoOne(props) {
                                     {dimension?.length !== 0 &&
                                         dimension?.map((dimension, i) => (
                                             <tr key={i}>
-                                                <td><img src={dimension.images[0].avatar} style={{ height: "90px", margin: "0px auto" }} /></td>
-                                                <td>{dimension.code}</td>
-                                                <td>{dimension.depth}</td>
-                                                <td>{dimension.width}</td>
-                                                <td>{dimension.height}</td>
+                                                <td><img src={dimension?.images[0]?.avatar} style={{ height: "90px", margin: "0px auto" }} /></td>
+                                                <td>{dimension?.code}</td>
+                                                <td>{dimension?.depth}</td>
+                                                <td>{dimension?.width}</td>
+                                                <td>{dimension?.height}</td>
                                             </tr>
                                         ))}
                                 </tbody>
@@ -217,7 +217,7 @@ function InfoOne(props) {
                                     data-product-sku={`${product?.product?.brand}`}>
                                 </div>
 
-                                <span class="stamped-product-reviews-badge stamped-main-badge" data-id="##product.id##"></span>
+                                <span className="stamped-product-reviews-badge stamped-main-badge" data-id="##product.id##"></span>
 
                                 <div className="row no-gutters">
                                     <div className="col-auto">

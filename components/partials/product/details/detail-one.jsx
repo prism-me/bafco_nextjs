@@ -22,6 +22,8 @@ function DetailOne(props) {
     const [authtoken, setAuthtoken] = useState('');
     const [selectedVariant, setSelectedVariant] = useState();
     const [variantCombGroup, setvariantCombGroup] = useState();
+    const [variationValues, setVariationValues] = useState([])
+    const [selectedValues, setSelectedValues] = useState({});
 
     // const numberFormat = value =>
     //     new Intl.NumberFormat("en-IN", {
@@ -63,9 +65,77 @@ function DetailOne(props) {
             return productVariation;
         });
 
+        // let newObj = {}
+        // currentProductVariation?.forEach((item) => {
+        //     newObj[item.type] = item.name
+        // });
+        // setSelectedValues(newObj)
+        // console.log(newObj,"==== newObj ====");
+
         setSelectedVariant(currentProductVariation);
 
-        console.log("setSelectedVariant :: ", selectedVariant)
+
+        console.log("setSelectedVariant 10 :: ", currentProductVariation)
+
+
+        let newvaria1 = product?.dropDown?.reduce((acc, curr) =>
+            acc.find((v) => v?.variant?.name === curr?.variant?.name) ? acc : [...acc, curr],
+            []);
+
+        let colorsNew1 = currentProductVariation?.find((v) => v.type === "Color")
+
+        console.log("colorsNew1 :: ", colorsNew1)
+
+        console.log("variation product :: ", product?.product_all_varitaions)
+
+        let newobjecom = product?.product_all_varitaions?.filter(v => v.product_details.variation_value_details.name == colorsNew1.name)
+        console.log(newobjecom, "newobjecom====== 87")
+
+
+        let newvaria = product?.dropDown?.reduce((acc, curr) =>
+            acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
+            []);
+
+
+        console.log("newvaria :: ", newvaria)
+        let newarray = [];
+        let colorObj = {}
+
+        // let colorsNew = currentProductVariation?.find((v) => v.type === "Color")
+
+        // let variationnew = newvaria.filter((item) => colorsNew.name == item.name )
+
+        // console.log("variationnew :: ", variationnew)
+
+        newvaria1?.forEach((item) => {
+            let arr = newvaria?.filter((v) => v.variant.name === item.variant.name);
+
+            let newName = item.variant.name;
+            let type = item.type;
+            let newlist = {
+                arrs: arr,
+                type: type,
+                newName: newName
+            };
+
+            if (newName == 'Color') {
+                colorObj = newlist
+            } else {
+                newarray.push(newlist);
+            }
+        });
+
+        if (colorObj.newName) {
+            newarray.unshift(colorObj);
+        }
+
+        console.log("newarray :: 83 ", newarray);
+
+        // console.log("colorGroup :: ", colorGroup);
+
+        setVariationValues(newarray);
+
+
 
         let comb = [];
 
@@ -158,58 +228,76 @@ function DetailOne(props) {
 
         console.log("item :: ", item);
         console.log("e.target.value :: ", e.target.value);
+        console.log("e.target.value selectedVariant :: ", selectedVariant);
 
         if (!e.target.value) {
-            const newState = selectedVariant.map(obj => {
+            //     const newState = selectedVariant.map(obj => {
 
-                if (obj.type === item.variant.name) {
-                    return {
-                        name: item.name,
-                        type: item.variant.name,
-                        variation_value_id: item.id,
-                        product_variation_id: item.product_variation_id
-                    };
-                }
-                return obj;
+            //         if (obj.type === item.variant.name) {
+            //             return {
+            //                 name: item.name,
+            //                 type: item.variant.name,
+            //                 variation_value_id: item.id,
+            //                 product_variation_id: item.product_variation_id
+            //             };
+            //         }
+            //         return obj;
 
-            });
+            //     });
 
-            setSelectedVariant(newState);
+            //     setSelectedVariant(newState);
 
-            let comb = [];
+            //     let comb = [];
 
-            newState.map((acc) => {
-                comb.push({ [acc.type]: acc.name });
-                return acc;
-            });
+            //     newState.map((acc) => {
+            //         comb.push({ [acc.type]: acc.name });
+            //         return acc;
+            //     });
 
-            let resultNewComb = comb.reduce(function (result, item) {
-                var key = Object.keys(item)[0];
-                result[key] = item[key];
-                return result;
+            //     let resultNewComb = comb.reduce(function (result, item) {
+            //         var key = Object.keys(item)[0];
+            //         result[key] = item[key];
+            //         return result;
 
-            }, {});
+            //     }, {});
 
-            let getVariationId = variantCombGroup.filter(function (entry) {
-                return Object.keys(resultNewComb).every(function (key) {
-                    return entry[key] === resultNewComb[key];
-                });
-            });
+            //     let getVariationId = variantCombGroup.filter(function (entry) {
+            //         return Object.keys(resultNewComb).every(function (key) {
+            //             return entry[key] === resultNewComb[key];
+            //         });
+            //     });
 
-            props.handelselectedVariation(getVariationId[0].variation_id);
+            //     props.handelselectedVariation(getVariationId[0].variation_id);
 
         } else {
 
-            const found = variationGroup?.filter((v) => v?.id == storeitemId);
+            console.log("item :: :: ", item?.find((v) => v.id == e.target.value));
+
+            const found = item?.find((v) => v.id == e.target.value);
+
+            console.log("found :: ", found)
+
+            if (selectedVariant.find((v) => v.type == found.variant.name)) {
+                console.log("selected");
+            } else {
+                selectedVariant.push({
+                    "name": found.name,
+                    "variation_value_id": found.variation_id,
+                    "type": found.variant.name,
+                    "product_variation_id": found.product_variation_id
+                })
+            }
+
+            console.log("selected :: ", selectedVariant)
 
             const newState = selectedVariant.map(obj => {
 
-                if (obj.type === found[0].variant.name) {
+                if (obj.type === found.variant.name) {
                     return {
-                        name: found[0].name,
-                        type: found[0].variant.name,
-                        variation_value_id: found[0].id,
-                        product_variation_id: found[0].product_variation_id
+                        name: found.name,
+                        type: found.variant.name,
+                        variation_value_id: found.id,
+                        product_variation_id: found.product_variation_id
                     };
                 }
                 return obj;
@@ -236,6 +324,7 @@ function DetailOne(props) {
             }, {});
 
             console.log("resultNewComb :: ", resultNewComb);
+            console.log("variantCombGroup :: ", variantCombGroup);
 
             let getVariationId = variantCombGroup.filter(function (entry) {
                 return Object.keys(resultNewComb).every(function (key) {
@@ -287,22 +376,13 @@ function DetailOne(props) {
 
             <div className="product-content" dangerouslySetInnerHTML={{ __html: product?.product_single_variation?.product_variation_details?.description }} />
 
-            {/* <div
-                class="postpay-widget"
-                data-type="product"
-                data-amount="100000"
-                data-currency="AED"
-                data-num-instalments="3"
-                data-locale="en"
-            ></div> */}
-
-            <div className="row">
+            {/* <div className="row">
                 {variationTypeGroup !== null &&
                     variationTypeGroup?.map((item, index) => (
                         <div className="col-md-6" key={index}>
                             <div className="details-filter-row details-row-size">
                                 <label htmlFor={`${item?.variant?.name}`}>{item?.variant?.name}: </label>
-                                {item?.type === "1" ?
+                                {item?.type === "1" || item?.type === "4" ?
                                     <div className="select-custom">
                                         <select
                                             name={`${item?.variant?.name}`}
@@ -323,25 +403,59 @@ function DetailOne(props) {
                                     <div className="product-nav product-nav-dots" style={{ display: "block" }}>
                                         {variationGroup &&
                                             variantCombGroup.map((variantcom) => (
-                                                <>
-                                                    {variantcom[selectedVariant[index - 1]?.type] === selectedVariant[index - 1]?.name &&
-                                                        variationGroup.map((item2, index2) => (
+                                                variantcom[selectedVariant[index - 1]?.type] === selectedVariant[index - 1]?.name &&
+                                                variationGroup.map((item2, index2) => (
+                                                    variantcom[item2?.variant?.name] === item2.name &&
+                                                    item?.variant?.name === item2?.variant?.name &&
+                                                    <span
+                                                        className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                        style={{ backgroundImage: `url(${item2?.type_value})` }}
+                                                        key={index2}
+                                                        onClick={(e) => handelSelectVariantChange(e, item2)}
+                                                    >
+                                                    </span>
+                                                ))
 
-                                                            variantcom[item2?.variant?.name] === item2.name &&
-                                                            item?.variant?.name === item2?.variant?.name &&
-
-                                                            <span
-                                                                className={`${(item2?.id == selectedVariant[index]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
-                                                                key={index2}
-                                                                onClick={(e) => handelSelectVariantChange(e, item2)}
-                                                            >
-                                                            </span>
-                                                        ))
-                                                    }
-                                                </>
                                             ))
                                         }
+                                    </div>
+                                }
+                            </div >
+                        </div>
+                    ))
+                }
+            </div> */}
+
+            <div className="row">
+                {variationValues !== null &&
+                    variationValues?.map((item, index) => (
+                        <div className="col-md-6" key={index}>
+                            <div className="details-filter-row details-row-size">
+                                <label htmlFor={`${item?.newName}`}>{item?.newName}: </label>
+                                {item?.type === "1" || item?.type === "4" ?
+                                    <div className="select-custom">
+                                        <select
+                                            name={`${item?.newName}`}
+                                            className="form-control"
+                                            value={selectedVariant[index - 1]?.variation_value_id}
+                                            onChange={(e) => handelSelectVariantChange(e, item?.arrs)}
+                                        >
+                                            <option value="">Select a {item?.newName}</option>
+                                            {item?.arrs?.map((item2, index2) => (
+                                                <option value={item2?.id} key={index2}>{item2?.type_value}</option>
+                                            ))}
+                                        </select>
+                                    </div> :
+                                    <div className="product-nav product-nav-dots" style={{ display: "block" }}>
+                                        {item?.arrs?.map((item2, index2) => (
+                                            <span
+                                                className={`${(item2?.id == selectedVariant[index + 1]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                                                style={{ backgroundImage: `url(${item2?.type_value})` }}
+                                                key={index2}
+                                                onClick={(e) => handelSelectVariantChange(e, item2)}
+                                            >
+                                            </span>
+                                        ))}
                                     </div>
                                 }
                             </div >
@@ -360,7 +474,11 @@ function DetailOne(props) {
 
                 <div className="details-filter-row details-row-size">
                     <label htmlFor="qty">Quantity: </label>
-                    <Qty changeQty={onChangeQty} max={100} value={qty}></Qty>
+                    <Qty
+                        changeQty={onChangeQty}
+                        value={qty}
+                    >
+                    </Qty>
                     {/* <Qty changeQty={onChangeQty} max={product?.product_single_variation?.product_variation_details?.in_stock} value={qty}></Qty> */}
                 </div >
                 :

@@ -132,7 +132,7 @@ function Contact() {
                                 ))}
                             </div>
                         </div>
-                        <div class="col-lg-1"></div>
+                        <div className="col-lg-1"></div>
                         <div className="col-lg-5">
                             <h2 className="title mb-1">{contactusdata?.getInTouch?.heading}</h2>
                             <p className="lead text-primary">{contactusdata?.getInTouch?.sub_heading}</p>

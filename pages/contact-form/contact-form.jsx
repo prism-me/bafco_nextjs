@@ -107,7 +107,7 @@ function ContactForm({ type }) {
                 </div>
                 <div className="form-group">
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     id="message"
                     rows="3"
                     placeholder="Message"
