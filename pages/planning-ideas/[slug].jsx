@@ -279,17 +279,19 @@ function PlaningIdeasInner(props) {
                     </div>
                   </div>
                 ) : (
-                  <button
-                    className="btn btn-sm btn-minwidth btn-outline-primary-2 mb-3"
-                    onClick={() =>
-                      downloadImg(
-                        "http://www.africau.edu/images/default/sample.pdf"
-                      )
-                    }
-                  >
-                    <i className="icon-arrow-down"></i>
-                    <span>Download Document</span>
-                  </button>
+                  <div className="docdownloadbtnwrape">
+                    <button
+                      className="btn btn-sm btn-minwidth btn-outline-primary-2 mb-3"
+                      onClick={() =>
+                        downloadImg(
+                          "http://www.africau.edu/images/default/sample.pdf"
+                        )
+                      }
+                    >
+                      <i className="icon-arrow-down"></i>
+                      <span>Download Document</span>
+                    </button>
+                  </div>
                 )}
 
                 <p className="subtitle mb-3">Share</p>

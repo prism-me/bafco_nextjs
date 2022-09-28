@@ -108,7 +108,7 @@ function HeaderSearch() {
                     ) : (
                       <p
                         style={{
-                          color: "lightgray",
+                          color: "#b0b0b0",
                           textTransform: "capitalize",
                           padding: "1rem",
                         }}
