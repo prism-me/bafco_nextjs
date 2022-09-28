@@ -68,13 +68,19 @@ function Cart(props) {
     setShippingCost(value);
   }
 
-  function changeQty(value, item) {
+  function changeQty(value, item, index) {
     let authtoken = localStorage.getItem("authtoken");
 
-    let data = {
-      cart_id: item?.cart[0]?.id,
-      qty: value,
-    };
+    setCartList(
+      cartList.map((item, ind) => {
+        if (ind == index)
+          return {
+            ...item,
+            qty: value,
+          };
+        return item;
+      })
+    );
 
     // if (authtoken !== null) {
     //   API.post(`/auth/cart-qty`, data, {
@@ -119,7 +125,7 @@ function Cart(props) {
       newCart.push({ cart_id: acc.cart[0].id, qty: acc.qty });
     });
 
-    // console.log("acc", newCart);
+    // console.log("acc", cartList);
 
     if (authtoken !== null) {
       API.post(`/auth/update-cart`, newCart, {
@@ -282,7 +288,7 @@ function Cart(props) {
                               <Qty
                                 value={item?.qty}
                                 changeQty={(current) => {
-                                  changeQty(current, item);
+                                  changeQty(current, item, index);
                                 }}
                                 adClass="cart-product-quantity"
                               ></Qty>
