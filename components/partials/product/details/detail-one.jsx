@@ -9,7 +9,9 @@ import { actions as wishlistAction } from "~/store/wishlist";
 import { actions as cartAction } from "~/store/cart";
 import { canAddToCart, isInWishlist } from "~/utils";
 // import "../../../../../utils/postpay.js";
-// import "../../../../utils/postpay";
+import "../../../../utils/postpay.js";
+import Tooltip from "react-simple-tooltip";
+// import { css } from "styled-components";
 
 function DetailOne(props) {
   const router = useRouter();
@@ -395,14 +397,14 @@ function DetailOne(props) {
         }}
       />
 
-      {/* <div
-                class="postpay-widget"
-                data-type="product"
-                data-amount="100000"
-                data-currency="AED"
-                data-num-instalments="3"
-                data-locale="en"
-            ></div> */}
+      <div
+        class="postpay-widget"
+        data-type="product"
+        data-amount="100000"
+        data-currency="AED"
+        data-num-instalments="3"
+        data-locale="en"
+      ></div>
 
       {/* <div className="row">
         {variationTypeGroup !== null &&
@@ -495,13 +497,15 @@ function DetailOne(props) {
                   </div> :
                   <div className="product-nav product-nav-dots" style={{ display: "block" }}>
                     {item?.arrs?.map((item2, index2) => (
-                      <span
-                        className={`${(item2?.id == selectedVariant[index + 1]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                        style={{ backgroundImage: `url(${item2?.type_value})` }}
-                        key={index2}
-                        onClick={(e) => handelSelectVariantChange(e, item2)}
-                      >
-                      </span>
+                      <Tooltip className="stocking_massage" content={item2?.name}>
+                        <span
+                          className={`${(item2?.id == selectedVariant[index + 1]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
+                          style={{ backgroundImage: `url(${item2?.type_value})` }}
+                          key={index2}
+                          onClick={(e) => handelSelectVariantChange(e, item2)}
+                        >
+                        </span>
+                      </Tooltip>
                     ))}
                   </div>
                 }
@@ -517,27 +521,40 @@ function DetailOne(props) {
                 </figure>
             </div> */}
 
-      {product?.product_single_variation?.product_variation_details
-        ?.in_stock !== 0 ? (
-        <div className="details-filter-row details-row-size">
-          <label htmlFor="qty">Quantity: </label>
-          <Qty changeQty={onChangeQty} max={100} value={qty}></Qty>
-          {/* <Qty changeQty={onChangeQty} max={product?.product_single_variation?.product_variation_details?.in_stock} value={qty}></Qty> */}
-        </div>
-      ) : (
+      {/* {product?.product_single_variation?.product_variation_details
+        ?.in_stock !== 0 ? ( */}
+      <div className="details-filter-row details-row-size">
+        <label htmlFor="qty">Quantity: </label>
+        <Qty changeQty={onChangeQty} max={100} value={qty}></Qty>
+        {/* <Qty changeQty={onChangeQty} max={product?.product_single_variation?.product_variation_details?.in_stock} value={qty}></Qty> */}
+      </div>
+      {/* ) : (
         <div className="details-filter-row details-row-size">
           <span className="product-label-out">Stocking</span>
         </div>
-      )}
+      )} */}
+
+      {product?.product_single_variation?.product_variation_details?.in_stock === 0 &&
+
+        // <Tooltip className="stocking_massage" content="Available to ship in 6-8 weeks.">
+        <p style={{ fontSize: '16px' }}>Available to ship in <span style={{ fontWeight: 'bold' }}>6-8 weeks</span>.</p>
+        // </Tooltip>
+      }
+
 
       <div className="product-details-action">
+        {/* <a
+          href="#"
+          className={`btn-product btn-cart 
+          ${product?.product_single_variation?.product_variation_details?.in_stock !== 1 ? "btn-disabled" : ""}
+          `}
+          onClick={(e) => onCartClick(e, 0)}
+        >
+          <span>add to cart</span>
+        </a> */}
         <a
           href="#"
-          className={`btn-product btn-cart ${product?.product_single_variation?.product_variation_details
-            ?.in_stock !== 1
-            ? "btn-disabled"
-            : ""
-            }`}
+          className={`btn-product btn-cart`}
           onClick={(e) => onCartClick(e, 0)}
         >
           <span>add to cart</span>
@@ -573,21 +590,15 @@ function DetailOne(props) {
           <span style={{ textTransform: "capitalize" }}>{subCategory}</span>
         </div>
 
-        {/* <div className="social-icons social-icons-sm">
-                    <span className="social-label">Share:</span>
-                    <ALink href="https://www.instagram.com/bafco/" className="social-icon" rel="noopener noreferrer" title="Instagram" target="_blank"><i className="icon-instagram"></i></ALink>
-                    <ALink href="https://www.facebook.com/bafcointeriors" className="social-icon" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
-                    <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
-                    <ALink href="https://twitter.com/Bafco" className="social-icon" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
-                    <ALink href="https://www.pinterest.com/bafcointeriors/" className="social-icon" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>
-                </div> */}
       </div>
       <div className="product-details-adv">
         <ul>
           {product?.single_product_details?.product?.promotional_images.map(
             (item, index) => (
               <li key={index}>
+                {/* <Tooltip className="stocking_massage" content={item?.url?.split('.')[0]}> */}
                 <img src={item.avatar} />
+                {/* </Tooltip> */}
               </li>
             )
           )}

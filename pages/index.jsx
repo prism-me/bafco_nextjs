@@ -18,6 +18,7 @@ import { actions as demoAction } from '~/store/demo';
 import ProductTwelve from '~/components/features/products/product-twelve';
 import { API } from '~/http/API';
 // import { productdata } from "../data";
+import { toast } from 'react-toastify';
 import {
     homeData,
     introSlider,
@@ -960,6 +961,7 @@ function Home(props) {
     const [homedata, setHomedata] = useState();
     const [bloglist, setBlogList] = useState();
     const [productList, setProductList] = useState();
+    const [email, setEmail] = useState("");
     // const [selectedCategory, setSelectedCategory] = useState('executive-chairs');
 
     function openVideoModal(e) {
@@ -989,6 +991,28 @@ function Home(props) {
             });
 
     }, [])
+
+    function handleEmailChange(e) {
+        setEmail(e.target.value);
+    }
+    function handleSubmit() {
+        if (email === '') {
+            alert('Please enter a email before submitting.');
+            return;
+        }
+        let formdata = {
+            'email': email
+        }
+        API.post(`/subscriber`, formdata).then((response) => {
+            if (response?.status === 200) {
+                toast.success(response?.data)
+            } else {
+                toast.error("Please fill in the required fields.");
+            }
+        }).catch((error) => {
+            toast.error("Somthing went wrong !");
+        });
+    }
 
 
     return (
@@ -1346,6 +1370,9 @@ function Home(props) {
                                     <div className="input-group">
                                         <input
                                             type="email"
+                                            name="email"
+                                            value={email}
+                                            onChange={handleEmailChange}
                                             className="form-control"
                                             placeholder="Enter your Email Address"
                                             aria-label="Email Adress"
@@ -1355,8 +1382,9 @@ function Home(props) {
                                         <div className="input-group-append">
                                             <button
                                                 className="btn btn-primary"
-                                                type="submit"
+                                                type="button"
                                                 id="newsletter-btn"
+                                                onClick={handleSubmit}
                                             >
                                                 <span>Subscribe</span>
                                                 <i className="icon-long-arrow-right"></i>

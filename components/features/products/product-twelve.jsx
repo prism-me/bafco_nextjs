@@ -127,11 +127,11 @@ function ProductTwelve(props) {
             </figure>
 
             <div className="product-body">
-                <div className="product-cat">
+                {/* <div className="product-cat">
                     <ALink href={`/collections/${categoryName}`}>
                         {categoryName}
                     </ALink>
-                </div>
+                </div> */}
 
                 <h3 className="product-title">
                     <ALink href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}>{product?.name}</ALink>
@@ -159,7 +159,7 @@ function ProductTwelve(props) {
                 }
             </div>
 
-            {product?.productvariations.in_stock && product?.productvariations.in_stock !== 0 ?
+            {/* {product?.productvariations.in_stock && product?.productvariations.in_stock !== 0 ?
                 <div className="product-action">
                     {
                         product?.variants?.length > 0 ?
@@ -173,7 +173,7 @@ function ProductTwelve(props) {
                     }
                 </div>
                 : ""
-            }
+            } */}
 
         </div>
     )

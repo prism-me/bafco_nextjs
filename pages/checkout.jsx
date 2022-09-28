@@ -72,13 +72,18 @@ function Checkout(props) {
     const [xauthtokenUser, setXAuthTokenUser] = useState();
     const [cartList, setCartList] = useState([]);
     const [isOpenThankyouModel, setIsOpenThankyouModel] = useState(false);
+    const [isOpenCancelMassageModel, setIsOpenCancelMassageModel] = useState(false);
 
     let timer;
 
     useEffect(() => {
-
+        console.log("router?.query :: ", router?.query)
         if (router?.query?.status == 'success') {
             setIsOpenThankyouModel(true);
+        }
+
+        if (router?.query?.status == 'cancelled') {
+            setIsOpenCancelMassageModel(true);
         }
 
     }, [router?.query?.status]);
@@ -92,6 +97,7 @@ function Checkout(props) {
 
         timer = setTimeout(() => {
             setIsOpenThankyouModel(false);
+            setIsOpenCancelMassageModel(false);
             router.push('/checkout');
         }, 350);
     }
@@ -973,6 +979,36 @@ function Checkout(props) {
                                                     <img className="mb-6" src='images/icons/success-icon.png' width='100px' style={{ margin: '0 auto' }} alt="Success" />
                                                     <h2>Thank you!</h2>
                                                     <h6>Your order has been placed successfully!</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal>
+                                }
+                                {isOpenCancelMassageModel &&
+                                    <Modal
+                                        isOpen={isOpenCancelMassageModel}
+                                        style={customStyles}
+                                        contentLabel="order Modal"
+                                        className="modal-dialog"
+                                        overlayClassName="d-flex align-items-center justify-content-center"
+                                        id="success-modal"
+                                        onRequestClose={closeThankyouModel}
+                                        closeTimeoutMS={10}
+                                    >
+                                        <div className="modal-content">
+                                            {console.log("isOpenCancelMassageModel :: ", isOpenCancelMassageModel)}
+                                            <div className="orderdetailModelheader modal-header mb-2">
+                                                {/* <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div> */}
+                                                <button type="button" className="close" onClick={closeThankyouModel}>
+                                                    <span aria-hidden="true">×</span>
+                                                    <span className="sr-only">Close</span>
+                                                </button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <div className="orderdetailbody text-center mb-6">
+                                                    <img className="mb-6" src='images/icons/symbol-christian-cross.png' width='100px' style={{ margin: '0 auto' }} alt="Success" />
+                                                    <h2>Please try again later!</h2>
+                                                    <h6>Your transaction was unsuccessful.</h6>
                                                 </div>
                                             </div>
                                         </div>
