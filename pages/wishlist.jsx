@@ -123,12 +123,16 @@ function Wishlist(props) {
                                             }
                                         </td>
                                         <td className="stock-col">
-                                            <span className={`${product?.variation[0]?.in_stock == 0 ? 'out-of-stock' : 'in-stock'}`} >{product?.variation[0]?.in_stock == 0 ? 'Out of stock' : 'In stock'}</span>
+                                            <span className={`${product?.variation[0]?.in_stock == 0 ? 'Stocking' : 'in-stock'}`} >{product?.variation[0]?.in_stock == 0 ? 'Out of stock' : 'In stock'}</span>
                                         </td>
                                         <td className="action-col">
-                                            <div className="dropdown">
-                                                <button className="btn btn-block btn-outline-primary-2" onClick={e => moveToCart(product)}>
-                                                    <i className="icon-cart-plus"></i>
+                                            <div className="dropdown product-details-action">
+                                                <button
+                                                    // className="btn btn-block btn-outline-primary-2" 
+                                                    className={`btn-product btn-cart ${product?.variation[0]?.in_stock !== 1 ? "btn-disabled" : ""}`}
+                                                    onClick={e => moveToCart(product)}
+                                                >
+                                                    {/* <i className="icon-cart-plus"></i> */}
                                                     add to cart
                                                 </button>
                                             </div>
