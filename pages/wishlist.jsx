@@ -129,7 +129,7 @@ function Wishlist(props) {
                                             <div className="dropdown product-details-action">
                                                 <button
                                                     // className="btn btn-block btn-outline-primary-2" 
-                                                    className={`btn-product btn-cart ${product?.variation[0]?.in_stock !== 1 ? "btn-disabled" : ""}`}
+                                                    className={`btn-product btn-cart`}
                                                     onClick={e => moveToCart(product)}
                                                 >
                                                     {/* <i className="icon-cart-plus"></i> */}

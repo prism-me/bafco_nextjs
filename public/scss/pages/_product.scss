@@ -1650,3 +1650,18 @@
 		text-align: left !important;
 	}
 }
+
+.stocking_massage {
+	.css-f5brtt-BaseToolTop {
+		width: 300px;
+		z-index: 9999;
+		max-width: max-content;
+
+		.css-17oi9u9-Bubble {
+			background: #fff;
+			color: #000;
+			border-color: #fff;
+			box-shadow: 0px 0px 5px 0px #cecece;
+		}
+	}
+}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Modal from 'react-modal';
 import Cookie from 'js-cookie';
+import { API } from '~/http/API';
+import { toast } from 'react-toastify';
 
 const customStyles = {
     overlay: {
@@ -10,46 +12,70 @@ const customStyles = {
     }
 };
 
-Modal.setAppElement( 'body' );
+Modal.setAppElement('body');
 
-function NewsletterModal () {
-    const [ open, setOpen ] = useState( false );
-    const [ doNotShow, setDoNotShow ] = useState( false );
+function NewsletterModal() {
+    const [open, setOpen] = useState(false);
+    const [doNotShow, setDoNotShow] = useState(false);
+    const [email, setEmail] = useState("");
 
-    useEffect( () => {
+    useEffect(() => {
         let timer;
-        Cookie.get( `hideNewsletter-${process.env.NEXT_PUBLIC_DEMO}` ) || ( timer = setTimeout( () => {
-            setOpen( true );
-        }, 5000 ) );
+        Cookie.get(`hideNewsletter-${process.env.NEXT_PUBLIC_DEMO}`) || (timer = setTimeout(() => {
+            setOpen(true);
+        }, 5000));
 
         return () => {
-            timer && clearTimeout( timer );
+            timer && clearTimeout(timer);
         };
-    }, [] )
+    }, [])
 
-    function closeModal ( e ) {
-        document.getElementById( "newsletter-popup-form" ).classList.remove( "ReactModal__Content--after-open" );
+    function closeModal(e) {
+        document.getElementById("newsletter-popup-form").classList.remove("ReactModal__Content--after-open");
 
-        if ( document.querySelector( ".ReactModal__Overlay" ) ) {
-            document.querySelector( ".ReactModal__Overlay" ).style.opacity = '0';
+        if (document.querySelector(".ReactModal__Overlay")) {
+            document.querySelector(".ReactModal__Overlay").style.opacity = '0';
         }
 
-        setTimeout( () => {
-            setOpen( false );
-            doNotShow && Cookie.set( `hideNewsletter-${process.env.NEXT_PUBLIC_DEMO}`, "true", { expires: 7 } );
-        }, 350 );
+        setTimeout(() => {
+            setOpen(false);
+            doNotShow && Cookie.set(`hideNewsletter-${process.env.NEXT_PUBLIC_DEMO}`, "true", { expires: 7 });
+        }, 350);
     }
 
-    function handleChange ( e ) {
-        setDoNotShow( e.target.checked );
+    function handleChange(e) {
+        setDoNotShow(e.target.checked);
+    }
+    function handleEmailChange(e) {
+        setEmail(e.target.value);
+    }
+    function handleSubmit() {
+        if (email === '') {
+            alert('Please enter a email before submitting.');
+            return;
+        }
+        let formdata = {
+            'email': email
+        }
+        API.post(`/subscriber`, formdata).then((response) => {
+            console.log("Success :: ", response)
+            if (response?.data?.error) {
+                toast.error("Please fill in the required fields.");
+            } else {
+                toast.success(response?.data)
+                setOpen(false);
+            }
+        }).catch((error) => {
+            toast.error("Somthing went wrong !");
+        });
     }
 
     return (
         <Modal
-            isOpen={ open }
-            onRequestClose={ closeModal }
-            style={ customStyles }
-            shouldReturnFocusAfterClose={ false }
+            isOpen={open}
+            onRequestClose={closeModal}
+            style={customStyles}
+            shouldReturnFocusAfterClose={false}
             contentLabel="Newsletter Modal"
             className="container newsletter-popup-container h-auto"
             overlayClassName="d-flex align-items-center justify-content-center"
@@ -64,20 +90,30 @@ function NewsletterModal () {
                                 <div className="banner-content text-center">
 
                                     <img src="images/bafco-logo.png" alt="logo" className="logo" width="150" />
-                                    <h2 className="banner-title">get <span>25<span style={ { fontWeight: '400' } }>%</span></span> off</h2>
-                                    <p>Subscribe to the Bafco eCommerce newsletter to receive timely updates from your favorite products.</p>
+                                    {/* <h2 className="banner-title">get <span>25<span style={ { fontWeight: '400' } }>%</span></span> off</h2> */}
+                                    <h2 className="banner-title">Sign Up. Be Inspired.</h2>
+                                    <p>Subscribe now for hand-picked exclusive deals, inspiration and workplace interior design tips, straight to your inbox.</p>
 
                                     <form action="#">
                                         <div className="input-group input-group-round">
-                                            <input type="email" className="form-control form-control-white" placeholder="Your Email Address" aria-label="Email Adress" required />
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={email}
+                                                onChange={handleEmailChange}
+                                                className="form-control form-control-white"
+                                                placeholder="Your Email Address"
+                                                aria-label="Email Adress"
+                                                required
+                                            />
                                             <div className="input-group-append">
-                                                <button className="btn" type="submit"><span>go</span></button>
+                                                <button className="btn" type="button" onClick={handleSubmit}><span>go</span></button>
                                             </div>
                                         </div>
                                     </form>
 
                                     <div className="custom-control custom-checkbox pl-4 ml-3">
-                                        <input type="checkbox" className="custom-control-input" id="register-policy" onChange={ handleChange } />
+                                        <input type="checkbox" className="custom-control-input" id="register-policy" onChange={handleChange} />
                                         <label className="custom-control-label" htmlFor="register-policy">Do not show this popup again</label>
                                     </div>
                                 </div>
@@ -88,17 +124,17 @@ function NewsletterModal () {
                                 <div className="lazy-overlay"></div>
                                 <LazyLoadImage
                                     alt="newsletter"
-                                    src="images/popup/newsletter/ESD61TW-grey.jpg"
-                                    threshold={ 0 }
-                                    width={ 396 }
-                                    height={ 420 }
+                                    src="images/popup/newsletter/cover-1.jpg"
+                                    threshold={0}
+                                    width={383}
+                                    height={420}
                                     effect="blur"
                                     className="newsletter-img"
                                 />
                             </div>
                         </div>
                     </div>
-                    <button title="Close (Esc)" type="button" className="mfp-close" onClick={ closeModal }><span>×</span></button>
+                    <button title="Close (Esc)" type="button" className="mfp-close" onClick={closeModal}><span>×</span></button>
                 </div>
             </div>
         </Modal>

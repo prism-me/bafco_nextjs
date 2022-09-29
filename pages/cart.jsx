@@ -257,15 +257,6 @@ function Cart(props) {
           </ol>
         </div>
       </nav>
-
-      <div
-        class="postpay-widget"
-        data-type="product"
-        data-amount="100000"
-        data-currency="AED"
-        data-num-instalments="3"
-        data-locale="en"
-      ></div>
       <div className="page-content pb-5">
         <div className="cart">
           <div className="container">
@@ -456,6 +447,15 @@ function Cart(props) {
                         </tr>
                       </tbody>
                     </table>
+
+                    <div
+                      class="postpay-widget"
+                      data-type="product"
+                      data-amount="100000"
+                      data-currency="AED"
+                      data-num-instalments="3"
+                      data-locale="en"
+                    ></div>
 
                     <ALink
                       className="btn btn-outline-primary-2 btn-order btn-block"
