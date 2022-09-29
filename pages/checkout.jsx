@@ -55,6 +55,7 @@ function Checkout(props) {
   });
   const [shipping, setshippingAddress] = useState({ ...shippingAddressData });
   const [cuponCode, setCuponCode] = useState("");
+  const [cuponCodeSuccessMsg, setCuponCodeSuccessMsg] = useState(false);
   // const [countryList, setCountryList] = useState();
   const [stateList, setStateList] = useState();
   const [email, setEmail] = useState("");
@@ -273,13 +274,12 @@ function Checkout(props) {
         headers: { Authorization: `Bearer ${authtoken}` },
       })
         .then((response) => {
-          console.log(response.data.status, "response");
           if (response.data.status === 200 || response.status === 201) {
-            console.log(response.data);
             setLoading(false);
             toast.success(response.data.message);
             setCartTotal(response?.data?.data);
             setIsPromoCodeValid(true);
+            setCuponCodeSuccessMsg(true);
           } else {
             setLoading(false);
             setIsPromoCodeValid(false);
@@ -966,7 +966,7 @@ function Checkout(props) {
                             onChange={handelCuponCode}
                             placeholder="Have a coupon? Click here to enter your code"
                           />
-                          {cuponCode && (
+                          {cuponCodeSuccessMsg && (
                             <label>Hurray! You got a discount!</label>
                           )}
                           {loading ? (
