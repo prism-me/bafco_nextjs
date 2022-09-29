@@ -228,24 +228,6 @@ function Cart(props) {
 
   return (
     <div className="main">
-      <Helmet>
-        <script
-          data-partytown-config
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.postpayAsyncInit = function()
-            {postpay.init({
-              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-              sandbox: true,
-              theme: "light",
-              locale: "en",
-            })}
-            `,
-          }}
-        />
-        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-      </Helmet>
-
       <PageHeader
         title="Cart"
         subTitle=""
@@ -455,21 +437,21 @@ function Cart(props) {
                       </tbody>
                     </table>
 
-                    <div
+                    {/* <div
                       className="postpay-widget mb-2"
                       data-type="cart"
-                      data-amount={cartTotal?.total}
+                      data-amount="3000"
                       data-currency="AED"
                       data-num-instalments="3"
                       data-locale="en"
-                    ></div>
+                    ></div> */}
 
-                    <ALink
+                    <a
                       className="btn btn-outline-primary-2 btn-order btn-block"
                       href="/checkout"
                     >
                       PROCEED TO CHECKOUT
-                    </ALink>
+                    </a>
                   </div>
 
                   <ALink
