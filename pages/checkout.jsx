@@ -562,35 +562,60 @@ function Checkout(props) {
   let guestCartTotalPrice = localStorage.getItem("guestCartTotalPrice");
   let cartTotalPrice = localStorage.getItem("cartTotalPrice");
 
-  const [showPostPay, setShowPostPay] = useState(false);
+  const [showPostPay1, setShowPostPay1] = useState(false);
 
-  const handleClick = (id) => {
-    if (id == "pay1") {
-      setShowPostPay(true);
-    } else if (id == "pay2") {
-      setShowPostPay(true);
-    }
+  const handleClickPay1 = () => {
+    setShowPostPay1(true);
+    setShowPostPay2(false);
   };
 
+  const [showPostPay2, setShowPostPay2] = useState(false);
+
+  const handleClickPay2 = () => {
+    setShowPostPay2(true);
+    setShowPostPay1(false);
+  };
   return (
     <div className="main">
-      <Helmet>
-        <script
-          data-partytown-config
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.postpayAsyncInit = function()
-            {postpay.init({
-              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-              sandbox: true,
-              theme: "light",
-              locale: "en",
-            })}
-            `,
-          }}
-        />
-        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-      </Helmet>
+      {showPostPay1 && (
+        <Helmet>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+             window.postpayAsyncInit = function()
+             {postpay.init({
+               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+               sandbox: true,
+               theme: "light",
+               locale: "en",
+             })}
+             `,
+            }}
+          />
+          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+        </Helmet>
+      )}
+      {showPostPay2 && (
+        <Helmet>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+             window.postpayAsyncInit = function()
+             {postpay.init({
+               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+               sandbox: true,
+               theme: "light",
+               locale: "en",
+             })}
+             `,
+            }}
+          />
+          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+        </Helmet>
+      )}
+
       <PageHeader
         title="Checkout"
         subTitle=""
@@ -1070,85 +1095,79 @@ function Checkout(props) {
                     </table>
 
                     <div className="paymentmethod">
-                      <h4 className="title">
-                        <label onClick={() => handleClick("pay1")}>
-                          <input
-                            type="radio"
-                            id="r11"
-                            name="occupation"
-                            value="directpay"
-                          />{" "}
+                      <h4 className="title mb-0">
+                        <label onClick={handleClickPay1}>
+                          <input type="radio" name="payment" value="pay1" />{" "}
                           Credit or Debit Card
                         </label>
                       </h4>
-                      {/* {showPostPay && ( */}
-                      <>
-                        {xauthtokenUser !== null ? (
-                          <div
-                            className="postpay-widget mb-3"
-                            data-type="payment-summary"
-                            data-amount={cartTotalPrice}
-                            data-currency="AED"
-                            data-num-instalments="1"
-                            data-country="{country}"
-                            data-hide-if-invalid="{selector}"
-                            data-locale="en"
-                          ></div>
-                        ) : (
-                          <div
-                            className="postpay-widget mb-3"
-                            data-type="payment-summary"
-                            data-amount={guestCartTotalPrice}
-                            data-currency="AED"
-                            data-num-instalments="1"
-                            data-country="{country}"
-                            data-hide-if-invalid="{selector}"
-                            data-locale="en"
-                          ></div>
-                        )}
-                      </>
-                      {/* )} */}
+                      {showPostPay1 && (
+                        <>
+                          {xauthtokenUser !== null ? (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={cartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="1"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          ) : (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={guestCartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="1"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          )}
+                        </>
+                      )}
                     </div>
                     <div>
-                      <h4 className="title">
-                        <label onClick={() => handleClick("pay2")}>
+                      <h4 className="title mb-3">
+                        <label onClick={handleClickPay2}>
                           <input
                             type="radio"
-                            id="r12"
-                            name="occupation"
-                            value="installement"
+                            name="payment"
+                            value="pay2"
                             readOnly
                           />{" "}
                           Instalments with Postpay
                         </label>
                       </h4>
-                      {/* {showPostPay && ( */}
-                      <>
-                        {xauthtokenUser !== null ? (
-                          <div
-                            className="postpay-widget mb-3"
-                            data-type="payment-summary"
-                            data-amount={cartTotalPrice}
-                            data-currency="AED"
-                            data-num-instalments="3"
-                            data-country="{country}"
-                            data-hide-if-invalid="{selector}"
-                            data-locale="en"
-                          ></div>
-                        ) : (
-                          <div
-                            className="postpay-widget mb-3"
-                            data-type="payment-summary"
-                            data-amount={guestCartTotalPrice}
-                            data-currency="AED"
-                            data-num-instalments="3"
-                            data-country="{country}"
-                            data-hide-if-invalid="{selector}"
-                            data-locale="en"
-                          ></div>
-                        )}
-                      </>
-                      {/* )} */}
+                      {showPostPay2 && (
+                        <>
+                          {xauthtokenUser !== null ? (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={cartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="3"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          ) : (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={guestCartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="3"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          )}
+                        </>
+                      )}
                     </div>
 
                     {loading ? (
