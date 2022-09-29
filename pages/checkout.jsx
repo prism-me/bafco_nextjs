@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
-import SlideToggle from "react-slide-toggle";
 import { API } from "~/http/API";
 import ALink from "~/components/features/alink";
-import Accordion from "~/components/features/accordion/accordion";
-import Card from "~/components/features/accordion/card";
 import PageHeader from "~/components/features/page-header";
 import CountryRegionData from "~/utils/countrydata.json";
-import { cartPriceTotal } from "~/utils/index";
 import { toast } from "react-toastify";
-import Joi from "joi";
 import Modal from "react-modal";
-// import { SuccessIcon } from '../public/images/icons/success-icon.png';
+import Helmet from "react-helmet";
 
 let billingAddressData = {
   name: "",
@@ -75,7 +70,8 @@ function Checkout(props) {
   const [cartList, setCartList] = useState([]);
   const [isOpenThankyouModel, setIsOpenThankyouModel] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isOpenCancelMassageModel, setIsOpenCancelMassageModel] = useState(false);
+  const [isOpenCancelMassageModel, setIsOpenCancelMassageModel] =
+    useState(false);
 
   let timer;
 
@@ -83,7 +79,7 @@ function Checkout(props) {
     if (router?.query?.status == "success") {
       setIsOpenThankyouModel(true);
     }
-    if (router?.query?.status == 'cancelled') {
+    if (router?.query?.status == "cancelled") {
       setIsOpenCancelMassageModel(true);
     }
   }, [router?.query?.status]);
@@ -564,6 +560,23 @@ function Checkout(props) {
 
   return (
     <div className="main">
+      <Helmet>
+        <script
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.postpayAsyncInit = function()
+            {postpay.init({
+              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+              sandbox: true,
+              theme: "light",
+              locale: "en",
+            })}
+            `,
+          }}
+        />
+        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+      </Helmet>
       <PageHeader
         title="Checkout"
         subTitle=""
@@ -1041,7 +1054,16 @@ function Checkout(props) {
                         </tr>
                       </tbody>
                     </table>
-
+                    <div
+                      class="postpay-widget mb-3"
+                      data-type="payment-summary"
+                      data-amount={cartTotal?.total}
+                      data-currency="AED"
+                      data-num-instalments="3"
+                      data-country="{country}"
+                      data-hide-if-invalid="{selector}"
+                      data-locale="en"
+                    ></div>
                     {loading ? (
                       <div
                         className="loader"
@@ -1113,7 +1135,7 @@ function Checkout(props) {
                   </Modal>
                 )}
 
-                {isOpenCancelMassageModel &&
+                {isOpenCancelMassageModel && (
                   <Modal
                     isOpen={isOpenCancelMassageModel}
                     style={customStyles}
@@ -1125,24 +1147,37 @@ function Checkout(props) {
                     closeTimeoutMS={10}
                   >
                     <div className="modal-content">
-                      {console.log("isOpenCancelMassageModel :: ", isOpenCancelMassageModel)}
+                      {console.log(
+                        "isOpenCancelMassageModel :: ",
+                        isOpenCancelMassageModel
+                      )}
                       <div className="orderdetailModelheader modal-header mb-2">
                         {/* <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div> */}
-                        <button type="button" className="close" onClick={closeThankyouModel}>
+                        <button
+                          type="button"
+                          className="close"
+                          onClick={closeThankyouModel}
+                        >
                           <span aria-hidden="true">×</span>
                           <span className="sr-only">Close</span>
                         </button>
                       </div>
                       <div className="modal-body">
                         <div className="orderdetailbody text-center mb-6">
-                          <img className="mb-6" src='images/icons/symbol-christian-cross.png' width='100px' style={{ margin: '0 auto' }} alt="Success" />
+                          <img
+                            className="mb-6"
+                            src="images/icons/symbol-christian-cross.png"
+                            width="100px"
+                            style={{ margin: "0 auto" }}
+                            alt="Success"
+                          />
                           <h2>Please try again later!</h2>
                           <h6>Your transaction was unsuccessful.</h6>
                         </div>
                       </div>
                     </div>
                   </Modal>
-                }
+                )}
               </div>
             </form>
           </div>

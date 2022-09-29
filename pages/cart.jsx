@@ -245,6 +245,7 @@ function Cart(props) {
         />
         <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
       </Helmet>
+
       <PageHeader
         title="Cart"
         subTitle=""
@@ -453,14 +454,16 @@ function Cart(props) {
                         </tr>
                       </tbody>
                     </table>
+
                     <div
-                      class="postpay-widget"
-                      data-type="product"
-                      data-amount="100000"
+                      className="postpay-widget mb-2"
+                      data-type="cart"
+                      data-amount={cartTotal?.total}
                       data-currency="AED"
                       data-num-instalments="3"
                       data-locale="en"
                     ></div>
+
                     <ALink
                       className="btn btn-outline-primary-2 btn-order btn-block"
                       href="/checkout"

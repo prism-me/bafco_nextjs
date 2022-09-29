@@ -3,12 +3,9 @@ import Helmet from "react-helmet";
 import { useStore } from "react-redux";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-
 import { wrapper } from "../store/index.js";
 import Layout from "../components/layout";
-
 import { actions as demoAction } from "../store/demo";
-
 import "~/public/scss/plugins/owl-carousel/owl.carousel.scss";
 import "~/public/scss/style.scss";
 
