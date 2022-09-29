@@ -86,13 +86,13 @@ function Layout({ children, hideQuick, hideVideo }) {
             <MobileMenu categoryData={categoryList} />
 
             <ToastContainer
-                autoClose={3000}
+                autoClose={2000}
                 duration={300}
                 newestOnTo={true}
                 className="toast-container"
                 position="top-right"
-                closeButton={false}
-                hideProgressBar={true}
+                closeButton={true}
+                hideProgressBar={false}
                 newestOnTop={true}
                 draggable={false}
             />

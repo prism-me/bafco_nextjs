@@ -269,12 +269,12 @@ function Cart(props) {
                               {item?.variation[0]?.in_stock === 0 ? (
                                 <div className="product-price d-inline-block mb-0">
                                   <span className="out-price">
-                                    AED {item?.variation[0]?.upper_price}
+                                    AED {item?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                   </span>
                                 </div>
                               ) : (
                                 <div className="product-price d-inline-block mb-0">
-                                  AED {item?.variation[0]?.upper_price}
+                                  AED {item?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </div>
                               )}
                             </td>
@@ -289,7 +289,7 @@ function Cart(props) {
                               ></Qty>
                             </td>
 
-                            <td className="total-col">AED {item?.total}</td>
+                            <td className="total-col">AED {item?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
 
                             <td className="remove-col">
                               <button
@@ -344,14 +344,14 @@ function Cart(props) {
                       <tbody>
                         <tr className="summary-subtotal">
                           <td>Subtotal:</td>
-                          <td>AED {cartTotal?.sub_total}</td>
+                          <td>AED {cartTotal?.sub_total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                           {/* <td>AED {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td> */}
                         </tr>
 
                         {cartTotal?.discounted_price && (
                           <tr className="summary-shipping">
                             <td>Discount:</td>
-                            <td>AED {cartTotal?.discounted_price}</td>
+                            <td>AED {cartTotal?.discounted_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                           </tr>
                         )}
 
@@ -360,7 +360,7 @@ function Cart(props) {
                           <td>
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
-                              : `AED ${cartTotal?.shipping_charges}`}
+                              : `AED ${cartTotal?.shipping_charges?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
 
@@ -401,7 +401,7 @@ function Cart(props) {
 
                         <tr className="summary-total">
                           <td>Total:</td>
-                          <td>AED {cartTotal?.total}</td>
+                          <td>AED {cartTotal?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                           {/* <td>
                                                             AED {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </td> */}

@@ -13,6 +13,7 @@ import "../../../../utils/postpay.js";
 import Tooltip from "react-simple-tooltip";
 // import { css } from "styled-components";
 
+
 function DetailOne(props) {
   const router = useRouter();
   const ref = useRef(null);
@@ -52,7 +53,7 @@ function DetailOne(props) {
       )
     );
 
-    console.log("setVariationTypeGroup :: ", variationTypeGroup);
+    // console.log("setVariationTypeGroup :: ", variationTypeGroup);
 
     setVariationGroup(
       product?.dropDown?.reduce(
@@ -62,7 +63,7 @@ function DetailOne(props) {
       )
     );
 
-    console.log("setVariationGroup :: ", variationGroup);
+    // console.log("setVariationGroup :: ", variationGroup);
 
     let currentProductVariation =
       product?.product_single_variation?.variation_value_details.map((item) => {
@@ -84,7 +85,7 @@ function DetailOne(props) {
 
     setSelectedVariant(currentProductVariation);
 
-    console.log("setSelectedVariant 10 :: ", currentProductVariation);
+    // console.log("setSelectedVariant 10 :: ", currentProductVariation);
 
     let newvaria1 = product?.dropDown?.reduce(
       (acc, curr) =>
@@ -96,14 +97,14 @@ function DetailOne(props) {
 
     let colorsNew1 = currentProductVariation?.find((v) => v.type === "Color");
 
-    console.log("colorsNew1 :: ", colorsNew1);
+    // console.log("colorsNew1 :: ", colorsNew1);
 
-    console.log("variation product :: ", product?.product_all_varitaions);
+    // console.log("variation product :: ", product?.product_all_varitaions);
 
     let newobjecom = product?.product_all_varitaions?.filter(
       (v) => v.product_details.variation_value_details.name == colorsNew1.name
     );
-    console.log(newobjecom, "newobjecom====== 87");
+    // console.log(newobjecom, "newobjecom====== 87");
 
     let newvaria = product?.dropDown?.reduce(
       (acc, curr) =>
@@ -111,7 +112,7 @@ function DetailOne(props) {
       []
     );
 
-    console.log("newvaria :: ", newvaria);
+    // console.log("newvaria :: ", newvaria);
     let newarray = [];
     let colorObj = {};
 
@@ -143,7 +144,7 @@ function DetailOne(props) {
       newarray.unshift(colorObj);
     }
 
-    console.log("newarray :: 83 ", newarray);
+    // console.log("newarray :: 83 ", newarray);
 
     // console.log("colorGroup :: ", colorGroup);
 
@@ -167,7 +168,7 @@ function DetailOne(props) {
     }, 0);
     setvariantCombGroup(comb);
 
-    console.log("setvariantCombGroup :: ", variantCombGroup);
+    // console.log("setvariantCombGroup :: ", variantCombGroup);
   }, [product]);
 
   useEffect(() => {
@@ -236,9 +237,9 @@ function DetailOne(props) {
 
     // const storeitemId = e.target.value;
 
-    console.log("item :: ", item);
-    console.log("e.target.value :: ", e.target.value);
-    console.log("e.target.value selectedVariant :: ", selectedVariant);
+    // console.log("item :: ", item);
+    // console.log("e.target.value :: ", e.target.value);
+    // console.log("e.target.value selectedVariant :: ", selectedVariant);
 
     if (!e.target.value) {
       const newState = selectedVariant.map((obj) => {
@@ -283,10 +284,10 @@ function DetailOne(props) {
 
       const found = item?.find((v) => v.id == e.target.value);
 
-      console.log("found :: ", found);
+      // console.log("found :: ", found);
 
       if (selectedVariant.find((v) => v.type == found.variant.name)) {
-        console.log("selected");
+        // console.log("selected");
       } else {
         selectedVariant.push({
           name: found.name,
@@ -296,7 +297,7 @@ function DetailOne(props) {
         });
       }
 
-      console.log("selected :: ", selectedVariant);
+      // console.log("selected :: ", selectedVariant);
 
       const newState = selectedVariant.map((obj) => {
         if (obj.type === found.variant.name) {
@@ -362,7 +363,7 @@ function DetailOne(props) {
                 {" "}
                 {
                   product?.product_single_variation?.product_variation_details
-                    ?.upper_price
+                    ?.upper_price?.toString().replace(/\B(?=(\d{2})+(?!\d))/g, ",")
                 }
               </span>
             ) : (
@@ -370,7 +371,7 @@ function DetailOne(props) {
                 {" "}
                 {
                   product?.product_single_variation?.product_variation_details
-                    ?.lower_price
+                    ?.lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
               </span>
             )}
@@ -382,7 +383,7 @@ function DetailOne(props) {
           AED{" "}
           {
             product?.product_single_variation?.product_variation_details
-              ?.upper_price
+              ?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           }
         </div>
       ) : (
@@ -390,7 +391,7 @@ function DetailOne(props) {
           AED{" "}
           {
             product?.product_single_variation?.product_variation_details
-              ?.lower_price
+              ?.lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           }
         </div>
       )}
@@ -616,15 +617,15 @@ function DetailOne(props) {
           )}
           {product?.product_single_variation?.product_variation_details
             ?.lead_img && (
-            <li>
-              <img
-                src={
-                  product?.product_single_variation?.product_variation_details
-                    ?.lead_img
-                }
-              />
-            </li>
-          )}
+              <li>
+                <img
+                  src={
+                    product?.product_single_variation?.product_variation_details
+                      ?.lead_img
+                  }
+                />
+              </li>
+            )}
         </ul>
       </div>
       <div className="sticky-bar d-none">

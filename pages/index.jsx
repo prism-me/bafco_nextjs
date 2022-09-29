@@ -1265,8 +1265,8 @@ function Home(props) {
                                                         </h3>
 
                                                         <div className="product-price">
-                                                            <span className="new-price">{item.new_price}</span>
-                                                            <span className="old-price">{item.old_price}</span>
+                                                            <span className="new-price">{item?.new_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                                            <span className="old-price">{item?.old_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                                         </div>
 
                                                         <div className="deal-countdown">

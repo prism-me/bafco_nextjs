@@ -112,7 +112,7 @@ function ProductInner() {
       (photoIndex +
         product?.single_product_details?.product?.album.length -
         1) %
-        product?.single_product_details?.product?.album.length
+      product?.single_product_details?.product?.album.length
     );
   }
 
@@ -134,13 +134,13 @@ function ProductInner() {
 
   return (
     <div className="main">
-      {/* <PageHeader
-                title={pageTitle}
-                subTitle="We make happy workplaces"
-                backgroundImage="images/banners/cat_banner.png"
-                buttonText="Discover More"
-                buttonUrl="#"
-            /> */}
+      <PageHeader
+        title={product?.single_product_details?.product?.name}
+        subTitle=""
+        backgroundImage={product?.single_product_details?.product?.banner_img !== "" && product?.single_product_details?.product?.banner_img !== null ? product?.single_product_details?.product?.banner_img : `images/banners/cat_banner.png`}
+        buttonText=""
+        buttonUrl="#"
+      />
       <nav className="breadcrumb-nav mb-6">
         <div className="container">
           <ol className="breadcrumb">
@@ -245,7 +245,7 @@ function ProductInner() {
                   nextSrc={
                     product?.single_product_details?.product?.album[
                       (photoIndex + 1) %
-                        product?.single_product_details?.product?.album?.length
+                      product?.single_product_details?.product?.album?.length
                     ].avatar
                   }
                   prevSrc={
@@ -254,7 +254,7 @@ function ProductInner() {
                         product?.single_product_details?.product?.album
                           ?.length -
                         1) %
-                        product?.single_product_details?.product?.album?.length
+                      product?.single_product_details?.product?.album?.length
                     ].avatar
                   }
                   onCloseRequest={closeLightBox}

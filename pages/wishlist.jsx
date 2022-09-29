@@ -116,10 +116,10 @@ function Wishlist(props) {
                                         <td className="price-col">
                                             {product?.variation[0]?.in_stock === 0 ?
                                                 <div className="product-price d-inline-block mb-0">
-                                                    <span className="out-price">AED {product?.variation[0]?.upper_price}</span>
+                                                    <span className="out-price">AED {product?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                                 </div>
                                                 :
-                                                <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.upper_price}</div>
+                                                <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                                             }
                                         </td>
                                         <td className="stock-col">

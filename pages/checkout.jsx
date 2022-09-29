@@ -1012,19 +1012,19 @@ function Checkout(props) {
                             </td>
                             <td className="total-col">
                               <div className="product">
-                                <p>AED {item?.total}</p>
+                                <p>AED {item?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                               </div>
                             </td>
                           </tr>
                         ))}
                         <tr className="summary-subtotal">
                           <td>Subtotal:</td>
-                          <td>{cartTotal?.sub_total}</td>
+                          <td>{cartTotal?.sub_total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                         </tr>
                         {cartTotal?.discounted_price && (
                           <tr className="summary-shipping">
                             <td>Discount:</td>
-                            <td>AED {cartTotal?.discounted_price}</td>
+                            <td>AED {cartTotal?.discounted_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                           </tr>
                         )}
                         <tr>
@@ -1032,12 +1032,12 @@ function Checkout(props) {
                           <td>
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
-                              : `AED ${cartTotal?.shipping_charges}`}
+                              : `AED ${cartTotal?.shipping_charges?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
                         <tr className="summary-total">
                           <td>Total:</td>
-                          <td>AED {cartTotal?.total}</td>
+                          <td>AED {cartTotal?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                         </tr>
                       </tbody>
                     </table>

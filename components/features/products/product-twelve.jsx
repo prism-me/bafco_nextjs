@@ -139,10 +139,10 @@ function ProductTwelve(props) {
 
                 {!product?.productvariations?.in_stock || product?.productvariations?.in_stock === 0 ?
                     <div className="product-price">
-                        <span className="out-price">AED {product?.productvariations?.upper_price}</span>
+                        <span className="out-price">AED {product?.productvariations?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                     </div>
                     :
-                    <div className="product-price">AED {product?.productvariations?.upper_price}</div>
+                    <div className="product-price">AED {product?.productvariations?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                 }
 
                 {product?.variants?.length > 0 ?
