@@ -8,8 +8,6 @@ import { actions as globalAction } from "~/store/global";
 import { actions as wishlistAction } from "~/store/wishlist";
 import { actions as cartAction } from "~/store/cart";
 import { canAddToCart, isInWishlist } from "~/utils";
-// import "../../../../../utils/postpay.js";
-// import "../../../../utils/postpay";
 
 function DetailOne(props) {
   const router = useRouter();
@@ -317,15 +315,6 @@ function DetailOne(props) {
               ?.description,
         }}
       />
-
-      {/* <div
-                class="postpay-widget"
-                data-type="product"
-                data-amount="100000"
-                data-currency="AED"
-                data-num-instalments="3"
-                data-locale="en"
-            ></div> */}
 
       <div className="row">
         {variationTypeGroup !== null &&

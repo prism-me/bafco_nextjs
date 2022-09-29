@@ -8,10 +8,8 @@ import { actions as globalAction } from "~/store/global";
 import { actions as wishlistAction } from "~/store/wishlist";
 import { actions as cartAction } from "~/store/cart";
 import { canAddToCart, isInWishlist } from "~/utils";
-// import "../../../../../utils/postpay.js";
-import "../../../../utils/postpay.js";
 import Tooltip from "react-simple-tooltip";
-// import { css } from "styled-components";
+import Helmet from "react-helmet";
 
 function DetailOne(props) {
   const router = useRouter();
@@ -340,6 +338,23 @@ function DetailOne(props) {
 
   return (
     <div className="product-details" ref={ref}>
+      <Helmet>
+        <script
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.postpayAsyncInit = function()
+            {postpay.init({
+              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+              sandbox: true,
+              theme: "light",
+              locale: "en",
+            })}
+            `,
+          }}
+        />
+        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+      </Helmet>
       <h1 className="product-title">
         {product?.single_product_details?.product?.name}
       </h1>
@@ -378,21 +393,47 @@ function DetailOne(props) {
         </div>
       ) : product?.product_single_variation?.product_variation_details?.limit >=
         qty ? (
-        <div className="product-price">
-          AED{" "}
-          {
-            product?.product_single_variation?.product_variation_details
-              ?.upper_price
-          }
-        </div>
+        <>
+          <div className="product-price">
+            AED{" "}
+            {
+              product?.product_single_variation?.product_variation_details
+                ?.upper_price
+            }
+          </div>
+          <div
+            className="postpay-widget mb-1"
+            data-type="product"
+            data-amount={
+              product?.product_single_variation?.product_variation_details
+                ?.upper_price
+            }
+            data-currency="AED"
+            data-num-instalments="3"
+            data-locale="en"
+          ></div>
+        </>
       ) : (
-        <div className="product-price">
-          AED{" "}
-          {
-            product?.product_single_variation?.product_variation_details
-              ?.lower_price
-          }
-        </div>
+        <>
+          <div className="product-price">
+            AED{" "}
+            {
+              product?.product_single_variation?.product_variation_details
+                ?.lower_price
+            }
+          </div>
+          <div
+            className="postpay-widget mb-1"
+            data-type="product"
+            data-amount={
+              product?.product_single_variation?.product_variation_details
+                ?.lower_price
+            }
+            data-currency="AED"
+            data-num-instalments="3"
+            data-locale="en"
+          ></div>
+        </>
       )}
 
       <div
@@ -403,15 +444,6 @@ function DetailOne(props) {
               ?.description,
         }}
       />
-
-      <div
-        class="postpay-widget"
-        data-type="product"
-        data-amount="100000"
-        data-currency="AED"
-        data-num-instalments="3"
-        data-locale="en"
-      ></div>
 
       {/* <div className="row">
         {variationTypeGroup !== null &&
@@ -510,14 +542,23 @@ function DetailOne(props) {
                     style={{ display: "block" }}
                   >
                     {item?.arrs?.map((item2, index2) => (
-                      <Tooltip className="stocking_massage" content={item2?.name}>
+                      <Tooltip
+                        className="stocking_massage"
+                        content={item2?.name}
+                      >
                         <span
-                          className={`${(item2?.id == selectedVariant[index + 1]?.variation_value_id ? 'active ' : '') + (item2?.disabled ? 'disabled' : '')}`}
-                          style={{ backgroundImage: `url(${item2?.type_value})` }}
+                          className={`${
+                            (item2?.id ==
+                            selectedVariant[index + 1]?.variation_value_id
+                              ? "active "
+                              : "") + (item2?.disabled ? "disabled" : "")
+                          }`}
+                          style={{
+                            backgroundImage: `url(${item2?.type_value})`,
+                          }}
                           key={index2}
                           onClick={(e) => handelSelectVariantChange(e, item2)}
-                        >
-                        </span>
+                        ></span>
                       </Tooltip>
                     ))}
                   </div>
@@ -546,13 +587,17 @@ function DetailOne(props) {
         </div>
       )} */}
 
-      {product?.product_single_variation?.product_variation_details?.in_stock === 0 &&
-
-        // <Tooltip className="stocking_massage" content="Available to ship in 6-8 weeks.">
-        <p style={{ fontSize: '16px' }}>Available to ship in <span style={{ fontWeight: 'bold' }}>6-8 weeks</span>.</p>
+      {
+        product?.product_single_variation?.product_variation_details
+          ?.in_stock === 0 && (
+          // <Tooltip className="stocking_massage" content="Available to ship in 6-8 weeks.">
+          <p style={{ fontSize: "16px" }}>
+            Available to ship in{" "}
+            <span style={{ fontWeight: "bold" }}>6-8 weeks</span>.
+          </p>
+        )
         // </Tooltip>
       }
-
 
       <div className="product-details-action">
         {/* <a
@@ -564,6 +609,7 @@ function DetailOne(props) {
         >
           <span>add to cart</span>
         </a> */}
+
         <a
           href="#"
           className={`btn-product btn-cart`}
@@ -571,6 +617,7 @@ function DetailOne(props) {
         >
           <span>add to cart</span>
         </a>
+
         <div className="details-action-wrapper">
           {isInWishlist(wishlist, product) ? (
             <ALink
@@ -601,7 +648,6 @@ function DetailOne(props) {
           <span>Type : </span>
           <span style={{ textTransform: "capitalize" }}>{subCategory}</span>
         </div>
-
       </div>
       <div className="product-details-adv">
         <ul>
