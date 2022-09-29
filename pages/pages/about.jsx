@@ -20,16 +20,6 @@ function About() {
             setPartnersList(response?.data?.partner)
         }).catch((err) => console.log(err));
 
-        // axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/about?lang=en').then(function (response) {
-        //     // handle success
-        //     setAboutdata(response.data?.about?.content)
-        //     setTeamList(response?.data?.team)
-        //     setPartnersList(response?.data?.partner)
-        // }).catch(function (error) {
-        //     // handle error
-        //     console.log(error);
-        // })
-
     }, []);
 
     return (
@@ -38,7 +28,7 @@ function About() {
                 title={aboutdata?.banner?.heading}
                 subTitle={aboutdata?.banner?.sub_heading}
                 backgroundImage={aboutdata?.banner?.image}
-                buttonText="Shop Now"
+                buttonText=""
                 buttonUrl="#"
             />
 

@@ -5,7 +5,7 @@ import PageHeader from "~/components/features/page-header";
 import { toast } from "react-toastify";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 import Files from "react-files";
-
+import { API } from "~/http/API"
 const axios = require("axios");
 
 const MapComponent = ({ text }) => <div>{text}</div>;
@@ -26,16 +26,11 @@ function Contact() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/contact-us")
-      .then(function (response) {
-        // handle success
-        setContactusdata(response.data.content);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+
+    API.get(`/contact-us`).then((response) => {
+      setContactusdata(response.data.content);
+    }).catch((err) => console.log(err));
+
   }, []);
 
   const handleInit = (e) => {
@@ -66,20 +61,17 @@ function Contact() {
     } else {
       console.log("updatedData :: ", updatedData);
       setLoading(true);
-      axios
-        .post(
-          "https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/form-submit",
-          updatedData
-        )
-        .then(function (response) {
-          setLoading(false);
-          toast.success(response?.data);
-          setcontactFormData({ ...contactFormData });
-        })
-        .catch(function (error) {
-          setLoading(false);
-          console.log(error);
-        });
+
+      API.post(`/form-submit`, updatedData).then((response) => {
+        setLoading(false);
+        toast.success(response?.data);
+        setcontactFormData({ ...contactFormData });
+      }).catch((err) => {
+        console.log(err);
+        setLoading(false);
+        toast.error("Something went wrong!");
+      });
+
     }
   };
 
@@ -92,7 +84,6 @@ function Contact() {
     let formdata = { ...contactFormData };
     formdata.attachment = files;
     setcontactFormData(formdata);
-    console.log("formdata :: ", formdata);
   };
 
   return (

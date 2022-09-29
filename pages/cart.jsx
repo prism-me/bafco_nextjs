@@ -8,7 +8,8 @@ import PageHeader from "~/components/features/page-header";
 import { actions as cartAction } from "~/store/cart";
 import { cartPriceTotal } from "~/utils/index";
 import { API } from "~/http/API";
-import { Head } from "next/document";
+import Helmet from "react-helmet";
+import { toast } from "react-toastify";
 
 function Cart(props) {
   const [cartList, setCartList] = useState([]);
@@ -119,6 +120,10 @@ function Cart(props) {
 
     let authtoken = localStorage.getItem("authtoken");
 
+    let UserDetail = localStorage.getItem("UserData");
+
+    let GuestUserDetail = localStorage.getItem("GuestUserData");
+
     let newCart = [];
 
     cartList.map((acc) => {
@@ -132,11 +137,45 @@ function Cart(props) {
         headers: { Authorization: `Bearer ${authtoken}` },
       })
         .then((response) => {
+          console.log("response Update Cart :: ", response.status);
+          setCartTotal(response?.data?.original?.original);
+          toast.success("Cart Updated Successfully!");
+          if (response?.status === 200) {
+            API.get(`/auth/cart/${UserDetail}`, {
+              headers: {
+                Authorization: `Bearer ${authtoken}`,
+              },
+            })
+              .then((res) => {
+                setCartList(res?.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      API.post(`/guest-update-cart`, newCart)
+        .then((response) => {
           // console.log(
           //   "response Update Cart :: ",
           //   response?.data?.original?.original
           // );
           setCartTotal(response?.data?.original?.original);
+          toast.success("Cart Updated Successfully!");
+          if (response.status === 200) {
+            API.get(`/guest-cart/${GuestUserDetail}`)
+              .then((response) => {
+                setCartList(response?.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -189,18 +228,24 @@ function Cart(props) {
 
   return (
     <div className="main">
-      {/* <Head>
-        <script type="text/javascript">
-          window.postpayAsyncInit = function()
-          {postpay.init({
-            merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-            sandbox: true,
-            theme: "light",
-            locale: "en",
-          })}
-        </script>
+      <Helmet>
+        <script
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.postpayAsyncInit = function()
+            {postpay.init({
+              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+              sandbox: true,
+              theme: "light",
+              locale: "en",
+            })}
+            `,
+          }}
+        />
         <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-      </Head> */}
+      </Helmet>
+
       <PageHeader
         title="Cart"
         subTitle=""
@@ -218,6 +263,7 @@ function Cart(props) {
           </ol>
         </div>
       </nav>
+
       <div className="page-content pb-5">
         <div className="cart">
           <div className="container">
@@ -410,9 +456,9 @@ function Cart(props) {
                     </table>
 
                     <div
-                      class="postpay-widget"
-                      data-type="product"
-                      data-amount="100000"
+                      className="postpay-widget mb-2"
+                      data-type="cart"
+                      data-amount={cartTotal?.total}
                       data-currency="AED"
                       data-num-instalments="3"
                       data-locale="en"

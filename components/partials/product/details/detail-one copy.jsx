@@ -8,8 +8,6 @@ import { actions as globalAction } from "~/store/global";
 import { actions as wishlistAction } from "~/store/wishlist";
 import { actions as cartAction } from "~/store/cart";
 import { canAddToCart, isInWishlist } from "~/utils";
-// import "../../../../../utils/postpay.js";
-// import "../../../../utils/postpay";
 
 function DetailOne(props) {
   const router = useRouter();
@@ -318,15 +316,6 @@ function DetailOne(props) {
         }}
       />
 
-      {/* <div
-                class="postpay-widget"
-                data-type="product"
-                data-amount="100000"
-                data-currency="AED"
-                data-num-instalments="3"
-                data-locale="en"
-            ></div> */}
-
       <div className="row">
         {variationTypeGroup !== null &&
           variationTypeGroup?.map((item, index) => (
@@ -368,16 +357,17 @@ function DetailOne(props) {
                             variationGroup.map(
                               (item2, index2) =>
                                 variantcom[item2?.variant?.name] ===
-                                item2.name &&
+                                  item2.name &&
                                 item?.variant?.name ===
-                                item2?.variant?.name && (
+                                  item2?.variant?.name && (
                                   <span
-                                    className={`${(item2?.id ==
-                                        selectedVariant[index]?.variation_value_id
+                                    className={`${
+                                      (item2?.id ==
+                                      selectedVariant[index]?.variation_value_id
                                         ? "active "
                                         : "") +
                                       (item2?.disabled ? "disabled" : "")
-                                      }`}
+                                    }`}
                                     style={{
                                       backgroundImage: `url(${item2?.type_value})`,
                                     }}
@@ -419,11 +409,12 @@ function DetailOne(props) {
       <div className="product-details-action">
         <a
           href="#"
-          className={`btn-product btn-cart ${product?.product_single_variation?.product_variation_details
+          className={`btn-product btn-cart ${
+            product?.product_single_variation?.product_variation_details
               ?.in_stock !== 1
               ? "btn-disabled"
               : ""
-            }`}
+          }`}
           onClick={(e) => onCartClick(e, 0)}
         >
           <span>add to cart</span>
@@ -479,15 +470,15 @@ function DetailOne(props) {
           )}
           {product?.product_single_variation?.product_variation_details
             ?.lead_img && (
-              <li>
-                <img
-                  src={
-                    product?.product_single_variation?.product_variation_details
-                      ?.lead_img
-                  }
-                />
-              </li>
-            )}
+            <li>
+              <img
+                src={
+                  product?.product_single_variation?.product_variation_details
+                    ?.lead_img
+                }
+              />
+            </li>
+          )}
         </ul>
       </div>
       <div className="sticky-bar d-none">

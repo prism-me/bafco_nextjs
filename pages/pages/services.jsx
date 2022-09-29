@@ -4,8 +4,7 @@ import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
 import OwlCarousel from '~/components/features/owl-carousel';
 import { mainSlider5 } from '~/utils/data';
-
-const axios = require('axios');
+import { API } from '~/http/API';
 
 function Services() {
 
@@ -14,13 +13,10 @@ function Services() {
 
     useEffect(() => {
 
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/services').then(function (response) {
-            console.log(response.data)
+        API.get(`/services`).then((response) => {
             setServicesData(response.data.services.content)
             setTestimonial(response.data.testimonial)
-        }).catch(function (error) {
-            console.log(error);
-        })
+        }).catch((err) => console.log(err));
 
     }, [])
 
@@ -30,7 +26,7 @@ function Services() {
                 title={servicesData?.banner?.heading}
                 subTitle={servicesData?.banner?.sub_heading}
                 backgroundImage={servicesData?.banner?.image}
-                buttonText="Shop Now"
+                buttonText=""
                 buttonUrl="#"
             />
 

@@ -1,21 +1,15 @@
 import { useRouter } from "next/router";
-import { useQuery } from "@apollo/react-hooks";
 import React, { useState, useEffect } from "react";
-import PageHeader from "~/components/features/page-header";
-import Breadcrumb from "~/components/partials/product/breadcrumb";
 import GalleryDefault from "~/components/partials/product/gallery/gallery-default";
 import DetailOne from "~/components/partials/product/details/detail-one";
 import InfoOne from "~/components/partials/product/info-tabs/info-one";
 import RelatedProductsOne from "~/components/partials/product/related/related-one";
 import { mainSlider9 } from "~/utils/data";
-import { Magnifier } from "react-image-magnifiers";
 import OwlCarousel from "~/components/features/owl-carousel";
-import { GET_PRODUCT } from "~/server/queries";
-import withApollo from "~/server/apollo";
 import ALink from "~/components/features/alink";
 import { API } from "~/http/API";
 import LightBox from "react-image-lightbox";
-import "../../../../../utils/postpay.js";
+import PageHeader from '~/components/features/page-header';
 
 function ProductInner() {
   const router = useRouter();
@@ -164,14 +158,15 @@ function ProductInner() {
         </div>
       </nav>
 
-      <div
+      {/* <div
         className="postpay-widget"
         data-type="product"
         data-amount="100000"
         data-currency="AED"
         data-num-instalments="3"
         data-locale="en"
-      ></div>
+      ></div> */}
+
       <div className="page-content">
         <div className="container skeleton-body">
           <div className="product-details-top">
@@ -287,4 +282,3 @@ function ProductInner() {
 }
 
 export default ProductInner;
-// export default withApollo({ ssr: typeof window == "undefined" })(ProductInner);

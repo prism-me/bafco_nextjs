@@ -1067,7 +1067,7 @@ function Home(props) {
                                     <div className="icon-box-content">
                                         <h3 className="icon-box-title">{homedata?.contact[1]?.text}</h3>
 
-                                        <p><a href={`https://wa.me/${homedata?.contact[1]?.value}`} style={{ color: '#fff' }}>{homedata?.contact[1]?.value}</a></p>
+                                        <p><a href={`https://wa.me/${homedata?.contact[1]?.value?.replace(/\s+/g, '')}`} style={{ color: '#fff' }}>{homedata?.contact[1]?.value}</a></p>
                                     </div>
                                 </div>
                             </Reveal>

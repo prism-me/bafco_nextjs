@@ -74,7 +74,7 @@ function Resources(props) {
         title={resourcesdata?.banner?.heading}
         subTitle={resourcesdata?.banner?.sub_heading}
         backgroundImage={resourcesdata?.banner?.image}
-        buttonText="Shop Now"
+        buttonText=""
         buttonUrl="#"
       />
 
