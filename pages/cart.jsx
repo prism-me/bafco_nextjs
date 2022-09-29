@@ -267,7 +267,7 @@ function Cart(props) {
       <div className="page-content pb-5">
         <div className="cart">
           <div className="container">
-            {cartList.length > 0 ? (
+            {cartList?.length > 0 ? (
               <div className="row">
                 <div className="col-lg-9">
                   <table className="table table-cart table-mobile">
@@ -282,8 +282,8 @@ function Cart(props) {
                     </thead>
 
                     <tbody>
-                      {cartList.length > 0 ? (
-                        cartList.map((item, index) => (
+                      {cartList?.length > 0 ? (
+                        cartList?.map((item, index) => (
                           <tr key={index}>
                             <td className="product-col">
                               <div className="product">
@@ -312,17 +312,17 @@ function Cart(props) {
                             </td>
 
                             <td className="price-col">
-                              {item?.variation[0]?.in_stock === 0 ? (
+                              {/* {item?.variation[0]?.in_stock === 0 ? (
                                 <div className="product-price d-inline-block mb-0">
                                   <span className="out-price">
                                     AED {item?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                   </span>
                                 </div>
-                              ) : (
+                              ) : ( */}
                                 <div className="product-price d-inline-block mb-0">
                                   AED {item?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </div>
-                              )}
+                              {/* )} */}
                             </td>
 
                             <td className="quantity-col">
