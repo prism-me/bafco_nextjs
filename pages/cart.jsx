@@ -132,7 +132,11 @@ function Cart(props) {
         headers: { Authorization: `Bearer ${authtoken}` },
       })
         .then((response) => {
-          console.log("response :: ", response);
+          // console.log(
+          //   "response Update Cart :: ",
+          //   response?.data?.original?.original
+          // );
+          setCartTotal(response?.data?.original?.original);
         })
         .catch((err) => {
           console.log(err);

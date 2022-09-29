@@ -23,7 +23,6 @@ function HeaderSearch() {
     if (searchTerm?.length > 2) setLoading(true);
     API.get(`/search?query=${searchTerm}`)
       .then((response) => {
-        console.log(response.data);
         if (response.status === 200 || response.status === 201) {
           setLoading(false);
           setProducts(response?.data);
