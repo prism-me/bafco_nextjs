@@ -9,6 +9,7 @@ import { actions as cartAction } from "~/store/cart";
 import { cartPriceTotal } from "~/utils/index";
 import { API } from "~/http/API";
 import { Head } from "next/document";
+import { toast } from "react-toastify";
 
 function Cart(props) {
   const [cartList, setCartList] = useState([]);
@@ -119,6 +120,10 @@ function Cart(props) {
 
     let authtoken = localStorage.getItem("authtoken");
 
+    let UserDetail = localStorage.getItem("UserData");
+
+    let GuestUserDetail = localStorage.getItem("GuestUserData");
+
     let newCart = [];
 
     cartList.map((acc) => {
@@ -132,11 +137,45 @@ function Cart(props) {
         headers: { Authorization: `Bearer ${authtoken}` },
       })
         .then((response) => {
+          console.log("response Update Cart :: ", response.status);
+          setCartTotal(response?.data?.original?.original);
+          toast.success("Cart Updated Successfully!");
+          if (response?.status === 200) {
+            API.get(`/auth/cart/${UserDetail}`, {
+              headers: {
+                Authorization: `Bearer ${authtoken}`,
+              },
+            })
+              .then((res) => {
+                setCartList(res?.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      API.post(`/guest-update-cart`, newCart)
+        .then((response) => {
           // console.log(
           //   "response Update Cart :: ",
           //   response?.data?.original?.original
           // );
           setCartTotal(response?.data?.original?.original);
+          toast.success("Cart Updated Successfully!");
+          if (response.status === 200) {
+            API.get(`/guest-cart/${GuestUserDetail}`)
+              .then((response) => {
+                setCartList(response?.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         })
         .catch((err) => {
           console.log(err);
