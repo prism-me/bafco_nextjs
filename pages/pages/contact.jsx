@@ -5,7 +5,7 @@ import PageHeader from "~/components/features/page-header";
 import { toast } from "react-toastify";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 import Files from "react-files";
-import { API } from "~/http/API"
+import { API } from "~/http/API";
 const axios = require("axios");
 
 const MapComponent = ({ text }) => <div>{text}</div>;
@@ -25,17 +25,36 @@ function Contact() {
   const [contactFormData, setcontactFormData] = useState({ ...contactForm });
   const [loading, setLoading] = useState(false);
 
+  const [selectedFile, setSelectedFile] = useState();
+  const [isSelected, setIsSelected] = useState(false);
+  const [invalidImage, setInvalidImage] = useState({ msg: "" });
+
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setIsSelected(true);
+  };
+
   useEffect(() => {
-
-    API.get(`/contact-us`).then((response) => {
-      setContactusdata(response.data.content);
-    }).catch((err) => console.log(err));
-
+    API.get(`/contact-us`)
+      .then((response) => {
+        setContactusdata(response.data.content);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const handleInit = (e) => {
     let formdata = { ...contactFormData };
     formdata[e.target.name] = e.target.value;
+    setcontactFormData(formdata);
+  };
+
+  const onFilesError = (error, file) => {
+    console.log("error code " + error.code + ": " + error.message);
+  };
+
+  const onFilesChange = (files) => {
+    let formdata = { ...contactFormData };
+    formdata.attachment = files[0].name;
     setcontactFormData(formdata);
   };
 
@@ -59,31 +78,32 @@ function Contact() {
     } else if (updatedData.subject === "") {
       toast.success("Please enter your Subject");
     } else {
-      console.log("updatedData :: ", updatedData);
       setLoading(true);
 
-      API.post(`/form-submit`, updatedData).then((response) => {
-        setLoading(false);
-        toast.success(response?.data);
-        setcontactFormData({ ...contactFormData });
-      }).catch((err) => {
-        console.log(err);
-        setLoading(false);
-        toast.error("Something went wrong!");
-      });
+      if (!selectedFile) {
+        setInvalidImage({ ...invalidImage, msg: "Please select image." });
+      }
 
+      const formContactData = new FormData();
+      formContactData.append("image", selectedFile);
+      formContactData.append("contactData[]", JSON.stringify(updatedData));
+
+      API.post(`/form-submit`, formContactData, {
+        headers: {
+          "Content-Type": `multipart/form-data; boundary=${formContactData._boundary}`,
+        },
+      })
+        .then((response) => {
+          setLoading(false);
+          toast.success(response?.data);
+          setcontactFormData({ ...contactFormData });
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+          toast.error("Something went wrong!");
+        });
     }
-  };
-
-  const onFilesError = (error, file) => {
-    console.log("error code " + error.code + ": " + error.message);
-  };
-
-  const onFilesChange = (files) => {
-    console.log(files);
-    let formdata = { ...contactFormData };
-    formdata.attachment = files;
-    setcontactFormData(formdata);
   };
 
   return (
@@ -234,7 +254,7 @@ function Contact() {
                   onChange={handleInit}
                 ></textarea>
 
-                <div className="files mb-3">
+                {/* <div className="files mb-3">
                   <Files
                     className="files-dropzone"
                     onChange={onFilesChange}
@@ -248,6 +268,43 @@ function Contact() {
                     <img src="images/icons/Uploadsvg.png" />
                     Drop files here or click to upload
                   </Files>
+                </div> */}
+
+                <div className="files mb-0 p-2">
+                  <input
+                    type="file"
+                    // accept="image/*,.pdf"
+                    style={{ display: "none" }}
+                    id="contained-button-file"
+                    onChange={changeHandler}
+                  />
+                  <label htmlFor="contained-button-file">
+                    <span
+                      className="btn"
+                      style={{
+                        background: "transparent",
+                        color: "#666",
+                        boxShadow: "none",
+                        borderRadius: "0",
+                        padding: "0",
+                      }}
+                    >
+                      <img src="images/icons/Uploadsvg.png" className="mr-3" />{" "}
+                      Drop files here or click to upload
+                    </span>
+                  </label>
+                  {isSelected ? (
+                    <div>
+                      <p>{selectedFile.name}</p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {!isSelected && (
+                    <p className="text-danger">
+                      <small>{invalidImage.msg}</small>
+                    </p>
+                  )}
                 </div>
 
                 <div className="text-center">
