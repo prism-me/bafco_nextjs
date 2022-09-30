@@ -286,7 +286,6 @@ function DetailOne(props) {
       } else {
         setVariationPopupeOpen(true);
       }
-
     } else {
       // console.log(
       //   "item :: :: ",
@@ -347,7 +346,6 @@ function DetailOne(props) {
       } else {
         setVariationPopupeOpen(true);
       }
-
     }
   }
 
@@ -395,7 +393,10 @@ function DetailOne(props) {
 
         <div className="ratings-container">
           <div className="ratings">
-            <div className="ratings-val" style={{ width: 3.4 * 20 + "%" }}></div>
+            <div
+              className="ratings-val"
+              style={{ width: 3.4 * 20 + "%" }}
+            ></div>
             <span className="tooltip-text">{3.4}</span>
           </div>
           <span className="ratings-text">( {3.4} Reviews )</span>
@@ -410,17 +411,16 @@ function DetailOne(props) {
                 <>
                   <span>
                     AED{" "}
-                    {
-                      product?.product_single_variation?.product_variation_details
-                        ?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
+                    {product?.product_single_variation?.product_variation_details?.upper_price
+                      ?.toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
                   <div
                     className="postpay-widget mb-1"
                     data-type="product"
                     data-amount={
-                      product?.product_single_variation?.product_variation_details
-                        ?.upper_price
+                      product?.product_single_variation
+                        ?.product_variation_details?.upper_price
                     }
                     data-currency="AED"
                     data-num-instalments="3"
@@ -431,17 +431,16 @@ function DetailOne(props) {
                 <>
                   <span>
                     AED{" "}
-                    {
-                      product?.product_single_variation?.product_variation_details
-                        ?.lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
+                    {product?.product_single_variation?.product_variation_details?.lower_price
+                      ?.toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
                   <div
                     className="postpay-widget mb-1"
                     data-type="product"
                     data-amount={
-                      product?.product_single_variation?.product_variation_details
-                        ?.upper_price
+                      product?.product_single_variation
+                        ?.product_variation_details?.lower_price
                     }
                     data-currency="AED"
                     data-num-instalments="3"
@@ -451,15 +450,14 @@ function DetailOne(props) {
               )}
             </span>
           </div>
-        ) : product?.product_single_variation?.product_variation_details?.limit >=
-          qty ? (
+        ) : product?.product_single_variation?.product_variation_details
+            ?.limit >= qty ? (
           <>
             <div className="product-price">
               AED{" "}
-              {
-                product?.product_single_variation?.product_variation_details
-                  ?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
+              {product?.product_single_variation?.product_variation_details?.upper_price
+                ?.toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </div>
             <div
               className="postpay-widget mb-1"
@@ -477,10 +475,9 @@ function DetailOne(props) {
           <>
             <div className="product-price">
               AED{" "}
-              {
-                product?.product_single_variation?.product_variation_details
-                  ?.lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
+              {product?.product_single_variation?.product_variation_details?.lower_price
+                ?.toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </div>
             <div
               className="postpay-widget mb-1"
@@ -586,7 +583,9 @@ function DetailOne(props) {
                         name={`${item?.newName}`}
                         className="form-control"
                         value={selectedVariant[index - 1]?.variation_value_id}
-                        onChange={(e) => handelSelectVariantChange(e, item?.arrs)}
+                        onChange={(e) =>
+                          handelSelectVariantChange(e, item?.arrs)
+                        }
                       >
                         <option value="">Select a {item?.newName}</option>
                         {item?.arrs?.map((item2, index2) => (
@@ -597,18 +596,22 @@ function DetailOne(props) {
                       </select>
                     </div>
                   ) : (
-                    <div className="product-nav product-nav-dots" style={{ display: "block" }}>
+                    <div
+                      className="product-nav product-nav-dots"
+                      style={{ display: "block" }}
+                    >
                       {item?.arrs?.map((item2, index2) => (
                         <Tooltip
                           className="stocking_massage"
                           content={item2?.name}
                         >
                           <span
-                            className={`${(item2?.id ==
+                            className={`${
+                              (item2?.id ==
                               selectedVariant[index + 1]?.variation_value_id
-                              ? "active "
-                              : "") + (item2?.disabled ? "disabled" : "")
-                              }`}
+                                ? "active "
+                                : "") + (item2?.disabled ? "disabled" : "")
+                            }`}
                             style={{
                               backgroundImage: `url(${item2?.type_value})`,
                             }}
@@ -718,15 +721,15 @@ function DetailOne(props) {
             )}
             {product?.product_single_variation?.product_variation_details
               ?.lead_img && (
-                <li>
-                  <img
-                    src={
-                      product?.product_single_variation?.product_variation_details
-                        ?.lead_img
-                    }
-                  />
-                </li>
-              )}
+              <li>
+                <img
+                  src={
+                    product?.product_single_variation?.product_variation_details
+                      ?.lead_img
+                  }
+                />
+              </li>
+            )}
           </ul>
         </div>
         <div className="sticky-bar d-none">
@@ -837,8 +840,7 @@ function DetailOne(props) {
             </div>
           </div>
         </Modal>
-      )
-      }
+      )}
     </>
   );
 }
