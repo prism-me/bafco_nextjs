@@ -387,6 +387,7 @@ function Checkout(props) {
         total_amount: cartTotal?.decimal_amount,
         tax_amount: "0",
         currency: "AED",
+        num_instalments: showPostPay1 === true ? 1 : 3,
         // "shipping": {
         //     "id": "shipping-01",
         //     "name": "BAFCO Delivery",
@@ -472,6 +473,7 @@ function Checkout(props) {
         total_amount: cartTotal?.decimal_amount,
         tax_amount: "0",
         currency: "AED",
+        num_instalments: showPostPay1 === true ? 1 : 3,
         // "shipping": {
         //     "id": "shipping-01",
         //     "name": "BAFCO Delivery",
@@ -522,8 +524,7 @@ function Checkout(props) {
         customer: {
           id: 1,
           email: email,
-          name:
-            isShipDifferent === true ? shipping?.name : billing_address?.name,
+          name: isShipDifferent === true ? shipping?.name : billing_address?.name,
         },
         discounts: [
           {
@@ -562,7 +563,7 @@ function Checkout(props) {
   let guestCartTotalPrice = localStorage.getItem("guestCartTotalPrice");
   let cartTotalPrice = localStorage.getItem("cartTotalPrice");
 
-  const [showPostPay1, setShowPostPay1] = useState(false);
+  const [showPostPay1, setShowPostPay1] = useState(true);
 
   const handleClickPay1 = () => {
     setShowPostPay1(true);
@@ -584,11 +585,11 @@ function Checkout(props) {
   return (
     <div className="main">
       {/* {showPostPay1 && ( */}
-        <Helmet>
-          <script
-            data-partytown-config
-            dangerouslySetInnerHTML={{
-              __html: `
+      <Helmet>
+        <script
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
              window.postpayAsyncInit = function()
              {postpay.init({
                merchantId: "id_40ac05065d574a72b8485a6d521626b8",
@@ -597,10 +598,10 @@ function Checkout(props) {
                locale: "en",
              })}
              `,
-            }}
-          />
-          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-        </Helmet>
+          }}
+        />
+        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+      </Helmet>
       {/* )}
       {showPostPay2 && (
         <Helmet>
@@ -1103,7 +1104,7 @@ function Checkout(props) {
                     <div className="paymentmethod">
                       <h4 className="title mb-0">
                         <label onClick={handleClickPay1}>
-                          <input type="radio" name="payment" value="pay1" />{" "}
+                          <input type="radio" name="payment" value="pay1" checked={showPostPay1 === true ? true : false} />{" "}
                           Credit or Debit Card
                         </label>
                       </h4>
