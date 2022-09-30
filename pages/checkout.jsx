@@ -387,6 +387,7 @@ function Checkout(props) {
         total_amount: cartTotal?.decimal_amount,
         tax_amount: "0",
         currency: "AED",
+        num_instalments: showPostPay1 === true ? 1 : 3,
         // "shipping": {
         //     "id": "shipping-01",
         //     "name": "BAFCO Delivery",
@@ -472,6 +473,7 @@ function Checkout(props) {
         total_amount: cartTotal?.decimal_amount,
         tax_amount: "0",
         currency: "AED",
+        num_instalments: showPostPay1 === true ? 1 : 3,
         // "shipping": {
         //     "id": "shipping-01",
         //     "name": "BAFCO Delivery",
@@ -522,8 +524,7 @@ function Checkout(props) {
         customer: {
           id: 1,
           email: email,
-          name:
-            isShipDifferent === true ? shipping?.name : billing_address?.name,
+          name: isShipDifferent === true ? shipping?.name : billing_address?.name,
         },
         discounts: [
           {
@@ -562,7 +563,7 @@ function Checkout(props) {
   let guestCartTotalPrice = localStorage.getItem("guestCartTotalPrice");
   let cartTotalPrice = localStorage.getItem("cartTotalPrice");
 
-  const [showPostPay1, setShowPostPay1] = useState(false);
+  const [showPostPay1, setShowPostPay1] = useState(true);
 
   const handleClickPay1 = () => {
     setShowPostPay1(true);
@@ -1079,8 +1080,8 @@ function Checkout(props) {
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
                               : `AED ${cartTotal?.shipping_charges
-                                  ?.toString()
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
                         <tr className="summary-total">
@@ -1098,44 +1099,41 @@ function Checkout(props) {
                     <div className="paymentmethod">
                       <h4 className="title mb-0">
                         <label onClick={handleClickPay1}>
-                          <input type="radio" name="payment" value="pay1" />{" "}
+                          <input type="radio" name="payment" value="pay1" checked={showPostPay1 === true ? true : false} />{" "}
                           Credit or Debit Card
                         </label>
                       </h4>
 
+                      {console.log("{localStorage.getItem :: ", localStorage.getItem("decimal_amount"))}
+
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget mb-3 ${
-                            showPostPay1 === true ? "active1" : "disable1"
-                          }`}
+                          className={`postpay-widget ${showPostPay1 === true ? 'active1' : 'disable1'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotalPrice}
+                          // data-amount={cartTotal?.decimal_amount}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="1"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget mb-3 ${
-                            showPostPay1 === true ? "active1" : "disable1"
-                          }`}
+                          className={`postpay-widget ${showPostPay1 === true ? 'active1' : 'disable1'}`}
                           data-type="payment-summary"
-                          data-amount={guestCartTotalPrice}
+                          // data-amount={cartTotal?.decimal_amount}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="1"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       )}
                     </div>
                     <div>
                       <h4
-                        className={`title ${
-                          showPostPay2 === true ? "mb-1" : "mb-3"
-                        }`}
+                        className={`title ${showPostPay2 === true ? "mb-1" : "mb-3"
+                          }`}
                       >
                         <label onClick={handleClickPay2}>
                           <input
@@ -1149,28 +1147,22 @@ function Checkout(props) {
                       </h4>
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget mb-3 ${
-                            showPostPay2 === true ? "active2" : "disable2"
-                          }`}
+                          className={`postpay-widget ${showPostPay2 === true ? 'active2' : 'disable2'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotalPrice}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="3"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget mb-3 ${
-                            showPostPay2 === true ? "active2" : "disable2"
-                          }`}
+                          className={`postpay-widget ${showPostPay2 === true ? 'active2' : 'disable2'}`}
                           data-type="payment-summary"
-                          data-amount={guestCartTotalPrice}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="3"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       )}
@@ -1215,10 +1207,6 @@ function Checkout(props) {
                     closeTimeoutMS={10}
                   >
                     <div className="modal-content">
-                      {console.log(
-                        "isOpenThankyouModel :: ",
-                        isOpenThankyouModel
-                      )}
                       <div className="orderdetailModelheader modal-header mb-2">
                         {/* <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div> */}
                         <button
@@ -1259,10 +1247,6 @@ function Checkout(props) {
                     closeTimeoutMS={10}
                   >
                     <div className="modal-content">
-                      {console.log(
-                        "isOpenCancelMassageModel :: ",
-                        isOpenCancelMassageModel
-                      )}
                       <div className="orderdetailModelheader modal-header mb-2">
                         {/* <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div> */}
                         <button

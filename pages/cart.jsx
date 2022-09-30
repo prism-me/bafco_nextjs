@@ -34,6 +34,7 @@ function Cart(props) {
       API.get(`/guest-cart-total/${GuestUserDetail}`)
         .then((response) => {
           setCartTotal(response?.data);
+          localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
         })
         .catch((err) => {
           console.log(err);
@@ -58,6 +59,7 @@ function Cart(props) {
       })
         .then((response) => {
           setCartTotal(response?.data);
+          localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
         })
         .catch((err) => {
           console.log(err);
@@ -137,7 +139,6 @@ function Cart(props) {
         headers: { Authorization: `Bearer ${authtoken}` },
       })
         .then((response) => {
-          console.log("response Update Cart :: ", response.status);
           setCartTotal(response?.data?.original?.original);
           toast.success("Cart Updated Successfully!");
           if (response?.status === 200) {
@@ -228,6 +229,23 @@ function Cart(props) {
 
   return (
     <div className="main">
+      <Helmet>
+        <script
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
+             window.postpayAsyncInit = function()
+             {postpay.init({
+               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+               sandbox: true,
+               theme: "light",
+               locale: "en",
+             })}
+             `,
+          }}
+        />
+        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+      </Helmet>
       <PageHeader
         title="Cart"
         subTitle=""
@@ -301,9 +319,9 @@ function Cart(props) {
                                   </span>
                                 </div>
                               ) : ( */}
-                                <div className="product-price d-inline-block mb-0">
-                                  AED {item?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                </div>
+                              <div className="product-price d-inline-block mb-0">
+                                AED {item?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              </div>
                               {/* )} */}
                             </td>
 
@@ -437,14 +455,13 @@ function Cart(props) {
                       </tbody>
                     </table>
 
-                    {/* <div
-                      className="postpay-widget mb-2"
+                    <div class="postpay-widget"
                       data-type="cart"
-                      data-amount="3000"
+                      data-amount={cartTotal?.total}
                       data-currency="AED"
-                      data-num-instalments="3"
-                      data-locale="en"
-                    ></div> */}
+                      data-num-instalments="1"
+                      data-locale="en">
+                    </div>
 
                     <a
                       className="btn btn-outline-primary-2 btn-order btn-block"

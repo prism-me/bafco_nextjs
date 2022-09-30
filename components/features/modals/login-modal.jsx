@@ -38,6 +38,7 @@ function LoginModal(props) {
   // console.log("VerificationPAge :: ", props)
 
   useEffect(() => {
+    
     setOpen(props.LoginModal);
     return () => {
       if (timer) clearTimeout(timer);
