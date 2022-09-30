@@ -584,7 +584,7 @@ function Checkout(props) {
 
   return (
     <div className="main">
-      {/* {showPostPay1 && ( */}
+
       <Helmet>
         <script
           data-partytown-config
@@ -602,26 +602,6 @@ function Checkout(props) {
         />
         <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
       </Helmet>
-      {/* )}
-      {showPostPay2 && (
-        <Helmet>
-          <script
-            data-partytown-config
-            dangerouslySetInnerHTML={{
-              __html: `
-             window.postpayAsyncInit = function()
-             {postpay.init({
-               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-               sandbox: true,
-               theme: "light",
-               locale: "en",
-             })}
-             `,
-            }}
-          />
-          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-        </Helmet>
-      )} */}
 
       <PageHeader
         title="Checkout"
@@ -1114,7 +1094,7 @@ function Checkout(props) {
                         <div
                           className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotalPrice}
+                          data-amount={cartTotal?.total}
                           data-currency="AED"
                           data-num-instalments="1"
                           data-country="{country}"
@@ -1125,7 +1105,7 @@ function Checkout(props) {
                         <div
                           className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
                           data-type="payment-summary"
-                          data-amount={guestCartTotalPrice}
+                          data-amount={cartTotal?.total}
                           data-currency="AED"
                           data-num-instalments="1"
                           data-country="{country}"
@@ -1154,7 +1134,7 @@ function Checkout(props) {
                         <div
                           className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotalPrice}
+                          data-amount={cartTotal?.total}
                           data-currency="AED"
                           data-num-instalments="3"
                           data-country="{country}"
@@ -1165,7 +1145,7 @@ function Checkout(props) {
                         <div
                           className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
                           data-type="payment-summary"
-                          data-amount={guestCartTotalPrice}
+                          data-amount={cartTotal?.total}
                           data-currency="AED"
                           data-num-instalments="3"
                           data-country="{country}"
