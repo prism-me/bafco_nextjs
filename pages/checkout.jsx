@@ -584,11 +584,11 @@ function Checkout(props) {
   return (
     <div className="main">
       {/* {showPostPay1 && ( */}
-      <Helmet>
-        <script
-          data-partytown-config
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Helmet>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
              window.postpayAsyncInit = function()
              {postpay.init({
                merchantId: "id_40ac05065d574a72b8485a6d521626b8",
@@ -597,12 +597,12 @@ function Checkout(props) {
                locale: "en",
              })}
              `,
-          }}
-        />
-        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-      </Helmet>
-      {/* )} */}
-      {/* {showPostPay2 && (
+            }}
+          />
+          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+        </Helmet>
+      {/* )}
+      {showPostPay2 && (
         <Helmet>
           <script
             data-partytown-config
@@ -1107,33 +1107,33 @@ function Checkout(props) {
                           Credit or Debit Card
                         </label>
                       </h4>
-                      {showPostPay1 && (
-                        <>
-                          {xauthtokenUser !== null ? (
-                            <div
-                              className="postpay-widget mb-3"
-                              data-type="payment-summary"
-                              data-amount={cartTotalPrice}
-                              data-currency="AED"
-                              data-num-instalments="1"
-                              data-country="{country}"
-                              data-hide-if-invalid="{selector}"
-                              data-locale="en"
-                            ></div>
-                          ) : (
-                            <div
-                              className="postpay-widget mb-3"
-                              data-type="payment-summary"
-                              data-amount={guestCartTotalPrice}
-                              data-currency="AED"
-                              data-num-instalments="1"
-                              data-country="{country}"
-                              data-hide-if-invalid="{selector}"
-                              data-locale="en"
-                            ></div>
-                          )}
-                        </>
+                      {/* {showPostPay1 && (
+                        <> */}
+                      {xauthtokenUser !== null ? (
+                        <div
+                          className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          data-type="payment-summary"
+                          data-amount={cartTotalPrice}
+                          data-currency="AED"
+                          data-num-instalments="1"
+                          data-country="{country}"
+                          data-hide-if-invalid="{selector}"
+                          data-locale="en"
+                        ></div>
+                      ) : (
+                        <div
+                          className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          data-type="payment-summary"
+                          data-amount={guestCartTotalPrice}
+                          data-currency="AED"
+                          data-num-instalments="1"
+                          data-country="{country}"
+                          data-hide-if-invalid="{selector}"
+                          data-locale="en"
+                        ></div>
                       )}
+                      {/* </>
+                      )} */}
                     </div>
                     <div>
                       <h4 className="title mb-3">
@@ -1147,33 +1147,33 @@ function Checkout(props) {
                           Instalments with Postpay
                         </label>
                       </h4>
-                      {showPostPay2 && (
-                        <>
-                          {xauthtokenUser !== null ? (
-                            <div
-                              className="postpay-widget mb-3"
-                              data-type="payment-summary"
-                              data-amount={cartTotalPrice}
-                              data-currency="AED"
-                              data-num-instalments="3"
-                              data-country="{country}"
-                              data-hide-if-invalid="{selector}"
-                              data-locale="en"
-                            ></div>
-                          ) : (
-                            <div
-                              className="postpay-widget mb-3"
-                              data-type="payment-summary"
-                              data-amount={guestCartTotalPrice}
-                              data-currency="AED"
-                              data-num-instalments="3"
-                              data-country="{country}"
-                              data-hide-if-invalid="{selector}"
-                              data-locale="en"
-                            ></div>
-                          )}
-                        </>
+                      {/* {showPostPay2 && (
+                        <> */}
+                      {xauthtokenUser !== null ? (
+                        <div
+                          className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          data-type="payment-summary"
+                          data-amount={cartTotalPrice}
+                          data-currency="AED"
+                          data-num-instalments="3"
+                          data-country="{country}"
+                          data-hide-if-invalid="{selector}"
+                          data-locale="en"
+                        ></div>
+                      ) : (
+                        <div
+                          className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          data-type="payment-summary"
+                          data-amount={guestCartTotalPrice}
+                          data-currency="AED"
+                          data-num-instalments="3"
+                          data-country="{country}"
+                          data-hide-if-invalid="{selector}"
+                          data-locale="en"
+                        ></div>
                       )}
+                      {/* </>
+                      )} */}
                     </div>
 
                     {loading ? (
