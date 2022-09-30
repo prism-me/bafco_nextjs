@@ -7,6 +7,7 @@ import PageHeader from "~/components/features/page-header";
 import CountryRegionData from "~/utils/countrydata.json";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
+import Helmet from "react-helmet";
 
 let billingAddressData = {
   name: "",
@@ -577,6 +578,24 @@ function Checkout(props) {
 
   return (
     <div className="main">
+      <Helmet>
+        <script
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
+             window.postpayAsyncInit = function()
+             {postpay.init({
+               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+               sandbox: true,
+               theme: "light",
+               locale: "en",
+             })}
+             `,
+          }}
+        />
+        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+      </Helmet>
+
       <PageHeader
         title="Checkout"
         subTitle=""
