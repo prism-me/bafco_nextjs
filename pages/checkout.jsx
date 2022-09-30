@@ -156,6 +156,7 @@ function Checkout(props) {
         .then((response) => {
           setCartTotal(response?.data);
           setCuponCode(response?.data?.coupon);
+          localStorage.setItem("cartTotalPrice", response?.data?.total);
         })
         .catch((err) => {
           console.log(err);
@@ -165,6 +166,7 @@ function Checkout(props) {
         .then((response) => {
           setCartTotal(response?.data);
           setCuponCode(response?.data?.coupon);
+          localStorage.setItem("guestCartTotalPrice", response?.data?.total);
         })
         .catch((err) => {
           console.log(err);
@@ -557,26 +559,69 @@ function Checkout(props) {
   // if (isError) {
   //   // return router.push('/cart/');
   // }
+  let guestCartTotalPrice = localStorage.getItem("guestCartTotalPrice");
+  let cartTotalPrice = localStorage.getItem("cartTotalPrice");
+
+  const [showPostPay1, setShowPostPay1] = useState(false);
+
+  const handleClickPay1 = () => {
+    setShowPostPay1(true);
+    setShowPostPay2(false);
+  };
+
+  const [showPostPay2, setShowPostPay2] = useState(false);
+
+  const handleClickPay2 = () => {
+    setShowPostPay2(true);
+    setShowPostPay1(false);
+  };
+
+  // useEffect(() => {
+  //   handleClickPay1();
+  //   handleClickPay2();
+  // }, [showPostPay1, showPostPay2]);
 
   return (
     <div className="main">
+      {/* {showPostPay1 && ( */}
       <Helmet>
         <script
           data-partytown-config
           dangerouslySetInnerHTML={{
             __html: `
-            window.postpayAsyncInit = function()
-            {postpay.init({
-              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-              sandbox: true,
-              theme: "light",
-              locale: "en",
-            })}
-            `,
+             window.postpayAsyncInit = function()
+             {postpay.init({
+               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+               sandbox: true,
+               theme: "light",
+               locale: "en",
+             })}
+             `,
           }}
         />
         <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
       </Helmet>
+      {/* )} */}
+      {/* {showPostPay2 && (
+        <Helmet>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+             window.postpayAsyncInit = function()
+             {postpay.init({
+               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+               sandbox: true,
+               theme: "light",
+               locale: "en",
+             })}
+             `,
+            }}
+          />
+          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+        </Helmet>
+      )} */}
+
       <PageHeader
         title="Checkout"
         subTitle=""
@@ -1054,16 +1099,83 @@ function Checkout(props) {
                         </tr>
                       </tbody>
                     </table>
-                    <div
-                      class="postpay-widget mb-3"
-                      data-type="payment-summary"
-                      data-amount={cartTotal?.total}
-                      data-currency="AED"
-                      data-num-instalments="3"
-                      data-country="{country}"
-                      data-hide-if-invalid="{selector}"
-                      data-locale="en"
-                    ></div>
+
+                    <div className="paymentmethod">
+                      <h4 className="title mb-0">
+                        <label onClick={handleClickPay1}>
+                          <input type="radio" name="payment" value="pay1" />{" "}
+                          Credit or Debit Card
+                        </label>
+                      </h4>
+                      {showPostPay1 && (
+                        <>
+                          {xauthtokenUser !== null ? (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={cartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="1"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          ) : (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={guestCartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="1"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    <div>
+                      <h4 className="title mb-3">
+                        <label onClick={handleClickPay2}>
+                          <input
+                            type="radio"
+                            name="payment"
+                            value="pay2"
+                            readOnly
+                          />{" "}
+                          Instalments with Postpay
+                        </label>
+                      </h4>
+                      {showPostPay2 && (
+                        <>
+                          {xauthtokenUser !== null ? (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={cartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="3"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          ) : (
+                            <div
+                              className="postpay-widget mb-3"
+                              data-type="payment-summary"
+                              data-amount={guestCartTotalPrice}
+                              data-currency="AED"
+                              data-num-instalments="3"
+                              data-country="{country}"
+                              data-hide-if-invalid="{selector}"
+                              data-locale="en"
+                            ></div>
+                          )}
+                        </>
+                      )}
+                    </div>
+
                     {loading ? (
                       <div
                         className="loader"
