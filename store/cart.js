@@ -56,8 +56,9 @@ const cartReducer = (state = initialState, action) => {
                         qty: qty.toString()
                     };
                     API.post(`/auth/cart`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
-
+                        console.log(response);
                         if (response.status === 200) {
+                            localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
                             toast.success("Product added to Cart");
                             return {
 
@@ -95,6 +96,7 @@ const cartReducer = (state = initialState, action) => {
                         };
                         API.post(`/guest-cart`, productData).then((response) => {
                             if (response.status === 200) {
+                                localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
                                 toast.success("Product added to Cart");
                                 return {
 
