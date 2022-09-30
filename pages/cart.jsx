@@ -34,6 +34,7 @@ function Cart(props) {
       API.get(`/guest-cart-total/${GuestUserDetail}`)
         .then((response) => {
           setCartTotal(response?.data);
+          localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
         })
         .catch((err) => {
           console.log(err);
@@ -58,6 +59,7 @@ function Cart(props) {
       })
         .then((response) => {
           setCartTotal(response?.data);
+          localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
         })
         .catch((err) => {
           console.log(err);
@@ -453,23 +455,13 @@ function Cart(props) {
                       </tbody>
                     </table>
 
-                    {/* <div class="postpay-widget"
+                    <div class="postpay-widget"
                       data-type="cart"
                       data-amount={cartTotal?.total}
                       data-currency="AED"
                       data-num-instalments="1"
                       data-locale="en">
-                    </div> */}
-
-                    <div
-                      className="postpay-widget"
-                      data-type="cart"
-                      data-amount={cartTotal?.total}
-                      data-currency="AED"
-                      data-num-instalments="1"
-                      data-country="{country}"
-                      data-locale="en"
-                    ></div>
+                    </div>
 
                     <a
                       className="btn btn-outline-primary-2 btn-order btn-block"

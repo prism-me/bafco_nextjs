@@ -577,14 +577,8 @@ function Checkout(props) {
     setShowPostPay1(false);
   };
 
-  // useEffect(() => {
-  //   handleClickPay1();
-  //   handleClickPay2();
-  // }, [showPostPay1, showPostPay2]);
-
   return (
     <div className="main">
-
       <Helmet>
         <script
           data-partytown-config
@@ -1051,19 +1045,33 @@ function Checkout(props) {
                             </td>
                             <td className="total-col">
                               <div className="product">
-                                <p>AED {item?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                                <p>
+                                  AED{" "}
+                                  {item?.total
+                                    ?.toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </p>
                               </div>
                             </td>
                           </tr>
                         ))}
                         <tr className="summary-subtotal">
                           <td>Subtotal:</td>
-                          <td>{cartTotal?.sub_total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                          <td>
+                            {cartTotal?.sub_total
+                              ?.toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </td>
                         </tr>
                         {cartTotal?.discounted_price && (
                           <tr className="summary-shipping">
                             <td>Discount:</td>
-                            <td>AED {cartTotal?.discounted_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                            <td>
+                              AED{" "}
+                              {cartTotal?.discounted_price
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            </td>
                           </tr>
                         )}
                         <tr>
@@ -1071,12 +1079,19 @@ function Checkout(props) {
                           <td>
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
-                              : `AED ${cartTotal?.shipping_charges?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                              : `AED ${cartTotal?.shipping_charges
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
                         <tr className="summary-total">
                           <td>Total:</td>
-                          <td>AED {cartTotal?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                          <td>
+                            AED{" "}
+                            {cartTotal?.total
+                              ?.toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1088,36 +1103,38 @@ function Checkout(props) {
                           Credit or Debit Card
                         </label>
                       </h4>
-                      {/* {showPostPay1 && (
-                        <> */}
+
+                      {console.log("{localStorage.getItem :: ", localStorage.getItem("decimal_amount"))}
+
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          className={`postpay-widget ${showPostPay1 === true ? 'active1' : 'disable1'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotal?.total}
+                          // data-amount={cartTotal?.decimal_amount}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="1"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          className={`postpay-widget ${showPostPay1 === true ? 'active1' : 'disable1'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotal?.total}
+                          // data-amount={cartTotal?.decimal_amount}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="1"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       )}
-                      {/* </>
-                      )} */}
                     </div>
                     <div>
-                      <h4 className="title mb-3">
+                      <h4
+                        className={`title ${showPostPay2 === true ? "mb-1" : "mb-3"
+                          }`}
+                      >
                         <label onClick={handleClickPay2}>
                           <input
                             type="radio"
@@ -1128,33 +1145,27 @@ function Checkout(props) {
                           Instalments with Postpay
                         </label>
                       </h4>
-                      {/* {showPostPay2 && (
-                        <> */}
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          className={`postpay-widget ${showPostPay2 === true ? 'active2' : 'disable2'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotal?.total}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="3"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          className={`postpay-widget ${showPostPay2 === true ? 'active2' : 'disable2'}`}
                           data-type="payment-summary"
-                          data-amount={cartTotal?.total}
+                          data-amount={localStorage.getItem("decimal_amount")}
                           data-currency="AED"
                           data-num-instalments="3"
-                          data-country="{country}"
-                          data-hide-if-invalid="{selector}"
+                          data-country="AE"
                           data-locale="en"
                         ></div>
                       )}
-                      {/* </>
-                      )} */}
                     </div>
 
                     {loading ? (
@@ -1196,10 +1207,6 @@ function Checkout(props) {
                     closeTimeoutMS={10}
                   >
                     <div className="modal-content">
-                      {console.log(
-                        "isOpenThankyouModel :: ",
-                        isOpenThankyouModel
-                      )}
                       <div className="orderdetailModelheader modal-header mb-2">
                         {/* <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div> */}
                         <button
@@ -1240,10 +1247,6 @@ function Checkout(props) {
                     closeTimeoutMS={10}
                   >
                     <div className="modal-content">
-                      {console.log(
-                        "isOpenCancelMassageModel :: ",
-                        isOpenCancelMassageModel
-                      )}
                       <div className="orderdetailModelheader modal-header mb-2">
                         {/* <div className="modal-title h4" id="contained-modal-title-vcenter">Cart List</div> */}
                         <button
