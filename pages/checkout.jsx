@@ -7,7 +7,6 @@ import PageHeader from "~/components/features/page-header";
 import CountryRegionData from "~/utils/countrydata.json";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
-import Helmet from "react-helmet";
 
 let billingAddressData = {
   name: "",
@@ -576,52 +575,8 @@ function Checkout(props) {
     setShowPostPay1(false);
   };
 
-  // useEffect(() => {
-  //   handleClickPay1();
-  //   handleClickPay2();
-  // }, [showPostPay1, showPostPay2]);
-
   return (
     <div className="main">
-      {/* {showPostPay1 && ( */}
-        <Helmet>
-          <script
-            data-partytown-config
-            dangerouslySetInnerHTML={{
-              __html: `
-             window.postpayAsyncInit = function()
-             {postpay.init({
-               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-               sandbox: true,
-               theme: "light",
-               locale: "en",
-             })}
-             `,
-            }}
-          />
-          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-        </Helmet>
-      {/* )}
-      {showPostPay2 && (
-        <Helmet>
-          <script
-            data-partytown-config
-            dangerouslySetInnerHTML={{
-              __html: `
-             window.postpayAsyncInit = function()
-             {postpay.init({
-               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-               sandbox: true,
-               theme: "light",
-               locale: "en",
-             })}
-             `,
-            }}
-          />
-          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-        </Helmet>
-      )} */}
-
       <PageHeader
         title="Checkout"
         subTitle=""
@@ -1070,19 +1025,33 @@ function Checkout(props) {
                             </td>
                             <td className="total-col">
                               <div className="product">
-                                <p>AED {item?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                                <p>
+                                  AED{" "}
+                                  {item?.total
+                                    ?.toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </p>
                               </div>
                             </td>
                           </tr>
                         ))}
                         <tr className="summary-subtotal">
                           <td>Subtotal:</td>
-                          <td>{cartTotal?.sub_total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                          <td>
+                            {cartTotal?.sub_total
+                              ?.toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </td>
                         </tr>
                         {cartTotal?.discounted_price && (
                           <tr className="summary-shipping">
                             <td>Discount:</td>
-                            <td>AED {cartTotal?.discounted_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                            <td>
+                              AED{" "}
+                              {cartTotal?.discounted_price
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            </td>
                           </tr>
                         )}
                         <tr>
@@ -1090,12 +1059,19 @@ function Checkout(props) {
                           <td>
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
-                              : `AED ${cartTotal?.shipping_charges?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                              : `AED ${cartTotal?.shipping_charges
+                                  ?.toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
                         <tr className="summary-total">
                           <td>Total:</td>
-                          <td>AED {cartTotal?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                          <td>
+                            AED{" "}
+                            {cartTotal?.total
+                              ?.toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1107,11 +1083,12 @@ function Checkout(props) {
                           Credit or Debit Card
                         </label>
                       </h4>
-                      {/* {showPostPay1 && (
-                        <> */}
+
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          className={`postpay-widget mb-3 ${
+                            showPostPay1 === true ? "active1" : "disable1"
+                          }`}
                           data-type="payment-summary"
                           data-amount={cartTotalPrice}
                           data-currency="AED"
@@ -1122,7 +1099,9 @@ function Checkout(props) {
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          className={`postpay-widget mb-3 ${
+                            showPostPay1 === true ? "active1" : "disable1"
+                          }`}
                           data-type="payment-summary"
                           data-amount={guestCartTotalPrice}
                           data-currency="AED"
@@ -1132,11 +1111,13 @@ function Checkout(props) {
                           data-locale="en"
                         ></div>
                       )}
-                      {/* </>
-                      )} */}
                     </div>
                     <div>
-                      <h4 className="title mb-3">
+                      <h4
+                        className={`title ${
+                          showPostPay2 === true ? "mb-1" : "mb-3"
+                        }`}
+                      >
                         <label onClick={handleClickPay2}>
                           <input
                             type="radio"
@@ -1147,11 +1128,11 @@ function Checkout(props) {
                           Instalments with Postpay
                         </label>
                       </h4>
-                      {/* {showPostPay2 && (
-                        <> */}
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          className={`postpay-widget mb-3 ${
+                            showPostPay2 === true ? "active2" : "disable2"
+                          }`}
                           data-type="payment-summary"
                           data-amount={cartTotalPrice}
                           data-currency="AED"
@@ -1162,7 +1143,9 @@ function Checkout(props) {
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget mb-3 ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          className={`postpay-widget mb-3 ${
+                            showPostPay2 === true ? "active2" : "disable2"
+                          }`}
                           data-type="payment-summary"
                           data-amount={guestCartTotalPrice}
                           data-currency="AED"
@@ -1172,8 +1155,6 @@ function Checkout(props) {
                           data-locale="en"
                         ></div>
                       )}
-                      {/* </>
-                      )} */}
                     </div>
 
                     {loading ? (
