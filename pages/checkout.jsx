@@ -575,9 +575,34 @@ function Checkout(props) {
     setShowPostPay2(true);
     setShowPostPay1(false);
   };
+
+  // useEffect(() => {
+  //   handleClickPay1();
+  //   handleClickPay2();
+  // }, [showPostPay1, showPostPay2]);
+
   return (
     <div className="main">
-      {showPostPay1 && (
+      {/* {showPostPay1 && ( */}
+      <Helmet>
+        <script
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
+             window.postpayAsyncInit = function()
+             {postpay.init({
+               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+               sandbox: true,
+               theme: "light",
+               locale: "en",
+             })}
+             `,
+          }}
+        />
+        <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+      </Helmet>
+      {/* )} */}
+      {/* {showPostPay2 && (
         <Helmet>
           <script
             data-partytown-config
@@ -595,26 +620,7 @@ function Checkout(props) {
           />
           <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
         </Helmet>
-      )}
-      {showPostPay2 && (
-        <Helmet>
-          <script
-            data-partytown-config
-            dangerouslySetInnerHTML={{
-              __html: `
-             window.postpayAsyncInit = function()
-             {postpay.init({
-               merchantId: "id_40ac05065d574a72b8485a6d521626b8",
-               sandbox: true,
-               theme: "light",
-               locale: "en",
-             })}
-             `,
-            }}
-          />
-          <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-        </Helmet>
-      )}
+      )} */}
 
       <PageHeader
         title="Checkout"
