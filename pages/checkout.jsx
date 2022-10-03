@@ -71,7 +71,8 @@ function Checkout(props) {
   const [cartList, setCartList] = useState([]);
   const [isOpenThankyouModel, setIsOpenThankyouModel] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isOpenCancelMassageModel, setIsOpenCancelMassageModel] = useState(false);
+  const [isOpenCancelMassageModel, setIsOpenCancelMassageModel] =
+    useState(false);
   const [discountedPrice, setDiscountedPrice] = useState(0);
 
   let timer;
@@ -279,14 +280,11 @@ function Checkout(props) {
           if (response.data.status === 200 || response.status === 201) {
             setLoading(false);
             toast.success(response.data.message);
-            setDiscountedPrice(response?.data?.value?.value)
+            setDiscountedPrice(response?.data?.value?.value);
             setIsPromoCodeValid(true);
             setCuponCodeSuccessMsg(true);
 
-            //   document.write(`<script>
-            //   postpay.ui.refresh();
-            // </script>`);
-
+            window.postpay.ui.refresh();
           } else {
             setLoading(false);
             setIsPromoCodeValid(false);
@@ -530,7 +528,8 @@ function Checkout(props) {
         customer: {
           id: 1,
           email: email,
-          name: isShipDifferent === true ? shipping?.name : billing_address?.name,
+          name:
+            isShipDifferent === true ? shipping?.name : billing_address?.name,
         },
         discounts: [
           {
@@ -601,14 +600,6 @@ function Checkout(props) {
           }}
         />
         <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-
-        {/* {discountedPrice > 0 &&
-          <script>
-            {alert("Please")}
-            {postpay.ui.refresh()}
-          </script>
-        } */}
-
       </Helmet>
 
       <PageHeader
@@ -1077,34 +1068,38 @@ function Checkout(props) {
                               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                           </td>
                         </tr>
-                        {discountedPrice > 0 &&
+                        {discountedPrice > 0 && (
                           <tr className="summary-shipping">
                             <td>Discount:</td>
-                            <td style={{ color: '#38ae04' }}>
+                            <td style={{ color: "#38ae04" }}>
                               AED{" "}
-                              {discountedPrice?.toString()
+                              {discountedPrice
+                                ?.toString()
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                             </td>
                           </tr>
-                        }
+                        )}
                         <tr>
                           <td>Shipping Fee:</td>
                           <td>
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
                               : `AED ${cartTotal?.shipping_charges
-                                ?.toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                                  ?.toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
                         <tr className="summary-total">
                           <td>Total:</td>
                           <td>
                             AED{" "}
-                            {discountedPrice > 0 ?
-                              (cartTotal?.total - discountedPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
-                              cartTotal?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
+                            {discountedPrice > 0
+                              ? (cartTotal?.total - discountedPrice)
+                                  .toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                              : cartTotal?.total
+                                  ?.toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                           </td>
                         </tr>
                       </tbody>
@@ -1113,17 +1108,27 @@ function Checkout(props) {
                     <div className="paymentmethod">
                       <h4 className="title mb-0">
                         <label onClick={handleClickPay1}>
-                          <input type="radio" name="payment" value="pay1" checked={showPostPay1 === true ? true : false} />{" "}
+                          <input
+                            type="radio"
+                            name="payment"
+                            value="pay1"
+                            checked={showPostPay1 === true ? true : false}
+                          />{" "}
                           Credit or Debit Card
                         </label>
                       </h4>
 
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          className={`postpay-widget ${
+                            showPostPay1 === true ? "active1" : "disable1"
+                          }`}
                           data-type="payment-summary"
                           // data-amount={cartTotal?.decimal_amount}
-                          data-amount={localStorage.getItem("decimal_amount") - discountedPrice}
+                          data-amount={
+                            localStorage.getItem("decimal_amount") -
+                            discountedPrice
+                          }
                           data-currency="AED"
                           data-num-instalments="1"
                           data-country="AE"
@@ -1131,10 +1136,15 @@ function Checkout(props) {
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget ${showPostPay1 === true ? 'active1' : 'disable1'}`}
+                          className={`postpay-widget ${
+                            showPostPay1 === true ? "active1" : "disable1"
+                          }`}
                           data-type="payment-summary"
                           // data-amount={cartTotal?.decimal_amount}
-                          data-amount={localStorage.getItem("decimal_amount") - discountedPrice}
+                          data-amount={
+                            localStorage.getItem("decimal_amount") -
+                            discountedPrice
+                          }
                           data-currency="AED"
                           data-num-instalments="1"
                           data-country="AE"
@@ -1144,8 +1154,9 @@ function Checkout(props) {
                     </div>
                     <div>
                       <h4
-                        className={`title ${showPostPay2 === true ? "mb-1" : "mb-3"
-                          }`}
+                        className={`title ${
+                          showPostPay2 === true ? "mb-1" : "mb-3"
+                        }`}
                       >
                         <label onClick={handleClickPay2}>
                           <input
@@ -1159,9 +1170,14 @@ function Checkout(props) {
                       </h4>
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          className={`postpay-widget ${
+                            showPostPay2 === true ? "active2" : "disable2"
+                          }`}
                           data-type="payment-summary"
-                          data-amount={localStorage.getItem("decimal_amount")}
+                          data-amount={
+                            localStorage.getItem("decimal_amount") -
+                            discountedPrice
+                          }
                           data-currency="AED"
                           data-num-instalments="3"
                           data-country="AE"
@@ -1169,9 +1185,14 @@ function Checkout(props) {
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget ${showPostPay2 === true ? 'active2' : 'disable2'}`}
+                          className={`postpay-widget ${
+                            showPostPay2 === true ? "active2" : "disable2"
+                          }`}
                           data-type="payment-summary"
-                          data-amount={localStorage.getItem("decimal_amount")}
+                          data-amount={
+                            localStorage.getItem("decimal_amount") -
+                            discountedPrice
+                          }
                           data-currency="AED"
                           data-num-instalments="3"
                           data-country="AE"
@@ -1179,7 +1200,7 @@ function Checkout(props) {
                         ></div>
                       )}
                     </div>
-
+                    {console.log("discountedPrice::", discountedPrice)}
                     {loading ? (
                       <div
                         className="loader"
@@ -1192,7 +1213,7 @@ function Checkout(props) {
                           height: "sm" ? "6em" : "md" ? "10em" : "10em",
                         }}
                       />
-                    ) : cartTotal?.total <= 10000 ?
+                    ) : cartTotal?.total <= 10000 ? (
                       <button
                         type="button"
                         onClick={handlePlaceOrderSubmit}
@@ -1202,15 +1223,24 @@ function Checkout(props) {
                         <span className="btn-hover-text">
                           Proceed to Checkout
                         </span>
-                      </button> :
+                      </button>
+                    ) : (
                       <>
-                        <p style={{ color: '#EE3124', fontWeight: 'bold', fontSize: '13px' }}>Your Order Limit is upto AED 10,000</p>
+                        <p
+                          style={{
+                            color: "#EE3124",
+                            fontWeight: "bold",
+                            fontSize: "13px",
+                          }}
+                        >
+                          Your Order Limit is upto AED 10,000
+                        </p>
                         <button
                           type="button"
                           // onClick={handlePlaceOrderSubmit}
                           className="btn btn-outline-primary-2 btn-order btn-block"
                           disabled
-                          style={{ cursor: 'no-drop' }}
+                          style={{ cursor: "no-drop" }}
                         >
                           <span className="btn-text">Place Order</span>
                           <span className="btn-hover-text">
@@ -1218,8 +1248,7 @@ function Checkout(props) {
                           </span>
                         </button>
                       </>
-
-                    }
+                    )}
                   </div>
                 </aside>
 
