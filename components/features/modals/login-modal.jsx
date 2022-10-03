@@ -38,7 +38,7 @@ function LoginModal(props) {
   // console.log("VerificationPAge :: ", props)
 
   useEffect(() => {
-    
+
     setOpen(props.LoginModal);
     return () => {
       if (timer) clearTimeout(timer);
@@ -86,61 +86,79 @@ function LoginModal(props) {
   };
 
   const handleRigistrationSubmit = (e) => {
-    if (
-      userFormData?.name !== "" &&
-      userFormData?.email !== "" &&
-      userFormData?.password !== "" &&
-      userFormData?.password.length >= 6
-    ) {
-      let formdata = new FormData();
-      formdata.append("name", userFormData?.name);
-      formdata.append("email", userFormData?.email);
-      formdata.append("password", userFormData?.password);
-      formdata.append("user_type", "User");
-      formdata.append("redirect_url", "https://bafco-next.herokuapp.com/");
-      setLoading(true);
-      API.post(`/auth/register`, formdata, {
-        "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
-      })
-        .then((response) => {
-          if (response?.data?.errors) {
-            setLoading(false);
-            toast.error(response?.data?.message);
-          } else {
-            closeModal();
-            setLoading(false);
-            toast.success(response?.data?.message);
-            router.push("/verification");
-            props.verificationPageShow(true);
-            // props.showPopup(true);
-            props.hidePopup(false);
-          }
-          // localStorage.setItem("userData", JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error);
-        });
-    } else {
-      if (userFormData?.name === "") {
-        toast.error("Please Enter User Name.");
-        return false;
-      }
-      if (userFormData?.email === "") {
-        toast.error("Please Enter Email.");
-        return false;
-      }
-      if (userFormData?.password === "") {
-        toast.error("Please Enter Password.");
-        return false;
-      } else if (userFormData?.password.length < 6) {
-        toast.error("Password must be at least 6 characters.");
-        return false;
-      }
+    // if (
+    //   userFormData?.name !== "" &&
+    //   userFormData?.email !== "" &&
+    //   userFormData?.password !== "" &&
+    //   userFormData?.password.length >= 6
+    // ) {
+    if (userFormData?.name === "") {
+      toast.error("Please Enter User Name.");
+      return false;
     }
+    if (userFormData?.email === "") {
+      toast.error("Please Enter Email.");
+      return false;
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userFormData?.email)) {
+      alert("Invalid email address.");
+      return;
+    }
+    if (userFormData?.password === "") {
+      toast.error("Please Enter Password.");
+      return false;
+    } else if (userFormData?.password.length < 6) {
+      toast.error("Password must be at least 6 characters.");
+      return false;
+    }
+    let formdata = new FormData();
+    formdata.append("name", userFormData?.name);
+    formdata.append("email", userFormData?.email);
+    formdata.append("password", userFormData?.password);
+    formdata.append("user_type", "User");
+    formdata.append("redirect_url", "https://bafco-next.herokuapp.com/");
+    setLoading(true);
+    API.post(`/auth/register`, formdata, {
+      "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
+    })
+      .then((response) => {
+        if (response?.data?.errors) {
+          setLoading(false);
+          toast.error(response?.data?.message);
+        } else {
+          closeModal();
+          setLoading(false);
+          toast.success(response?.data?.message);
+          router.push("/verification");
+          props.verificationPageShow(true);
+          // props.showPopup(true);
+          props.hidePopup(false);
+        }
+        // localStorage.setItem("userData", JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+
   };
 
   const handleLoginSubmit = async () => {
+
+    if (userFormData?.email === "") {
+      toast.error("Please Enter Email.");
+      return false;
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userFormData?.email)) {
+      alert("Invalid email address.");
+      return;
+    }
+    if (userFormData?.password === "") {
+      toast.error("Please Enter Password.");
+      return false;
+    } else if (userFormData?.password.length < 6) {
+      toast.error("Password must be at least 6 characters.");
+      return false;
+    }
+
     let formdata = {
       email: userFormData.email,
       password: userFormData.password,
@@ -169,6 +187,15 @@ function LoginModal(props) {
   };
 
   const handleForgotePasswordSubmit = async () => {
+
+    if (forgotPasswordemail === "") {
+      toast.error("Please Enter Email.");
+      return false;
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(forgotPasswordemail)) {
+      alert("Invalid email address.");
+      return;
+    }
+
     let formdata = {
       email: `${forgotPasswordemail}`,
       redirect_url: "http://bafco-next.herokuapp.com/",
@@ -275,13 +302,13 @@ function LoginModal(props) {
                                       width: "sm"
                                         ? "6em"
                                         : "md"
-                                        ? "10em"
-                                        : "10em",
+                                          ? "10em"
+                                          : "10em",
                                       height: "sm"
                                         ? "6em"
                                         : "md"
-                                        ? "10em"
-                                        : "10em",
+                                          ? "10em"
+                                          : "10em",
                                     }}
                                   />
                                 ) : (
@@ -367,13 +394,13 @@ function LoginModal(props) {
                                       width: "sm"
                                         ? "6em"
                                         : "md"
-                                        ? "10em"
-                                        : "10em",
+                                          ? "10em"
+                                          : "10em",
                                       height: "sm"
                                         ? "6em"
                                         : "md"
-                                        ? "10em"
-                                        : "10em",
+                                          ? "10em"
+                                          : "10em",
                                     }}
                                   />
                                 ) : (

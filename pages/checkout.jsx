@@ -283,9 +283,8 @@ function Checkout(props) {
             setIsPromoCodeValid(true);
             setCuponCodeSuccessMsg(true);
 
-            //   document.write(`<script>
-            //   postpay.ui.refresh();
-            // </script>`);
+            // document.createElement(postpay.ui.refresh())
+            postpay.ui.refresh();
 
           } else {
             setLoading(false);
@@ -388,7 +387,7 @@ function Checkout(props) {
     if (UserId) {
       let formdata = {
         user_id: UserId,
-        coupon_code: isPromoCodeValid === true ? cuponCode : "BAFCOTest",
+        // coupon_code: isPromoCodeValid === true ? cuponCode : "BAFCOTest",
         total_amount: localStorage.getItem("decimal_amount") - discountedPrice,
         tax_amount: "0",
         currency: "AED",
@@ -448,9 +447,10 @@ function Checkout(props) {
         },
         discounts: [
           {
-            code: isPromoCodeValid === true ? cuponCode : "BAFCOTest",
+            // code: isPromoCodeValid === true ? cuponCode : "BAFCOTest",
+            code: discountedPrice,
             name: isPromoCodeValid === true ? cuponCode : "BAFCOTest",
-            amount: cartTotal?.total,
+            amount: cartTotal?.total - discountedPrice,
           },
         ],
       };
@@ -601,13 +601,6 @@ function Checkout(props) {
           }}
         />
         <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
-
-        {/* {discountedPrice > 0 &&
-          <script>
-            {alert("Please")}
-            {postpay.ui.refresh()}
-          </script>
-        } */}
 
       </Helmet>
 
@@ -1290,7 +1283,7 @@ function Checkout(props) {
                         <div className="orderdetailbody text-center mb-6">
                           <img
                             className="mb-6"
-                            src="images/icons/symbol-christian-cross.png"
+                            src="images/icons/crossimages.png"
                             width="100px"
                             style={{ margin: "0 auto" }}
                             alt="Success"

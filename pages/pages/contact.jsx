@@ -68,15 +68,23 @@ function Contact() {
       updatedData.phone === "" &&
       updatedData.subject === ""
     ) {
-      toast.success("Please enter your Data");
+      toast.error("Please enter your Data");
+      return;
     } else if (updatedData.email === "") {
-      toast.success("Please enter your Email");
+      toast.error("Please enter your Email");
+      return;
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(updatedData.email)) {
+      alert("Invalid email address.");
+      return;
     } else if (updatedData.name === "") {
-      toast.success("Please enter your Name");
+      toast.error("Please enter your Name");
+      return;
     } else if (updatedData.phone === "") {
-      toast.success("Please enter your Phone number");
+      toast.error("Please enter your Phone number");
+      return;
     } else if (updatedData.subject === "") {
-      toast.success("Please enter your Subject");
+      toast.error("Please enter your Subject");
+      return;
     } else {
       setLoading(true);
 
