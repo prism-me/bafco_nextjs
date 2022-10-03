@@ -139,7 +139,9 @@ function Cart(props) {
         headers: { Authorization: `Bearer ${authtoken}` },
       })
         .then((response) => {
-          setCartTotal(response?.data?.original?.original);
+          console.log("response", response);
+          localStorage.setItem("decimal_amount", response?.data?.original?.decimal_amount);
+          setCartTotal(response?.data?.original);
           toast.success("Cart Updated Successfully!");
           if (response?.status === 200) {
             API.get(`/auth/cart/${UserDetail}`, {
@@ -166,7 +168,8 @@ function Cart(props) {
           //   "response Update Cart :: ",
           //   response?.data?.original?.original
           // );
-          setCartTotal(response?.data?.original?.original);
+          localStorage.setItem("decimal_amount", response?.data?.original?.decimal_amount);
+          setCartTotal(response?.data?.original);
           toast.success("Cart Updated Successfully!");
           if (response.status === 200) {
             API.get(`/guest-cart/${GuestUserDetail}`)
@@ -455,13 +458,16 @@ function Cart(props) {
                       </tbody>
                     </table>
 
-                    <div class="postpay-widget"
+                    <div
+                      className="postpay-widget"
                       data-type="cart"
-                      data-amount={cartTotal?.total}
+                      // data-amount={cartTotal?.decimal_amount}
+                      data-amount={localStorage.getItem("decimal_amount")}
                       data-currency="AED"
                       data-num-instalments="1"
-                      data-locale="en">
-                    </div>
+                      data-country="AE"
+                      data-locale="en"
+                    ></div>
 
                     <a
                       className="btn btn-outline-primary-2 btn-order btn-block"
