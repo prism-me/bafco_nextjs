@@ -178,6 +178,29 @@ export const scrollToPageContent = function () {
 }
 
 /**
+ * Scrolling to Page content section for Product Inner.
+ */
+ export const scrollToPageContentInstant = function () {
+    let to = document.querySelector('.page-content')
+        .offsetTop - 74;
+    if (isSafariBrowser() || isEdgeBrowser()) {
+        let pos = window.pageYOffset;
+        let timerId = setInterval(() => {
+            if (pos <= to) clearInterval(timerId);
+            else {
+                window.scrollBy(0, -120);
+                pos -= 120;
+            }
+        }, 1);
+    } else {
+        window.scrollTo({
+            top: to,
+            behavior: 'auto'
+        });
+    }
+}
+
+/**
  * utils to make background parallax
  */
 export const parallax = () => {

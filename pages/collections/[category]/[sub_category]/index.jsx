@@ -128,6 +128,20 @@ function ShopGrid() {
             updatedList.splice(brandValue.indexOf(event.target.value), 1);
         }
         setBrandValue(updatedList);
+
+        let formdata = {
+            "brand": updatedList,
+            "min": priceRange.min,
+            "max": priceRange.max,
+            "route": currentPageRoute,
+            "color": colorValue
+        };
+
+        API.post(`/category-list-filteration`, formdata).then((response) => {
+            setProducts(response?.data)
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     const handelColor = (e, item) => {
@@ -143,24 +157,52 @@ function ShopGrid() {
         }
         setColorValue(updatedList);
 
-    }
-
-    function onChangePriceRange(value) {
-        setRange(value);
-    }
-
-    function handelSelectFilter() {
-
         let formdata = {
             "brand": brandValue,
             "min": priceRange.min,
             "max": priceRange.max,
+            "route": currentPageRoute,
+            "color": updatedList
+        };
+
+        API.post(`/category-list-filteration`, formdata).then((response) => {
+            setProducts(response?.data)
+        }).catch((err) => {
+            console.log(err);
+        });
+
+    }
+
+    function onChangePriceRange(value) {
+
+        setRange(value);
+
+        let formdata = {
+            "brand": brandValue,
+            "min": value.min,
+            "max": value.max,
             "route": currentPageRoute,
             "color": colorValue
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
             setProducts(response?.data)
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    function handelSelectFilter() {
+
+        setRange({ min: 0, max: 10000 });
+        setBrandValue([]);
+        setColorValue([]);
+
+        API.get(`/front-products/${currentPageRoute}`).then((response) => {
+            setProducts(response?.data?.products);
+            setPageTitle(response?.data?.name);
+            // setTotalCount(response?.data?.products?.length)
+            setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
             console.log(err);
         });
@@ -264,11 +306,12 @@ function ShopGrid() {
                                     <div className={toggle ? 'sidebar-filter-wrapper' : ''}>
                                         <div className="widget widget-clean">
                                             <label>Filters:</label>
+
                                             <button
                                                 onClick={handelSelectFilter}
                                                 className="pr-2 sidebar-filter-clear"
                                                 style={{ color: '#008482', fontWeight: 'bold' }}
-                                                scroll={false}>Apply</button>
+                                                scroll={false}>Reset</button>
                                         </div>
 
                                         <SlideToggle collapsed={false}>
@@ -387,14 +430,8 @@ function ShopGrid() {
                                                                 <div className="filter-price-text d-flex justify-content-between">
                                                                     <span>
                                                                         Price Range:&nbsp;
-                                                                        <span className="filter-price-range">Dhs{priceRange.min} - Dhs{priceRange.max}</span>
+                                                                        <span className="filter-price-range">AED {priceRange.min} - AED {priceRange.max?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                                                     </span>
-
-                                                                    {/* <button
-                                                                        onClick={handelSelectFilter}
-                                                                        className="pr-2"
-                                                                        style={{ color: '#EE3124' }}
-                                                                        scroll={false}>Filter</button> */}
                                                                 </div>
 
                                                                 <div className="price-slider">
@@ -404,10 +441,74 @@ function ShopGrid() {
                                                                         minValue={0}
                                                                         step={50}
                                                                         value={priceRange}
-                                                                        onChange={onChangePriceRange}
+                                                                        // onChange={onChangePriceRange}
+                                                                        onChange={value => setRange(value)}
+                                                                        onChangeComplete={onChangePriceRange}
                                                                     />
                                                                 </div>
                                                             </div>
+                                                            {/* <div className="filter-items">
+                                                                <div className="filter-item">
+                                                                    <div className="custom-control custom-checkbox">
+                                                                        <input type="checkbox"
+                                                                            className="custom-control-input"
+                                                                            id={`price-1`}
+                                                                            value="200"
+                                                                            name="price"
+                                                                            // onChange={e => onAttrClick(e, "Brand")}
+                                                                        />
+                                                                        <label className="custom-control-label" htmlFor={`price-1`}>Under AED 200</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="filter-item">
+                                                                    <div className="custom-control custom-checkbox">
+                                                                        <input type="checkbox"
+                                                                            className="custom-control-input"
+                                                                            id={`price-2`}
+                                                                            value="200"
+                                                                            name="price"
+                                                                            // onChange={e => onAttrClick(e, "Brand")}
+                                                                        />
+                                                                        <label className="custom-control-label" htmlFor={`price-2`}>AED 500 - AED 1000</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="filter-item">
+                                                                    <div className="custom-control custom-checkbox">
+                                                                        <input type="checkbox"
+                                                                            className="custom-control-input"
+                                                                            id={`price-3`}
+                                                                            value="200"
+                                                                            name="price"
+                                                                            // onChange={e => onAttrClick(e, "Brand")}
+                                                                        />
+                                                                        <label className="custom-control-label" htmlFor={`price-3`}>AED 1000 - AED 5000</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="filter-item">
+                                                                    <div className="custom-control custom-checkbox">
+                                                                        <input type="checkbox"
+                                                                            className="custom-control-input"
+                                                                            id={`price-4`}
+                                                                            value="200"
+                                                                            name="price"
+                                                                            // onChange={e => onAttrClick(e, "Brand")}
+                                                                        />
+                                                                        <label className="custom-control-label" htmlFor={`price-4`}>AED 5000 - AED 10000</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="filter-item">
+                                                                    <div className="custom-control custom-checkbox">
+                                                                        <input type="checkbox"
+                                                                            className="custom-control-input"
+                                                                            id={`price-5`}
+                                                                            value="200"
+                                                                            name="price"
+                                                                            // onChange={e => onAttrClick(e, "Brand")}
+                                                                        />
+                                                                        <label className="custom-control-label" htmlFor={`price-5`}>Over AED 10000</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div> */}
                                                         </div>
                                                     </div>
                                                 </div>

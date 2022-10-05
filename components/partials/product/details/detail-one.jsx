@@ -396,96 +396,99 @@ function DetailOne(props) {
           <span className="ratings-text">( {3.4} Reviews )</span>
         </div>
 
-        {product?.product_single_variation?.product_variation_details
-          ?.in_stock === 0 ? (
-          <div className="product-price">
-            <span className="out-price">
-              {product?.product_single_variation?.product_variation_details
-                ?.limit >= qty ? (
-                <>
-                  <span>
-                    AED{" "}
-                    {product?.product_single_variation?.product_variation_details?.upper_price
-                      ?.toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </span>
-                  <div
-                    className="postpay-widget mb-1"
-                    data-type="product"
-                    data-amount={
-                      product?.product_single_variation
-                        ?.product_variation_details?.upper_price
-                    }
-                    data-currency="AED"
-                    data-num-instalments="3"
-                    data-locale="en"
-                  ></div>
-                </>
-              ) : (
-                <>
-                  <span>
-                    AED{" "}
-                    {product?.product_single_variation?.product_variation_details?.lower_price
-                      ?.toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </span>
-                  <div
-                    className="postpay-widget mb-1"
-                    data-type="product"
-                    data-amount={
-                      product?.product_single_variation
-                        ?.product_variation_details?.lower_price
-                    }
-                    data-currency="AED"
-                    data-num-instalments="3"
-                    data-locale="en"
-                  ></div>
-                </>
-              )}
-            </span>
-          </div>
-        ) : product?.product_single_variation?.product_variation_details
-          ?.limit >= qty ? (
-          <>
-            <div className="product-price">
-              AED{" "}
-              {product?.product_single_variation?.product_variation_details?.upper_price
-                ?.toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            </div>
-            <div
-              className="postpay-widget mb-1"
-              data-type="product"
-              data-amount={
-                product?.product_single_variation?.product_variation_details
-                  ?.upper_price
-              }
-              data-currency="AED"
-              data-num-instalments="3"
-              data-locale="en"
-            ></div>
-          </>
-        ) : (
-          <>
-            <div className="product-price">
-              AED{" "}
-              {product?.product_single_variation?.product_variation_details?.lower_price
-                ?.toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            </div>
-            <div
-              className="postpay-widget mb-1"
-              data-type="product"
-              data-amount={
-                product?.product_single_variation?.product_variation_details
-                  ?.lower_price
-              }
-              data-currency="AED"
-              data-num-instalments="3"
-              data-locale="en"
-            ></div>
-          </>
-        )}
+        {
+          // product?.product_single_variation?.product_variation_details
+          //   ?.in_stock === 0 ? (
+          //   <div className="product-price">
+          //     <span className="out-price">
+          //       {product?.product_single_variation?.product_variation_details
+          //         ?.limit >= qty ? (
+          //         <>
+          //           <span>
+          //             AED{" "}
+          //             {product?.product_single_variation?.product_variation_details?.upper_price
+          //               ?.toString()
+          //               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          //           </span>
+          //           <div
+          //             className="postpay-widget mb-1"
+          //             data-type="product"
+          //             data-amount={
+          //               product?.product_single_variation
+          //                 ?.product_variation_details?.upper_price
+          //             }
+          //             data-currency="AED"
+          //             data-num-instalments="3"
+          //             data-locale="en"
+          //           ></div>
+          //         </>
+          //       ) : (
+          //         <>
+          //           <span>
+          //             AED{" "}
+          //             {product?.product_single_variation?.product_variation_details?.lower_price
+          //               ?.toString()
+          //               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          //           </span>
+          //           <div
+          //             className="postpay-widget mb-1"
+          //             data-type="product"
+          //             data-amount={
+          //               product?.product_single_variation
+          //                 ?.product_variation_details?.lower_price
+          //             }
+          //             data-currency="AED"
+          //             data-num-instalments="3"
+          //             data-locale="en"
+          //           ></div>
+          //         </>
+          //       )}
+          //     </span>
+          //   </div>
+          // ) :
+            product?.product_single_variation?.product_variation_details
+              ?.limit >= qty ? (
+              <>
+                <div className="product-price">
+                  AED{" "}
+                  {product?.product_single_variation?.product_variation_details?.upper_price
+                    ?.toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </div>
+                <div
+                  className="postpay-widget mb-1"
+                  data-type="product"
+                  data-amount={
+                    product?.product_single_variation?.product_variation_details
+                      ?.upper_price
+                  }
+                  data-currency="AED"
+                  data-num-instalments="3"
+                  data-locale="en"
+                ></div>
+              </>
+            ) : (
+              <>
+                <div className="product-price">
+                  AED{" "}
+                  {product?.product_single_variation?.product_variation_details?.lower_price
+                    ?.toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </div>
+                <div
+                  className="postpay-widget mb-1"
+                  data-type="product"
+                  data-amount={
+                    product?.product_single_variation?.product_variation_details
+                      ?.lower_price
+                  }
+                  data-currency="AED"
+                  data-num-instalments="3"
+                  data-locale="en"
+                ></div>
+              </>
+            )
+        }
 
         <div
           className="product-content"

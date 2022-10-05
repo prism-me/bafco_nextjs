@@ -10,6 +10,7 @@ import ALink from "~/components/features/alink";
 import { API } from "~/http/API";
 import LightBox from "react-image-lightbox";
 import PageHeader from '~/components/features/page-header';
+import { scrollToPageContentInstant } from '~/utils';
 
 function ProductInner() {
   const router = useRouter();
@@ -39,6 +40,10 @@ function ProductInner() {
   //     console.log("useffect", query);
 
   // }, [router])
+
+  useEffect(() => {
+    scrollToPageContentInstant();
+}, [query])
 
   useEffect(() => {
     if (selectedVariation !== "") {
@@ -157,15 +162,6 @@ function ProductInner() {
           </ol>
         </div>
       </nav>
-
-      {/* <div
-        className="postpay-widget"
-        data-type="product"
-        data-amount="100000"
-        data-currency="AED"
-        data-num-instalments="3"
-        data-locale="en"
-      ></div> */}
 
       <div className="page-content">
         <div className="container skeleton-body">
