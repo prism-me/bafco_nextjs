@@ -446,48 +446,48 @@ function DetailOne(props) {
           //     </span>
           //   </div>
           // ) :
-            product?.product_single_variation?.product_variation_details
-              ?.limit >= qty ? (
-              <>
-                <div className="product-price">
-                  AED{" "}
-                  {product?.product_single_variation?.product_variation_details?.upper_price
-                    ?.toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </div>
-                <div
-                  className="postpay-widget mb-1"
-                  data-type="product"
-                  data-amount={
-                    product?.product_single_variation?.product_variation_details
-                      ?.upper_price
-                  }
-                  data-currency="AED"
-                  data-num-instalments="3"
-                  data-locale="en"
-                ></div>
-              </>
-            ) : (
-              <>
-                <div className="product-price">
-                  AED{" "}
-                  {product?.product_single_variation?.product_variation_details?.lower_price
-                    ?.toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </div>
-                <div
-                  className="postpay-widget mb-1"
-                  data-type="product"
-                  data-amount={
-                    product?.product_single_variation?.product_variation_details
-                      ?.lower_price
-                  }
-                  data-currency="AED"
-                  data-num-instalments="3"
-                  data-locale="en"
-                ></div>
-              </>
-            )
+          product?.product_single_variation?.product_variation_details
+            ?.limit >= qty ? (
+            <>
+              <div className="product-price">
+                AED{" "}
+                {product?.product_single_variation?.product_variation_details?.upper_price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </div>
+              <div
+                className="postpay-widget mb-1"
+                data-type="product"
+                data-amount={
+                  product?.product_single_variation?.product_variation_details
+                    ?.upper_price
+                }
+                data-currency="AED"
+                data-num-instalments="3"
+                data-locale="en"
+              ></div>
+            </>
+          ) : (
+            <>
+              <div className="product-price">
+                AED{" "}
+                {product?.product_single_variation?.product_variation_details?.lower_price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </div>
+              <div
+                className="postpay-widget mb-1"
+                data-type="product"
+                data-amount={
+                  product?.product_single_variation?.product_variation_details
+                    ?.lower_price
+                }
+                data-currency="AED"
+                data-num-instalments="3"
+                data-locale="en"
+              ></div>
+            </>
+          )
         }
 
         <div
@@ -569,6 +569,8 @@ function DetailOne(props) {
           ))}
       </div> */}
         <div className="row">
+          {/* {console.log("variationValues :: ", variationValues)}
+          {console.log("selectedVariant :: ", selectedVariant)} */}
           {variationValues !== null &&
             variationValues?.map((item, index) => (
               <div className="col-md-6" key={index}>
@@ -576,10 +578,11 @@ function DetailOne(props) {
                   <label htmlFor={`${item?.newName}`}>{item?.newName}: </label>
                   {item?.type === "1" || item?.type === "4" ? (
                     <div className="select-custom">
+                      {/* {console.log("selectedVariant :: ", item?.arrs?.find(v => v?.variant?.name === selectedVariant?.newName))} */}
                       <select
                         name={`${item?.newName}`}
                         className="form-control"
-                        value={selectedVariant[index - 1]?.variation_value_id}
+                        value={selectedVariant[index]?.variation_value_id}
                         onChange={(e) =>
                           handelSelectVariantChange(e, item?.arrs)
                         }
@@ -603,14 +606,8 @@ function DetailOne(props) {
                           content={item2?.name}
                         >
                           <span
-                            className={`${(item2?.id ==
-                              selectedVariant[index + 1]?.variation_value_id
-                              ? "active "
-                              : "") + (item2?.disabled ? "disabled" : "")
-                              }`}
-                            style={{
-                              backgroundImage: `url(${item2?.type_value})`,
-                            }}
+                            className={`${(item2?.id == selectedVariant?.find(v => v.variation_value_id === item2.id)?.['variation_value_id'] ? "active " : "") + (item2?.disabled ? "disabled" : "")}`}
+                            style={{ backgroundImage: `url(${item2?.type_value})` }}
                             key={index2}
                             onClick={(e) => handelSelectVariantChange(e, item2)}
                           ></span>
