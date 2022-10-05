@@ -267,7 +267,7 @@ function ShopGrid() {
                                             <button
                                                 onClick={handelSelectFilter}
                                                 className="pr-2 sidebar-filter-clear"
-                                                style={{ color: '#EE3124', fontWeight: 'bold' }}
+                                                style={{ color: '#008482', fontWeight: 'bold' }}
                                                 scroll={false}>Apply</button>
                                         </div>
 

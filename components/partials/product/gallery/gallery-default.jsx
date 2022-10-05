@@ -59,7 +59,7 @@ function GalleryDefault(props) {
                 <div className="row m-0">
                     <figure className="product-main-image" index="0">
                         {
-                            !product?.in_stock || product?.in_stock == 0 ?
+                            product?.in_stock || product?.in_stock === 1 ?
                                 <span className="product-label label-out">Stocking</span>
                                 : ""
                         }

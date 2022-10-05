@@ -75,7 +75,7 @@ function GalleryMasonry ( props ) {
                         }
 
                         {
-                            !product.stock || product.stock == 0 ?
+                            product.stock || product.stock === 1 ?
                                 <span className="product-label label-out">Stocking</span>
                                 : ""
                         }

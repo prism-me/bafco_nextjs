@@ -80,8 +80,8 @@ function RelatedProducts(props) {
   return (
     <div className="product product-11 text-center">
       <figure className="product-media">
-        {!product?.productvariations?.in_stock ||
-        product?.productvariations?.in_stock === 0 ? (
+        {product?.productvariations?.in_stock ||
+        product?.productvariations?.in_stock === 1 ? (
           <span className="product-label label-circle label-out">
             Stocking
           </span>

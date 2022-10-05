@@ -52,7 +52,7 @@ function Layout({ children, hideQuick, hideVideo }) {
                 window.scrollBy(0, -120);
                 pos -= 120;
             }, 1);
-        } else {
+        }   else {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'

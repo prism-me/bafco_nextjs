@@ -117,7 +117,7 @@ function QuickViewModal(props) {
                                                         : ""
                                                 } */}
 
-                                                {product?.variations[0].in_stock == 0 ?
+                                                {product?.variations[0].in_stock === 1 ?
                                                     <span className="product-label label-out">Stocking</span>
                                                     : ""
                                                 }

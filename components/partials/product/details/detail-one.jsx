@@ -241,12 +241,6 @@ function DetailOne(props) {
   function handelSelectVariantChange(e, item) {
     e.preventDefault();
 
-    // const storeitemId = e.target.value;
-
-    // console.log("item :: ", item);
-    // console.log("e.target.value :: ", e.target.value);
-    // console.log("e.target.value selectedVariant :: ", selectedVariant);
-
     if (!e.target.value) {
       const newState = selectedVariant.map((obj) => {
         if (obj.type === item.variant.name) {
@@ -451,7 +445,7 @@ function DetailOne(props) {
             </span>
           </div>
         ) : product?.product_single_variation?.product_variation_details
-            ?.limit >= qty ? (
+          ?.limit >= qty ? (
           <>
             <div className="product-price">
               AED{" "}
@@ -606,12 +600,11 @@ function DetailOne(props) {
                           content={item2?.name}
                         >
                           <span
-                            className={`${
-                              (item2?.id ==
+                            className={`${(item2?.id ==
                               selectedVariant[index + 1]?.variation_value_id
-                                ? "active "
-                                : "") + (item2?.disabled ? "disabled" : "")
-                            }`}
+                              ? "active "
+                              : "") + (item2?.disabled ? "disabled" : "")
+                              }`}
                             style={{
                               backgroundImage: `url(${item2?.type_value})`,
                             }}
@@ -705,7 +698,7 @@ function DetailOne(props) {
 
           <div className="product-cat text-truncate">
             <span>Type : </span>
-            <span style={{ textTransform: "capitalize" }}>{subCategory}</span>
+            <ALink href={`/collections/${router?.query?.category}/${router?.query?.sub_category}`}><span style={{ textTransform: "capitalize" }}>{subCategory}</span></ALink>
           </div>
         </div>
         <div className="product-details-adv">
@@ -721,15 +714,15 @@ function DetailOne(props) {
             )}
             {product?.product_single_variation?.product_variation_details
               ?.lead_img && (
-              <li>
-                <img
-                  src={
-                    product?.product_single_variation?.product_variation_details
-                      ?.lead_img
-                  }
-                />
-              </li>
-            )}
+                <li>
+                  <img
+                    src={
+                      product?.product_single_variation?.product_variation_details
+                        ?.lead_img
+                    }
+                  />
+                </li>
+              )}
           </ul>
         </div>
         <div className="sticky-bar d-none">
