@@ -33,6 +33,7 @@ function ShopGrid() {
     const [priceRange, setRange] = useState({ min: 0, max: 10000 });
     const [brandValue, setBrandValue] = useState([]);
     const [colorValue, setColorValue] = useState([]);
+    const [sortBy, setSortBy] = useState("default");
 
     useEffect(() => {
 
@@ -86,15 +87,41 @@ function ShopGrid() {
     }, [products])
 
     function onSortByChange(e) {
-        let queryObject = router.query;
-        let url = router.pathname.replace('[type]', query.type) + '?';
-        for (let key in queryObject) {
-            if (key !== "type" && key !== "sortBy") {
-                url += key + '=' + queryObject[key] + '&';
-            }
+
+        let sortByProductList = [];
+
+        if (e.target.value == "low_to_high") {
+
+            sortByProductList = products?.sort((el1, el2) => el1?.productvariations?.upper_price?.localeCompare(el2?.productvariations?.upper_price, undefined, { numeric: true }));
+
+            setProducts([...sortByProductList]);
+
+        } else if (e.target.value === "high_to_low") {
+
+            sortByProductList = products?.sort((el1, el2) => el2?.productvariations?.upper_price?.localeCompare(el1?.productvariations?.upper_price, undefined, { numeric: true }));
+
+            setProducts([...sortByProductList]);
+
+        } else {
+
+            let formdata = {
+                "brand": brandValue,
+                "min": priceRange.min,
+                "max": priceRange.max,
+                "route": currentPageRoute,
+                "color": colorValue
+            };
+    
+            API.post(`/category-list-filteration`, formdata).then((response) => {
+                setProducts(response?.data)
+            }).catch((err) => {
+                console.log(err);
+            });
+
         }
 
-        router.push(url + 'sortBy=' + e.target.value);
+        setSortBy(e.target.value);
+
     }
 
     function toggleSidebar() {
@@ -273,12 +300,11 @@ function ShopGrid() {
                                                 id="sortby"
                                                 className="form-control"
                                                 onChange={onSortByChange}
-                                                value={query.sortBy ? query.sortBy : 'default'}
+                                                value={sortBy}
                                             >
                                                 <option value="default">Default</option>
-                                                <option value="featured">Most Popular</option>
-                                                <option value="rating">Most Rated</option>
-                                                <option value="new">Date</option>
+                                                <option value="low_to_high">Price : Low To High</option>
+                                                <option value="high_to_low">Price : High To Low</option>
                                             </select>
                                         </div>
                                     </div>

@@ -129,10 +129,10 @@ function DetailOne(props) {
     // console.log("variationnew :: ", variationnew)
 
     newvaria1?.forEach((item) => {
-      let arr = newvaria?.filter((v) => v.variant.name === item.variant.name);
+      let arr = newvaria?.filter((v) => v?.variant?.name === item?.variant?.name);
 
-      let newName = item.variant.name;
-      let type = item.type;
+      let newName = item?.variant?.name;
+      let type = item?.type;
       let newlist = {
         arrs: arr,
         type: type,
@@ -241,14 +241,18 @@ function DetailOne(props) {
   function handelSelectVariantChange(e, item) {
     e.preventDefault();
 
+    // console.log(item, e.target.value);
+    // if (e.target.value == "") {
+
+    //  } else 
     if (!e.target.value) {
       const newState = selectedVariant.map((obj) => {
-        if (obj.type === item.variant.name) {
+        if (obj?.type === item?.variant?.name) {
           return {
-            name: item.name,
-            type: item.variant.name,
-            variation_value_id: item.id,
-            product_variation_id: item.product_variation_id,
+            name: item?.name,
+            type: item?.variant?.name,
+            variation_value_id: item?.id,
+            product_variation_id: item?.product_variation_id,
           };
         }
         return obj;
@@ -281,14 +285,8 @@ function DetailOne(props) {
         setVariationPopupeOpen(true);
       }
     } else {
-      // console.log(
-      //   "item :: :: ",
-      //   item?.find((v) => v.id == e.target.value)
-      // );
 
       const found = item?.find((v) => v.id == e.target.value);
-
-      // console.log("found :: ", found);
 
       if (selectedVariant.find((v) => v.type == found.variant.name)) {
         // console.log("selected");
@@ -578,11 +576,11 @@ function DetailOne(props) {
                   <label htmlFor={`${item?.newName}`}>{item?.newName}: </label>
                   {item?.type === "1" || item?.type === "4" ? (
                     <div className="select-custom">
-                      {/* {console.log("selectedVariant :: ", item?.arrs?.find(v => v?.variant?.name === selectedVariant?.newName))} */}
+                      {/* {console.log("selectedVariant :: ", (item?.arrs?.find(v => v?.name === (selectedVariant?.find(x => x.type === item?.newName)?.['name'])))?.['name'])} */}
                       <select
                         name={`${item?.newName}`}
                         className="form-control"
-                        value={selectedVariant[index]?.variation_value_id}
+                        value={item?.arrs?.find(v => v?.name === (selectedVariant?.find(x => x.type === item?.newName)?.['name']))?.['id'] === "" ? "" : item?.arrs?.find(v => v?.name === (selectedVariant?.find(x => x.type === item?.newName)?.['name']))?.['id']}
                         onChange={(e) =>
                           handelSelectVariantChange(e, item?.arrs)
                         }
@@ -606,7 +604,7 @@ function DetailOne(props) {
                           content={item2?.name}
                         >
                           <span
-                            className={`${(item2?.id == selectedVariant?.find(v => v.variation_value_id === item2.id)?.['variation_value_id'] ? "active " : "") + (item2?.disabled ? "disabled" : "")}`}
+                            className={`${(item2?.id === selectedVariant?.find(v => v.variation_value_id === item2.id)?.['variation_value_id'] ? "active " : "") + (item2?.disabled ? "disabled" : "")}`}
                             style={{ backgroundImage: `url(${item2?.type_value})` }}
                             key={index2}
                             onClick={(e) => handelSelectVariantChange(e, item2)}
