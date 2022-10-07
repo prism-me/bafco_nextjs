@@ -35,7 +35,7 @@ function ShopGrid() {
     const [priceRange, setRange] = useState({ min: 0, max: 60000 });
     const [brandValue, setBrandValue] = useState([]);
     const [colorValue, setColorValue] = useState([]);
-    const [sortBy, setSortBy] = useState("default");
+    const [sortBy, setSortBy] = useState("all");
 
     useEffect(() => {
 
@@ -98,12 +98,14 @@ function ShopGrid() {
             sortByProductList = products?.sort((el1, el2) => el1?.productvariations?.upper_price?.localeCompare(el2?.productvariations?.upper_price, undefined, { numeric: true }));
 
             setProducts([...sortByProductList]);
+            setLoading(false);
 
         } else if (e.target.value === "high_to_low") {
 
             sortByProductList = products?.sort((el1, el2) => el2?.productvariations?.upper_price?.localeCompare(el1?.productvariations?.upper_price, undefined, { numeric: true }));
 
             setProducts([...sortByProductList]);
+            setLoading(false);
 
         } else {
 
@@ -312,7 +314,7 @@ function ShopGrid() {
                                                 onChange={onSortByChange}
                                                 value={sortBy}
                                             >
-                                                <option value="default">Default</option>
+                                                <option value="all">All</option>
                                                 <option value="low_to_high">Price : Low To High</option>
                                                 <option value="high_to_low">Price : High To Low</option>
                                             </select>
