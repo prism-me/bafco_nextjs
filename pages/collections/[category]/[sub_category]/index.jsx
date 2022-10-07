@@ -107,6 +107,15 @@ function ShopGrid() {
             setProducts([...sortByProductList]);
             setLoading(false);
 
+        } else if (e.target.value === "stocking") {
+
+            console.log("in_stock :: ", products?.filter(v => v?.productvariations?.in_stock === 1))
+
+            sortByProductList = products?.filter(v => v?.productvariations?.in_stock === 1);
+
+            setProducts([...sortByProductList]);
+            setLoading(false);
+
         } else {
 
             let formdata = {
@@ -315,6 +324,7 @@ function ShopGrid() {
                                                 value={sortBy}
                                             >
                                                 <option value="all">All</option>
+                                                <option value="stocking">Stocking</option>
                                                 <option value="low_to_high">Price : Low To High</option>
                                                 <option value="high_to_low">Price : High To Low</option>
                                             </select>
