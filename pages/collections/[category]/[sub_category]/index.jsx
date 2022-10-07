@@ -12,6 +12,7 @@ import InputRange from 'react-input-range';
 import SlideToggle from 'react-slide-toggle';
 import 'react-input-range/lib/css/index.css';
 import { shopData } from '~/utils/data';
+import Tooltip from "react-simple-tooltip";
 
 function ShopGrid() {
     const router = useRouter();
@@ -380,31 +381,42 @@ function ShopGrid() {
                                         <SlideToggle collapsed={false}>
                                             {
                                                 ({ onToggle, setCollapsibleElement, toggleState }) => (
-                                                    <div className="widget widget-collapsible">
-                                                        <h3 className="widget-title mb-2"><a href="#colour" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Colour</a></h3>
+                                                    <div className="widget widget-collapsible widget-color">
+                                                        <h3 className="widget-title mb-2">
+                                                            <a href="#colour" className={`${toggleState.toLowerCase() == 'collapsed' ? 'collapsed' : ''}`} onClick={(e) => { onToggle(e); e.preventDefault() }}>Colour</a>
+                                                        </h3>
                                                         <div ref={setCollapsibleElement}>
                                                             <div className="widget-body pt-0">
                                                                 <div className="filter-colors">
                                                                     {filterColorValues?.map((item, index) => (
                                                                         item?.value_type !== "3" ?
-                                                                            <a
-                                                                                href={item?.value_id}
-                                                                                className={colorValue?.find(v => v === item?.value_id) ? 'selected' : ''}
-                                                                                style={{ backgroundColor: item?.value_type_variation }}
-                                                                                key={index}
-                                                                                onClick={e => handelColor(e, item)}
+                                                                            <Tooltip
+                                                                                className="stocking_massage"
+                                                                                content={item?.value_name}
                                                                             >
-                                                                                <span className="sr-only">Color Name</span>
-                                                                            </a> :
-                                                                            <a
-                                                                                href={item?.value_id}
-                                                                                className={colorValue?.find(v => v === item?.value_id) ? 'selected' : ''}
-                                                                                style={{ backgroundImage: `url(${item?.value_type_variation})` }}
-                                                                                key={index}
-                                                                                onClick={e => handelColor(e, item)}
+                                                                                <a
+                                                                                    href={item?.value_id}
+                                                                                    className={colorValue?.find(v => v === item?.value_id) ? 'selected' : ''}
+                                                                                    style={{ backgroundColor: item?.value_type_variation }}
+                                                                                    key={index}
+                                                                                    onClick={e => handelColor(e, item)}
+                                                                                >
+                                                                                    <span className="sr-only">Color Name</span>
+                                                                                </a></Tooltip> :
+                                                                            <Tooltip
+                                                                                className="stocking_massage"
+                                                                                content={item?.value_name}
                                                                             >
-                                                                                <span className="sr-only">Color Name</span>
-                                                                            </a>
+                                                                                <a
+                                                                                    href={item?.value_id}
+                                                                                    className={colorValue?.find(v => v === item?.value_id) ? 'selected' : ''}
+                                                                                    style={{ backgroundImage: `url(${item?.value_type_variation})` }}
+                                                                                    key={index}
+                                                                                    onClick={e => handelColor(e, item)}
+                                                                                >
+                                                                                    <span className="sr-only">Color Name</span>
+                                                                                </a>
+                                                                            </Tooltip>
                                                                     ))}
                                                                 </div>
                                                             </div>
