@@ -7,6 +7,7 @@ function HeaderSearch() {
   const router = useRouter("");
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,7 +26,8 @@ function HeaderSearch() {
       .then((response) => {
         if (response.status === 200 || response.status === 201) {
           setLoading(false);
-          setProducts(response?.data);
+          setProducts(response?.data?.products);
+          setCategories(response?.data?.category);
         }
       })
       .catch((err) => {
@@ -35,6 +37,7 @@ function HeaderSearch() {
   }, [searchTerm]);
 
   useEffect(() => {
+    setSearchTerm("");
     document.querySelector(".header-search.show-results") &&
       document
         .querySelector(".header-search.show-results")
@@ -94,16 +97,35 @@ function HeaderSearch() {
                   />
                 ) : (
                   <div className="autocomplete-suggestions">
-                    {products.length > 0 ? (
-                      products?.map((product, index) => (
-                        <ALink
-                          href={`/collections/${product?.category_route?.parent_catetory[0]?.route}/${product?.category_route?.route}/${product?.route}`}
-                          className="autocomplete-suggestion"
-                          key={`search-result-${index}`}
-                        >
-                          {product.name}
-                        </ALink>
-                      ))
+                    {products.length > 0 || categories.length > 0 ? (
+                      <>
+                        {products?.map((product, index) => (
+                          <ALink
+                            href={`/collections/${product?.category_route?.parent_catetory[0]?.route}/${product?.category_route?.route}/${product?.route}`}
+                            className="autocomplete-suggestion"
+                            key={`search-result-${index}`}
+                          >
+                            <img src={product?.featured_image} alt={product?.name} />{product?.name}
+                          </ALink>
+                        ))}
+                        {categories?.map((product, index) => (
+                          product?.parent_catetory?.length === 0 ?
+                            <ALink
+                              href={`/collections/${product?.route}`}
+                              className="autocomplete-suggestion"
+                              key={`search-result-${index}`}
+                            >
+                              <img src={product?.featured_image} alt={product?.name} />{product?.name}
+                            </ALink> :
+                            <ALink
+                              href={`/collections/${product?.parent_catetory[0]?.route}/${product?.route}`}
+                              className="autocomplete-suggestion"
+                              key={`search-result-${index}`}
+                            >
+                              <img src={product?.featured_image} alt={product?.name} />{product?.name}
+                            </ALink>
+                        ))}
+                      </>
                     ) : (
                       <p
                         style={{

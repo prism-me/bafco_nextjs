@@ -18,6 +18,7 @@ function ShopGrid() {
     const query = router.query;
     const currentPageRoute = query?.sub_category;
     const [firstLoading, setFirstLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [perPage, setPerPage] = useState(12);
     const [pageTitle, setPageTitle] = useState("");
     const [toggle, setToggle] = useState(false);
@@ -30,7 +31,7 @@ function ShopGrid() {
     const [filterColorValues, setFilterColorValues] = useState();
     const [filterCategoryList, setFilterCategoryList] = useState();
     const [filterByValue, setFilterByValue] = useState();
-    const [priceRange, setRange] = useState({ min: 0, max: 10000 });
+    const [priceRange, setRange] = useState({ min: 0, max: 60000 });
     const [brandValue, setBrandValue] = useState([]);
     const [colorValue, setColorValue] = useState([]);
     const [sortBy, setSortBy] = useState("default");
@@ -53,7 +54,7 @@ function ShopGrid() {
             setFilterColorValues(response?.data?.variations?.reduce((acc, curr) =>
                 acc.find((v) => v?.value_name === curr?.value_name) ? acc : [...acc, curr],
                 []));
-            setFilterBrandValues(response?.data?.variations?.reduce((acc, curr) =>
+            setFilterBrandValues(response?.data?.brands?.reduce((acc, curr) =>
                 acc.find((v) => v?.brand === curr?.brand) ? acc : [...acc, curr],
                 [])
             );
@@ -88,6 +89,7 @@ function ShopGrid() {
 
     function onSortByChange(e) {
 
+        setLoading(true);
         let sortByProductList = [];
 
         if (e.target.value == "low_to_high") {
@@ -111,9 +113,10 @@ function ShopGrid() {
                 "route": currentPageRoute,
                 "color": colorValue
             };
-    
+
             API.post(`/category-list-filteration`, formdata).then((response) => {
                 setProducts(response?.data)
+                setLoading(false);
             }).catch((err) => {
                 console.log(err);
             });
@@ -147,7 +150,7 @@ function ShopGrid() {
     }
 
     const onAttrClick = (event, type) => {
-
+        setLoading(true);
         var updatedList = [...brandValue];
         if (event.target.checked) {
             updatedList = [...brandValue, event.target.value];
@@ -166,6 +169,7 @@ function ShopGrid() {
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
             setProducts(response?.data)
+            setLoading(false);
         }).catch((err) => {
             console.log(err);
         });
@@ -174,6 +178,8 @@ function ShopGrid() {
     const handelColor = (e, item) => {
 
         e.preventDefault();
+
+        setLoading(true);
 
         var updatedList = [...colorValue];
 
@@ -193,7 +199,8 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data)
+            setProducts(response?.data);
+            setLoading(false);
         }).catch((err) => {
             console.log(err);
         });
@@ -202,6 +209,7 @@ function ShopGrid() {
 
     function onChangePriceRange(value) {
 
+        setLoading(true);
         setRange(value);
 
         let formdata = {
@@ -214,6 +222,7 @@ function ShopGrid() {
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
             setProducts(response?.data)
+            setLoading(false);
         }).catch((err) => {
             console.log(err);
         });
@@ -221,7 +230,7 @@ function ShopGrid() {
 
     function handelSelectFilter() {
 
-        setRange({ min: 0, max: 10000 });
+        setRange({ min: 0, max: 60000 });
         setBrandValue([]);
         setColorValue([]);
 
@@ -314,7 +323,7 @@ function ShopGrid() {
                             <ShopListTwo
                                 products={products}
                                 perPage={perPage}
-                            // loading={loading}
+                                loading={loading}
                             />
                             {/* {totalCount > perPage ?
                                 <Pagination perPage={perPage} total={totalCount}></Pagination>
@@ -378,19 +387,18 @@ function ShopGrid() {
                                                                 <div className="filter-colors">
                                                                     {filterColorValues?.map((item, index) => (
                                                                         item?.value_type !== "3" ?
-                                                                            <ALink
-                                                                                href='#color'
-                                                                                // className={containsAttrInUrl('color', item?.value_name) ? 'selected' : ''}
+                                                                            <a
+                                                                                href={item?.value_id}
+                                                                                className={colorValue?.find(v => v === item?.value_id) ? 'selected' : ''}
                                                                                 style={{ backgroundColor: item?.value_type_variation }}
                                                                                 key={index}
                                                                                 onClick={e => handelColor(e, item)}
                                                                             >
                                                                                 <span className="sr-only">Color Name</span>
-                                                                            </ALink> :
-
+                                                                            </a> :
                                                                             <a
                                                                                 href={item?.value_id}
-                                                                                // className={containsAttrInUrl('color', item?.value_name) ? 'selected' : ''}
+                                                                                className={colorValue?.find(v => v === item?.value_id) ? 'selected' : ''}
                                                                                 style={{ backgroundImage: `url(${item?.value_type_variation})` }}
                                                                                 key={index}
                                                                                 onClick={e => handelColor(e, item)}
@@ -463,7 +471,7 @@ function ShopGrid() {
                                                                 <div className="price-slider">
                                                                     <InputRange
                                                                         formatLabel={value => `${value}`}
-                                                                        maxValue={10000}
+                                                                        maxValue={60000}
                                                                         minValue={0}
                                                                         step={50}
                                                                         value={priceRange}
