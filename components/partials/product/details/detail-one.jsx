@@ -819,14 +819,14 @@ function DetailOne(props) {
             <div className="modal-body">
               <div className="orderdetailbody text-center mb-6">
                 <img
-                  className="mb-6"
+                  className="mb-3"
                   src="images/icons/symbol-christian-cross.png"
                   width="100px"
                   style={{ margin: "0 auto" }}
                   alt="Success"
                 />
                 {/* <h2>Please try again later!</h2> */}
-                <h6>This combination is not availabel.</h6>
+                <h6>This combination is not available.</h6>
               </div>
             </div>
           </div>
