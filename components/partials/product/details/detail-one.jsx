@@ -101,15 +101,15 @@ function DetailOne(props) {
       []
     );
 
-    let colorsNew1 = currentProductVariation?.find((v) => v.type === "Color");
+    let colorsNew1 = currentProductVariation?.find((v) => v?.type === "Color");
 
     // console.log("colorsNew1 :: ", colorsNew1);
 
     // console.log("variation product :: ", product?.product_all_varitaions);
 
-    let newobjecom = product?.product_all_varitaions?.filter(
-      (v) => v.product_details.variation_value_details.name == colorsNew1.name
-    );
+    // let newobjecom = product?.product_all_varitaions?.filter(
+    //   (v) => v?.product_details?.variation_value_details?.name == colorsNew1?.name
+    // );
     // console.log(newobjecom, "newobjecom====== 87");
 
     let newvaria = product?.dropDown?.reduce(
@@ -696,7 +696,9 @@ function DetailOne(props) {
 
           <div className="product-cat text-truncate">
             <span>Type : </span>
-            <ALink href={`/collections/${router?.query?.category}/${router?.query?.sub_category}`}><span style={{ textTransform: "capitalize" }}>{subCategory}</span></ALink>
+            <ALink href={`/collections/${router?.query?.category}/${router?.query?.sub_category}`}>
+              <span style={{ textTransform: "capitalize" }}>{subCategory}</span>
+            </ALink>
           </div>
         </div>
         <div className="product-details-adv">
