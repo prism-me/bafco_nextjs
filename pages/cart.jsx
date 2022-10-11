@@ -34,7 +34,10 @@ function Cart(props) {
       API.get(`/guest-cart-total/${GuestUserDetail}`)
         .then((response) => {
           setCartTotal(response?.data);
-          localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
+          localStorage.setItem(
+            "decimal_amount",
+            response?.data?.decimal_amount
+          );
         })
         .catch((err) => {
           console.log(err);
@@ -59,7 +62,10 @@ function Cart(props) {
       })
         .then((response) => {
           setCartTotal(response?.data);
-          localStorage.setItem("decimal_amount", response?.data?.decimal_amount);
+          localStorage.setItem(
+            "decimal_amount",
+            response?.data?.decimal_amount
+          );
         })
         .catch((err) => {
           console.log(err);
@@ -140,7 +146,10 @@ function Cart(props) {
       })
         .then((response) => {
           console.log("response", response);
-          localStorage.setItem("decimal_amount", response?.data?.original?.decimal_amount);
+          localStorage.setItem(
+            "decimal_amount",
+            response?.data?.original?.decimal_amount
+          );
           setCartTotal(response?.data?.original);
           toast.success("Cart Updated Successfully!");
           if (response?.status === 200) {
@@ -168,7 +177,10 @@ function Cart(props) {
           //   "response Update Cart :: ",
           //   response?.data?.original?.original
           // );
-          localStorage.setItem("decimal_amount", response?.data?.original?.decimal_amount);
+          localStorage.setItem(
+            "decimal_amount",
+            response?.data?.original?.decimal_amount
+          );
           setCartTotal(response?.data?.original);
           toast.success("Cart Updated Successfully!");
           if (response.status === 200) {
@@ -323,7 +335,10 @@ function Cart(props) {
                                 </div>
                               ) : ( */}
                               <div className="product-price d-inline-block mb-0">
-                                AED {item?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                AED{" "}
+                                {item?.variation[0]?.upper_price
+                                  ?.toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                               </div>
                               {/* )} */}
                             </td>
@@ -338,7 +353,12 @@ function Cart(props) {
                               ></Qty>
                             </td>
 
-                            <td className="total-col">AED {item?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                            <td className="total-col">
+                              AED{" "}
+                              {item?.total
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            </td>
 
                             <td className="remove-col">
                               <button
@@ -393,14 +413,24 @@ function Cart(props) {
                       <tbody>
                         <tr className="summary-subtotal">
                           <td>Subtotal:</td>
-                          <td>AED {cartTotal?.sub_total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                          <td>
+                            AED{" "}
+                            {cartTotal?.sub_total
+                              ?.toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </td>
                           {/* <td>AED {cartPriceTotal(props.cartItems).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td> */}
                         </tr>
 
                         {cartTotal?.discounted_price && (
                           <tr className="summary-shipping">
                             <td>Discount:</td>
-                            <td>AED {cartTotal?.discounted_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                            <td>
+                              AED{" "}
+                              {cartTotal?.discounted_price
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            </td>
                           </tr>
                         )}
 
@@ -409,7 +439,9 @@ function Cart(props) {
                           <td>
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
-                              : `AED ${cartTotal?.shipping_charges?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                              : `AED ${cartTotal?.shipping_charges
+                                  ?.toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
 
@@ -450,7 +482,12 @@ function Cart(props) {
 
                         <tr className="summary-total">
                           <td>Total:</td>
-                          <td>AED {cartTotal?.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                          <td>
+                            AED{" "}
+                            {cartTotal?.total
+                              ?.toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          </td>
                           {/* <td>
                                                             AED {(cartPriceTotal(props.cartItems) + shippingCost).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                         </td> */}
@@ -462,7 +499,7 @@ function Cart(props) {
                       className="postpay-widget"
                       data-type="cart"
                       // data-amount={cartTotal?.decimal_amount}
-                      data-amount={localStorage.getItem("decimal_amount")}
+                      data-amount={localStorage.getItem("decimal_amount") * 100}
                       data-currency="AED"
                       data-num-instalments="1"
                       data-country="AE"
