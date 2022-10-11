@@ -129,7 +129,9 @@ function DetailOne(props) {
     // console.log("variationnew :: ", variationnew)
 
     newvaria1?.forEach((item) => {
-      let arr = newvaria?.filter((v) => v?.variant?.name === item?.variant?.name);
+      let arr = newvaria?.filter(
+        (v) => v?.variant?.name === item?.variant?.name
+      );
 
       let newName = item?.variant?.name;
       let type = item?.type;
@@ -244,7 +246,7 @@ function DetailOne(props) {
     // console.log(item, e.target.value);
     // if (e.target.value == "") {
 
-    //  } else 
+    //  } else
     if (!e.target.value) {
       const newState = selectedVariant.map((obj) => {
         if (obj?.type === item?.variant?.name) {
@@ -285,7 +287,6 @@ function DetailOne(props) {
         setVariationPopupeOpen(true);
       }
     } else {
-
       const found = item?.find((v) => v.id == e.target.value);
 
       if (selectedVariant.find((v) => v.type == found.variant.name)) {
@@ -444,8 +445,8 @@ function DetailOne(props) {
           //     </span>
           //   </div>
           // ) :
-          product?.product_single_variation?.product_variation_details
-            ?.limit >= qty ? (
+          product?.product_single_variation?.product_variation_details?.limit >=
+          qty ? (
             <>
               <div className="product-price">
                 AED{" "}
@@ -453,12 +454,17 @@ function DetailOne(props) {
                   ?.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </div>
+              {console.log(
+                "productprice ::",
+                product?.product_single_variation?.product_variation_details
+                  ?.upper_price
+              )}
               <div
                 className="postpay-widget mb-1"
                 data-type="product"
                 data-amount={
                   product?.product_single_variation?.product_variation_details
-                    ?.upper_price
+                    ?.upper_price * 100
                 }
                 data-currency="AED"
                 data-num-instalments="3"
@@ -478,7 +484,7 @@ function DetailOne(props) {
                 data-type="product"
                 data-amount={
                   product?.product_single_variation?.product_variation_details
-                    ?.lower_price
+                    ?.lower_price * 100
                 }
                 data-currency="AED"
                 data-num-instalments="3"
@@ -580,7 +586,23 @@ function DetailOne(props) {
                       <select
                         name={`${item?.newName}`}
                         className="form-control"
-                        value={item?.arrs?.find(v => v?.name === (selectedVariant?.find(x => x.type === item?.newName)?.['name']))?.['id'] === "" ? "" : item?.arrs?.find(v => v?.name === (selectedVariant?.find(x => x.type === item?.newName)?.['name']))?.['id']}
+                        value={
+                          item?.arrs?.find(
+                            (v) =>
+                              v?.name ===
+                              selectedVariant?.find(
+                                (x) => x.type === item?.newName
+                              )?.["name"]
+                          )?.["id"] === ""
+                            ? ""
+                            : item?.arrs?.find(
+                                (v) =>
+                                  v?.name ===
+                                  selectedVariant?.find(
+                                    (x) => x.type === item?.newName
+                                  )?.["name"]
+                              )?.["id"]
+                        }
                         onChange={(e) =>
                           handelSelectVariantChange(e, item?.arrs)
                         }
@@ -604,8 +626,17 @@ function DetailOne(props) {
                           content={item2?.name}
                         >
                           <span
-                            className={`${(item2?.id === selectedVariant?.find(v => v.variation_value_id === item2.id)?.['variation_value_id'] ? "active " : "") + (item2?.disabled ? "disabled" : "")}`}
-                            style={{ backgroundImage: `url(${item2?.type_value})` }}
+                            className={`${
+                              (item2?.id ===
+                              selectedVariant?.find(
+                                (v) => v.variation_value_id === item2.id
+                              )?.["variation_value_id"]
+                                ? "active "
+                                : "") + (item2?.disabled ? "disabled" : "")
+                            }`}
+                            style={{
+                              backgroundImage: `url(${item2?.type_value})`,
+                            }}
                             key={index2}
                             onClick={(e) => handelSelectVariantChange(e, item2)}
                           ></span>
@@ -696,7 +727,9 @@ function DetailOne(props) {
 
           <div className="product-cat text-truncate">
             <span>Type : </span>
-            <ALink href={`/collections/${router?.query?.category}/${router?.query?.sub_category}`}>
+            <ALink
+              href={`/collections/${router?.query?.category}/${router?.query?.sub_category}`}
+            >
               <span style={{ textTransform: "capitalize" }}>{subCategory}</span>
             </ALink>
           </div>
@@ -714,15 +747,15 @@ function DetailOne(props) {
             )}
             {product?.product_single_variation?.product_variation_details
               ?.lead_img && (
-                <li>
-                  <img
-                    src={
-                      product?.product_single_variation?.product_variation_details
-                        ?.lead_img
-                    }
-                  />
-                </li>
-              )}
+              <li>
+                <img
+                  src={
+                    product?.product_single_variation?.product_variation_details
+                      ?.lead_img
+                  }
+                />
+              </li>
+            )}
           </ul>
         </div>
         <div className="sticky-bar d-none">
