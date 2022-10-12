@@ -134,7 +134,7 @@ function ProductInner() {
   return (
     <div className="main">
       <PageHeader
-        title={product?.single_product_details?.product?.name}
+        title={''}
         subTitle=""
         backgroundImage={product?.single_product_details?.product?.banner_img !== "" && product?.single_product_details?.product?.banner_img !== null ? product?.single_product_details?.product?.banner_img : `images/banners/cat_banner.png`}
         buttonText=""

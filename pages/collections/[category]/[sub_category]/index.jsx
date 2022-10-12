@@ -24,6 +24,8 @@ function ShopGrid() {
     const [pageTitle, setPageTitle] = useState("");
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState();
+    const categoryslug = query?.category?.split("-");
+    const categoryName = categoryslug?.map((item) => item + " ");
     const [subCategoryDetails, setsubCategoryDetails] = useState();
     // const [totalCount, setTotalCount] = useState();
     const totalCount = products && products?.length;
@@ -292,7 +294,7 @@ function ShopGrid() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}`}>{query?.category}</ALink></li>
+                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}`}>{categoryName}</ALink></li>
                         <li className="breadcrumb-item active">{pageTitle}</li>
                     </ol>
                 </div>
