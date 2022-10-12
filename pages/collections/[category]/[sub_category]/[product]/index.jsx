@@ -29,17 +29,27 @@ function ProductInner() {
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
-  // useEffect(() => {
-  //     // setQuery(router.query);
-  //     // let slug1 = router.query?.product;
-  //     // setSlug(slug1);
-  //     // setSubCategoryName(query?.sub_category.replace('-', ' '));
+  useEffect(() => {
+      // setQuery(router.query);
+      // let slug1 = router.query?.product;
+      // setSlug(slug1);
+      // setSubCategoryName(query?.sub_category.replace('-', ' '));
 
-  //     // setPageTitle(query?.product.replace('-', ' '));
+      // setPageTitle(query?.product.replace('-', ' '));
 
-  //     console.log("useffect", query);
+      console.log("useffect", query?.product);
+      
+      API.get(`/product-detail/${query?.product}`)
+      .then((response) => {
+        setProduct(response.data);
+        setPageTitle(response?.data?.single_product_details?.product?.name);
+        // setSubCategoryName(query?.sub_category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-  // }, [router])
+  }, [query?.product])
 
   useEffect(() => {
     scrollToPageContentInstant();
@@ -71,28 +81,21 @@ function ProductInner() {
           .catch((err) => {
             console.log(err);
           });
-      } else {
-        API.get(`/product-detail/${query?.product}`)
-          .then((response) => {
-            setProduct(response.data);
-            setPageTitle(response?.data?.single_product_details?.product?.name);
-            // setSubCategoryName(query?.sub_category);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+      } 
+      // else {
+      //   API.get(`/product-detail/${query?.product}`)
+      //     .then((response) => {
+      //       setProduct(response.data);
+      //       setPageTitle(response?.data?.single_product_details?.product?.name);
+      //       // setSubCategoryName(query?.sub_category);
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+      // }
     }
-
-    // API.get(`related-products/${query?.sub_category}`).then((response) => {
-    //     setRelatedProducts(response.data.data)
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-
     API.get(`random-products`)
       .then((response) => {
-        // console.log(response)
         setRandomProducts(response.data.data);
       })
       .catch((err) => {

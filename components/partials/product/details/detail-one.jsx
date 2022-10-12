@@ -451,11 +451,6 @@ function DetailOne(props) {
               <div className="product-price">
                 AED{" "}{product?.product_single_variation?.product_variation_details?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </div>
-              {console.log(
-                "productprice ::",
-                product?.product_single_variation?.product_variation_details
-                  ?.upper_price
-              )}
               <div
                 className="postpay-widget mb-1"
                 data-type="product"
