@@ -12,7 +12,6 @@ function HeaderSearch() {
 
   useEffect(() => {
     document.querySelector("body").addEventListener("click", closeSearchForm);
-
     return () => {
       document
         .querySelector("body")

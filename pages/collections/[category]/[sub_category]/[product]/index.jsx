@@ -37,7 +37,7 @@ function ProductInner() {
 
       // setPageTitle(query?.product.replace('-', ' '));
 
-      console.log("useffect", query?.product);
+      // console.log("useffect", query?.product);
       
       API.get(`/product-detail/${query?.product}`)
       .then((response) => {
