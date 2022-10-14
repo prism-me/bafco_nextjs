@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useRouter } from "next/router";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Rating } from 'react-simple-star-rating';
 import ALink from '~/components/features/alink';
@@ -12,6 +13,7 @@ let initialObject = {
 }
 
 function InfoOne(props) {
+    const router = useRouter();
     const { product, dimension } = props;
     const [reviewData, setReviewData] = useState({ ...initialObject });
 
@@ -44,7 +46,6 @@ function InfoOne(props) {
 
     const handleSubmit = () => {
         let finalRoom = reviewData;
-        console.log("reviewData ::", finalRoom);
     }
 
     return (
@@ -210,7 +211,7 @@ function InfoOne(props) {
                             <div id="stamped-main-widget"
                                 data-product-id={product?.product?.id}
                                 data-name={product?.product?.name}
-                                data-url={`https://bafco-next.herokuapp.com`}
+                                data-url={`https://bafco-next.herokuapp.com${router?.asPath}`}
                                 data-image-url={product?.product?.featured_image}
                                 data-description={product?.product?.short_description}
                                 data-product-sku="2">

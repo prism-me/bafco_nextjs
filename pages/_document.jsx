@@ -45,6 +45,18 @@ export default class MyDocument extends Document {
             }}
           />
           <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+
+          <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+          <script
+            type="text/javascript"
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `StampedFn.init({
+              apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', 
+              storeUrl: 'bafco-next.herokuapp.com' 
+            });`,
+            }}
+          />
         </Head>
         <body>
           <Main />

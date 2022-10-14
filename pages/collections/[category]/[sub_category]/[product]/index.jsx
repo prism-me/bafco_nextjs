@@ -58,9 +58,7 @@ function ProductInner() {
 
   useEffect(() => {
     if (selectedVariation !== "") {
-      // router.push(
-      //   `/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`
-      // );
+      router.push(`/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`);
 
       API.get(`/product-detail/${query?.product}/${selectedVariation}`)
         .then((response) => {
@@ -143,12 +141,10 @@ function ProductInner() {
           type="text/javascript"
           data-partytown-config
           dangerouslySetInnerHTML={{
-            __html: `
-            StampedFn.init({
+            __html: `StampedFn.init({
               apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', 
               storeUrl: 'bafco-next.herokuapp.com' 
-            });
-            `,
+            });`,
           }}
         />
 
