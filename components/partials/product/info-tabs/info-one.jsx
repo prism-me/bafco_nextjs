@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useRouter } from "next/router";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Rating } from 'react-simple-star-rating';
 import ALink from '~/components/features/alink';
@@ -12,6 +13,7 @@ let initialObject = {
 }
 
 function InfoOne(props) {
+    const router = useRouter();
     const { product, dimension } = props;
     const [reviewData, setReviewData] = useState({ ...initialObject });
 
@@ -44,7 +46,6 @@ function InfoOne(props) {
 
     const handleSubmit = () => {
         let finalRoom = reviewData;
-        console.log("reviewData ::", finalRoom);
     }
 
     return (
@@ -80,7 +81,7 @@ function InfoOne(props) {
 
                     <Tab className="nav-item">
                         {/* <span className="nav-link" >Reviews ({product?.review})</span> */}
-                        <span className="nav-link" >Reviews (2)</span>
+                        <span className="nav-link" >Reviews (0)</span>
                     </Tab>
                 </TabList>
 
@@ -206,8 +207,16 @@ function InfoOne(props) {
 
                     <TabPanel className="tab-pane">
                         <div className="reviews">
-                            <h3>Reviews (2)</h3>
-                            <div className="review">
+                            <h3>Reviews (0)</h3>
+                            <div id="stamped-main-widget"
+                                data-product-id={product?.product?.id}
+                                data-name={product?.product?.name}
+                                data-url={`https://bafco-next.herokuapp.com${router?.asPath}`}
+                                data-image-url={product?.product?.featured_image}
+                                data-description={product?.product?.short_description}
+                                data-product-sku="2">
+                            </div>
+                            {/* <div className="review">
                                 <div id="stamped-main-widget"
                                     data-product-id={`${product?.product?.id}`}
                                     data-name={`${product?.product?.name}`}
@@ -243,20 +252,12 @@ function InfoOne(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="review" >
+                            {/* <div className="review" >
                                 <div className="row no-gutters">
                                     <div className="col-auto">
                                         <h4><ALink href="#">John Doe</ALink></h4>
-
-                                        {/* <div className="ratings-container">
-                                            <div className="ratings">
-                                                <div className="ratings-val" style={ { width: product.ratings * 20 + '%' } }></div>
-                                                <span className="tooltip-text">{ product.ratings.toFixed( 2 ) }</span>
-                                            </div>
-                                        </div> */}
-
                                         <span className="review-date mb-1">5 days ago</span>
                                     </div>
 
@@ -273,7 +274,7 @@ function InfoOne(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="reply">
                             <div className="title-wrapper text-left">

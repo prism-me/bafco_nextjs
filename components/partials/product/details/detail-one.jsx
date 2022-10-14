@@ -101,7 +101,7 @@ function DetailOne(props) {
       []
     );
 
-    let colorsNew1 = currentProductVariation?.find((v) => v?.type === "Color");
+    // let colorsNew1 = currentProductVariation?.find((v) => v?.type === "Color");
 
     // console.log("colorsNew1 :: ", colorsNew1);
 
@@ -379,12 +379,38 @@ function DetailOne(props) {
             }}
           />
           <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+
+          {/* <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+          <script
+            type="text/javascript"
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+            StampedFn.init({
+              apiKey: 'key-3Md5j76g62ShEJ4G3U57SIy107P66a', 
+              storeUrl: 'www.bafco.com' 
+            });
+            `,
+            }}
+          /> */}
+
         </Helmet>
         <h1 className="product-title">
           {product?.single_product_details?.product?.name}
         </h1>
 
-        <div className="ratings-container">
+        <span class="stamped-product-reviews-badge stamped-main-badge" data-id={product?.single_product_details?.product?.id}></span>
+
+        {/* <div id="stamped-main-widget"
+          data-product-id={product?.single_product_details?.product?.id}
+          data-name={product?.single_product_details?.product?.name}
+          data-url={`https://bafco-next.herokuapp.com${router?.asPath}`}
+          data-image-url={product?.single_product_details?.product?.featured_image}
+          data-description={product?.single_product_details?.product?.short_description}
+          data-product-sku="YOPO-MBT-ST-FA-PAB-NSP">
+        </div> */}
+
+        {/* <div className="ratings-container">
           <div className="ratings">
             <div
               className="ratings-val"
@@ -393,7 +419,7 @@ function DetailOne(props) {
             <span className="tooltip-text">{3.4}</span>
           </div>
           <span className="ratings-text">( {3.4} Reviews )</span>
-        </div>
+        </div> */}
 
         {
           // product?.product_single_variation?.product_variation_details
@@ -446,13 +472,10 @@ function DetailOne(props) {
           //   </div>
           // ) :
           product?.product_single_variation?.product_variation_details?.limit >=
-          qty ? (
+            qty ? (
             <>
               <div className="product-price">
-                AED{" "}
-                {product?.product_single_variation?.product_variation_details?.upper_price
-                  ?.toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                AED{" "}{product?.product_single_variation?.product_variation_details?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </div>
               <div
                 className="postpay-widget mb-1"
@@ -591,12 +614,12 @@ function DetailOne(props) {
                           )?.["id"] === ""
                             ? ""
                             : item?.arrs?.find(
-                                (v) =>
-                                  v?.name ===
-                                  selectedVariant?.find(
-                                    (x) => x.type === item?.newName
-                                  )?.["name"]
-                              )?.["id"]
+                              (v) =>
+                                v?.name ===
+                                selectedVariant?.find(
+                                  (x) => x.type === item?.newName
+                                )?.["name"]
+                            )?.["id"]
                         }
                         onChange={(e) =>
                           handelSelectVariantChange(e, item?.arrs)
@@ -621,14 +644,13 @@ function DetailOne(props) {
                           content={item2?.name}
                         >
                           <span
-                            className={`${
-                              (item2?.id ===
+                            className={`${(item2?.id ===
                               selectedVariant?.find(
                                 (v) => v.variation_value_id === item2.id
                               )?.["variation_value_id"]
-                                ? "active "
-                                : "") + (item2?.disabled ? "disabled" : "")
-                            }`}
+                              ? "active "
+                              : "") + (item2?.disabled ? "disabled" : "")
+                              }`}
                             style={{
                               backgroundImage: `url(${item2?.type_value})`,
                             }}
@@ -742,15 +764,15 @@ function DetailOne(props) {
             )}
             {product?.product_single_variation?.product_variation_details
               ?.lead_img && (
-              <li>
-                <img
-                  src={
-                    product?.product_single_variation?.product_variation_details
-                      ?.lead_img
-                  }
-                />
-              </li>
-            )}
+                <li>
+                  <img
+                    src={
+                      product?.product_single_variation?.product_variation_details
+                        ?.lead_img
+                    }
+                  />
+                </li>
+              )}
           </ul>
         </div>
         <div className="sticky-bar d-none">

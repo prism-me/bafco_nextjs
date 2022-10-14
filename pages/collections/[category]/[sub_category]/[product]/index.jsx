@@ -11,6 +11,7 @@ import { API } from "~/http/API";
 import LightBox from "react-image-lightbox";
 import PageHeader from '~/components/features/page-header';
 import { scrollToPageContentInstant } from '~/utils';
+import Helmet from "react-helmet";
 
 function ProductInner() {
   const router = useRouter();
@@ -29,27 +30,35 @@ function ProductInner() {
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
-  // useEffect(() => {
-  //     // setQuery(router.query);
-  //     // let slug1 = router.query?.product;
-  //     // setSlug(slug1);
-  //     // setSubCategoryName(query?.sub_category.replace('-', ' '));
-
-  //     // setPageTitle(query?.product.replace('-', ' '));
-
-  //     console.log("useffect", query);
-
-  // }, [router])
-
   useEffect(() => {
-    scrollToPageContentInstant();
-}, [query])
+    // setQuery(router.query);
+    // let slug1 = router.query?.product;
+    // setSlug(slug1);
+    // setSubCategoryName(query?.sub_category.replace('-', ' '));
+
+    // setPageTitle(query?.product.replace('-', ' '));
+
+    // console.log("useffect", query?.product);
+
+    API.get(`/product-detail/${query?.product}`)
+      .then((response) => {
+        setProduct(response.data);
+        setPageTitle(response?.data?.single_product_details?.product?.name);
+        // setSubCategoryName(query?.sub_category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  }, [query?.product])
+
+  // useEffect(() => {
+  //   scrollToPageContentInstant();
+  // }, [query])
 
   useEffect(() => {
     if (selectedVariation !== "") {
-      router.push(
-        `/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`
-      );
+      router.push(`/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`);
 
       API.get(`/product-detail/${query?.product}/${selectedVariation}`)
         .then((response) => {
@@ -71,28 +80,21 @@ function ProductInner() {
           .catch((err) => {
             console.log(err);
           });
-      } else {
-        API.get(`/product-detail/${query?.product}`)
-          .then((response) => {
-            setProduct(response.data);
-            setPageTitle(response?.data?.single_product_details?.product?.name);
-            // setSubCategoryName(query?.sub_category);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
       }
+      // else {
+      //   API.get(`/product-detail/${query?.product}`)
+      //     .then((response) => {
+      //       setProduct(response.data);
+      //       setPageTitle(response?.data?.single_product_details?.product?.name);
+      //       // setSubCategoryName(query?.sub_category);
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+      // }
     }
-
-    // API.get(`related-products/${query?.sub_category}`).then((response) => {
-    //     setRelatedProducts(response.data.data)
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-
     API.get(`random-products`)
       .then((response) => {
-        // console.log(response)
         setRandomProducts(response.data.data);
       })
       .catch((err) => {
@@ -133,8 +135,22 @@ function ProductInner() {
 
   return (
     <div className="main">
+      <Helmet>
+        <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+        <script
+          type="text/javascript"
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `StampedFn.init({
+              apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', 
+              storeUrl: 'bafco-next.herokuapp.com' 
+            });`,
+          }}
+        />
+
+      </Helmet>
       <PageHeader
-        title={product?.single_product_details?.product?.name}
+        title={''}
         subTitle=""
         backgroundImage={product?.single_product_details?.product?.banner_img !== "" && product?.single_product_details?.product?.banner_img !== null ? product?.single_product_details?.product?.banner_img : `images/banners/cat_banner.png`}
         buttonText=""

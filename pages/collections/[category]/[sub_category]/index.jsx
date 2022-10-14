@@ -22,8 +22,11 @@ function ShopGrid() {
     const [loading, setLoading] = useState(false);
     const [perPage, setPerPage] = useState(12);
     const [pageTitle, setPageTitle] = useState("");
+    const [pageBanner, setPageBanner] = useState("");
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState();
+    const categoryslug = query?.category?.split("-");
+    const categoryName = categoryslug?.map((item) => item + " ");
     const [subCategoryDetails, setsubCategoryDetails] = useState();
     // const [totalCount, setTotalCount] = useState();
     const totalCount = products && products?.length;
@@ -44,6 +47,7 @@ function ShopGrid() {
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
             setProducts(response?.data?.products);
             setPageTitle(response?.data?.name);
+            setPageBanner(response?.data?.banner_image);
             // setTotalCount(response?.data?.products?.length)
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
@@ -249,6 +253,7 @@ function ShopGrid() {
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
             setProducts(response?.data?.products);
             setPageTitle(response?.data?.name);
+            setPageBanner(response?.data?.banner_image);
             // setTotalCount(response?.data?.products?.length)
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
@@ -282,8 +287,8 @@ function ShopGrid() {
             <PageHeader
                 title={pageTitle}
                 subTitle=""
-                backgroundImage="images/banners/cat_banner.png"
-                buttonText="View Our Products"
+                backgroundImage={pageBanner === "" || pageBanner === null ? "images/banners/cat_banner.png" : pageBanner}
+                buttonText=""
                 buttonUrl="#"
             />
             <nav className="breadcrumb-nav mb-2">
@@ -292,7 +297,7 @@ function ShopGrid() {
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}`}>{query?.category}</ALink></li>
+                        <li className="breadcrumb-item"><ALink href={`/collections/${query?.category}`}>{categoryName}</ALink></li>
                         <li className="breadcrumb-item active">{pageTitle}</li>
                     </ol>
                 </div>
