@@ -53,7 +53,7 @@ export default class MyDocument extends Document {
             dangerouslySetInnerHTML={{
               __html: `StampedFn.init({
               apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', 
-              storeUrl: 'bafco-next.herokuapp.com' 
+              storeUrl: 'www.bafco.com' 
             });`,
             }}
           />

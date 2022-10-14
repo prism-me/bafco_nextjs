@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Rating } from 'react-simple-star-rating';
 import ALink from '~/components/features/alink';
+import Test from '../../../../pages/test';
+import Helmet from "react-helmet";
 
 let initialObject = {
     name: "",
@@ -208,6 +210,19 @@ function InfoOne(props) {
                     <TabPanel className="tab-pane">
                         <div className="reviews">
                             <h3>Reviews (0)</h3>
+                            <Helmet>
+                                <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+                                <script
+                                    type="text/javascript"
+                                    data-partytown-config
+                                    dangerouslySetInnerHTML={{
+                                        __html: `StampedFn.init({
+                                        apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', 
+                                        storeUrl: 'www.bafco.com' 
+                                        });`,
+                                    }}
+                                />
+                            </Helmet>
                             <div id="stamped-main-widget"
                                 data-product-id={product?.product?.id}
                                 data-name={product?.product?.name}
@@ -216,6 +231,7 @@ function InfoOne(props) {
                                 data-description={product?.product?.short_description}
                                 data-product-sku="2">
                             </div>
+
                             {/* <div className="review">
                                 <div id="stamped-main-widget"
                                     data-product-id={`${product?.product?.id}`}
