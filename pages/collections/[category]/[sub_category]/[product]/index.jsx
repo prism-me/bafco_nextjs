@@ -52,15 +52,15 @@ function ProductInner() {
 
   }, [query?.product])
 
-  useEffect(() => {
-    scrollToPageContentInstant();
-  }, [query])
+  // useEffect(() => {
+  //   scrollToPageContentInstant();
+  // }, [query])
 
   useEffect(() => {
     if (selectedVariation !== "") {
-      router.push(
-        `/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`
-      );
+      // router.push(
+      //   `/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`
+      // );
 
       API.get(`/product-detail/${query?.product}/${selectedVariation}`)
         .then((response) => {
@@ -145,8 +145,8 @@ function ProductInner() {
           dangerouslySetInnerHTML={{
             __html: `
             StampedFn.init({
-              apiKey: 'key-3Md5j76g62ShEJ4G3U57SIy107P66a', 
-              storeUrl: 'www.bafco.com' 
+              apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', 
+              storeUrl: 'bafco-next.herokuapp.com' 
             });
             `,
           }}

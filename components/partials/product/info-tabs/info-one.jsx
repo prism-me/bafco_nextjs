@@ -213,7 +213,7 @@ function InfoOne(props) {
                                 data-url={`https://bafco-next.herokuapp.com`}
                                 data-image-url={product?.product?.featured_image}
                                 data-description={product?.product?.short_description}
-                                data-product-sku="YOPO-MBT-ST-FA-PAB-NSP">
+                                data-product-sku="2">
                             </div>
                             {/* <div className="review">
                                 <div id="stamped-main-widget"
