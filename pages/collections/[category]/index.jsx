@@ -26,7 +26,7 @@ function ProductSubCatInner() {
             <PageHeader
                 title={categoryData?.name}
                 subTitle={categoryData?.sub_title}
-                backgroundImage="images/banners/cat_banner.png"
+                backgroundImage={categoryData?.banner_image === "" || categoryData?.banner_image === null ? "images/banners/cat_banner.png" : categoryData?.banner_image}
                 buttonText="View Our Products"
                 buttonUrl="#"
             />
