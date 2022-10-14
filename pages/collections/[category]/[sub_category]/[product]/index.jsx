@@ -11,6 +11,7 @@ import { API } from "~/http/API";
 import LightBox from "react-image-lightbox";
 import PageHeader from '~/components/features/page-header';
 import { scrollToPageContentInstant } from '~/utils';
+import Helmet from "react-helmet";
 
 function ProductInner() {
   const router = useRouter();
@@ -30,16 +31,16 @@ function ProductInner() {
   const [photoIndex, setPhotoIndex] = useState(0);
 
   useEffect(() => {
-      // setQuery(router.query);
-      // let slug1 = router.query?.product;
-      // setSlug(slug1);
-      // setSubCategoryName(query?.sub_category.replace('-', ' '));
+    // setQuery(router.query);
+    // let slug1 = router.query?.product;
+    // setSlug(slug1);
+    // setSubCategoryName(query?.sub_category.replace('-', ' '));
 
-      // setPageTitle(query?.product.replace('-', ' '));
+    // setPageTitle(query?.product.replace('-', ' '));
 
-      // console.log("useffect", query?.product);
-      
-      API.get(`/product-detail/${query?.product}`)
+    // console.log("useffect", query?.product);
+
+    API.get(`/product-detail/${query?.product}`)
       .then((response) => {
         setProduct(response.data);
         setPageTitle(response?.data?.single_product_details?.product?.name);
@@ -53,7 +54,7 @@ function ProductInner() {
 
   useEffect(() => {
     scrollToPageContentInstant();
-}, [query])
+  }, [query])
 
   useEffect(() => {
     if (selectedVariation !== "") {
@@ -81,7 +82,7 @@ function ProductInner() {
           .catch((err) => {
             console.log(err);
           });
-      } 
+      }
       // else {
       //   API.get(`/product-detail/${query?.product}`)
       //     .then((response) => {
@@ -136,6 +137,22 @@ function ProductInner() {
 
   return (
     <div className="main">
+      <Helmet>
+        <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+        <script
+          type="text/javascript"
+          data-partytown-config
+          dangerouslySetInnerHTML={{
+            __html: `
+            StampedFn.init({
+              apiKey: 'key-3Md5j76g62ShEJ4G3U57SIy107P66a', 
+              storeUrl: 'www.bafco.com' 
+            });
+            `,
+          }}
+        />
+
+      </Helmet>
       <PageHeader
         title={''}
         subTitle=""
