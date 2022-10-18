@@ -116,6 +116,7 @@ function Footer(props) {
                 </div>
               </div>
             </div>
+
             <div className="col-sm-4 col-lg-2">
               <div className="widget">
                 <h4 className="widget-title">QUICK LINKS</h4>
@@ -153,69 +154,54 @@ function Footer(props) {
                 </ul>
               </div>
             </div>
+            <div className="col-sm-3 col-lg-3">
+              <div className="row">
+                <div className="col-sm-6 col-lg-6">
+                  <div className="widget">
+                    <h4 className="widget-title">SHOP</h4>
 
-            <div className="col-sm-2 col-lg-2">
-              <div className="widget">
-                <h4 className="widget-title">SHOP</h4>
+                    <ul className="widget-list">
+                      {categoryList?.map((category, i) => (
+                        category?.parent_id === null &&
+                        <li>
+                          <ALink href={`/collections/${category.route}`} key={i}>{category.name}</ALink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="col-sm-6 col-lg-6">
+                  <div className="widget">
+                    <h4 className="widget-title">BAFCO</h4>
 
-                <ul className="widget-list">
-                  {categoryList?.map((category, i) => (
-                    category?.parent_id === null &&
-                    <li>
-                      <ALink href={`/collections/${category.route}`} key={i}>{category.name}</ALink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* <div className="col-sm-4 col-lg-2">
-              <div className="widget">
-                <h4 className="widget-title">MY ACCOUNT</h4>
-
-                <ul className="widget-list">
-                  <li>
-                    <ALink href="#">My account</ALink>
-                  </li>
-                  <li>
-                    <ALink href="#">Order History</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/policies/terms-of-service">Terms & Condition</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/faq">FAQs</ALink>
-                  </li>
-                </ul>
-              </div>
-            </div> */}
-
-            <div className="col-sm-2 col-lg-1">
-              <div className="widget">
-                <h4 className="widget-title">BAFCO</h4>
-
-                <ul className="widget-list">
-                  <li>
-                    <ALink href="/pages/about/">About Us</ALink>
-                  </li>
-                  <li>
-                    <ALink href="/pages/services/">Services</ALink>
-                  </li>
-                  {/* <li>
+                    <ul className="widget-list">
+                      <li>
+                        <ALink href="/pages/about/">About Us</ALink>
+                      </li>
+                      <li>
+                        <ALink href="/pages/services/">Services</ALink>
+                      </li>
+                      {/* <li>
                     <ALink href="/pages/innovations/">Innovations</ALink>
                   </li> */}
-                  <li>
-                    <ALink href="/pages/resources/">Resources</ALink>
-                  </li>
-                  {/* <li>
+                      <li>
+                        <ALink href="/pages/resources/">Resources</ALink>
+                      </li>
+                      {/* <li>
                     <ALink href="/pages/team/">Our Team</ALink>
                   </li> */}
-                  <li>
-                    <ALink href="/pages/contact/">Contact Us</ALink>
-                  </li>
-                </ul>
+                      <li>
+                        <ALink href="/project-references/">Project Gallery</ALink>
+                      </li>
+                      <li>
+                        <ALink href="/pages/contact/">Contact Us</ALink>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
+
 
             <div className="col-sm-6 col-lg-4" style={{ paddingRight: '0' }}>
               <div className="widget">
