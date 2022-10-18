@@ -1060,7 +1060,7 @@ function Home() {
                                         <h3 className="intro-subtitle">{item?.sub_heading}</h3>
                                         <h1 className="intro-title">{item?.heading}</h1>
 
-                                        <ALink href={item?.button_url} className="btn btn-dark btn-outline-darker">
+                                        <ALink href={`${item?.button_url}`} className="btn btn-dark btn-outline-darker">
                                             <span>{item?.button_text}</span>
                                             <i className="icon-long-arrow-right"></i>
                                         </ALink>
@@ -1149,7 +1149,7 @@ function Home() {
                                         <h4 className="banner-subtitle">{homedata?.collections[0]?.sub_heading}</h4>
                                         <h3 className="banner-title">{homedata?.collections[0]?.heading}</h3>
                                         <div className="banner-text">{homedata?.collections[0]?.starting_from}</div>
-                                        <ALink href={homedata?.collections[0]?.button_url} className="btn btn-outline-gray banner-link">{homedata?.collections[0]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
+                                        <ALink href={`${homedata?.collections[0]?.button_url}`} className="btn btn-outline-gray banner-link">{homedata?.collections[0]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1175,7 +1175,7 @@ function Home() {
                                         <h4 className="banner-subtitle text-grey">{homedata?.collections[1]?.sub_heading}</h4>
                                         <h3 className="banner-title text-white">{homedata?.collections[1]?.heading}</h3>
                                         {/* <div className="banner-text text-white">from $39.99</div> */}
-                                        <ALink href={homedata?.collections[1]?.button_url} className="btn btn-outline-white banner-link">{homedata?.collections[1]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
+                                        <ALink href={`${homedata?.collections[1]?.button_url}`} className="btn btn-outline-white banner-link">{homedata?.collections[1]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1201,7 +1201,7 @@ function Home() {
                                             <div className="banner-content banner-content-top">
                                                 <h4 className="banner-subtitle">{homedata?.collections[2]?.sub_heading}</h4>
                                                 <h3 className="banner-title">{homedata?.collections[2]?.heading}</h3>
-                                                <ALink href={homedata?.collections[2]?.button_url} className="btn btn-outline-gray banner-link">{homedata?.collections[2]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href={`${homedata?.collections[2]?.button_url}`} className="btn btn-outline-gray banner-link">{homedata?.collections[2]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1224,7 +1224,7 @@ function Home() {
                                                 <h4 className="banner-subtitle text-grey">{homedata?.collections[3]?.sub_heading}</h4>
                                                 <h3 className="banner-title text-white">{homedata?.collections[3]?.heading}</h3>
                                                 {/* <div className="banner-text">up to 30% off</div> */}
-                                                <ALink href={homedata?.collections[3]?.button_url} className="btn btn-outline-white banner-link">{homedata?.collections[3]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href={`${homedata?.collections[3]?.button_url}`} className="btn btn-outline-white banner-link">{homedata?.collections[3]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1306,7 +1306,7 @@ function Home() {
                                                             {/* <Countdown date={`2022-08-01T01:02:03`} renderer={rendererThree} /> */}
                                                             <Countdown date={item?.expires_in} renderer={rendererThree} />
                                                         </div>
-                                                        <ALink href={item?.button_url1} className="btn btn-primary">
+                                                        <ALink href={`${item?.button_url1}`} className="btn btn-primary">
                                                             <span>{item?.button_text1}</span><i className="icon-long-arrow-right"></i>
                                                         </ALink>
                                                     </>
@@ -1315,7 +1315,7 @@ function Home() {
 
                                             <div className="deal-image position-relative">
                                                 <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                                                    <ALink href="#">
+                                                    <ALink href={`${item?.button_url1}`}>
                                                         <div className="lazy-overlay bg-white"></div>
 
                                                         <LazyLoadImage
@@ -1334,7 +1334,7 @@ function Home() {
 
                                     <div className="col-lg-3">
                                         <div className="banner banner-overlay banner-overlay-light d-none d-lg-block pb-2">
-                                            <ALink href="#"
+                                            <ALink href={`${item?.button_url2}`}
                                             // className="h-100"
                                             >
                                                 <div className="lazy-overlay"></div>
@@ -1353,7 +1353,7 @@ function Home() {
                                                 <h4 className="banner-subtitle text-white">{item.sub_heading_image2}</h4>
                                                 <h3 className="banner-title text-white">{item.heading_image2}</h3>
                                                 {/* <div className="banner-text text-primary">$49.99</div> */}
-                                                <ALink href={item?.button_url2} className="btn btn-outline-light banner-link">{item?.button_text2}<i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href={`${item?.button_url2}`} className="btn btn-outline-light banner-link">{item?.button_text2}<i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
