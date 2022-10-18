@@ -10,6 +10,7 @@ $forest-green: #008482;
     font-weight: 600;
     font-size: 18px;
   }
+
   .descr {
     p {
       margin-bottom: 0;
@@ -21,8 +22,22 @@ $forest-green: #008482;
       .lead {
         margin: 1rem 0rem 0.5rem 0rem;
         opacity: 0.6;
+
         @media screen and (max-width: 767px) {
           font-size: 13px;
+        }
+
+        span:after {
+          position: absolute;
+          content: ",";
+        }
+
+        span {
+          position: relative;
+        }
+
+        span:last-child:after {
+          content: "";
         }
       }
 
@@ -30,12 +45,14 @@ $forest-green: #008482;
         font-weight: 500;
         margin-bottom: 2rem;
         font-size: 20px;
+
         @media screen and (max-width: 767px) {
           font-size: 15px;
         }
       }
     }
   }
+
   .heading.heading-center .title {
     margin-bottom: 3rem !important;
     font-weight: 500 !important;
@@ -43,18 +60,22 @@ $forest-green: #008482;
     color: #000 !important;
     font-size: 3rem !important;
   }
+
   .nav.nav-pills .nav-item.show .nav-link,
   .nav.nav-pills .nav-item .nav-link.active {
     color: $forest-green !important;
     border-bottom-color: $forest-green !important;
   }
+
   .nav.nav-border-anim .nav-link:before {
     background-color: $forest-green !important;
   }
+
   .nav.nav-pills .nav-link:hover,
   .nav.nav-pills .nav-link:focus {
     color: $forest-green !important;
   }
+
   // .nav.nav-pills .nav-link {
   //   text-transform: capitalize !important;
   // }

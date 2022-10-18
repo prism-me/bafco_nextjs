@@ -219,7 +219,7 @@ function Footer(props) {
                 <ul className="contact-list contact-info">
                   <li>
                     <i className="icon-phone" style={{ color: '#008482' }}></i>
-                    <a href="tel:+971 43 738 300">+971 43 738 300</a>
+                    <a href="tel:+97143738300">+971 4 373 8300</a>
                   </li>
                   <li>
                     <i className="icon-envelope" style={{ color: '#008482' }}></i>
@@ -239,7 +239,7 @@ function Footer(props) {
                 <ul className="contact-list contact-info">
                   <li>
                     <i className="icon-phone" style={{ color: '#008482' }}></i>
-                    <a href="tel:+971 26 317 008">+971 26 317 008</a>
+                    <a href="tel:+97126317008">+971 2 631 7008</a>
                   </li>
                   <li>
                     <i className="icon-envelope" style={{ color: '#008482' }}></i>

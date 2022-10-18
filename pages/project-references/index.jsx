@@ -128,9 +128,11 @@ function ProjectReferences() {
                           <div className="furnitureContent">
                             <p className="lead">
                               {x.project_category.map((t, ind) => (
-                                <span key={ind} className="mr-2">
-                                  {t.name},
-                                </span>
+                                <>
+                                  <span key={ind} className="mr-2">
+                                    {t.name}
+                                  </span>{" "}
+                                </>
                               ))}
                             </p>
                             <h3>{x.title}</h3>
