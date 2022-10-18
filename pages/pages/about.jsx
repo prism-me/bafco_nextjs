@@ -100,7 +100,7 @@ function About() {
                     </div>
                 </div>
 
-                <div className="pt-6 pb-5 mb-6 mb-lg-8">
+                {/* <div className="pt-6 pb-5 mb-6 mb-lg-8">
                     <div className="container">
                         <div className="row" style={{ alignItems: 'center' }}>
                             <div className="col-lg-5 mb-3 mb-lg-0">
@@ -121,7 +121,7 @@ function About() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="mb-2"></div>
 

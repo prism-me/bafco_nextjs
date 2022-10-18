@@ -66,7 +66,7 @@ function Footer(props) {
                     <i className="icon-instagram"></i>
                   </ALink>
                   <ALink
-                    href="https://www.facebook.com/bafcointeriors"
+                    href="https://www.facebook.com/bafcofurniture"
                     className="social-icon social-facebook"
                     rel="noopener noreferrer"
                     title="Facebook"

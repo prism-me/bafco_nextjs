@@ -21,6 +21,7 @@ function VideoModal ( props ) {
     const { showModal } = props;
 
     const closeHandler = () => {
+
         document.querySelector( "#video-modal" ).classList.remove( "ReactModal__Content--after-open" );
 
         if ( document.querySelector( ".ReactModal__Overlay" ) ) {
@@ -42,6 +43,7 @@ function VideoModal ( props ) {
             shouldReturnFocusAfterClose={ false }
             id="video-modal"
         >
+            {console.log("props :: ", props)}
             <button type="button" className="close" onClick={ closeHandler }>
                 <span aria-hidden="true"><i className="icon-close"></i></span>
             </button>
