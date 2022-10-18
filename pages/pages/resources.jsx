@@ -11,6 +11,21 @@ import BlogCollection from "~/components/partials/home/blog-collection";
 import { API } from "~/http/API";
 import { fadeIn } from "~/utils/data";
 import { introSlider, fabricFinishedSlider } from "~/utils/data";
+import Modal from 'react-modal';
+
+
+const customStyles = {
+  content: {
+    top: '50%',
+    transform: 'translateY(-50%)'
+  },
+  overlay: {
+    backgroundColor: 'rgba(77,77,77,0.6)',
+    zIndex: '9000'
+  }
+};
+
+Modal.setAppElement('body');
 
 function Resources(props) {
   const [resourcesdata, setResourcesdata] = useState();
@@ -42,6 +57,8 @@ function Resources(props) {
   const [brochuresList, setBrochuresList] = useState();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categoryList, setCategoryList] = useState("");
+  const [isVideoShow, setIsVideoShow] = useState(false);
+  const [videoLink, setVideoLink] = useState("");
 
   useEffect(() => {
     API.get(`/brochure-category-list`)
@@ -63,9 +80,25 @@ function Resources(props) {
       });
   }, [selectedCategory]);
 
-  function openVideoModal(e) {
+  function openVideoModal(e, link) {
     e.preventDefault();
-    props?.showVideo();
+    // props?.showVideo();
+    setIsVideoShow(true);
+    setVideoLink(link)
+  }
+
+  const closeHandler = () => {
+
+    document.querySelector("#video-modal").classList.remove("ReactModal__Content--after-open");
+
+    if (document.querySelector(".ReactModal__Overlay")) {
+      document.querySelector(".ReactModal__Overlay").style.opacity = '0';
+    }
+
+    setTimeout(() => {
+      setIsVideoShow(false);
+      // props.hideVideo();
+    }, 350);
   }
 
   return (
@@ -223,9 +256,8 @@ function Resources(props) {
                   role="tablist"
                 >
                   <li
-                    className={`nav-item ${
-                      selectedCategory === "all" ? "show" : ""
-                    }`}
+                    className={`nav-item ${selectedCategory === "all" ? "show" : ""
+                      }`}
                     onClick={() => setSelectedCategory("all")}
                   >
                     <span className="nav-link">All</span>
@@ -234,9 +266,8 @@ function Resources(props) {
                     categoryList.map((item, index) => (
                       <li
                         key={index}
-                        className={`nav-item ${
-                          selectedCategory === `${item.route}` ? "show" : ""
-                        }`}
+                        className={`nav-item ${selectedCategory === `${item.route}` ? "show" : ""
+                          }`}
                         onClick={() => setSelectedCategory(`${item.route}`)}
                       >
                         <span className="nav-link">{item.name}</span>
@@ -364,7 +395,7 @@ function Resources(props) {
                         <a
                           href={x?.link}
                           className="btn-iframe"
-                          onClick={openVideoModal}
+                          onClick={(e) => openVideoModal(e, x?.link)}
                         >
                           <i className="icon-play-outline icon"></i>
                         </a>
@@ -396,6 +427,20 @@ function Resources(props) {
                 No Video found.
               </p>
             )}
+            <Modal
+              isOpen={isVideoShow}
+              onRequestClose={closeHandler}
+              style={customStyles}
+              contentLabel="Video Modal"
+              className="video-modal p-3"
+              shouldReturnFocusAfterClose={false}
+              id="video-modal"
+            >
+              <button type="button" className="close" onClick={closeHandler}>
+                <span aria-hidden="true"><i className="icon-close"></i></span>
+              </button>
+              <iframe className="mfp-iframe modal-content" src={`https://www.youtube.com/embed/${videoLink?.split('https://youtu.be/')[1]}`} frameBorder="0" allowFullScreen="" title="youtube"></iframe>
+            </Modal>
           </div>
         </div>
 
