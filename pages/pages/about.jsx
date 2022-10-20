@@ -100,7 +100,7 @@ function About() {
                     </div>
                 </div>
 
-                <div className="pt-6 pb-5 mb-6 mb-lg-8">
+                {/* <div className="pt-6 pb-5 mb-6 mb-lg-8">
                     <div className="container">
                         <div className="row" style={{ alignItems: 'center' }}>
                             <div className="col-lg-5 mb-3 mb-lg-0">
@@ -121,23 +121,47 @@ function About() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="mb-2"></div>
 
                 <div className="bg-image pt-7 pb-5 pt-md-12 pb-md-9" style={{ backgroundImage: `url(images/about/unsplash_wDDfbanbhl8.png)` }} >
                     <div className="container">
                         <div className="row">
-                            {aboutdata?.counter?.map((item, index) => (
-                                <div className="col-6 col-md-3" key={index}>
-                                    <div className="count-container text-center">
-                                        <div className="count-wrapper text-white">
-                                            <span className="count" data-from="0" data-to={item.value} data-speed="3000" data-refresh-interval="50">0</span>
-                                        </div>
-                                        <h3 className="count-title text-white">{item.description}</h3>
+                            {/* {aboutdata?.counter?.map((item, index) => ( */}
+                            <div className="col-6 col-md-3">
+                                <div className="count-container text-center">
+                                    <div className="count-wrapper text-white">
+                                        <span className="count" data-from="0" data-to="200" data-speed="3000" data-refresh-interval="50">0</span>
                                     </div>
+                                    <h3 className="count-title text-white">BAFCO Employees</h3>
                                 </div>
-                            ))}
+                            </div>
+                            <div className="col-6 col-md-3">
+                                <div className="count-container text-center">
+                                    <div className="count-wrapper text-white">
+                                        <span className="count" data-from="0" data-to="30" data-speed="3000" data-refresh-interval="50">0</span>
+                                    </div>
+                                    <h3 className="count-title text-white">Exclusive Partnerships with Global Furniture Brands</h3>
+                                </div>
+                            </div>
+                            <div className="col-6 col-md-3">
+                                <div className="count-container text-center">
+                                    <div className="count-wrapper text-white">
+                                        <span className="count" data-from="0" data-to="2" data-speed="3000" data-refresh-interval="50">0</span>
+                                    </div>
+                                    <h3 className="count-title text-white">Showrooms across GCC</h3>
+                                </div>
+                            </div>
+                            <div className="col-6 col-md-3">
+                                <div className="count-container text-center">
+                                    <div className="count-wrapper text-white">
+                                        <span className="count" data-from="0" data-to="32" data-speed="3000" data-refresh-interval="50">0</span>
+                                    </div>
+                                    <h3 className="count-title text-white">Furniture Lines, made in the UAE by BAFCO</h3>
+                                </div>
+                            </div>
+                            {/* ))} */}
                         </div>
                     </div>
                 </div>

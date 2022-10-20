@@ -6,8 +6,8 @@ import PageHeader from '~/components/features/page-header';
 import { applicationSlider, applicationTabsSlider } from '~/utils/data';
 import withApollo from '~/server/apollo';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import { API } from '~/http/API';
 
-const axios = require('axios');
 
 function ManagmentPage() {
     const router = useRouter();
@@ -18,35 +18,34 @@ function ManagmentPage() {
 
     useEffect(() => {
 
-        setCurrentPage(query?.slug);
+        let pageslug = query?.slug?.split("-");
 
-        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/managements/${query?.slug}`).then(function (response) {
-            // handle success
-            console.log(response.data.content);
+        setCurrentPage(pageslug?.map((item) => item + " "));
+
+        API.get(`managements/${query?.slug}`).then((response) => {
             setManagementdata(response.data.content)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
+        }).catch((err) => {
+            console.log(err);
+        });
 
     }, [query])
 
     return (
         <main className="main shop">
-            <PageHeader
+            {/* <PageHeader
                 title={managementdata?.content?.banner?.heading}
                 subTitle={managementdata?.content?.banner?.sub_heading}
                 backgroundImage={managementdata?.content?.banner?.image}
                 buttonText="Discover More"
                 buttonUrl="#"
-            />
+            /> */}
             <nav className="breadcrumb-nav mb-2">
                 <div className="container">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <ALink href="/">Home</ALink>
                         </li>
-                        <li className="breadcrumb-item active">{managementdata?.content?.banner?.heading}</li>
+                        <li className="breadcrumb-item active">{currentPage}</li>
                     </ol>
                 </div>
             </nav>

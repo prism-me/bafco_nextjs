@@ -148,7 +148,7 @@ function MobileMenu(props) {
 
                 <div className="social-icons">
                     <ALink href="https://www.instagram.com/bafco/" className="social-icon" rel="noopener noreferrer" title="Instagram" target="_blank"><i className="icon-instagram"></i></ALink>
-                    <ALink href="https://www.facebook.com/bafcointeriors" className="social-icon" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
+                    <ALink href="https://www.facebook.com/bafcofurniture" className="social-icon" rel="noopener noreferrer" title="Facebook" target="_blank"><i className="icon-facebook-f"></i></ALink>
                     <ALink href="https://www.linkedin.com/company/bafco/" className="social-icon" rel="noopener noreferrer" title="linkedin" target="_blank"><i className="icon-linkedin"></i></ALink>
                     <ALink href="https://twitter.com/Bafco" className="social-icon" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="icon-twitter"></i></ALink>
                     <ALink href="https://www.pinterest.com/bafcointeriors/" className="social-icon" rel="noopener noreferrer" title="pinterest" target="_blank"><i className="icon-pinterest"></i></ALink>

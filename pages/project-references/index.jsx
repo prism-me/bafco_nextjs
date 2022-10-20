@@ -87,9 +87,8 @@ function ProjectReferences() {
                   role="tablist"
                 >
                   <li
-                    className={`nav-item ${
-                      selectedCategory === "all" ? "show" : ""
-                    }`}
+                    className={`nav-item ${selectedCategory === "all" ? "show" : ""
+                      }`}
                     onClick={() => setSelectedCategory("all")}
                   >
                     <span className="nav-link">All</span>
@@ -98,9 +97,8 @@ function ProjectReferences() {
                     categoryList.map((item, index) => (
                       <li
                         key={index}
-                        className={`nav-item ${
-                          selectedCategory === `${item.route}` ? "show" : ""
-                        }`}
+                        className={`nav-item ${selectedCategory === `${item.route}` ? "show" : ""
+                          }`}
                         onClick={() => setSelectedCategory(`${item.route}`)}
                       >
                         <span className="nav-link">{item.name}</span>
@@ -130,9 +128,11 @@ function ProjectReferences() {
                           <div className="furnitureContent">
                             <p className="lead">
                               {x.project_category.map((t, ind) => (
-                                <span key={ind} className="mr-2">
-                                  {t.name},
-                                </span>
+                                <>
+                                  <span key={ind} className="mr-2">
+                                    {t.name}
+                                  </span>{" "}
+                                </>
                               ))}
                             </p>
                             <h3>{x.title}</h3>

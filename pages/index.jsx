@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import withApollo from '~/server/apollo';
 // import { GET_HOME_DATA } from '~/server/queries';
 import { attrFilter } from '~/utils';
-import { actions as demoAction } from '~/store/demo';
+// import { actions as demoAction } from '~/store/demo';
 import ProductTwelve from '~/components/features/products/product-twelve';
 import { API } from '~/http/API';
 // import { productdata } from "../data";
@@ -31,6 +31,7 @@ import {
     projectRelatedProductsInnerSlider,
     productSlider
 } from '~/utils/data';
+import Modal from 'react-modal';
 
 const axios = require('axios');
 
@@ -951,7 +952,20 @@ const postsdata = [
     }
 ];
 
-function Home(props) {
+const customStyles = {
+    content: {
+        top: '50%',
+        transform: 'translateY(-50%)'
+    },
+    overlay: {
+        backgroundColor: 'rgba(77,77,77,0.6)',
+        zIndex: '9000'
+    }
+};
+
+Modal.setAppElement('body');
+
+function Home() {
     // const { data, loading, error } = useQuery(GET_HOME_DATA);
     // const products = data && data.homeData.products;
     // const topProducts = attrFilter(data && data.homeData.products, 'top');
@@ -962,11 +976,27 @@ function Home(props) {
     const [bloglist, setBlogList] = useState();
     const [productList, setProductList] = useState();
     const [email, setEmail] = useState("");
+    const [isVideoShow, setIsVideoShow] = useState(false);
     // const [selectedCategory, setSelectedCategory] = useState('executive-chairs');
 
     function openVideoModal(e) {
         e.preventDefault();
-        props?.showVideo();
+        // props?.showVideo();
+        setIsVideoShow(true);
+    }
+
+    const closeHandler = () => {
+
+        document.querySelector("#video-modal").classList.remove("ReactModal__Content--after-open");
+
+        if (document.querySelector(".ReactModal__Overlay")) {
+            document.querySelector(".ReactModal__Overlay").style.opacity = '0';
+        }
+
+        setTimeout(() => {
+            setIsVideoShow(false);
+            // props.hideVideo();
+        }, 350);
     }
 
     // if (error) {
@@ -1023,15 +1053,15 @@ function Home(props) {
             <div className="intro-slider-container">
                 <OwlCarousel adclassName="owl-simple owl-light owl-nav-inside" options={introSlider}>
                     {homedata?.banner?.map((item, index) => (
-                        <div className={`intro-slide slide1`} key={index} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item.image !== "" ? item.image : 'images/home/Magic7.jpg'})` }}>
+                        <div className={`intro-slide slide1`} key={index} style={{ backgroundColor: '#EDF2F0', backgroundImage: `url(${item?.image !== "" ? item?.image : 'images/home/Magic7.jpg'})` }}>
                             <div className="container intro-content">
                                 <Reveal keyframes={fadeInUpShorter} delay="100%" duration={1000}>
                                     <>
-                                        <h3 className="intro-subtitle">{item.sub_heading}</h3>
-                                        <h1 className="intro-title">{item.heading}</h1>
+                                        <h3 className="intro-subtitle">{item?.sub_heading}</h3>
+                                        <h1 className="intro-title">{item?.heading}</h1>
 
-                                        <ALink href="#" className="btn btn-dark btn-outline-darker">
-                                            <span>Design My Desk</span>
+                                        <ALink href={`${item?.button_url}`} className="btn btn-dark btn-outline-darker">
+                                            <span>{item?.button_text}</span>
                                             <i className="icon-long-arrow-right"></i>
                                         </ALink>
                                     </>
@@ -1119,7 +1149,7 @@ function Home(props) {
                                         <h4 className="banner-subtitle">{homedata?.collections[0]?.sub_heading}</h4>
                                         <h3 className="banner-title">{homedata?.collections[0]?.heading}</h3>
                                         <div className="banner-text">{homedata?.collections[0]?.starting_from}</div>
-                                        <ALink href="#" className="btn btn-outline-gray banner-link">View All Workstations <i className="icon-long-arrow-right"></i></ALink>
+                                        <ALink href={`${homedata?.collections[0]?.button_url}`} className="btn btn-outline-gray banner-link">{homedata?.collections[0]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1145,7 +1175,7 @@ function Home(props) {
                                         <h4 className="banner-subtitle text-grey">{homedata?.collections[1]?.sub_heading}</h4>
                                         <h3 className="banner-title text-white">{homedata?.collections[1]?.heading}</h3>
                                         {/* <div className="banner-text text-white">from $39.99</div> */}
-                                        <ALink href="#" className="btn btn-outline-white banner-link">View All Chairs <i className="icon-long-arrow-right"></i></ALink>
+                                        <ALink href={`${homedata?.collections[1]?.button_url}`} className="btn btn-outline-white banner-link">{homedata?.collections[1]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                     </div>
                                 </div>
                             </Reveal>
@@ -1171,7 +1201,7 @@ function Home(props) {
                                             <div className="banner-content banner-content-top">
                                                 <h4 className="banner-subtitle">{homedata?.collections[2]?.sub_heading}</h4>
                                                 <h3 className="banner-title">{homedata?.collections[2]?.heading}</h3>
-                                                <ALink href="#" className="btn btn-outline-gray banner-link">View All Desks <i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href={`${homedata?.collections[2]?.button_url}`} className="btn btn-outline-gray banner-link">{homedata?.collections[2]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1194,7 +1224,7 @@ function Home(props) {
                                                 <h4 className="banner-subtitle text-grey">{homedata?.collections[3]?.sub_heading}</h4>
                                                 <h3 className="banner-title text-white">{homedata?.collections[3]?.heading}</h3>
                                                 {/* <div className="banner-text">up to 30% off</div> */}
-                                                <ALink href="#" className="btn btn-outline-white banner-link">View All Sofa <i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href={`${homedata?.collections[3]?.button_url}`} className="btn btn-outline-white banner-link">{homedata?.collections[3]?.button_text} <i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1260,11 +1290,11 @@ function Home(props) {
                                             <div className="deal-content">
                                                 <Reveal keyframes={fadeInLeftShorter} delay={200} duration={1000} triggerOnce>
                                                     <>
-                                                        <h4>{item.sub_heading_image1}</h4>
-                                                        <h2>{item.heading_image1}</h2>
+                                                        <h4>{item?.sub_heading_image1}</h4>
+                                                        <h2>{item?.heading_image1}</h2>
 
                                                         <h3 className="product-title">
-                                                            <ALink href="#">Check Out</ALink>
+                                                            {item?.product_title}
                                                         </h3>
 
                                                         <div className="product-price">
@@ -1274,10 +1304,10 @@ function Home(props) {
 
                                                         <div className="deal-countdown">
                                                             {/* <Countdown date={`2022-08-01T01:02:03`} renderer={rendererThree} /> */}
-                                                            <Countdown date={item.expires_in} renderer={rendererThree} />
+                                                            <Countdown date={item?.expires_in} renderer={rendererThree} />
                                                         </div>
-                                                        <ALink href="#" className="btn btn-primary">
-                                                            <span>Shop Now</span><i className="icon-long-arrow-right"></i>
+                                                        <ALink href={`${item?.button_url1}`} className="btn btn-primary">
+                                                            <span>{item?.button_text1}</span><i className="icon-long-arrow-right"></i>
                                                         </ALink>
                                                     </>
                                                 </Reveal>
@@ -1285,7 +1315,7 @@ function Home(props) {
 
                                             <div className="deal-image position-relative">
                                                 <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
-                                                    <ALink href="#">
+                                                    <ALink href={`${item?.button_url1}`}>
                                                         <div className="lazy-overlay bg-white"></div>
 
                                                         <LazyLoadImage
@@ -1304,7 +1334,7 @@ function Home(props) {
 
                                     <div className="col-lg-3">
                                         <div className="banner banner-overlay banner-overlay-light d-none d-lg-block pb-2">
-                                            <ALink href="#"
+                                            <ALink href={`${item?.button_url2}`}
                                             // className="h-100"
                                             >
                                                 <div className="lazy-overlay"></div>
@@ -1323,7 +1353,7 @@ function Home(props) {
                                                 <h4 className="banner-subtitle text-white">{item.sub_heading_image2}</h4>
                                                 <h3 className="banner-title text-white">{item.heading_image2}</h3>
                                                 {/* <div className="banner-text text-primary">$49.99</div> */}
-                                                <ALink href="/" className="btn btn-outline-light banner-link">Shop Now<i className="icon-long-arrow-right"></i></ALink>
+                                                <ALink href={`${item?.button_url2}`} className="btn btn-outline-light banner-link">{item?.button_text2}<i className="icon-long-arrow-right"></i></ALink>
                                             </div>
                                         </div>
                                     </div>
@@ -1339,15 +1369,35 @@ function Home(props) {
 
             <div className="video-banner video-banner-bg bg-image text-center" style={{ backgroundImage: `url(${homedata?.video?.icon})` }}>
                 <div className="container">
-                    <Reveal keyframes={fadeInUpShorter} delay={200} duration={1000} triggerOnce style={{ backgroundImage: `url(${homedata?.video?.icon})` }}>
+                    <Reveal
+                        keyframes={fadeInUpShorter}
+                        delay={200}
+                        duration={1000}
+                        triggerOnce style={{ backgroundImage: `url(${homedata?.video?.icon})` }}
+                    >
                         <>
                             <h3 className="video-banner-title h1 text-white">
-                                {/* <span>New Collection</span> */}
                                 <strong>{homedata?.video?.heading}</strong>
                             </h3>
-                            <a href={homedata?.video?.link} className="btn-video btn-iframe" onClick={openVideoModal}><i className="icon-play"></i></a>
+                            <a href={homedata?.video?.link} className="btn-video btn-iframe" onClick={openVideoModal}>
+                                <i className="icon-play"></i>
+                            </a>
                         </>
                     </Reveal>
+                    <Modal
+                        isOpen={isVideoShow}
+                        onRequestClose={closeHandler}
+                        style={customStyles}
+                        contentLabel="Video Modal"
+                        className="video-modal p-3"
+                        shouldReturnFocusAfterClose={false}
+                        id="video-modal"
+                    >
+                        <button type="button" className="close" onClick={closeHandler}>
+                            <span aria-hidden="true"><i className="icon-close"></i></span>
+                        </button>
+                        <iframe className="mfp-iframe modal-content" src={`https://www.youtube.com/embed/${homedata?.video?.link?.split('https://youtu.be/')[1]}`} frameBorder="0" allowFullScreen="" title="youtube"></iframe>
+                    </Modal>
                 </div>
             </div>
 
@@ -1405,5 +1455,5 @@ function Home(props) {
     )
 }
 
-// export default Home;
-export default connect(null, { ...demoAction })(Home);
+export default Home;
+// export default connect(null, { ...demoAction })(Home);
