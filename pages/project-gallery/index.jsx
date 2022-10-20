@@ -58,7 +58,7 @@ function ProjectReferences() {
             <li className="breadcrumb-item">
               <ALink href="/">Home</ALink>
             </li>
-            <li className="breadcrumb-item active">Project References</li>
+            <li className="breadcrumb-item active">Project Gallery</li>
           </ol>
         </div>
       </nav>
@@ -78,17 +78,18 @@ function ProjectReferences() {
 
           <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
             <div className="container">
-              <div className="heading heading-center mb-3">
+              {/* <div className="heading heading-center mb-3">
                 <h2 className="title">Furniture</h2>
-              </div>
+              </div> */}
               <div className="top-collection  mb-3">
                 <ul
                   className="nav nav-pills nav-border-anim justify-content-center"
                   role="tablist"
                 >
                   <li
-                    className={`nav-item ${selectedCategory === "all" ? "show" : ""
-                      }`}
+                    className={`nav-item ${
+                      selectedCategory === "all" ? "show" : ""
+                    }`}
                     onClick={() => setSelectedCategory("all")}
                   >
                     <span className="nav-link">All</span>
@@ -97,8 +98,9 @@ function ProjectReferences() {
                     categoryList.map((item, index) => (
                       <li
                         key={index}
-                        className={`nav-item ${selectedCategory === `${item.route}` ? "show" : ""
-                          }`}
+                        className={`nav-item ${
+                          selectedCategory === `${item.route}` ? "show" : ""
+                        }`}
                         onClick={() => setSelectedCategory(`${item.route}`)}
                       >
                         <span className="nav-link">{item.name}</span>
@@ -114,7 +116,7 @@ function ProjectReferences() {
                     projectsList?.slice(0, loadItems).map((x, i) => (
                       <div className="col-6 col-md-6 col-lg-4" key={i}>
                         <div className="furnitureWrper">
-                          <ALink href={`/project-references/${x.id}`}>
+                          <ALink href={`/project-gallery/${x.id}`}>
                             <img
                               key={i}
                               src={x.thumbnail_img}

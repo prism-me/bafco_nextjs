@@ -53,17 +53,20 @@ function ContactForm({ type }) {
                   Do you happen to like one of the products and would like to
                   learn more?
                 </h3>
-                <h3>DO you need swatches?</h3>
-                <h3>Contact us !</h3>
+                <h3>Do you need swatches?</h3>
+                <h3>Contact Us.</h3>
               </div>
-              <p className="fbsubtitle">Architects Support</p>
+              <p className="fbsubtitle">
+                Interior Designer and Architects Support{" "}
+              </p>
               <p className="fbsubtitle">
                 <a href="mailto:info@bafco.eu" className="cinfo">
                   e: info@bafco.eu
                 </a>{" "}
                 <br />
-                <a href="tel:+12345678901" className="cinfo">
-                  t: +12 345 67 89 01
+                <a href="tel:+97143738300" className="cinfo">
+                  {/* t: +12 345 67 89 01 */}
+                  t: +971 4 3738 300
                 </a>
               </p>
             </div>

@@ -82,9 +82,7 @@ function RelatedProducts(props) {
       <figure className="product-media">
         {product?.productvariations?.in_stock ||
         product?.productvariations?.in_stock === 1 ? (
-          <span className="product-label label-circle label-out">
-            Stocking
-          </span>
+          <span className="product-label label-circle label-out">Stocking</span>
         ) : (
           ""
         )}

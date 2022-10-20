@@ -1245,7 +1245,7 @@ function Home() {
                         <img src={homedata?.projects?.image} alt="slide" />
                     </div>
                     <div className="text-center mb-7 mt-2">
-                        <ALink href="/project-references/" className="btn btn-outline-darker btn-more"><span>View All Projects</span><i className="icon-long-arrow-right"></i></ALink>
+                        <ALink href="/project-gallery/" className="btn btn-outline-darker btn-more"><span>View All Projects</span><i className="icon-long-arrow-right"></i></ALink>
                     </div>
                 </Reveal>
             </div>

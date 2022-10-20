@@ -11,21 +11,20 @@ import BlogCollection from "~/components/partials/home/blog-collection";
 import { API } from "~/http/API";
 import { fadeIn } from "~/utils/data";
 import { introSlider, fabricFinishedSlider } from "~/utils/data";
-import Modal from 'react-modal';
-
+import Modal from "react-modal";
 
 const customStyles = {
   content: {
-    top: '50%',
-    transform: 'translateY(-50%)'
+    top: "50%",
+    transform: "translateY(-50%)",
   },
   overlay: {
-    backgroundColor: 'rgba(77,77,77,0.6)',
-    zIndex: '9000'
-  }
+    backgroundColor: "rgba(77,77,77,0.6)",
+    zIndex: "9000",
+  },
 };
 
-Modal.setAppElement('body');
+Modal.setAppElement("body");
 
 function Resources(props) {
   const [resourcesdata, setResourcesdata] = useState();
@@ -84,22 +83,23 @@ function Resources(props) {
     e.preventDefault();
     // props?.showVideo();
     setIsVideoShow(true);
-    setVideoLink(link)
+    setVideoLink(link);
   }
 
   const closeHandler = () => {
-
-    document.querySelector("#video-modal").classList.remove("ReactModal__Content--after-open");
+    document
+      .querySelector("#video-modal")
+      .classList.remove("ReactModal__Content--after-open");
 
     if (document.querySelector(".ReactModal__Overlay")) {
-      document.querySelector(".ReactModal__Overlay").style.opacity = '0';
+      document.querySelector(".ReactModal__Overlay").style.opacity = "0";
     }
 
     setTimeout(() => {
       setIsVideoShow(false);
       // props.hideVideo();
     }, 350);
-  }
+  };
 
   return (
     <div className="main resources-page">
@@ -129,7 +129,7 @@ function Resources(props) {
           <div className="application-heading mb-3 d-flex justify-content-between align-items-center resourceheadingmbl">
             <h3>Project References</h3>
             <ALink
-              href={"/project-references/"}
+              href={"/project-gallery/"}
               className="btn btn-outline-darker btn-more"
             >
               <span>View All Projects</span>
@@ -160,7 +160,7 @@ function Resources(props) {
                     />
 
                     <ALink
-                      href={"/project-references/"}
+                      href={"/project-gallery/"}
                       className="btn btn-sm btn-minwidth btn-outline-primary-2"
                     >
                       <span>Click Here</span>
@@ -256,8 +256,9 @@ function Resources(props) {
                   role="tablist"
                 >
                   <li
-                    className={`nav-item ${selectedCategory === "all" ? "show" : ""
-                      }`}
+                    className={`nav-item ${
+                      selectedCategory === "all" ? "show" : ""
+                    }`}
                     onClick={() => setSelectedCategory("all")}
                   >
                     <span className="nav-link">All</span>
@@ -266,8 +267,9 @@ function Resources(props) {
                     categoryList.map((item, index) => (
                       <li
                         key={index}
-                        className={`nav-item ${selectedCategory === `${item.route}` ? "show" : ""
-                          }`}
+                        className={`nav-item ${
+                          selectedCategory === `${item.route}` ? "show" : ""
+                        }`}
                         onClick={() => setSelectedCategory(`${item.route}`)}
                       >
                         <span className="nav-link">{item.name}</span>
@@ -437,9 +439,19 @@ function Resources(props) {
               id="video-modal"
             >
               <button type="button" className="close" onClick={closeHandler}>
-                <span aria-hidden="true"><i className="icon-close"></i></span>
+                <span aria-hidden="true">
+                  <i className="icon-close"></i>
+                </span>
               </button>
-              <iframe className="mfp-iframe modal-content" src={`https://www.youtube.com/embed/${videoLink?.split('https://youtu.be/')[1]}`} frameBorder="0" allowFullScreen="" title="youtube"></iframe>
+              <iframe
+                className="mfp-iframe modal-content"
+                src={`https://www.youtube.com/embed/${
+                  videoLink?.split("https://youtu.be/")[1]
+                }`}
+                frameBorder="0"
+                allowFullScreen=""
+                title="youtube"
+              ></iframe>
             </Modal>
           </div>
         </div>
