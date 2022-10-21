@@ -66,7 +66,7 @@ function ProjectReferences() {
       <div className="page-content pb-0">
         <div className="container">
           <div className="application-heading mb-5 text-center">
-            <h3>{projectdata?.intro?.title}</h3>
+            <h2 className="title">{projectdata?.intro?.title}</h2>
             <p className="subtitle">{projectdata?.intro?.sub_title}</p>
             <p
               className="descr"

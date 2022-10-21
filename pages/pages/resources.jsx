@@ -127,7 +127,7 @@ function Resources(props) {
       <div className="page-content pb-3">
         <div className="container">
           <div className="application-heading mb-3 d-flex justify-content-between align-items-center resourceheadingmbl">
-            <h3>Project References</h3>
+            <h3 className="title">Project References</h3>
             <ALink
               href={"/project-gallery/"}
               className="btn btn-outline-darker btn-more"
@@ -173,7 +173,7 @@ function Resources(props) {
           </OwlCarousel>
 
           <div className="application-heading mb-3 d-flex justify-content-between align-items-center resourceheadingmbl">
-            <h3>Planning Ideas</h3>
+            <h3 className="title">Planning Ideas</h3>
             <ALink
               href={"/planning-ideas/"}
               className="btn btn-outline-darker btn-more"
@@ -289,23 +289,25 @@ function Resources(props) {
                 <Masonry gutter="15px">
                   {brochuresList?.length > 0 ? (
                     brochuresList?.slice(0, 9)?.map((x, i) => (
-                      <div className="workspaceWrper">
-                        <img
-                          key={i}
-                          src={x.featured_img}
-                          style={{ width: "100%", display: "block" }}
-                        />
-                        <div className="worspaceContent">
-                          <h3>{x.title}</h3>
-                          <p className="lead">
-                            {x?.broucher_category &&
-                              x?.broucher_category?.length > 0 &&
-                              x?.broucher_category?.map((cat, ind) => (
-                                <span key={ind}>{cat?.name}, </span>
-                              ))}
-                          </p>
+                      <ALink href={"/pages/brouchure-images"}>
+                        <div className="workspaceWrper">
+                          <img
+                            key={i}
+                            src={x.featured_img}
+                            style={{ width: "100%", display: "block" }}
+                          />
+                          <div className="worspaceContent">
+                            <h3>{x.title}</h3>
+                            <p className="lead">
+                              {x?.broucher_category &&
+                                x?.broucher_category?.length > 0 &&
+                                x?.broucher_category?.map((cat, ind) => (
+                                  <span key={ind}>{cat?.name} </span>
+                                ))}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      </ALink>
                     ))
                   ) : (
                     <p
@@ -343,7 +345,9 @@ function Resources(props) {
             >
               <div className="col-lg-4 col-sm-6 col-xs-12">
                 <div className="application-heading mb-3">
-                  <h3>{resourcesdata?.fabricFinished?.title}</h3>
+                  <h3 className="title">
+                    {resourcesdata?.fabricFinished?.title}
+                  </h3>
                 </div>
                 <p className="fbsubtitle">
                   {resourcesdata?.fabricFinished?.sub_title}
@@ -383,7 +387,7 @@ function Resources(props) {
         </div>
 
         <div className="application-heading mb-3 text-center">
-          <h3>Video Gallery</h3>
+          <h3 className="title">Video Gallery</h3>
         </div>
         <div className="container">
           <div className="row video-gallery mb-3">

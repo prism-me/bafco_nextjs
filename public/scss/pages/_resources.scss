@@ -142,13 +142,24 @@ $forest-green: #008482;
       }
     }
   }
-
+  .application-heading {
+    .title {
+      font-size: 30px;
+      font-weight: 600;
+      @media (max-width: 575px) {
+        font-size: 25px;
+      }
+    }
+  }
   .heading.heading-center .title {
     margin-bottom: 3rem !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     line-height: 1.1 !important;
     color: #000 !important;
     font-size: 3rem !important;
+    @media (max-width: 575px) {
+      font-size: 25px !important;
+    }
   }
   .nav.nav-pills .nav-item.show .nav-link,
   .nav.nav-pills .nav-item .nav-link.active {
@@ -177,16 +188,22 @@ $forest-green: #008482;
       right: 0;
     }
 
+    &:hover .worspaceContent {
+      opacity: 1;
+    }
+
     .worspaceContent {
       position: absolute;
       bottom: 0;
       right: 0;
       left: 0;
       text-align: center;
+      opacity: 0;
+      transition: all 0.3s;
 
       .lead {
         color: #fff;
-        opacity: 0.6;
+        opacity: 0.8;
         margin-bottom: 1rem;
       }
 
@@ -301,10 +318,13 @@ $forest-green: #008482;
   .blog-posts {
     .title {
       margin-bottom: 3rem !important;
-      font-weight: 500 !important;
+      font-weight: 600 !important;
       line-height: 1.1 !important;
       color: #000 !important;
       font-size: 3rem !important;
+      @media (max-width: 575px) {
+        font-size: 25px !important;
+      }
     }
 
     .blogbtnwrapper {

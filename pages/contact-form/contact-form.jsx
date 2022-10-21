@@ -77,7 +77,7 @@ function ContactForm({ type }) {
                     type="text"
                     className="form-control"
                     id="name"
-                    placeholder="Name & Surname *"
+                    placeholder="Full Name *"
                     name="name"
                     required
                     value={formValues.name}

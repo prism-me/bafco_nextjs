@@ -44,7 +44,7 @@ function VideoGallery(props) {
             <div className="row">
               <div className="col-12 col-md-12 col-lg-12">
                 <div className="application-heading mb-3 d-flex justify-content-between align-items-center">
-                  <h3>Video Gallery</h3>
+                  <h3 className="title">Video Gallery</h3>
                 </div>
               </div>
               {videoList?.length > 0 ? (
