@@ -140,10 +140,9 @@ function RelatedProducts(props) {
       </figure>
 
       <div className="product-body">
-        <div className="product-cat">
+        {/* <div className="product-cat">
           <ALink href={`/collections/${categoryName}`}>{categoryName}</ALink>
-        </div>
-
+        </div> */}
         <h3 className="product-title">
           <ALink
             href={`/collections/${categoryName}/${subCategoryName}/${product?.route}`}
@@ -151,8 +150,13 @@ function RelatedProducts(props) {
             {product?.name}
           </ALink>
         </h3>
-
-        {!product?.productvariations.in_stock ||
+        <div className="product-price">
+          AED{" "}
+          {product?.productvariations?.upper_price
+            ?.toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        </div>
+        {/* {!product?.productvariations.in_stock ||
         product?.productvariations.in_stock == 0 ? (
           <div className="product-price">
             <span className="out-price">
@@ -178,15 +182,7 @@ function RelatedProducts(props) {
             AED{product?.productvariations.lower_price}&ndash;AED
             {product?.productvariations.upper_price}
           </div>
-        )}
-
-        {/* <div className="ratings-container">
-                    <div className="ratings">
-                        <div className="ratings-val" style={{ width: product?.ratings * 20 + '%' }}></div>
-                        <span className="tooltip-text">{product?.ratings?.toFixed(2)}</span>
-                    </div>
-                    <span className="ratings-text">( {product?.review} Reviews )</span>
-                </div> */}
+        )} */}
 
         {product?.variants?.length > 0 ? (
           <div className="product-nav product-nav-dots">
@@ -207,7 +203,7 @@ function RelatedProducts(props) {
         )}
       </div>
 
-      {product?.productvariations.in_stock &&
+      {/* {product?.productvariations.in_stock &&
       product?.productvariations.in_stock !== 0 ? (
         <div className="product-action">
           {product?.variants?.length > 0 ? (
@@ -222,7 +218,7 @@ function RelatedProducts(props) {
         </div>
       ) : (
         ""
-      )}
+      )} */}
     </div>
   );
 }
