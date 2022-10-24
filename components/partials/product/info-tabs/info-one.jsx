@@ -232,7 +232,7 @@ function InfoOne(props) {
                                 data-product-sku="2">
                             </div>
 
-                            {/* <div className="review">
+                            <div className="review">
                                 <div id="stamped-main-widget"
                                     data-product-id={`${product?.product?.id}`}
                                     data-name={`${product?.product?.name}`}
@@ -268,9 +268,9 @@ function InfoOne(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
 
-                            {/* <div className="review" >
+                            <div className="review" >
                                 <div className="row no-gutters">
                                     <div className="col-auto">
                                         <h4><ALink href="#">John Doe</ALink></h4>
@@ -290,7 +290,7 @@ function InfoOne(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
                         <div className="reply">
                             <div className="title-wrapper text-left">

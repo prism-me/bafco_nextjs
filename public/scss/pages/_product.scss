@@ -1682,3 +1682,18 @@
 		}
 	}
 }
+
+.stamped-widget-poweredby {
+    display: none;
+}
+
+span.stamped-summary-actions-newreview, input#stamped-button-submit {
+    color: #008482;
+    background-color: #fff;
+}
+
+span.stamped-summary-actions-newreview:hover, input#stamped-button-submit:hover {
+    color: #fff;
+    border-color: #008482;
+    background-color: #008482;
+}
