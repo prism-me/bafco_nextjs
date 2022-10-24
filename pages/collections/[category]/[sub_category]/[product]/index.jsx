@@ -298,6 +298,7 @@ function ProductInner() {
             data-product-sku="2">
           </div>
 
+
           <RelatedProductsOne
             // relatedproducts={relatedProducts}
             randomProduct={randomProducts}

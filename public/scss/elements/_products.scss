@@ -306,6 +306,8 @@
 
 .out-price {
 	color: #cccccc;
+	text-decoration: line-through;
+	padding-left: 15px;
 }
 
 .out-text {
@@ -451,7 +453,7 @@
 	font-family: "molla";
 
 	&:before {
-		content: "\f318""\f318""\f318""\f318""\f318";
+		content: "\f318" "\f318" "\f318" "\f318" "\f318";
 	}
 }
 

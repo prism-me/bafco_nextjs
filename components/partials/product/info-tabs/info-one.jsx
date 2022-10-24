@@ -81,10 +81,10 @@ function InfoOne(props) {
                         </Tab>
                     }
 
-                    <Tab className="nav-item">
-                        {/* <span className="nav-link" >Reviews ({product?.review})</span> */}
+                    {/* <Tab className="nav-item">
+                        <span className="nav-link" >Reviews ({product?.review})</span>
                         <span className="nav-link" >Reviews (0)</span>
-                    </Tab>
+                    </Tab> */}
                 </TabList>
 
                 <div className="tab-content">
@@ -207,7 +207,7 @@ function InfoOne(props) {
                         </TabPanel>
                     }
 
-                    <TabPanel className="tab-pane">
+                    {/* <TabPanel className="tab-pane">
                         <div className="reviews">
                             <h3>Reviews (0)</h3>
                             <Helmet>
@@ -307,25 +307,6 @@ function InfoOne(props) {
                                     allowHalfIcon
                                     fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']}
                                 />
-                                {/* <span className="rating-stars selected">
-                                    {[1, 2, 3, 4, 5].map((num, index) =>
-                                        <a className={`star-${num}`} href="#" onClick={setRating} key={'star-' + index}>{num}</a>
-                                    )}
-                                </span> */}
-
-                                {/* <select 
-                                name="rating" 
-                                id="rating" 
-                                required=""
-                                
-                                style={{ display: 'none' }}>
-                                    <option value="">Rate…</option>
-                                    <option value="5">Perfect</option>
-                                    <option value="4">Good</option>
-                                    <option value="3">Average</option>
-                                    <option value="2">Not that bad</option>
-                                    <option value="1">Very poor</option>
-                                </select> */}
                             </div>
                             <form>
                                 <textarea
@@ -375,7 +356,7 @@ function InfoOne(props) {
                                 />
                             </form>
                         </div>
-                    </TabPanel>
+                    </TabPanel> */}
                 </div>
             </div>
         </Tabs >

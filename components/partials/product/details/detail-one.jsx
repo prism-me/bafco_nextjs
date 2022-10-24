@@ -380,19 +380,17 @@ function DetailOne(props) {
           />
           <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
 
-          {/* <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+          <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
           <script
             type="text/javascript"
             data-partytown-config
             dangerouslySetInnerHTML={{
-              __html: `
-            StampedFn.init({
-              apiKey: 'key-3Md5j76g62ShEJ4G3U57SIy107P66a', 
+              __html: `StampedFn.init({
+              apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', 
               storeUrl: 'www.bafco.com' 
-            });
-            `,
+            });`,
             }}
-          /> */}
+          />
 
         </Helmet>
         <h1 className="product-title">
@@ -400,15 +398,6 @@ function DetailOne(props) {
         </h1>
 
         <span class="stamped-product-reviews-badge stamped-main-badge" data-id={product?.single_product_details?.product?.id}></span>
-
-        {/* <div id="stamped-main-widget"
-          data-product-id={product?.single_product_details?.product?.id}
-          data-name={product?.single_product_details?.product?.name}
-          data-url={`https://bafco-next.herokuapp.com${router?.asPath}`}
-          data-image-url={product?.single_product_details?.product?.featured_image}
-          data-description={product?.single_product_details?.product?.short_description}
-          data-product-sku="YOPO-MBT-ST-FA-PAB-NSP">
-        </div> */}
 
         {/* <div className="ratings-container">
           <div className="ratings">
@@ -471,19 +460,18 @@ function DetailOne(props) {
           //     </span>
           //   </div>
           // ) :
-          product?.product_single_variation?.product_variation_details?.limit >=
-            qty ? (
+          product?.product_single_variation?.product_variation_details?.limit >= qty ? (
             <>
               <div className="product-price">
                 AED{" "}{product?.product_single_variation?.product_variation_details?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                <span className="out-price">AED{" "}
+                  {product?.product_single_variation?.product_variation_details?.original_upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </span>
               </div>
               <div
                 className="postpay-widget mb-1"
                 data-type="product"
-                data-amount={
-                  product?.product_single_variation?.product_variation_details
-                    ?.upper_price * 100
-                }
+                data-amount={product?.product_single_variation?.product_variation_details?.upper_price * 100}
                 data-currency="AED"
                 data-num-instalments="3"
                 data-locale="en"
@@ -493,17 +481,15 @@ function DetailOne(props) {
             <>
               <div className="product-price">
                 AED{" "}
-                {product?.product_single_variation?.product_variation_details?.lower_price
-                  ?.toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {product?.product_single_variation?.product_variation_details?.lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                <span className="out-price">AED{" "}
+                  {product?.product_single_variation?.product_variation_details?.original_lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </span>
               </div>
               <div
                 className="postpay-widget mb-1"
                 data-type="product"
-                data-amount={
-                  product?.product_single_variation?.product_variation_details
-                    ?.lower_price * 100
-                }
+                data-amount={product?.product_single_variation?.product_variation_details?.lower_price * 100}
                 data-currency="AED"
                 data-num-instalments="3"
                 data-locale="en"
