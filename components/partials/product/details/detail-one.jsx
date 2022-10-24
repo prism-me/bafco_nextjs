@@ -464,9 +464,11 @@ function DetailOne(props) {
             <>
               <div className="product-price">
                 AED{" "}{product?.product_single_variation?.product_variation_details?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                <span className="out-price">AED{" "}
-                  {product?.product_single_variation?.product_variation_details?.original_upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </span>
+                {product?.product_single_variation?.product_variation_details?.original_upper_price &&
+                  <span className="out-price">AED{" "}
+                    {product?.product_single_variation?.product_variation_details?.original_upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </span>
+                }
               </div>
               <div
                 className="postpay-widget mb-1"
@@ -482,9 +484,11 @@ function DetailOne(props) {
               <div className="product-price">
                 AED{" "}
                 {product?.product_single_variation?.product_variation_details?.lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                <span className="out-price">AED{" "}
-                  {product?.product_single_variation?.product_variation_details?.original_lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </span>
+                {product?.product_single_variation?.product_variation_details?.original_lower_price &&
+                  <span className="out-price">AED{" "}
+                    {product?.product_single_variation?.product_variation_details?.original_lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </span>
+                }
               </div>
               <div
                 className="postpay-widget mb-1"
