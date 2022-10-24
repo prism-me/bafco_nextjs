@@ -134,11 +134,9 @@ function Footer(props) {
                   <li>
                     <ALink href="#">Warranty</ALink>
                   </li>
-                  <li>
-                    <ALink href="/project-references/">
-                      Project References
-                    </ALink>
-                  </li>
+                  {/* <li>
+                    <ALink href="/project-gallery/">Project Gallery</ALink>
+                  </li> */}
                   <li>
                     <ALink href="#">Testimonials</ALink>
                   </li>
@@ -149,7 +147,9 @@ function Footer(props) {
                     <ALink href="/pages/faq">FAQs</ALink>
                   </li>
                   <li>
-                    <ALink href="/policies/terms-of-service">Terms & Condition</ALink>
+                    <ALink href="/policies/terms-of-service">
+                      Terms & Condition
+                    </ALink>
                   </li>
                 </ul>
               </div>
@@ -161,12 +161,19 @@ function Footer(props) {
                     <h4 className="widget-title">SHOP</h4>
 
                     <ul className="widget-list">
-                      {categoryList?.map((category, i) => (
-                        category?.parent_id === null &&
-                        <li>
-                          <ALink href={`/collections/${category.route}`} key={i}>{category.name}</ALink>
-                        </li>
-                      ))}
+                      {categoryList?.map(
+                        (category, i) =>
+                          category?.parent_id === null && (
+                            <li>
+                              <ALink
+                                href={`/collections/${category.route}`}
+                                key={i}
+                              >
+                                {category.name}
+                              </ALink>
+                            </li>
+                          )
+                      )}
                     </ul>
                   </div>
                 </div>
@@ -191,7 +198,7 @@ function Footer(props) {
                     <ALink href="/pages/team/">Our Team</ALink>
                   </li> */}
                       <li>
-                        <ALink href="/project-references/">Project Gallery</ALink>
+                        <ALink href="/project-gallery/">Project Gallery</ALink>
                       </li>
                       <li>
                         <ALink href="/pages/contact/">Contact Us</ALink>
@@ -202,8 +209,7 @@ function Footer(props) {
               </div>
             </div>
 
-
-            <div className="col-sm-6 col-lg-4" style={{ paddingRight: '0' }}>
+            <div className="col-sm-6 col-lg-4" style={{ paddingRight: "0" }}>
               <div className="widget">
                 <h4 className="widget-title">VISIT OUR SHOWROOM</h4>
                 <ul className="contact-list">
@@ -218,11 +224,14 @@ function Footer(props) {
                 </ul>
                 <ul className="contact-list contact-info">
                   <li>
-                    <i className="icon-phone" style={{ color: '#008482' }}></i>
+                    <i className="icon-phone" style={{ color: "#008482" }}></i>
                     <a href="tel:+97143738300">+971 4 373 8300</a>
                   </li>
                   <li>
-                    <i className="icon-envelope" style={{ color: '#008482' }}></i>
+                    <i
+                      className="icon-envelope"
+                      style={{ color: "#008482" }}
+                    ></i>
                     <a href="mailto:hello@bafco.com">hello@bafco.com</a>
                   </li>
                 </ul>
@@ -238,11 +247,14 @@ function Footer(props) {
                 </ul>
                 <ul className="contact-list contact-info">
                   <li>
-                    <i className="icon-phone" style={{ color: '#008482' }}></i>
+                    <i className="icon-phone" style={{ color: "#008482" }}></i>
                     <a href="tel:+97126317008">+971 2 631 7008</a>
                   </li>
                   <li>
-                    <i className="icon-envelope" style={{ color: '#008482' }}></i>
+                    <i
+                      className="icon-envelope"
+                      style={{ color: "#008482" }}
+                    ></i>
                     <a href="mailto:auhoffice@bafco.com">auhoffice@bafco.com</a>
                   </li>
                 </ul>

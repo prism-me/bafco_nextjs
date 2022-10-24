@@ -48,7 +48,7 @@ function ProjectReferencesInner(props) {
               <ALink href="/">Home</ALink>
             </li>
             <li className="breadcrumb-item">
-              <ALink href="/project-references/">Project References</ALink>
+              <ALink href="/project-gallery/">Project Gallery</ALink>
             </li>
             <li className="breadcrumb-item active">{projectDetail.title}</li>
           </ol>

@@ -83,24 +83,39 @@ function BrouchureImages(props) {
                     className="img-fluid mb-2"
                   />
                   <div className="bottom-left">
-                    {brochuredata?.profile?.heading}
+                    <h2>{brochuredata?.profile?.heading}</h2>
+                    <p>{brochuredata?.profile?.sub_heading}</p>
+                    <div className="btnWrapper">
+                      <ALink
+                        href="https://issuu.com/bafco/docs/bafco_profile?fr=sNTBhYTQ1MzAxMDc"
+                        target={"_blank"}
+                        className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                      >
+                        <i className="icon-eye"></i>
+                        <span>View BAFCO Company Profile</span>
+                      </ALink>
+                    </div>
                   </div>
-                  <div className="top-right">
+                  {/* <div className="top-right">
                     {brochuredata?.profile?.sub_heading}
-                  </div>
+                  </div> */}
                 </div>
                 {/* <div className="btnWrapper">
-                  <button
+                   <button
                     className="btn btn-sm btn-minwidth btn-outline-primary-2"
                     onClick={() => downloadImg(brochuredata?.profile?.image)}
                   >
                     <i className="icon-arrow-down"></i>
                     <span>Download Bafco Company Profile</span>
-                  </button>
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                  </button> 
+                  <ALink
+                    href="https://issuu.com/bafco/docs/bafco_profile?fr=sNTBhYTQ1MzAxMDc"
+                    target={"_blank"}
+                    className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                  >
                     <i className="icon-eye"></i>
                     <span>View Bafco Company Profile (via ISSUU)</span>
-                  </button>
+                  </ALink>
                 </div> */}
               </div>
             </div>

@@ -897,7 +897,7 @@ export const projectRelatedProductsInnerSlider = {
   nav: true,
   dots: true,
   margin: 20,
-  loop: true,
+  loop: false,
   responsive: {
     0: {
       items: 1,
