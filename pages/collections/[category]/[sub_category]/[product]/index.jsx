@@ -9,8 +9,8 @@ import OwlCarousel from "~/components/features/owl-carousel";
 import ALink from "~/components/features/alink";
 import { API } from "~/http/API";
 import LightBox from "react-image-lightbox";
-import PageHeader from '~/components/features/page-header';
-import { scrollToPageContentInstant } from '~/utils';
+import PageHeader from "~/components/features/page-header";
+import { scrollToPageContentInstant } from "~/utils";
 import Helmet from "react-helmet";
 
 function ProductInner() {
@@ -45,20 +45,22 @@ function ProductInner() {
         setProduct(response.data);
         setPageTitle(response?.data?.single_product_details?.product?.name);
         // setSubCategoryName(query?.sub_category);
+        window.postpay.ui.refresh();
       })
       .catch((err) => {
         console.log(err);
       });
-
-  }, [query?.product])
+  }, [query?.product]);
 
   useEffect(() => {
     scrollToPageContentInstant();
-  }, [query])
+  }, [query]);
 
   useEffect(() => {
     if (selectedVariation !== "") {
-      router.push(`/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`);
+      router.push(
+        `/collections/${query?.category}/${query?.sub_category}/${query?.product}?variationId=${selectedVariation}`
+      );
 
       API.get(`/product-detail/${query?.product}/${selectedVariation}`)
         .then((response) => {
@@ -113,7 +115,7 @@ function ProductInner() {
       (photoIndex +
         product?.single_product_details?.product?.album.length -
         1) %
-      product?.single_product_details?.product?.album.length
+        product?.single_product_details?.product?.album.length
     );
   }
 
@@ -136,7 +138,10 @@ function ProductInner() {
   return (
     <div className="main">
       <Helmet>
-        <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+        <script
+          type="text/javascript"
+          src="https://cdn1.stamped.io/files/widget.min.js"
+        ></script>
         <script
           type="text/javascript"
           data-partytown-config
@@ -149,9 +154,14 @@ function ProductInner() {
         />
       </Helmet>
       <PageHeader
-        title={''}
+        title={""}
         subTitle=""
-        backgroundImage={product?.single_product_details?.product?.banner_img !== "" && product?.single_product_details?.product?.banner_img !== null ? product?.single_product_details?.product?.banner_img : `images/banners/cat_banner.png`}
+        backgroundImage={
+          product?.single_product_details?.product?.banner_img !== "" &&
+          product?.single_product_details?.product?.banner_img !== null
+            ? product?.single_product_details?.product?.banner_img
+            : `images/banners/cat_banner.png`
+        }
         buttonText=""
         buttonUrl="#"
       />
@@ -259,7 +269,7 @@ function ProductInner() {
                   nextSrc={
                     product?.single_product_details?.product?.album[
                       (photoIndex + 1) %
-                      product?.single_product_details?.product?.album?.length
+                        product?.single_product_details?.product?.album?.length
                     ].avatar
                   }
                   prevSrc={
@@ -268,7 +278,7 @@ function ProductInner() {
                         product?.single_product_details?.product?.album
                           ?.length -
                         1) %
-                      product?.single_product_details?.product?.album?.length
+                        product?.single_product_details?.product?.album?.length
                     ].avatar
                   }
                   onCloseRequest={closeLightBox}
@@ -289,14 +299,19 @@ function ProductInner() {
             product={product?.single_product_details}
             dimension={product?.dimensions}
           />
-          <div id="stamped-main-widget"
+          <div
+            id="stamped-main-widget"
             data-product-id={product?.single_product_details?.product?.id}
             data-name={product?.single_product_details?.product?.name}
             data-url={`https://bafco-next.herokuapp.com${router?.asPath}`}
-            data-image-url={product?.single_product_details?.product?.featured_image}
-            data-description={product?.single_product_details?.product?.short_description}
-            data-product-sku="2">
-          </div>
+            data-image-url={
+              product?.single_product_details?.product?.featured_image
+            }
+            data-description={
+              product?.single_product_details?.product?.short_description
+            }
+            data-product-sku="2"
+          ></div>
 
           <RelatedProductsOne
             // relatedproducts={relatedProducts}
