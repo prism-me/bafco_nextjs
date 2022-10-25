@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 import Files from "react-files";
 import { API } from "~/http/API";
+import Helmet from "react-helmet";
+
+
 const axios = require("axios");
 
 const MapComponent = ({ text }) => <div>{text}</div>;
@@ -116,6 +119,10 @@ function Contact() {
 
   return (
     <div className="main">
+      <Helmet>
+        <title>{contactusdata?.meta?.meta_title}</title>
+        <meta name="description" content={`${contactusdata?.meta?.meta_description}`} />
+      </Helmet>
       <PageHeader
         title={contactusdata?.banner?.heading}
         subTitle={contactusdata?.banner?.sub_heading}

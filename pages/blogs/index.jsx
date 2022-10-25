@@ -3,20 +3,27 @@ import ALink from '~/components/features/alink';
 import PageHeader from '~/components/features/page-header';
 const axios = require('axios');
 import withApollo from '~/server/apollo';
+import { API } from '~/http/API';
+import Helmet from "react-helmet";
+
 
 function BlogListing() {
     const [blogdata, setBlogdata] = useState();
 
     useEffect(() => {
-        axios.get('https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/blogs?en').then(function (response) {
+        API.get(`/blogs`).then((response) => {
             setBlogdata(response.data)
-        }).catch(function (error) {
-            console.log(error);
-        })
-    }, [])
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     return (
         <div className="main">
+            <Helmet>
+                <title>Blogs</title>
+                <meta name="description" content={`Blogs`} />
+            </Helmet>
             <PageHeader
                 title="Blogs"
                 subTitle="We make happy workplaces"

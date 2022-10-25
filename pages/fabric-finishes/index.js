@@ -11,6 +11,7 @@ import { GET_PRODUCTS } from "~/server/queries";
 import { scrollToPageContent } from "~/utils";
 import FabricTopBar from "./FabricTopBar";
 import { API } from "~/http/API";
+import Helmet from "react-helmet";
 
 function FabricGrid() {
   const router = useRouter();
@@ -175,6 +176,10 @@ function FabricGrid() {
 
   return (
     <main className="main shop fabric-finishes-page">
+      <Helmet>
+        <title>Fabric & Finishe</title>
+        <meta name="description" content={`Fabric & Finishe`} />
+      </Helmet>
       <nav className="breadcrumb-nav mb-2">
         <div className="container">
           <ol className="breadcrumb">
@@ -197,9 +202,8 @@ function FabricGrid() {
           />
           <div className="row skeleton-body">
             <div
-              className={`col-lg-9 skel-shop-products ${
-                !loading ? "loaded" : ""
-              }`}
+              className={`col-lg-9 skel-shop-products ${!loading ? "loaded" : ""
+                }`}
             >
               <FabricListOne
                 products={fabricList}
@@ -216,9 +220,8 @@ function FabricGrid() {
             </div>
 
             <aside
-              className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${
-                !loading || firstLoading ? "loaded" : ""
-              }`}
+              className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${!loading || firstLoading ? "loaded" : ""
+                }`}
             >
               <div className="skel-widget"></div>
               <div className="skel-widget"></div>

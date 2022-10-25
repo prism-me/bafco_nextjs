@@ -1,11 +1,14 @@
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
-import Card from '~/components/features/accordion/card';
-import Accordion from '~/components/features/accordion/accordion';
+import Helmet from "react-helmet";
 
 function PrivacyPolicy() {
     return (
         <div className="main">
+            <Helmet>
+                <title>Privacy policy</title>
+                <meta name="description" content={`Privacy policy`} />
+            </Helmet>
             <PageHeader
                 title="Privacy policy"
                 subTitle="We make happy workplaces"

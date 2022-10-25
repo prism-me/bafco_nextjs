@@ -32,6 +32,7 @@ import {
     productSlider
 } from '~/utils/data';
 import Modal from 'react-modal';
+import { Helmet } from "react-helmet";
 
 const axios = require('axios');
 
@@ -1050,6 +1051,10 @@ function Home() {
 
     return (
         <div className="main home-page skeleton-body">
+            <Helmet>
+                <title>{homedata?.meta?.meta_title}</title>
+                <meta name="description" content={`${homedata?.meta?.meta_description}`} />
+            </Helmet>
             <div className="intro-slider-container">
                 <OwlCarousel adclassName="owl-simple owl-light owl-nav-inside" options={introSlider}>
                     {homedata?.banner?.map((item, index) => (

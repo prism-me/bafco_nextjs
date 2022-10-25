@@ -1,9 +1,14 @@
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import ALink from '~/components/features/alink';
+import Helmet from "react-helmet";
 
-function Login () {
+function Login() {
     return (
         <div className="main">
+            <Helmet>
+                <title>Login</title>
+                <meta name="description" content={`Login`} />
+            </Helmet>
             <nav className="breadcrumb-nav border-0 mb-0">
                 <div className="container">
                     <ol className="breadcrumb">
@@ -18,11 +23,11 @@ function Login () {
                 </div>
             </nav>
 
-            <div className="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style={ { backgroundImage: `url(images/backgrounds/login-bg.jpg)` } }>
+            <div className="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style={{ backgroundImage: `url(images/backgrounds/login-bg.jpg)` }}>
                 <div className="container">
                     <div className="form-box">
                         <div className="form-tab">
-                            <Tabs selectedTabClassName="show" defaultIndex={ 0 }>
+                            <Tabs selectedTabClassName="show" defaultIndex={0}>
                                 <TabList className="nav nav-pills nav-fill">
                                     <Tab className="nav-item">
                                         <span className="nav-link">Sign In</span>
@@ -34,7 +39,7 @@ function Login () {
                                 </TabList>
 
                                 <div className="tab-content">
-                                    <TabPanel style={ { paddingTop: "2rem" } }>
+                                    <TabPanel style={{ paddingTop: "2rem" }}>
                                         <div>
                                             <form action="#">
                                                 <div className="form-group">
@@ -68,13 +73,13 @@ function Login () {
                                                         <ALink href="/pages/login" className="btn btn-login btn-g">
                                                             <i className="icon-google"></i>
                                                             Login With Google
-                                                    </ALink>
+                                                        </ALink>
                                                     </div>
                                                     <div className="col-sm-6">
                                                         <ALink href="/pages/login" className="btn btn-login btn-f">
                                                             <i className="icon-facebook-f"></i>
                                                             Login With Facebook
-                                                    </ALink>
+                                                        </ALink>
                                                     </div>
                                                 </div>
                                             </div>

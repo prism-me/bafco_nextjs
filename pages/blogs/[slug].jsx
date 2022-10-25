@@ -8,7 +8,8 @@ import PageHeader from '~/components/features/page-header';
 import withApollo from '~/server/apollo';
 import { GET_POST } from '~/server/queries';
 import { actions as demoAction } from '~/store/demo';
-const axios = require('axios');
+import { API } from '~/http/API';
+import Helmet from "react-helmet";
 
 function BlogInner(props) {
     const slug = useRouter().query.slug;
@@ -21,15 +22,12 @@ function BlogInner(props) {
     const [blogData, setBlogdata] = useState();
 
     useEffect(() => {
-        axios.get(`https://prismcloudhosting.com/BAFCO_APIs/public/v1/api/blogs/${slug}`).then(function (response) {
-            // handle success
-            console.log("response :: ", response.data);
+        API.get(`/blogs/${slug}`).then((response) => {
             setBlogdata(response.data)
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-    }, [])
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
 
     // const openVideoModal = (e) => {
@@ -43,6 +41,10 @@ function BlogInner(props) {
 
     return (
         <div className="main">
+            <Helmet>
+                <title>{blogData?.seo?.meta_title}</title>
+                <meta name="description" content={`${blogData?.seo?.meta_description}`} />
+            </Helmet>
             <PageHeader
                 title={blogData?.title}
                 subTitle={blogData?.sub_title}

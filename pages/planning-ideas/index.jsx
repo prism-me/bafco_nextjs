@@ -7,6 +7,9 @@ import { API } from "~/http/API";
 import { fadeIn } from "~/utils/data";
 import Reveal from "react-awesome-reveal";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
+
+
 
 function PlaningIdeas() {
   const [planningList, setPlanningList] = useState();
@@ -42,6 +45,10 @@ function PlaningIdeas() {
 
   return (
     <div className="main planing-ideas-page">
+      <Helmet>
+        <title>Planning Ideas</title>
+        <meta name="description" content={`Planning Ideas`} />
+      </Helmet>
       <nav className="breadcrumb-nav">
         <div className="container">
           <ol className="breadcrumb">

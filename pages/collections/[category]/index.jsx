@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import ALink from '~/components/features/alink';
 import PageHeader from '~/components/features/page-header';
 import { API } from '~/http/API';
+import Helmet from "react-helmet";
 
 function ProductSubCatInner() {
     const router = useRouter();
@@ -23,6 +24,10 @@ function ProductSubCatInner() {
 
     return (
         <main className="main shop">
+            <Helmet>
+                <title>{categoryData?.seo?.meta_title}</title>
+                <meta name="description" content={`${categoryData?.seo?.meta_description}`} />
+            </Helmet>
             <PageHeader
                 title={categoryData?.name}
                 subTitle={categoryData?.sub_title}
