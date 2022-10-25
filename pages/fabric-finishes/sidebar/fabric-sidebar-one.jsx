@@ -2,7 +2,6 @@ import React from "react";
 import { useRouter } from "next/router";
 import SlideToggle from "react-slide-toggle";
 import ALink from "~/components/features/alink";
-import { useState } from "react";
 
 function FabricSidebarOne(props) {
   const { toggle = false, filterData = [], matId } = props;
@@ -29,13 +28,25 @@ function FabricSidebarOne(props) {
   //   ?.filter((x) => x?.name == "Color-Range")[0]
   //   ?.child_value?.filter((item) => item.value.material_id == matId);
 
-  const finishesData = filterData
-    ?.filter((x) => x?.name == "Finishes")[0]
-    ?.child_value?.filter((item) =>
-      item?.child?.filter((x) => x?.value?.material_id == matId)
-    );
+  // const finishesData = filterData
+  //   ?.filter((x) => x?.name == "Finishes")[0]
+  //   ?.child_value?.filter((item) =>
+  //     item?.child?.filter((x) => x?.value?.material_id == matId)
+  //   );
 
   // console.log("collectionfilter ::", finishesData);
+
+  const collectionsArray = filterData?.filter((x) => x?.name == "Brand")[0]
+    ?.child_value;
+  const uniqueCollections = Array.from(new Set(collectionsArray));
+
+  const colorsArray = filterData?.filter((x) => x?.name == "Color-Range")[0]
+    ?.child_value;
+  const uniqueColors = Array.from(new Set(colorsArray));
+
+  const finishesArray = filterData?.filter((x) => x?.name == "Finishes")[0]
+    ?.child_value;
+  const uniqueFinishes = Array.from(new Set(finishesArray));
 
   return (
     <>
@@ -66,27 +77,25 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-items filter-items-count">
-                      {filterData
-                        ?.filter((x) => x?.name == "Brand")[0]
-                        ?.child_value?.map((item, index) => (
-                          <div className="filter-item" key={`cat_${index}`}>
-                            <ALink
-                              className={`${
-                                query?.collection == item?.id ? "active" : ""
-                              }`}
-                              href={{
-                                pathname: router.pathname,
-                                query: {
-                                  collection: item?.id,
-                                },
-                              }}
-                              scroll={false}
-                            >
-                              {item?.name}
-                            </ALink>
-                            {/* <span className="item-count">{item.count}</span> */}
-                          </div>
-                        ))}
+                      {uniqueCollections?.map((item, index) => (
+                        <div className="filter-item" key={`cat_${index}`}>
+                          <ALink
+                            className={`${
+                              query?.collection == item?.id ? "active" : ""
+                            }`}
+                            href={{
+                              pathname: router.pathname,
+                              query: {
+                                collection: item?.id,
+                              },
+                            }}
+                            scroll={false}
+                          >
+                            {item?.name}
+                          </ALink>
+                          {/* <span className="item-count">{item.count}</span> */}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -116,26 +125,24 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-colors">
-                      {filterData
-                        ?.filter((x) => x?.name == "Color-Range")[0]
-                        ?.child_value?.map((item, index) => (
-                          <ALink
-                            className={`${
-                              query?.color == item?.id ? "selected" : ""
-                            }`}
-                            href={{
-                              pathname: router.pathname,
-                              query: {
-                                color: item?.id,
-                              },
-                            }}
-                            style={{ backgroundColor: item?.name }}
-                            key={index}
-                            scroll={false}
-                          >
-                            <span className="sr-only">Color Name</span>
-                          </ALink>
-                        ))}
+                      {uniqueColors?.map((item, index) => (
+                        <ALink
+                          className={`${
+                            query?.color == item?.id ? "selected" : ""
+                          }`}
+                          href={{
+                            pathname: router.pathname,
+                            query: {
+                              color: item?.id,
+                            },
+                          }}
+                          style={{ backgroundColor: item?.name }}
+                          key={index}
+                          scroll={false}
+                        >
+                          <span className="sr-only">Color Name</span>
+                        </ALink>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -165,32 +172,30 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-items">
-                      {filterData
-                        ?.filter((x) => x?.name == "Finishes")[0]
-                        ?.child_value?.map((item, index) => (
-                          <div className="filter-item" key={index}>
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id={`finishes-${index + 1}`}
-                                value={item?.id}
-                                onChange={(e) =>
-                                  onAttrClick(e, "finishes", item?.id)
-                                }
-                                checked={
-                                  query?.finishes == item?.id ? true : false
-                                }
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor={`finishes-${index + 1}`}
-                              >
-                                {item?.name}
-                              </label>
-                            </div>
+                      {uniqueFinishes?.map((item, index) => (
+                        <div className="filter-item" key={index}>
+                          <div className="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input"
+                              id={`finishes-${index + 1}`}
+                              value={item?.id}
+                              onChange={(e) =>
+                                onAttrClick(e, "finishes", item?.id)
+                              }
+                              checked={
+                                query?.finishes == item?.id ? true : false
+                              }
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor={`finishes-${index + 1}`}
+                            >
+                              {item?.name}
+                            </label>
                           </div>
-                        ))}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

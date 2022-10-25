@@ -165,7 +165,7 @@ function Resources(props) {
                     />
 
                     <ALink
-                      href={"/project-gallery/"}
+                      href={`/project-gallery/${item.id}`}
                       className="btn btn-sm btn-minwidth btn-outline-primary-2"
                     >
                       <span>Click Here</span>
