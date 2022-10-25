@@ -35,7 +35,7 @@ function ShopGrid() {
     const [filterColorValues, setFilterColorValues] = useState();
     const [filterCategoryList, setFilterCategoryList] = useState();
     const [filterByValue, setFilterByValue] = useState();
-    const [priceRange, setRange] = useState({ min: 0, max: 60000 });
+    const [priceRange, setRange] = useState({ min: 0, max: 90000 });
     const [brandValue, setBrandValue] = useState([]);
     const [colorValue, setColorValue] = useState([]);
     const [sortBy, setSortBy] = useState("all");
@@ -247,7 +247,7 @@ function ShopGrid() {
 
     function handelSelectFilter() {
 
-        setRange({ min: 0, max: 60000 });
+        setRange({ min: 0, max: 90000 });
         setBrandValue([]);
         setColorValue([]);
 
@@ -501,7 +501,7 @@ function ShopGrid() {
                                                                 <div className="price-slider">
                                                                     <InputRange
                                                                         formatLabel={value => `${value}`}
-                                                                        maxValue={60000}
+                                                                        maxValue={90000}
                                                                         minValue={0}
                                                                         step={50}
                                                                         value={priceRange}
