@@ -45,7 +45,8 @@ function ShopGrid() {
         // setPageTitle(query?.sub_category);
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
-            setProducts(response?.data?.products);
+            // setProducts(response?.data?.products);
+            setProducts(response?.data?.products?.sort((a, b) => a.currentIndex - b.currentIndex));
             setPageTitle(response?.data?.name);
             setPageBanner(response?.data?.banner_image);
             // setTotalCount(response?.data?.products?.length)
@@ -131,7 +132,7 @@ function ShopGrid() {
             };
 
             API.post(`/category-list-filteration`, formdata).then((response) => {
-                setProducts(response?.data)
+                setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex))
                 setLoading(false);
             }).catch((err) => {
                 console.log(err);
@@ -184,7 +185,7 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data)
+            setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex))
             setLoading(false);
         }).catch((err) => {
             console.log(err);
@@ -215,7 +216,7 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data);
+            setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex));
             setLoading(false);
         }).catch((err) => {
             console.log(err);
@@ -237,7 +238,7 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data)
+            setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex))
             setLoading(false);
         }).catch((err) => {
             console.log(err);
@@ -251,7 +252,7 @@ function ShopGrid() {
         setColorValue([]);
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
-            setProducts(response?.data?.products);
+            setProducts(response?.data?.products?.sort((a, b) => a.currentIndex - b.currentIndex));
             setPageTitle(response?.data?.name);
             setPageBanner(response?.data?.banner_image);
             // setTotalCount(response?.data?.products?.length)
