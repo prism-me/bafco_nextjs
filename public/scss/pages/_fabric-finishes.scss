@@ -70,7 +70,9 @@ $forest-green: #008482;
   .product-title {
     text-align: left;
   }
-
+  .product-media img {
+    height: auto;
+  }
   .product-media::before {
     padding-top: 100%;
   }
