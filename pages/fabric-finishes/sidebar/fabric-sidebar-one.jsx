@@ -72,17 +72,17 @@ function FabricSidebarOne(props) {
                           <div className="filter-item" key={`cat_${index}`}>
                             <ALink
                               className={`${
-                                query.collection == item.id ? "active" : ""
+                                query?.collection == item?.id ? "active" : ""
                               }`}
                               href={{
                                 pathname: router.pathname,
                                 query: {
-                                  collection: item.id,
+                                  collection: item?.id,
                                 },
                               }}
                               scroll={false}
                             >
-                              {item.name}
+                              {item?.name}
                             </ALink>
                             {/* <span className="item-count">{item.count}</span> */}
                           </div>
@@ -121,15 +121,15 @@ function FabricSidebarOne(props) {
                         ?.child_value?.map((item, index) => (
                           <ALink
                             className={`${
-                              query.color == item.id ? "selected" : ""
+                              query?.color == item?.id ? "selected" : ""
                             }`}
                             href={{
                               pathname: router.pathname,
                               query: {
-                                color: item.id,
+                                color: item?.id,
                               },
                             }}
-                            style={{ backgroundColor: item.name }}
+                            style={{ backgroundColor: item?.name }}
                             key={index}
                             scroll={false}
                           >
@@ -174,19 +174,19 @@ function FabricSidebarOne(props) {
                                 type="checkbox"
                                 className="custom-control-input"
                                 id={`finishes-${index + 1}`}
-                                value={item.id}
+                                value={item?.id}
                                 onChange={(e) =>
-                                  onAttrClick(e, "finishes", item.id)
+                                  onAttrClick(e, "finishes", item?.id)
                                 }
                                 checked={
-                                  query.finishes == item.id ? true : false
+                                  query?.finishes == item?.id ? true : false
                                 }
                               />
                               <label
                                 className="custom-control-label"
                                 htmlFor={`finishes-${index + 1}`}
                               >
-                                {item.name}
+                                {item?.name}
                               </label>
                             </div>
                           </div>

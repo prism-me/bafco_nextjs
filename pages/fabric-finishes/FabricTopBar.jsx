@@ -56,14 +56,15 @@ function FabricTopBar(props) {
       <div className="fabric-top-bar mb-5">
         <div className="btnWrapper">
           {categoryList?.length > 0 &&
-            categoryList.map((item, index) => (
+            categoryList?.map((item, index) => (
               <button
+                key={index}
                 className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${
-                  selectedCategory == `${item.name}` ? "active" : ""
+                  selectedCategory == `${item?.name}` ? "active" : ""
                 }`}
                 onClick={() => {
-                  onSliderClickTab(`${item.name}`);
-                  onMatTab(`${item.id}`);
+                  onSliderClickTab(`${item?.name}`);
+                  onMatTab(`${item?.id}`);
                 }}
                 ref={childRef}
               >
