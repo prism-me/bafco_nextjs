@@ -19,11 +19,11 @@ function FabricSidebarOne(props) {
     }
   }
 
-  const collectionData = filterData
-    ?.filter((x) => x?.name == "Collection")[0]
-    ?.child_value[0]?.child?.filter(
-      (item) => item?.value?.material_id == matId
-    );
+  // const collectionData = filterData
+  //   ?.filter((x) => x?.name == "Collection")[0]
+  //   ?.child_value[0]?.child?.filter(
+  //     (item) => item?.value?.material_id == matId
+  //   );
 
   // const colorsData = filterData
   //   ?.filter((x) => x?.name == "Color-Range")[0]
@@ -66,25 +66,27 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-items filter-items-count">
-                      {collectionData?.map((item, index) => (
-                        <div className="filter-item" key={`cat_${index}`}>
-                          <ALink
-                            className={`${
-                              query.collection == item.id ? "active" : ""
-                            }`}
-                            href={{
-                              pathname: router.pathname,
-                              query: {
-                                collection: item.id,
-                              },
-                            }}
-                            scroll={false}
-                          >
-                            {item.name}
-                          </ALink>
-                          {/* <span className="item-count">{item.count}</span> */}
-                        </div>
-                      ))}
+                      {filterData
+                        ?.filter((x) => x?.name == "Brand")[0]
+                        ?.child_value?.map((item, index) => (
+                          <div className="filter-item" key={`cat_${index}`}>
+                            <ALink
+                              className={`${
+                                query.collection == item.id ? "active" : ""
+                              }`}
+                              href={{
+                                pathname: router.pathname,
+                                query: {
+                                  collection: item.id,
+                                },
+                              }}
+                              scroll={false}
+                            >
+                              {item.name}
+                            </ALink>
+                            {/* <span className="item-count">{item.count}</span> */}
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>

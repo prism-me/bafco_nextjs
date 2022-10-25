@@ -70,7 +70,7 @@ function FabricTopBar(props) {
                 <span>{item.name}</span>
               </button>
             ))}
-          <button
+          {/* <button
             className="btn btn-sm btn-minwidth btn-outline-primary-2 downloadbtn"
             onClick={() =>
               downloadImg("http://www.africau.edu/images/default/sample.pdf")
@@ -78,15 +78,15 @@ function FabricTopBar(props) {
           >
             <i className="icon-arrow-down"></i>
             <span>Download Collections</span>
-          </button>
+          </button> */}
         </div>
         <div className="toolbox mb-0">
           <div className="toolbox-right">
-            <div className="toolbox-sort">
+            {/* <div className="toolbox-sort">
               <label htmlFor="sortby" className="mr-0">
                 Laminate Card
               </label>
-            </div>
+            </div> */}
             {/* <div className="toolbox-layout">
               <ALink
                 href=""
