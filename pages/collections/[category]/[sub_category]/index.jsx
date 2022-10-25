@@ -35,7 +35,7 @@ function ShopGrid() {
     const [filterColorValues, setFilterColorValues] = useState();
     const [filterCategoryList, setFilterCategoryList] = useState();
     const [filterByValue, setFilterByValue] = useState();
-    const [priceRange, setRange] = useState({ min: 0, max: 60000 });
+    const [priceRange, setRange] = useState({ min: 0, max: 90000 });
     const [brandValue, setBrandValue] = useState([]);
     const [colorValue, setColorValue] = useState([]);
     const [sortBy, setSortBy] = useState("all");
@@ -45,7 +45,8 @@ function ShopGrid() {
         // setPageTitle(query?.sub_category);
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
-            setProducts(response?.data?.products);
+            // setProducts(response?.data?.products);
+            setProducts(response?.data?.products?.sort((a, b) => a.currentIndex - b.currentIndex));
             setPageTitle(response?.data?.name);
             setPageBanner(response?.data?.banner_image);
             // setTotalCount(response?.data?.products?.length)
@@ -131,7 +132,7 @@ function ShopGrid() {
             };
 
             API.post(`/category-list-filteration`, formdata).then((response) => {
-                setProducts(response?.data)
+                setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex))
                 setLoading(false);
             }).catch((err) => {
                 console.log(err);
@@ -184,7 +185,7 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data)
+            setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex))
             setLoading(false);
         }).catch((err) => {
             console.log(err);
@@ -215,7 +216,7 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data);
+            setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex));
             setLoading(false);
         }).catch((err) => {
             console.log(err);
@@ -237,7 +238,7 @@ function ShopGrid() {
         };
 
         API.post(`/category-list-filteration`, formdata).then((response) => {
-            setProducts(response?.data)
+            setProducts(response?.data?.sort((a, b) => a.currentIndex - b.currentIndex))
             setLoading(false);
         }).catch((err) => {
             console.log(err);
@@ -246,12 +247,12 @@ function ShopGrid() {
 
     function handelSelectFilter() {
 
-        setRange({ min: 0, max: 60000 });
+        setRange({ min: 0, max: 90000 });
         setBrandValue([]);
         setColorValue([]);
 
         API.get(`/front-products/${currentPageRoute}`).then((response) => {
-            setProducts(response?.data?.products);
+            setProducts(response?.data?.products?.sort((a, b) => a.currentIndex - b.currentIndex));
             setPageTitle(response?.data?.name);
             setPageBanner(response?.data?.banner_image);
             // setTotalCount(response?.data?.products?.length)
@@ -500,7 +501,7 @@ function ShopGrid() {
                                                                 <div className="price-slider">
                                                                     <InputRange
                                                                         formatLabel={value => `${value}`}
-                                                                        maxValue={60000}
+                                                                        maxValue={90000}
                                                                         minValue={0}
                                                                         step={50}
                                                                         value={priceRange}
