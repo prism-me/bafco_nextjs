@@ -36,17 +36,29 @@ function FabricSidebarOne(props) {
 
   // console.log("collectionfilter ::", finishesData);
 
-  const collectionsArray = filterData?.filter((x) => x?.name == "Brand")[0]
-    ?.child_value;
-  const uniqueCollections = Array.from(new Set(collectionsArray));
+  const uniqueCollections = [];
+  filterData
+    ?.filter((x) => x?.name == "Brand")[0]
+    ?.child_value.map((item) => {
+      var findItem = uniqueCollections.find((x) => x.name === item.name);
+      if (!findItem) uniqueCollections.push(item);
+    });
 
-  const colorsArray = filterData?.filter((x) => x?.name == "Color-Range")[0]
-    ?.child_value;
-  const uniqueColors = Array.from(new Set(colorsArray));
+  const uniqueColors = [];
+  filterData
+    ?.filter((x) => x?.name == "Color Range")[0]
+    ?.child_value.map((item) => {
+      var findItem = uniqueColors.find((x) => x.name === item.name);
+      if (!findItem) uniqueColors.push(item);
+    });
 
-  const finishesArray = filterData?.filter((x) => x?.name == "Finishes")[0]
-    ?.child_value;
-  const uniqueFinishes = Array.from(new Set(finishesArray));
+  const uniqueFinishes = [];
+  filterData
+    ?.filter((x) => x?.name == "Finishes")[0]
+    ?.child_value.map((item) => {
+      var findItem = uniqueFinishes.find((x) => x.name === item.name);
+      if (!findItem) uniqueFinishes.push(item);
+    });
 
   return (
     <>
