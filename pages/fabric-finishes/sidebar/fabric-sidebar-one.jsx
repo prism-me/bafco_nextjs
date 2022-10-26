@@ -18,47 +18,41 @@ function FabricSidebarOne(props) {
     }
   }
 
-  // const collectionData = filterData
-  //   ?.filter((x) => x?.name == "Collection")[0]
-  //   ?.child_value[0]?.child?.filter(
-  //     (item) => item?.value?.material_id == matId
-  //   );
-
-  // const colorsData = filterData
-  //   ?.filter((x) => x?.name == "Color-Range")[0]
-  //   ?.child_value?.filter((item) => item.value.material_id == matId);
-
-  // const finishesData = filterData
-  //   ?.filter((x) => x?.name == "Finishes")[0]
-  //   ?.child_value?.filter((item) =>
-  //     item?.child?.filter((x) => x?.value?.material_id == matId)
-  //   );
-
-  // console.log("collectionfilter ::", finishesData);
-
-  const uniqueCollections = [];
-  filterData
+  const collectionData = filterData
     ?.filter((x) => x?.name == "Brand")[0]
-    ?.child_value.map((item) => {
-      var findItem = uniqueCollections.find((x) => x.name === item.name);
-      if (!findItem) uniqueCollections.push(item);
-    });
+    ?.child_value?.filter((item) => item?.value?.material_id == matId);
 
-  const uniqueColors = [];
-  filterData
+  const colorsData = filterData
     ?.filter((x) => x?.name == "Color Range")[0]
-    ?.child_value.map((item) => {
-      var findItem = uniqueColors.find((x) => x.name === item.name);
-      if (!findItem) uniqueColors.push(item);
-    });
+    ?.child_value?.filter((item) => item?.value?.material_id == matId);
 
-  const uniqueFinishes = [];
-  filterData
+  const finishesData = filterData
     ?.filter((x) => x?.name == "Finishes")[0]
-    ?.child_value.map((item) => {
-      var findItem = uniqueFinishes.find((x) => x.name === item.name);
-      if (!findItem) uniqueFinishes.push(item);
-    });
+    ?.child_value?.filter((item) => item?.value?.material_id == matId);
+
+  // const uniqueCollections = [];
+  // filterData
+  //   ?.filter((x) => x?.name == "Brand")[0]
+  //   ?.child_value.map((item) => {
+  //     var findItem = uniqueCollections.find((x) => x.name === item.name);
+  //     if (!findItem) uniqueCollections.push(item);
+  //   });
+
+  // const uniqueColors = [];
+  // filterData
+  //   ?.filter((x) => x?.name == "Color Range")[0]
+  //   ?.child_value.map((item) => {
+  //     var findItem = uniqueColors.find((x) => x.name === item.name);
+  //     if (!findItem) uniqueColors.push(item);
+  //   });
+
+  // const uniqueFinishes = [];
+  // filterData
+  //   ?.filter((x) => x?.name == "Finishes")[0]
+  //   ?.child_value.map((item) => {
+  //     var findItem = uniqueFinishes.find((x) => x.name === item.name);
+  //     if (!findItem) uniqueFinishes.push(item);
+  //   });
 
   return (
     <>
@@ -89,25 +83,27 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-items filter-items-count">
-                      {uniqueCollections?.map((item, index) => (
-                        <div className="filter-item" key={`cat_${index}`}>
-                          <ALink
-                            className={`${
-                              query?.collection == item?.id ? "active" : ""
-                            }`}
-                            href={{
-                              pathname: router.pathname,
-                              query: {
-                                collection: item?.id,
-                              },
-                            }}
-                            scroll={false}
-                          >
-                            {item?.name}
-                          </ALink>
-                          {/* <span className="item-count">{item.count}</span> */}
-                        </div>
-                      ))}
+                      {collectionData?.length > 0
+                        ? collectionData?.map((item, index) => (
+                            <div className="filter-item" key={`cat_${index}`}>
+                              <ALink
+                                className={`${
+                                  query?.collection == item?.id ? "active" : ""
+                                }`}
+                                href={{
+                                  pathname: router.pathname,
+                                  query: {
+                                    collection: item?.id,
+                                  },
+                                }}
+                                scroll={false}
+                              >
+                                {item?.name}
+                              </ALink>
+                              {/* <span className="item-count">{item.count}</span> */}
+                            </div>
+                          ))
+                        : "No Collection Found !!!"}
                     </div>
                   </div>
                 </div>
@@ -137,24 +133,26 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-colors">
-                      {uniqueColors?.map((item, index) => (
-                        <ALink
-                          className={`${
-                            query?.color == item?.id ? "selected" : ""
-                          }`}
-                          href={{
-                            pathname: router.pathname,
-                            query: {
-                              color: item?.id,
-                            },
-                          }}
-                          style={{ backgroundColor: item?.name }}
-                          key={index}
-                          scroll={false}
-                        >
-                          <span className="sr-only">Color Name</span>
-                        </ALink>
-                      ))}
+                      {colorsData?.length > 0
+                        ? colorsData?.map((item, index) => (
+                            <ALink
+                              className={`${
+                                query?.color == item?.id ? "selected" : ""
+                              }`}
+                              href={{
+                                pathname: router.pathname,
+                                query: {
+                                  color: item?.id,
+                                },
+                              }}
+                              style={{ backgroundColor: item?.name }}
+                              key={index}
+                              scroll={false}
+                            >
+                              <span className="sr-only">Color Name</span>
+                            </ALink>
+                          ))
+                        : "No Color Range Found !!!"}
                     </div>
                   </div>
                 </div>
@@ -184,30 +182,32 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-items">
-                      {uniqueFinishes?.map((item, index) => (
-                        <div className="filter-item" key={index}>
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id={`finishes-${index + 1}`}
-                              value={item?.id}
-                              onChange={(e) =>
-                                onAttrClick(e, "finishes", item?.id)
-                              }
-                              checked={
-                                query?.finishes == item?.id ? true : false
-                              }
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor={`finishes-${index + 1}`}
-                            >
-                              {item?.name}
-                            </label>
-                          </div>
-                        </div>
-                      ))}
+                      {finishesData?.length > 0
+                        ? finishesData?.map((item, index) => (
+                            <div className="filter-item" key={index}>
+                              <div className="custom-control custom-checkbox">
+                                <input
+                                  type="checkbox"
+                                  className="custom-control-input"
+                                  id={`finishes-${index + 1}`}
+                                  value={item?.id}
+                                  onChange={(e) =>
+                                    onAttrClick(e, "finishes", item?.id)
+                                  }
+                                  checked={
+                                    query?.finishes == item?.id ? true : false
+                                  }
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor={`finishes-${index + 1}`}
+                                >
+                                  {item?.name}
+                                </label>
+                              </div>
+                            </div>
+                          ))
+                        : "No Finishes Found !!!"}
                     </div>
                   </div>
                 </div>
