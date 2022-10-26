@@ -12,6 +12,7 @@ import { API } from "~/http/API";
 import { fadeIn } from "~/utils/data";
 import { introSlider, fabricFinishedSlider } from "~/utils/data";
 import Modal from "react-modal";
+import Helmet from "react-helmet";
 
 const customStyles = {
   content: {
@@ -103,6 +104,10 @@ function Resources(props) {
 
   return (
     <div className="main resources-page">
+      <Helmet>
+        <title>{resourcesdata?.meta?.meta_title}</title>
+        <meta name="description" content={`${resourcesdata?.meta?.meta_description}`} />
+      </Helmet>
       <PageHeader
         title={resourcesdata?.banner?.heading}
         subTitle={resourcesdata?.banner?.sub_heading}

@@ -3,6 +3,7 @@ import { API } from "~/http/API"
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
 import { countTo } from '~/utils';
+import Helmet from "react-helmet";
 
 function About() {
 
@@ -24,6 +25,10 @@ function About() {
 
     return (
         <div className="main">
+            <Helmet>
+                <title>{aboutdata?.content?.meta?.meta_title}</title>
+                <meta name="description" content={`${aboutdata?.content?.meta?.meta_description}`} />
+            </Helmet>
             <PageHeader
                 title={aboutdata?.banner?.heading}
                 subTitle={aboutdata?.banner?.sub_heading}

@@ -4,6 +4,7 @@ import PageHeader from "~/components/features/page-header";
 import Card from '~/components/features/accordion/card';
 import Accordion from '~/components/features/accordion/accordion';
 import { API } from '~/http/API';
+import Helmet from "react-helmet";
 
 function FAQ() {
 
@@ -31,6 +32,10 @@ function FAQ() {
 
     return (
         <div className="main">
+            <Helmet>
+                <title>{faqsdata?.FaqBanner?.content?.meta?.meta_title}</title>
+                <meta name="description" content={`${faqsdata?.FaqBanner?.content?.meta?.meta_description}`} />
+            </Helmet>
             <PageHeader
                 title={faqsdata?.FaqBanner?.content?.banner?.heading}
                 subTitle={faqsdata?.FaqBanner?.content?.banner?.sub_heading !== '' ? faqsdata?.FaqBanner?.content?.banner?.sub_heading : ''}

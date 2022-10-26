@@ -5,6 +5,7 @@ import ContactForm from "../contact-form/contact-form";
 import { API } from "~/http/API";
 import { fadeIn } from "~/utils/data";
 import Reveal from "react-awesome-reveal";
+import Helmet from "react-helmet";
 
 function ProjectReferences() {
   const [projectdata, setProjectdata] = useState();
@@ -52,6 +53,10 @@ function ProjectReferences() {
 
   return (
     <div className="main prefrences-page">
+      <Helmet>
+        <title>{projectdata?.meta?.meta_title}</title>
+        <meta name="description" content={`${projectdata?.meta?.meta_description}`} />
+      </Helmet>
       <nav className="breadcrumb-nav">
         <div className="container">
           <ol className="breadcrumb">
@@ -87,9 +92,8 @@ function ProjectReferences() {
                   role="tablist"
                 >
                   <li
-                    className={`nav-item ${
-                      selectedCategory === "all" ? "show" : ""
-                    }`}
+                    className={`nav-item ${selectedCategory === "all" ? "show" : ""
+                      }`}
                     onClick={() => setSelectedCategory("all")}
                   >
                     <span className="nav-link">All</span>
@@ -98,9 +102,8 @@ function ProjectReferences() {
                     categoryList.map((item, index) => (
                       <li
                         key={index}
-                        className={`nav-item ${
-                          selectedCategory === `${item.route}` ? "show" : ""
-                        }`}
+                        className={`nav-item ${selectedCategory === `${item.route}` ? "show" : ""
+                          }`}
                         onClick={() => setSelectedCategory(`${item.route}`)}
                       >
                         <span className="nav-link">{item.name}</span>

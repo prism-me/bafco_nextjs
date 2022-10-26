@@ -1,11 +1,14 @@
 import ALink from '~/components/features/alink';
 import PageHeader from "~/components/features/page-header";
-import Card from '~/components/features/accordion/card';
-import Accordion from '~/components/features/accordion/accordion';
+import Helmet from "react-helmet";
 
 function TermsOfService() {
     return (
         <div className="main">
+            <Helmet>
+                <title>Shipping policy</title>
+                <meta name="description" content={`Shipping policy`} />
+            </Helmet>
             <PageHeader
                 title="Shipping policy"
                 subTitle="We make happy workplaces"

@@ -7,6 +7,7 @@ import { applicationSlider, applicationTabsSlider } from '~/utils/data';
 import withApollo from '~/server/apollo';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { API } from '~/http/API';
+import Helmet from "react-helmet";
 
 
 function ManagmentPage() {
@@ -32,6 +33,10 @@ function ManagmentPage() {
 
     return (
         <main className="main shop">
+            <Helmet>
+                <title>{managementdata?.content?.meta?.meta_title}</title>
+                <meta name="description" content={`${managementdata?.content?.meta?.meta_description}`} />
+            </Helmet>
             {/* <PageHeader
                 title={managementdata?.content?.banner?.heading}
                 subTitle={managementdata?.content?.banner?.sub_heading}

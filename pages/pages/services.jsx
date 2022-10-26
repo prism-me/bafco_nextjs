@@ -5,6 +5,8 @@ import PageHeader from "~/components/features/page-header";
 import OwlCarousel from '~/components/features/owl-carousel';
 import { mainSlider5 } from '~/utils/data';
 import { API } from '~/http/API';
+import Helmet from "react-helmet";
+
 
 function Services() {
 
@@ -22,6 +24,10 @@ function Services() {
 
     return (
         <div className="main">
+            <Helmet>
+                <title>{servicesData?.meta?.meta_title}</title>
+                <meta name="description" content={`${servicesData?.meta?.meta_description}`} />
+            </Helmet>
             <PageHeader
                 title={servicesData?.banner?.heading}
                 subTitle={servicesData?.banner?.sub_heading}

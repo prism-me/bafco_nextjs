@@ -13,6 +13,9 @@ import { API } from "~/http/API";
 import RelatedProducts from "./related-products";
 import Lightbox from "react-image-lightbox";
 import { saveAs } from "file-saver";
+import Helmet from "react-helmet";
+
+
 
 function ProjectReferencesInner(props) {
   const slug = useRouter().query.slug;
@@ -41,6 +44,10 @@ function ProjectReferencesInner(props) {
 
   return (
     <div className="main prefrencesInner-page">
+      <Helmet>
+        <title>{projectDetail?.seo?.meta_title}</title>
+        <meta name="description" content={`${projectDetail?.seo?.meta_description}`} />
+      </Helmet>
       <nav className="breadcrumb-nav">
         <div className="container">
           <ol className="breadcrumb">
@@ -146,16 +153,16 @@ function ProjectReferencesInner(props) {
                           }
                           nextSrc={
                             projectDetail?.additional_img[
-                              (photoIndex.index + 1) %
-                                projectDetail?.additional_img.length
+                            (photoIndex.index + 1) %
+                            projectDetail?.additional_img.length
                             ]
                           }
                           prevSrc={
                             projectDetail?.additional_img[
-                              (photoIndex.index +
-                                projectDetail?.additional_img.length -
-                                1) %
-                                projectDetail?.additional_img.length
+                            (photoIndex.index +
+                              projectDetail?.additional_img.length -
+                              1) %
+                            projectDetail?.additional_img.length
                             ]
                           }
                           imageTitle={

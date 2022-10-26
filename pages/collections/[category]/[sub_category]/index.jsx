@@ -13,6 +13,7 @@ import SlideToggle from 'react-slide-toggle';
 import 'react-input-range/lib/css/index.css';
 import { shopData } from '~/utils/data';
 import Tooltip from "react-simple-tooltip";
+import Helmet from "react-helmet";
 
 function ShopGrid() {
     const router = useRouter();
@@ -23,6 +24,7 @@ function ShopGrid() {
     const [perPage, setPerPage] = useState(12);
     const [pageTitle, setPageTitle] = useState("");
     const [pageBanner, setPageBanner] = useState("");
+    const [pageSEODetails, setPageSEODetails] = useState("");
     const [toggle, setToggle] = useState(false);
     const [products, setProducts] = useState();
     const categoryslug = query?.category?.split("-");
@@ -49,6 +51,7 @@ function ShopGrid() {
             setProducts(response?.data?.products?.sort((a, b) => a.currentIndex - b.currentIndex));
             setPageTitle(response?.data?.name);
             setPageBanner(response?.data?.banner_image);
+            setPageSEODetails(response?.data?.seo);
             // setTotalCount(response?.data?.products?.length)
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
@@ -255,6 +258,7 @@ function ShopGrid() {
             setProducts(response?.data?.products?.sort((a, b) => a.currentIndex - b.currentIndex));
             setPageTitle(response?.data?.name);
             setPageBanner(response?.data?.banner_image);
+            setPageSEODetails(response?.data?.seo);
             // setTotalCount(response?.data?.products?.length)
             setTotalProducts(response?.data?.products?.length);
         }).catch((err) => {
@@ -285,6 +289,10 @@ function ShopGrid() {
 
     return (
         <main className="main shop">
+            <Helmet>
+                <title>{pageSEODetails?.meta_title}</title>
+                <meta name="description" content={`${pageSEODetails?.meta_description}`} />
+            </Helmet>
             <PageHeader
                 title={pageTitle}
                 subTitle=""
