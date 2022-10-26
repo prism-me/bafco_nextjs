@@ -59,7 +59,6 @@ function FabricSidebarOne(props) {
       var findItem = uniqueFinishes.find((x) => x.name === item.name);
       if (!findItem) uniqueFinishes.push(item);
     });
-  console.log("uniqueFinishes ::", uniqueFinishes);
 
   return (
     <>
