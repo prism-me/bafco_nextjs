@@ -46,6 +46,15 @@ function FabricListOne(props) {
     return a.concat(b);
   }, []);
 
+  let collectionsData = [];
+  let uniqueCollectionsTitle;
+  if (finishesdata) {
+    finishesdata?.forEach((element) => {
+      collectionsData.push(element?.value?.title);
+    });
+    uniqueCollectionsTitle = [...new Set(collectionsData)];
+  }
+
   return (
     <div className="products mb-3">
       {products?.length == 0 && !loading ? (
@@ -61,25 +70,6 @@ function FabricListOne(props) {
           ) : // products?.child_value?.length == 0 && !loading ? (
           //   <p className="no-results">No products matching your selection.</p>
           // ) :
-          // : query[0] == "collection" ? (
-          //   products?.child_value?.filter(
-          //     (item) => item?.value?.material_id == matId
-          //   ).length > 0 ? (
-          //     products?.child_value
-          //       ?.filter((item) => item?.value?.material_id == matId)
-          //       ?.map((product, index) => (
-          //         <div className={gridClass} key={index}>
-          //           <FabricGrid
-          //             product={product}
-          //             setProductId={setProductId}
-          //             setIsOpen={setIsOpen}
-          //           />
-          //         </div>
-          //       ))
-          //   ) : (
-          //     <p className="no-results">No products matching your selection.</p>
-          //   )
-          // )
           // query[0] == "color" ? (
           //   products?.child_value?.filter(
           //     (item) => item?.value?.material_id == matId
@@ -100,15 +90,54 @@ function FabricListOne(props) {
           //   )
           // )
           //  :
-          finishesdata?.length > 0 ? (
-            finishesdata?.map((product, index) => (
-              <div className={gridClass} key={index}>
-                <FabricGrid
-                  product={product}
-                  setProductId={setProductId}
-                  setIsOpen={setIsOpen}
-                />
-              </div>
+          // finishesdata?.length > 0 ? (
+          //   finishesdata?.map((product, index) => (
+          //     <div className={gridClass} key={index}>
+          //       <h3 style={{ fontSize: "14px" }}>{product?.value?.title}</h3>
+          //       <FabricGrid
+          //         product={product}
+          //         setProductId={setProductId}
+          //         setIsOpen={setIsOpen}
+          //       />
+          //     </div>
+          //   ))
+          // ) : (
+          //   <p className="no-results">No products matching your selection.</p>
+          // )
+          uniqueCollectionsTitle?.length > 0 ? (
+            uniqueCollectionsTitle?.map((x, ind) => (
+              <>
+                <div className="col-12">
+                  <h5
+                    style={{
+                      marginBottom: "15px",
+                      marginTop: "10px",
+                    }}
+                    key={ind}
+                  >
+                    {x}
+                  </h5>
+                </div>
+                {finishesdata?.length > 0 ? (
+                  finishesdata
+                    ?.filter((t) => {
+                      return t?.value?.title === x;
+                    })
+                    ?.map((product, index) => (
+                      <div className={gridClass} key={index}>
+                        <FabricGrid
+                          product={product}
+                          setProductId={setProductId}
+                          setIsOpen={setIsOpen}
+                        />
+                      </div>
+                    ))
+                ) : (
+                  <p className="no-results">
+                    No products matching your selection.
+                  </p>
+                )}
+              </>
             ))
           ) : (
             <p className="no-results">No products matching your selection.</p>

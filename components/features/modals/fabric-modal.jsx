@@ -112,7 +112,7 @@ function FabricModal(props) {
 
                         {ModalData?.detailData?.color_code && (
                           <>
-                            <p className="title">Color Range</p>
+                            <p className="title">Color</p>
                             <ALink
                               href="#"
                               style={{
