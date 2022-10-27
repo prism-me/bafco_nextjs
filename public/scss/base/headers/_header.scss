@@ -1211,11 +1211,10 @@
   right: 0;
   width: auto;
   position: absolute;
-  top: 100%;
+  top: 10%;
   min-width: 450px;
   z-index: 99;
-  display: none;
-
+  // display: none;
   box-shadow: 0 10px 20px 5px rgb(0 0 0 / 5%);
   color: #8d8d8d;
   background-color: #f4f4f4;
