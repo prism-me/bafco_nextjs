@@ -28,7 +28,7 @@ function FabricModal(props) {
     if (productId) {
       API.get(`/finishes-filter-detail/${productId}`)
         .then((response) => {
-          setModalData(response?.data?.detailData);
+          setModalData(response?.data);
         })
         .catch((err) => {
           console.log(err);
@@ -66,26 +66,15 @@ function FabricModal(props) {
                 {!loading ? (
                   <>
                     <div className="fabricImgWrape">
-                      <figure className="mb-3">
+                      <figure>
                         <LazyLoadImage
                           alt="Thumbnail"
-                          src={ModalData?.featured_img}
+                          src={ModalData?.detailData?.featured_img}
                           width="100%"
                           height={100}
                           className="d-block"
-                          style={{ height: "400px" }}
                         />
                       </figure>
-                      <center>
-                        <button
-                          className="btn btn-sm btn-minwidth btn-outline-primary-2"
-                          onClick={() =>
-                            window.open("images/fabric/fabric.png", "_blank")
-                          }
-                        >
-                          <span>See the Full Panel</span>
-                        </button>
-                      </center>
                     </div>
                   </>
                 ) : (
@@ -97,24 +86,38 @@ function FabricModal(props) {
                   {!loading ? (
                     <>
                       <div className="mb-5">
-                        <h3 className="mb-3">{ModalData?.title}</h3>
+                        {ModalData?.detailData?.values?.name && (
+                          <h3 className="mb-3">
+                            {ModalData?.detailData?.values?.name}
+                          </h3>
+                        )}
 
-                        {ModalData?.values?.parent && (
+                        {ModalData?.material?.name && (
                           <>
-                            <p className="title">Type</p>
+                            <p className="title">Material</p>
                             <p className="subtitle">
-                              {ModalData?.values?.parent?.name}
+                              {ModalData?.material?.name}
                             </p>
                           </>
                         )}
 
-                        {ModalData?.code && (
+                        {ModalData?.detailData?.title && (
+                          <>
+                            <p className="title">Collection</p>
+                            <p className="subtitle">
+                              {ModalData?.detailData?.title}
+                            </p>
+                          </>
+                        )}
+
+                        {ModalData?.detailData?.color_code && (
                           <>
                             <p className="title">Color Range</p>
-                            {/* <p className="subtitle">{ModalData?.code}</p> */}
                             <ALink
                               href="#"
-                              style={{ backgroundColor: "pink" }}
+                              style={{
+                                backgroundColor: `${ModalData?.detailData?.color_code}`,
+                              }}
                               scroll={false}
                               className="colorStyle"
                             >
@@ -123,18 +126,20 @@ function FabricModal(props) {
                           </>
                         )}
 
-                        {ModalData?.values && (
+                        {ModalData?.detailData?.values?.parent?.name && (
                           <>
                             <p className="title">Finish</p>
                             <p className="subtitle">
-                              {ModalData?.values?.name}
+                              {ModalData?.detailData?.values?.parent?.name}
                             </p>
                           </>
                         )}
                       </div>
                       <button
                         className="btn btn-sm btn-minwidth btn-outline-primary-2"
-                        onClick={() => downloadImg(ModalData?.featured_img)}
+                        onClick={() =>
+                          downloadImg(ModalData?.detailData?.featured_img)
+                        }
                       >
                         <span>Download</span>
                         <i className="icon-arrow-down"></i>

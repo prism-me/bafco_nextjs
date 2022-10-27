@@ -18,41 +18,25 @@ function FabricSidebarOne(props) {
     }
   }
 
-  const collectionData = filterData
-    ?.filter((x) => x?.name == "Brand")[0]
-    ?.child_value?.filter((item) => item?.value?.material_id == matId);
-
-  const colorsData = filterData
-    ?.filter((x) => x?.name == "Color Range")[0]
-    ?.child_value?.filter((item) => item?.value?.material_id == matId);
-
-  const finishesData = filterData
+  const uniqueColors = [];
+  filterData
     ?.filter((x) => x?.name == "Finishes")[0]
-    ?.child_value?.filter((item) => item?.value?.material_id == matId);
+    ?.child_value[0]?.child?.filter((item) => item?.value?.material_id == matId)
+    ?.map((item) => {
+      var findItem = uniqueColors.find(
+        (x) => x?.value?.color_code === item?.value?.color_code
+      );
+      if (!findItem) uniqueColors.push(item);
+    });
 
-  // const uniqueCollections = [];
-  // filterData
-  //   ?.filter((x) => x?.name == "Brand")[0]
-  //   ?.child_value.map((item) => {
-  //     var findItem = uniqueCollections.find((x) => x.name === item.name);
-  //     if (!findItem) uniqueCollections.push(item);
-  //   });
-
-  // const uniqueColors = [];
-  // filterData
-  //   ?.filter((x) => x?.name == "Color Range")[0]
-  //   ?.child_value.map((item) => {
-  //     var findItem = uniqueColors.find((x) => x.name === item.name);
-  //     if (!findItem) uniqueColors.push(item);
-  //   });
-
-  // const uniqueFinishes = [];
-  // filterData
-  //   ?.filter((x) => x?.name == "Finishes")[0]
-  //   ?.child_value.map((item) => {
-  //     var findItem = uniqueFinishes.find((x) => x.name === item.name);
-  //     if (!findItem) uniqueFinishes.push(item);
-  //   });
+  const uniqueFinishes = [];
+  filterData
+    ?.filter((x) => x?.name == "Finishes")[0]
+    ?.child_value?.filter((item) => item?.value?.material_id == matId)
+    ?.map((item) => {
+      var findItem = uniqueFinishes.find((x) => x?.name === item?.name);
+      if (!findItem) uniqueFinishes.push(item);
+    });
 
   return (
     <>
@@ -60,57 +44,6 @@ function FabricSidebarOne(props) {
         className={`${toggle ? "sidebar-filter" : "sidebar"} sidebar-shop`}
       >
         <div className={toggle ? "sidebar-filter-wrapper" : ""}>
-          <SlideToggle collapsed={true}>
-            {({ onToggle, setCollapsibleElement, toggleState }) => (
-              <div className="widget widget-collapsible">
-                <h3 className="widget-title mb-2">
-                  <a
-                    href="#collection"
-                    className={`${
-                      toggleState.toLowerCase() == "collapsed"
-                        ? "collapsed"
-                        : ""
-                    }`}
-                    onClick={(e) => {
-                      onToggle(e);
-                      e.preventDefault();
-                    }}
-                  >
-                    Collection
-                  </a>
-                </h3>
-
-                <div ref={setCollapsibleElement}>
-                  <div className="widget-body pt-0">
-                    <div className="filter-items filter-items-count">
-                      {collectionData?.length > 0
-                        ? collectionData?.map((item, index) => (
-                            <div className="filter-item" key={`cat_${index}`}>
-                              <ALink
-                                className={`${
-                                  query?.collection == item?.id ? "active" : ""
-                                }`}
-                                href={{
-                                  pathname: router.pathname,
-                                  query: {
-                                    collection: item?.id,
-                                  },
-                                }}
-                                scroll={false}
-                              >
-                                {item?.name}
-                              </ALink>
-                              {/* <span className="item-count">{item.count}</span> */}
-                            </div>
-                          ))
-                        : "No Collection Found !!!"}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </SlideToggle>
-
           <SlideToggle collapsed={true}>
             {({ onToggle, setCollapsibleElement, toggleState }) => (
               <div className="widget widget-collapsible">
@@ -133,19 +66,23 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-colors">
-                      {colorsData?.length > 0
-                        ? colorsData?.map((item, index) => (
+                      {uniqueColors?.length > 0
+                        ? uniqueColors?.map((item, index) => (
                             <ALink
                               className={`${
-                                query?.color == item?.id ? "selected" : ""
+                                query?.color == item?.value?.color_code
+                                  ? "selected"
+                                  : ""
                               }`}
                               href={{
                                 pathname: router.pathname,
                                 query: {
-                                  color: item?.id,
+                                  color: item?.value?.color_code,
                                 },
                               }}
-                              style={{ backgroundColor: item?.name }}
+                              style={{
+                                backgroundColor: item?.value?.color_code,
+                              }}
                               key={index}
                               scroll={false}
                             >
@@ -182,8 +119,8 @@ function FabricSidebarOne(props) {
                 <div ref={setCollapsibleElement}>
                   <div className="widget-body pt-0">
                     <div className="filter-items">
-                      {finishesData?.length > 0
-                        ? finishesData?.map((item, index) => (
+                      {uniqueFinishes?.length > 0
+                        ? uniqueFinishes?.map((item, index) => (
                             <div className="filter-item" key={index}>
                               <div className="custom-control custom-checkbox">
                                 <input
