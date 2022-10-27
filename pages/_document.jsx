@@ -16,15 +16,15 @@ export default class MyDocument extends Document {
             type="text/css"
             href="css/fonts-molla.min.css"
           />
-          <link
+          {/* <link
             rel="stylesheet"
             type="text/css"
             href="vendor/line-awesome/css/line-awesome.min.css"
-          />
-          <script
+          /> */}
+          {/* <script
             type="text/javascript"
             src="https://cdn1.stamped.io/files/widget.min.js"
-          ></script>
+          ></script> */}
           <script type="text/javascript">
             {/* <![CDATA[
                         StampedFn.init({apiKey: 'pubkey-80v41xE947ABC418d1g8LH7ER871GP', storeUrl: 'www.bafco.com' }); 

@@ -31,6 +31,7 @@ function LoginModal(props) {
   const [openForgotPasswordForm, setOpenForgotPasswordForm] = useState(false);
   const [forgotPasswordemail, setForgotPasswordEmail] = useState("");
   const [isRememberChecked, setIsRememberChecked] = useState(false);
+  const [isAgree, setIsAgree] = useState(false);
   const [loading, setLoading] = useState(false);
 
   let timer;
@@ -48,6 +49,10 @@ function LoginModal(props) {
   const handleChange = () => {
     console.log("onChangeCheckbox :: ", !isRememberChecked)
     setIsRememberChecked(!isRememberChecked);
+  }
+
+  const handleChangeIsAgree = () => {
+    setIsAgree(!isAgree)
   }
 
   function closeModal() {
@@ -343,7 +348,7 @@ function LoginModal(props) {
                                   >
                                     Remember Me
                                   </label>
-                                  
+
                                 </div>
 
                                 <span
@@ -516,7 +521,8 @@ function LoginModal(props) {
                                 type="checkbox"
                                 className="custom-control-input"
                                 id="register-policy-2"
-                                required
+                                value={isAgree}
+                                onChange={handleChangeIsAgree}
                               />
                               <label
                                 className="custom-control-label"
