@@ -40,8 +40,8 @@ function FAQ() {
                 title={faqsdata?.FaqBanner?.content?.banner?.heading}
                 subTitle={faqsdata?.FaqBanner?.content?.banner?.sub_heading !== '' ? faqsdata?.FaqBanner?.content?.banner?.sub_heading : ''}
                 backgroundImage={faqsdata?.FaqBanner?.content?.banner?.image}
-                buttonText="Shop Now"
-                buttonUrl="/"
+                buttonText=""
+                buttonUrl="#"
             />
 
             <nav className="breadcrumb-nav">

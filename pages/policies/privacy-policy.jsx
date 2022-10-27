@@ -13,7 +13,7 @@ function PrivacyPolicy() {
                 title="Privacy policy"
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/cat_banner.png"
-                buttonText="Shop Now"
+                buttonText=""
                 buttonUrl="#"
             />
 

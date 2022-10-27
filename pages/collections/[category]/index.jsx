@@ -32,7 +32,7 @@ function ProductSubCatInner() {
                 title={categoryData?.name}
                 subTitle={categoryData?.sub_title}
                 backgroundImage={categoryData?.banner_image === "" || categoryData?.banner_image === null ? "images/banners/cat_banner.png" : categoryData?.banner_image}
-                buttonText="View Our Products"
+                buttonText=""
                 buttonUrl="#"
             />
             <nav className="breadcrumb-nav mb-2">

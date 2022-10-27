@@ -68,8 +68,8 @@ function Wishlist(props) {
                 title="WishList"
                 subTitle="We make happy workplaces"
                 backgroundImage={wishlistbg}
-                buttonText="Shop Now"
-                buttonUrl="/"
+                buttonText=""
+                buttonUrl="#"
             />
 
             <nav className="breadcrumb-nav">

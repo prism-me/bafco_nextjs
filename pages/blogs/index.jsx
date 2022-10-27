@@ -28,7 +28,7 @@ function BlogListing() {
                 title="Blogs"
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/innovations-bg.png"
-                buttonText="Shop Now"
+                buttonText=""
                 buttonUrl="#"
             />
             <nav className="breadcrumb-nav">

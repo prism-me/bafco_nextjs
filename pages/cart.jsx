@@ -265,8 +265,8 @@ function Cart(props) {
         title="Cart"
         subTitle=""
         backgroundImage="images/banners/cart-banner.png"
-        buttonText="Shop Now"
-        buttonUrl="/"
+        buttonText=""
+        buttonUrl="#"
       />
       <nav className="breadcrumb-nav">
         <div className="container">

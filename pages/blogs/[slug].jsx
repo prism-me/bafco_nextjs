@@ -49,7 +49,7 @@ function BlogInner(props) {
                 title={blogData?.title}
                 subTitle={blogData?.sub_title}
                 backgroundImage={blogData?.banner_img}
-                buttonText="Shop Now"
+                buttonText=""
                 buttonUrl="#"
             />
 

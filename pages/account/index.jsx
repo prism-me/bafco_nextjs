@@ -609,7 +609,7 @@ function MyAccount(props) {
         title="My Account"
         subTitle=""
         backgroundImage="images/banners/account-banner.png"
-        buttonText="Shop Now"
+        buttonText=""
         buttonUrl="#"
       />
       <nav className="breadcrumb-nav mb-3">
