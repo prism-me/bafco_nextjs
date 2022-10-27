@@ -84,12 +84,10 @@ function FabricGrid() {
   // filters data start
 
   useEffect(() => {
-    if ((query?.collection || query?.color || query?.finishes) && matId) {
+    if ((query?.color || query?.finishes) && matId) {
       let formdata = {
-        finishes_id:
-          Number(query?.collection) ||
-          Number(query?.color) ||
-          Number(query?.finishes),
+        color_code: query?.color,
+        finishes_id: Number(query?.finishes),
         material_id: matId,
       };
       API.post(`/finishes-filter-data`, formdata)
@@ -202,8 +200,9 @@ function FabricGrid() {
           />
           <div className="row skeleton-body">
             <div
-              className={`col-lg-9 skel-shop-products ${!loading ? "loaded" : ""
-                }`}
+              className={`col-lg-9 skel-shop-products ${
+                !loading ? "loaded" : ""
+              }`}
             >
               <FabricListOne
                 products={fabricList}
@@ -220,8 +219,9 @@ function FabricGrid() {
             </div>
 
             <aside
-              className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${!loading || firstLoading ? "loaded" : ""
-                }`}
+              className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body ${
+                !loading || firstLoading ? "loaded" : ""
+              }`}
             >
               <div className="skel-widget"></div>
               <div className="skel-widget"></div>
