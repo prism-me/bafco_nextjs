@@ -24,7 +24,7 @@ function GalleryDefault(props) {
     }
 
     function openLightBox() {
-        let index = parseInt(document.querySelector(".product-main-image").getAttribute("index"));
+        let index = parseInt(document.querySelector(".product-main-image-figure").getAttribute("index"));
 
         if (!index) {
             index = 0;
@@ -38,14 +38,14 @@ function GalleryDefault(props) {
     }
 
     function changeBgImage(e, image, index) {
-        let imgs = document.querySelectorAll('.product-main-image img');
+        let imgs = document.querySelectorAll('.product-main-image-figure img');
         for (let i = 0; i < imgs.length; i++) {
             imgs[i].src = image;
         }
 
         document.querySelector('.product-image-gallery .active').classList.remove('active');
 
-        document.querySelector('.product-main-image').setAttribute('index', index);
+        document.querySelector('.product-main-image-figure').setAttribute('index', index);
         e.currentTarget.classList.add('active');
     }
 
@@ -57,7 +57,7 @@ function GalleryDefault(props) {
         <>
             <div className={`product-gallery ${adClass}`}>
                 <div className="row m-0">
-                    <figure className="product-main-image" index="0">
+                    <figure className="product-main-image product-main-image-figure" index="0">
                         {
                             product?.in_stock || product?.in_stock === 1 ?
                                 <span className="product-label label-out">Stocking</span>
