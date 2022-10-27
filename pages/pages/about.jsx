@@ -180,30 +180,28 @@ function About() {
                                     <p>Access to on-trend, design-led brands sourced from global markets and artisan ateliers.</p>
                                 </div>
                                 <div className="brands-display">
-                                    {
-                                        partnersList?.map((brand, index) =>
-                                            index % 2 ?
-                                                <div className="row justify-content-center mb-3" key={index} style={{ alignItems: 'center' }}>
-                                                    <div className="col-sm-6 col-md-6 col-xs-12">
-                                                        <img src={brand.image} alt={brand.name} />
-                                                    </div>
-                                                    <div className="col-sm-6 col-md-6 col-xs-12">
-                                                        <ALink href={brand.link} target="_blank"><img src={brand.logo} alt={brand.name} /></ALink>
-                                                        <div dangerouslySetInnerHTML={{ __html: brand.description }} />
-                                                    </div>
-                                                </div > :
-                                                <div className="row justify-content-center mb-3" key={index} style={{ alignItems: 'center' }}>
+                                    {partnersList?.map((brand, index) =>
+                                        index % 2 ?
+                                            <div className="row justify-content-center mb-3" key={index} style={{ alignItems: 'center' }}>
+                                                <div className="col-sm-6 col-md-6 col-xs-12">
+                                                    <img src={brand.image} alt={brand.name} />
+                                                </div>
+                                                <div className="col-sm-6 col-md-6 col-xs-12">
+                                                    <ALink href={brand.link} target="_blank"><img src={brand.logo} alt={brand.name} /></ALink>
+                                                    <div dangerouslySetInnerHTML={{ __html: brand.description }} />
+                                                </div>
+                                            </div > :
+                                            <div className="row justify-content-center mb-3" key={index} style={{ alignItems: 'center' }}>
 
-                                                    <div className="col-sm-6 col-md-6 col-xs-12">
-                                                        <ALink href={brand.link} target="_blank"><img src={brand.logo} alt={brand.name} /></ALink>
-                                                        <div dangerouslySetInnerHTML={{ __html: brand.description }} />
-                                                    </div>
-                                                    <div className="col-sm-6 col-md-6 col-xs-12">
-                                                        <img src={brand.image} alt={brand.name} />
-                                                    </div>
-                                                </div >
-                                        )
-                                    }
+                                                <div className="col-sm-6 col-md-6 col-xs-12">
+                                                    <ALink href={brand.link} target="_blank"><img src={brand.logo} alt={brand.name} /></ALink>
+                                                    <div dangerouslySetInnerHTML={{ __html: brand.description }} />
+                                                </div>
+                                                <div className="col-sm-6 col-md-6 col-xs-12">
+                                                    <img src={brand.image} alt={brand.name} />
+                                                </div>
+                                            </div >
+                                    )}
                                 </div >
                             </div >
                         </div >

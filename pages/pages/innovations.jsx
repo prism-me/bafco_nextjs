@@ -128,7 +128,7 @@ function Innovations(props) {
                 title={innovationdata?.banner?.heading}
                 subTitle={innovationdata?.banner?.sub_heading}
                 backgroundImage={innovationdata?.banner?.image}
-                buttonText="Shop Now"
+                buttonText=""
                 buttonUrl="#"
             />
 

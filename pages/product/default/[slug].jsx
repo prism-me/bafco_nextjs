@@ -36,7 +36,7 @@ function ProductDefault() {
                 title={product?.name}
                 subTitle="We make happy workplaces"
                 backgroundImage="images/banners/cat_banner.png"
-                buttonText="Discover More"
+                buttonText=""
                 buttonUrl="#"
             />
             <Breadcrumb prev={prev} next={next} current={product?.name} currentCategory={product?.category[0]?.name} />

@@ -91,7 +91,7 @@ function Wishlist(props) {
                                 <tr>
                                     <th>Product</th>
                                     <th>Price</th>
-                                    <th>Stock Status</th>
+                                    {/* <th>Stock Status</th> */}
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -114,17 +114,17 @@ function Wishlist(props) {
                                             </div>
                                         </td>
                                         <td className="price-col">
-                                            {product?.variation[0]?.in_stock === 0 ?
+                                            {/* {product?.variation[0]?.in_stock === 0 ?
                                                 <div className="product-price d-inline-block mb-0">
                                                     <span className="out-price">AED {product?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                                 </div>
-                                                :
+                                                : */}
                                                 <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                                            }
+                                            {/* } */}
                                         </td>
-                                        <td className="stock-col">
+                                        {/* <td className="stock-col">
                                             <span className={`${product?.variation[0]?.in_stock === 1 ? 'Stocking' : 'in-stock'}`} >{product?.variation[0]?.in_stock == 0 ? 'Out of stock' : 'In stock'}</span>
-                                        </td>
+                                        </td> */}
                                         <td className="action-col">
                                             <div className="dropdown product-details-action">
                                                 <button
