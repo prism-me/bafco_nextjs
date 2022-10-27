@@ -30,7 +30,7 @@ function LoginModal(props) {
   const [userFormData, setUserFormData] = useState({ ...userForm });
   const [openForgotPasswordForm, setOpenForgotPasswordForm] = useState(false);
   const [forgotPasswordemail, setForgotPasswordEmail] = useState("");
-
+  const [isRememberChecked, setIsRememberChecked] = useState(false);
   const [loading, setLoading] = useState(false);
 
   let timer;
@@ -44,6 +44,11 @@ function LoginModal(props) {
       if (timer) clearTimeout(timer);
     };
   });
+
+  const handleChange = () => {
+    console.log("onChangeCheckbox :: ", !isRememberChecked)
+    setIsRememberChecked(!isRememberChecked);
+  }
 
   function closeModal() {
     document
@@ -323,10 +328,14 @@ function LoginModal(props) {
                                 )}
 
                                 <div className="custom-control custom-checkbox">
+
                                   <input
                                     type="checkbox"
                                     className="custom-control-input"
                                     id="signin-remember-2"
+                                    value={isRememberChecked}
+                                    onChange={handleChange}
+                                    name="lsRememberMe"
                                   />
                                   <label
                                     className="custom-control-label"
@@ -334,6 +343,7 @@ function LoginModal(props) {
                                   >
                                     Remember Me
                                   </label>
+                                  
                                 </div>
 
                                 <span

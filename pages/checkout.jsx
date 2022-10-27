@@ -1086,8 +1086,8 @@ function Checkout(props) {
                             {cartTotal?.shipping_charges === "Free"
                               ? cartTotal?.shipping_charges
                               : `AED ${cartTotal?.shipping_charges
-                                  ?.toString()
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                           </td>
                         </tr>
                         <tr className="summary-total">
@@ -1096,11 +1096,11 @@ function Checkout(props) {
                             AED{" "}
                             {discountedPrice > 0
                               ? (cartTotal?.total - discountedPrice)
-                                  .toString()
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                               : cartTotal?.total
-                                  ?.toString()
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                ?.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                           </td>
                         </tr>
                       </tbody>
@@ -1121,9 +1121,8 @@ function Checkout(props) {
 
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget ${
-                            showPostPay1 === true ? "active1" : "disable1"
-                          }`}
+                          className={`postpay-widget ${showPostPay1 === true ? "active1" : "disable1"
+                            }`}
                           data-type="payment-summary"
                           // data-amount={cartTotal?.decimal_amount}
                           data-amount={
@@ -1137,9 +1136,8 @@ function Checkout(props) {
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget ${
-                            showPostPay1 === true ? "active1" : "disable1"
-                          }`}
+                          className={`postpay-widget ${showPostPay1 === true ? "active1" : "disable1"
+                            }`}
                           data-type="payment-summary"
                           // data-amount={cartTotal?.decimal_amount}
                           data-amount={
@@ -1155,9 +1153,8 @@ function Checkout(props) {
                     </div>
                     <div>
                       <h4
-                        className={`title ${
-                          showPostPay2 === true ? "mb-1" : "mb-3"
-                        }`}
+                        className={`title ${showPostPay2 === true ? "mb-1" : "mb-3"
+                          }`}
                       >
                         <label onClick={handleClickPay2}>
                           <input
@@ -1171,9 +1168,8 @@ function Checkout(props) {
                       </h4>
                       {xauthtokenUser !== null ? (
                         <div
-                          className={`postpay-widget ${
-                            showPostPay2 === true ? "active2" : "disable2"
-                          }`}
+                          className={`postpay-widget ${showPostPay2 === true ? "active2" : "disable2"
+                            }`}
                           data-type="payment-summary"
                           data-amount={
                             localStorage.getItem("decimal_amount") -
@@ -1186,9 +1182,8 @@ function Checkout(props) {
                         ></div>
                       ) : (
                         <div
-                          className={`postpay-widget ${
-                            showPostPay2 === true ? "active2" : "disable2"
-                          }`}
+                          className={`postpay-widget ${showPostPay2 === true ? "active2" : "disable2"
+                            }`}
                           data-type="payment-summary"
                           data-amount={
                             localStorage.getItem("decimal_amount") -
@@ -1228,8 +1223,9 @@ function Checkout(props) {
                     ) : (
                       <>
                         <p
+                          className="mb-3"
                           style={{
-                            color: "#EE3124",
+                            color: "#008482",
                             fontWeight: "bold",
                             fontSize: "13px",
                           }}

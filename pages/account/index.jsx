@@ -248,7 +248,6 @@ function MyAccount(props) {
       API.get(`/user-order-detail/${UserId}`, header)
         .then((response) => {
           setOrderList(response?.data);
-          console.log("user-order-detail :: ", response?.data);
         })
         .catch((err) => console.log(err));
     }
@@ -719,7 +718,7 @@ function MyAccount(props) {
                       </TabPanel>
 
                       <TabPanel>
-                        {orderList?.length < 0 ? (
+                        {orderList?.length === 0 ? (
                           <>
                             <p>No order has been made yet.</p>
                             <ALink
@@ -755,10 +754,10 @@ function MyAccount(props) {
                                             ? "Order Placed"
                                             : order?.status ===
                                               "ORDERDISPATCHED"
-                                            ? "Order Dispatched"
-                                            : order?.status === "ORDERDELIVERED"
-                                            ? "Order Delivered"
-                                            : "Order Canceled"}
+                                              ? "Order Dispatched"
+                                              : order?.status === "ORDERDELIVERED"
+                                                ? "Order Delivered"
+                                                : "Order Canceled"}
                                         </span>
                                       </td>
                                       <td className="td_product">
@@ -894,15 +893,15 @@ function MyAccount(props) {
                                       </div>
                                       <div className="col-lg-3 col-md-6 col-sm-6 col-12">
                                         {singleOrderDetails?.status ===
-                                        "ORDERPLACED"
+                                          "ORDERPLACED"
                                           ? "Order Placed"
                                           : singleOrderDetails?.status ===
                                             "ORDERDISPATCHED"
-                                          ? "Order Dispatched"
-                                          : singleOrderDetails?.status ===
-                                            "ORDERDELIVERED"
-                                          ? "Order Delivered"
-                                          : "Order Canceled"}
+                                            ? "Order Dispatched"
+                                            : singleOrderDetails?.status ===
+                                              "ORDERDELIVERED"
+                                              ? "Order Delivered"
+                                              : "Order Canceled"}
                                       </div>
                                     </div>
                                     <div className="row"></div>
@@ -1073,8 +1072,8 @@ function MyAccount(props) {
                                                   ? true
                                                   : isdefault
                                               }
-                                              // onChange={(e) => handleChangeSetDefault(e, index, address.id)}
-                                              // onChange={() => { setIsDefault(!isdefault) }}
+                                            // onChange={(e) => handleChangeSetDefault(e, index, address.id)}
+                                            // onChange={() => { setIsDefault(!isdefault) }}
                                             />
                                             <span className="slider round"></span>
                                           </label>
@@ -1406,13 +1405,13 @@ function MyAccount(props) {
                                             width: "sm"
                                               ? "6em"
                                               : "md"
-                                              ? "10em"
-                                              : "10em",
+                                                ? "10em"
+                                                : "10em",
                                             height: "sm"
                                               ? "6em"
                                               : "md"
-                                              ? "10em"
-                                              : "10em",
+                                                ? "10em"
+                                                : "10em",
                                           }}
                                         />
                                       ) : (
