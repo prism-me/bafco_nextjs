@@ -65,6 +65,14 @@
 		width: 100%;
 		z-index: 2;
 		height: 290px;
+
+		@media (max-width: 767px) {
+			height: auto;
+		}
+
+		@media screen and (min-width: 768px) and (max-width: 1200px) {
+			height: auto;
+		}
 	}
 }
 

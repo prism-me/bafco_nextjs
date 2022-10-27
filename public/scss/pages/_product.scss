@@ -512,6 +512,16 @@
 		font-size: 1.4rem;
 		margin-bottom: 0;
 		color: #000;
+
+		@media (max-width: 767px) {
+			width: auto;
+			margin-right: 15px;
+		}
+
+		@media screen and (min-width: 768px) and (max-width: 1200px) {
+			width: auto;
+			margin-right: 15px;
+		}
 	}
 
 	span.product-label-out {
@@ -1684,16 +1694,18 @@
 }
 
 .stamped-widget-poweredby {
-    display: none;
+	display: none;
 }
 
-span.stamped-summary-actions-newreview, input#stamped-button-submit {
-    color: #008482;
-    background-color: #fff;
+span.stamped-summary-actions-newreview,
+input#stamped-button-submit {
+	color: #008482;
+	background-color: #fff;
 }
 
-span.stamped-summary-actions-newreview:hover, input#stamped-button-submit:hover {
-    color: #fff;
-    border-color: #008482;
-    background-color: #008482;
+span.stamped-summary-actions-newreview:hover,
+input#stamped-button-submit:hover {
+	color: #fff;
+	border-color: #008482;
+	background-color: #008482;
 }

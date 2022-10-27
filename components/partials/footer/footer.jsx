@@ -117,7 +117,7 @@ function Footer(props) {
               </div>
             </div>
 
-            <div className="col-sm-4 col-lg-2">
+            <div className="col-sm-6 col-lg-2">
               <div className="widget">
                 <h4 className="widget-title">QUICK LINKS</h4>
 
@@ -154,7 +154,7 @@ function Footer(props) {
                 </ul>
               </div>
             </div>
-            <div className="col-sm-3 col-lg-3">
+            <div className="col-sm-12 col-lg-3">
               <div className="row">
                 <div className="col-sm-6 col-lg-6">
                   <div className="widget">
@@ -209,7 +209,7 @@ function Footer(props) {
               </div>
             </div>
 
-            <div className="col-sm-6 col-lg-4" style={{ paddingRight: "0" }}>
+            <div className="col-sm-12 col-lg-4" style={{ paddingRight: "0" }}>
               <div className="widget">
                 <h4 className="widget-title">VISIT OUR SHOWROOM</h4>
                 <ul className="contact-list">

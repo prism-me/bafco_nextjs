@@ -585,7 +585,7 @@ function DetailOne(props) {
           {console.log("selectedVariant :: ", selectedVariant)} */}
           {variationValues !== null &&
             variationValues?.map((item, index) => (
-              <div className="col-md-6" key={index}>
+              <div className="col-sm-12 col-xs-12 col-lg-6" key={index}>
                 <div className="details-filter-row details-row-size">
                   <label htmlFor={`${item?.newName}`}>{item?.newName}: </label>
                   {item?.type === "1" || item?.type === "4" ? (

@@ -202,7 +202,7 @@ function ProductInner() {
         <div className="container skeleton-body">
           <div className="product-details-top">
             <div className={`row skel-pro-single ${loading ? "" : "loaded"}`}>
-              <div className="col-md-6">
+              <div className="col-sm-5 col-xs-12 col-lg-6">
                 <div className="skel-product-gallery"></div>
                 {product?.product_single_variation ? (
                   <GalleryDefault
@@ -216,7 +216,7 @@ function ProductInner() {
                 )}
               </div>
 
-              <div className="col-md-6">
+              <div className="col-sm-7 col-xs-12 col-lg-6">
                 <div className="entry-summary row">
                   <div className="col-md-12">
                     <div className="entry-summary1 mt-2 mt-md-0"></div>
