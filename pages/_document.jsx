@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
             href="css/fonts-molla.min.css"
           />
 
-          {/* <!-- Google Tag Manager --> */}
+          {/* <!-- Google Tag Manager --> //*/}
           <script
             data-partytown-config
             dangerouslySetInnerHTML={{
