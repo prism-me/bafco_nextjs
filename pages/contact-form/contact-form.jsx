@@ -66,7 +66,7 @@ function ContactForm({ type }) {
                 <br />
                 <a href="tel:+97143738300" className="cinfo">
                   {/* t: +12 345 67 89 01 */}
-                  t: +971 4 3738 300
+                  t: +971 4 373 8300
                 </a>
               </p>
             </div>
