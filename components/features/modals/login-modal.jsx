@@ -332,8 +332,7 @@ function LoginModal(props) {
                                   </button>
                                 )}
 
-                                <div className="custom-control custom-checkbox">
-
+                                {/* <div className="custom-control custom-checkbox">
                                   <input
                                     type="checkbox"
                                     className="custom-control-input"
@@ -348,8 +347,7 @@ function LoginModal(props) {
                                   >
                                     Remember Me
                                   </label>
-
-                                </div>
+                                </div> */}
 
                                 <span
                                   onClick={(e) =>
@@ -516,7 +514,7 @@ function LoginModal(props) {
                               </button>
                             )}
 
-                            <div className="custom-control custom-checkbox">
+                            {/* <div className="custom-control custom-checkbox">
                               <input
                                 type="checkbox"
                                 className="custom-control-input"
@@ -530,7 +528,7 @@ function LoginModal(props) {
                               >
                                 I agree to the privacy policy *
                               </label>
-                            </div>
+                            </div> */}
                           </div>
                         </form>
                         {/* <div className="form-choice">

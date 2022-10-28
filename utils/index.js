@@ -52,7 +52,7 @@ export const canAddToCart = (cartItems, product, qty) => {
  * @param {Object} product 
  */
 export const isInWishlist = (wishlist, product) => {
-    return product && wishlist.findIndex(item => item.product_id == product.id) > -1;
+    return product && wishlist.findIndex(item => item?.product_variation_id === product?.product_single_variation?.product_variation_details?.id) > -1;
 }
 
 /**
@@ -61,7 +61,7 @@ export const isInWishlist = (wishlist, product) => {
  * @param {Object} product 
  */
 export const isInCompare = (compare, product) => {
-    return product && compare.findIndex(item => item.product_id == product.id) > -1;
+    return product && compare.findIndex(item => item.product_variation_id === product?.product_single_variation?.product_variation_details?.id) > -1;
 }
 
 

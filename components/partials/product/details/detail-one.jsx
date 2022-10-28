@@ -217,6 +217,7 @@ function DetailOne(props) {
       product_id: product?.single_product_details?.product?.id,
       product_variation_id:
         product?.product_single_variation?.product_variation_details?.id,
+      qty: qty
     };
 
     props.addToCart(data);

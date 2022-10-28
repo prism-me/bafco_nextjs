@@ -35,6 +35,7 @@ function Wishlist(props) {
         let data = {
             'product_id': product?.productData[0]?.id,
             'product_variation_id': product?.variation[0]?.product_variation_name[0]?.product_variation_id,
+            'qty': 1,
         };
 
         props.addToCart(data);
@@ -119,7 +120,7 @@ function Wishlist(props) {
                                                     <span className="out-price">AED {product?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                                 </div>
                                                 : */}
-                                                <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                                            <div className="product-price d-inline-block mb-0">AED {product?.variation[0]?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                                             {/* } */}
                                         </td>
                                         {/* <td className="stock-col">

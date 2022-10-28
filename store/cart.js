@@ -23,9 +23,8 @@ const cartReducer = (state = initialState, action) => {
 
             let UserDetail = localStorage.getItem('UserData');
             let authtoken = localStorage.getItem('authtoken');
-
             var findIndex = state.data.findIndex(item => item.product_id == action.payload.product.product_id);
-            let qty = action.payload.qty ? action.payload.qty : 1;
+            let qty = action?.payload?.product?.qty ? action?.payload?.product?.qty : 1;
 
 
             if (findIndex !== -1) {
@@ -49,11 +48,12 @@ const cartReducer = (state = initialState, action) => {
             } else {
 
                 if (UserDetail !== null) {
+                    console.log("action?.payload?.product?.qty :: ", action.payload)
                     let productData = {
                         user_id: UserDetail,
                         product_id: action?.payload?.product?.product_id,
                         product_variation_id: action?.payload?.product?.product_variation_id,
-                        qty: qty.toString()
+                        qty: action?.payload?.product?.qty?.toString()
                     };
                     API.post(`/auth/cart`, productData, { headers: { 'Authorization': `Bearer ${authtoken}` } }).then((response) => {
                         console.log(response);
@@ -92,7 +92,7 @@ const cartReducer = (state = initialState, action) => {
                             user_id: GuestUserDetail,
                             product_id: action?.payload?.product?.product_id,
                             product_variation_id: action?.payload?.product?.product_variation_id,
-                            qty: qty.toString()
+                            qty: action?.payload?.product?.qty?.toString()
                         };
                         API.post(`/guest-cart`, productData).then((response) => {
                             if (response.status === 200) {
