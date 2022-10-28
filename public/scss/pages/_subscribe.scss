@@ -1,0 +1,8 @@
+.subscribegrid {
+  .loader {
+    margin: auto auto auto -6rem;
+    @media (max-width: 575px) {
+      margin: 10px auto;
+    }
+  }
+}
