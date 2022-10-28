@@ -19,7 +19,9 @@ function FabricGrid(props) {
           wrapperClassName="product-image"
           onClick={() => {
             setIsOpen(true);
-            setProductId(product?.id);
+            setProductId(
+              query && query[0] == "color" ? product?.finishes_id : product?.id
+            );
           }}
         />
       </figure>
