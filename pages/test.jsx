@@ -21,7 +21,7 @@ const Test = () => {
                 <div id="stamped-main-widget"
                     data-product-id="429"
                     data-name="Yoto Midback in White"
-                    data-url="https://bafco-next.herokuapp.com/collections/chairs/tasks-&-ergonomic-chairs/yoto-midback-in-white/"
+                    data-url="https://www.bafco.com/collections/chairs/tasks-&-ergonomic-chairs/yoto-midback-in-white/"
                     data-image-url="https://bafco.b-cdn.net/images/yotomb-166479327465.jpg"
                     data-description="This is the Yoto Task Chair. It's a beautiful, ergonomic chair that can be customized to fit your needs and style. The frame is made of black or white PP"
                     data-product-sku="2">

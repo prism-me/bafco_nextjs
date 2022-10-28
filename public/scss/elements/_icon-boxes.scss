@@ -94,6 +94,10 @@
 			color: #fff;
 		}
 	}
+
+	@media (max-width: 767px) {
+		display: none;
+	}
 }
 
 .icon-box-side {
@@ -103,6 +107,11 @@
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 	margin-bottom: 0;
+
+	@media (max-width: 767px) {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
 
 	p {
 		margin-bottom: 0;

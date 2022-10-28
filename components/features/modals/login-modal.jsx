@@ -125,7 +125,7 @@ function LoginModal(props) {
     formdata.append("email", userFormData?.email);
     formdata.append("password", userFormData?.password);
     formdata.append("user_type", "User");
-    formdata.append("redirect_url", "https://bafco-next.herokuapp.com/");
+    formdata.append("redirect_url", "https://www.bafco.com/");
     setLoading(true);
     API.post(`/auth/register`, formdata, {
       "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
