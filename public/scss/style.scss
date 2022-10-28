@@ -93,11 +93,11 @@
 
 // $font-family1: "Lato", sans-serif;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-$font-family2: 'Montserrat', sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+$font-family2: "Montserrat", sans-serif;
 
-$font-family: 'Montserrat', sans-serif;
-$font-family1: 'Montserrat', sans-serif;
+$font-family: "Montserrat", sans-serif;
+$font-family1: "Montserrat", sans-serif;
 
 /*-------------------- 1.General Styles ---------- */
 @import "base/base";
@@ -315,3 +315,6 @@ $font-family1: 'Montserrat', sans-serif;
 
 /*-------------------- planing ideas inner --------------------*/
 @import "pages/planing-ideas-inner";
+
+/*-------------------- subscribe --------------------*/
+@import "pages/subscribe";

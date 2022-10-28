@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 function Subscribe() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -21,22 +22,26 @@ function Subscribe() {
     let formdata = {
       email: email,
     };
+    setLoading(true);
     API.post(`/subscriber`, formdata)
       .then((response) => {
         if (response?.status === 200) {
+          setLoading(false);
           toast.success(response?.data);
         } else {
+          setLoading(false);
           toast.error("Please fill in the required fields.");
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error("Somthing went wrong !");
       });
   }
   return (
     <Reveal keyframes={fadeIn} delay={200} duration={1000} triggerOnce>
       <div
-        className="footer-newsletter bg-image"
+        className="footer-newsletter bg-image subscribegrid"
         style={{
           backgroundImage: "url(images/backgrounds/NewsletterBackground.jpg)",
         }}
@@ -64,15 +69,29 @@ function Subscribe() {
                     required
                   />
                   <div className="input-group-append">
-                    <button
-                      className="btn btn-primary"
-                      type="button"
-                      id="newsletter-btn"
-                      onClick={handleSubmit}
-                    >
-                      <span>Subscribe</span>
-                      <i className="icon-long-arrow-right"></i>
-                    </button>
+                    {!loading ? (
+                      <div
+                        className="loader"
+                        style={{
+                          borderTopColor: "white",
+                          borderRightColor: "white",
+                          borderBottomColor: "white",
+                          borderLeftColor: "#008482",
+                          width: "sm" ? "6em" : "md" ? "10em" : "10em",
+                          height: "sm" ? "6em" : "md" ? "10em" : "10em",
+                        }}
+                      />
+                    ) : (
+                      <button
+                        className="btn btn-primary"
+                        type="button"
+                        id="newsletter-btn"
+                        onClick={handleSubmit}
+                      >
+                        <span>Subscribe</span>
+                        <i className="icon-long-arrow-right"></i>
+                      </button>
+                    )}
                   </div>
                 </div>
               </form>

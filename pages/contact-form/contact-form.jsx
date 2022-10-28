@@ -28,6 +28,7 @@ function ContactForm({ type }) {
         }
       })
       .catch((err) => {
+        setLoading(false);
         alert("Something went wrong.");
         console.log(err);
       });
