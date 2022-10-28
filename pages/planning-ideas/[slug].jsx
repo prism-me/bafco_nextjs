@@ -18,8 +18,6 @@ import { actions as globalAction } from "~/store/global";
 import { toast } from "react-toastify";
 import Helmet from "react-helmet";
 
-
-
 function PlaningIdeasInner(props) {
   const slug = useRouter().query.slug;
 
@@ -117,7 +115,10 @@ function PlaningIdeasInner(props) {
     <div className="main planingIdeasInner-page">
       <Helmet>
         <title>{planDetail?.seo?.meta_title}</title>
-        <meta name="description" content={`${planDetail?.seo?.meta_description}`} />
+        <meta
+          name="description"
+          content={`${planDetail?.seo?.meta_description}`}
+        />
       </Helmet>
       <nav className="breadcrumb-nav">
         <div className="container">
@@ -150,8 +151,8 @@ function PlaningIdeasInner(props) {
                 </div>
                 {console.log("authtoken ::", authtoken)}
                 {authtoken === "" ||
-                  authtoken === null ||
-                  authtoken === undefined ? (
+                authtoken === null ||
+                authtoken === undefined ? (
                   ""
                 ) : (
                   <>
@@ -185,8 +186,8 @@ function PlaningIdeasInner(props) {
                 <p className="subtitle mb-3">Documentation</p>
 
                 {authtoken === "" ||
-                  authtoken === null ||
-                  authtoken === undefined ? (
+                authtoken === null ||
+                authtoken === undefined ? (
                   <div className="docWrape mb-3">
                     <div className="row">
                       <div className="col-lg-6 col-sm-12 col-xs-12 colStyle">
@@ -249,13 +250,13 @@ function PlaningIdeasInner(props) {
                                     width: "sm"
                                       ? "6em"
                                       : "md"
-                                        ? "10em"
-                                        : "10em",
+                                      ? "10em"
+                                      : "10em",
                                     height: "sm"
                                       ? "6em"
                                       : "md"
-                                        ? "10em"
-                                        : "10em",
+                                      ? "10em"
+                                      : "10em",
                                   }}
                                 />
                               ) : (
@@ -271,9 +272,16 @@ function PlaningIdeasInner(props) {
                         <div className="colSpace">
                           <p>I don't have an account yet.</p>
                           <p>
-                            Obtaining an account takes up to 72 hours (business
+                            {/* Obtaining an account takes up to 72 hours (business
                             days only, Customer service opening hours, from
-                            Monday to Friday, between 8 A.M. and 5 P.M.).
+                            Monday to Friday, between 8 A.M. and 5 P.M.). */}
+                            Are you an architect, designer or interior
+                            influencer that needs a new ideas for your next
+                            project? <strong>Sign up for</strong> the latest{" "}
+                            <strong>workspace</strong> design{" "}
+                            <strong>solution</strong> available{" "}
+                            <strong>as</strong> 3D AutoCAD (DWG) and SketchUp 3D{" "}
+                            <strong>(SKP) files</strong>.
                           </p>
                           <button
                             className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-2"
@@ -351,8 +359,9 @@ function PlaningIdeasInner(props) {
                     planDetail.featured_img.length > 0 &&
                     planDetail.featured_img.map((name, index) => (
                       <button
-                        className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${featuredImg?.name === name?.name && "active"
-                          }`}
+                        className={`btn btn-sm btn-minwidth btn-outline-primary-2 mr-2 ${
+                          featuredImg?.name === name?.name && "active"
+                        }`}
                         key={index}
                         onClick={() => changeTab(name.name)}
                       >
