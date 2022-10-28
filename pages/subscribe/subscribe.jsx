@@ -69,7 +69,7 @@ function Subscribe() {
                     required
                   />
                   <div className="input-group-append">
-                    {!loading ? (
+                    {loading ? (
                       <div
                         className="loader"
                         style={{
