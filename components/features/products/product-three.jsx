@@ -86,7 +86,7 @@ function ProductThree ( props ) {
 
                 {
                     !product.stock || product.stock === 1 ?
-                        <span className="product-label label-circle label-out">Stocking</span>
+                        <span className="product-label label-circle label-out">in stock</span>
                         : ""
                 }
 

@@ -104,7 +104,7 @@ function Footer(props) {
                   {/* <ALink href="https://www.tiktok.com/@bafcodxb" className="social-icon social-twitter" rel="noopener noreferrer" title="Twitter" target="_blank"><i className="fa-tiktok"></i></ALink> */}
                   {/* </div> */}
 
-                  <span className="widget-about-title">Payment Method</span>
+                  <span className="widget-about-title">Payment Methods</span>
                   <figure className="footer-payments">
                     <img
                       src="images/payments.png"

@@ -118,7 +118,7 @@ function QuickViewModal(props) {
                                                 } */}
 
                                                 {product?.variations[0].in_stock === 1 ?
-                                                    <span className="product-label label-out">Stocking</span>
+                                                    <span className="product-label label-out">in stock</span>
                                                     : ""
                                                 }
                                                 <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" onChangeRef={setCarouselRef} events={events} options={{ 'dots': false, 'nav': false }}>

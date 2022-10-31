@@ -389,7 +389,7 @@ function DetailOne(props) {
 
       {/* <div className="product product-7 text-center w-100">
                 <figure className="product-media">
-                    <span className="product-label label-out">Stocking</span>
+                    <span className="product-label label-out">in stock</span>
                 </figure>
             </div> */}
 
@@ -402,7 +402,7 @@ function DetailOne(props) {
         </div>
       ) : (
         <div className="details-filter-row details-row-size">
-          <span className="product-label-out">Stocking</span>
+          <span className="product-label-out">in stock</span>
         </div>
       )}
 

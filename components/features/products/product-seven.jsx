@@ -86,7 +86,7 @@ function ProductSeven ( props ) {
 
                 {
                     !product.stock || product.stock === 1 ?
-                        <span className="product-label">Stocking</span>
+                        <span className="product-label">in stock</span>
                         : ""
                 }
 

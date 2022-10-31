@@ -217,7 +217,7 @@ function DetailOne(props) {
       product_id: product?.single_product_details?.product?.id,
       product_variation_id:
         product?.product_single_variation?.product_variation_details?.id,
-      qty: qty
+      qty: qty,
     };
 
     props.addToCart(data);
@@ -381,7 +381,10 @@ function DetailOne(props) {
           />
           <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
 
-          <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+          <script
+            type="text/javascript"
+            src="https://cdn1.stamped.io/files/widget.min.js"
+          ></script>
           <script
             type="text/javascript"
             data-partytown-config
@@ -392,13 +395,15 @@ function DetailOne(props) {
             });`,
             }}
           />
-
         </Helmet>
         <h1 className="product-title">
           {product?.single_product_details?.product?.name}
         </h1>
 
-        <span class="stamped-product-reviews-badge stamped-main-badge" data-id={product?.single_product_details?.product?.id}></span>
+        <span
+          class="stamped-product-reviews-badge stamped-main-badge"
+          data-id={product?.single_product_details?.product?.id}
+        ></span>
 
         {/* <div className="ratings-container">
           <div className="ratings">
@@ -461,20 +466,31 @@ function DetailOne(props) {
           //     </span>
           //   </div>
           // ) :
-          product?.product_single_variation?.product_variation_details?.limit >= qty ? (
+          product?.product_single_variation?.product_variation_details?.limit >=
+          qty ? (
             <>
               <div className="product-price">
-                AED{" "}{product?.product_single_variation?.product_variation_details?.upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                {product?.product_single_variation?.product_variation_details?.original_upper_price &&
-                  <span className="out-price">AED{" "}
-                    {product?.product_single_variation?.product_variation_details?.original_upper_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                AED{" "}
+                {product?.product_single_variation?.product_variation_details?.upper_price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {product?.product_single_variation?.product_variation_details
+                  ?.original_upper_price && (
+                  <span className="out-price">
+                    AED{" "}
+                    {product?.product_single_variation?.product_variation_details?.original_upper_price
+                      ?.toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
-                }
+                )}
               </div>
               <div
                 className="postpay-widget mb-1"
                 data-type="product"
-                data-amount={product?.product_single_variation?.product_variation_details?.upper_price * 100}
+                data-amount={
+                  product?.product_single_variation?.product_variation_details
+                    ?.upper_price * 100
+                }
                 data-currency="AED"
                 data-num-instalments="3"
                 data-locale="en"
@@ -484,17 +500,26 @@ function DetailOne(props) {
             <>
               <div className="product-price">
                 AED{" "}
-                {product?.product_single_variation?.product_variation_details?.lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                {product?.product_single_variation?.product_variation_details?.original_lower_price &&
-                  <span className="out-price">AED{" "}
-                    {product?.product_single_variation?.product_variation_details?.original_lower_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {product?.product_single_variation?.product_variation_details?.lower_price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {product?.product_single_variation?.product_variation_details
+                  ?.original_lower_price && (
+                  <span className="out-price">
+                    AED{" "}
+                    {product?.product_single_variation?.product_variation_details?.original_lower_price
+                      ?.toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
-                }
+                )}
               </div>
               <div
                 className="postpay-widget mb-1"
                 data-type="product"
-                data-amount={product?.product_single_variation?.product_variation_details?.lower_price * 100}
+                data-amount={
+                  product?.product_single_variation?.product_variation_details
+                    ?.lower_price * 100
+                }
                 data-currency="AED"
                 data-num-instalments="3"
                 data-locale="en"
@@ -605,12 +630,12 @@ function DetailOne(props) {
                           )?.["id"] === ""
                             ? ""
                             : item?.arrs?.find(
-                              (v) =>
-                                v?.name ===
-                                selectedVariant?.find(
-                                  (x) => x.type === item?.newName
-                                )?.["name"]
-                            )?.["id"]
+                                (v) =>
+                                  v?.name ===
+                                  selectedVariant?.find(
+                                    (x) => x.type === item?.newName
+                                  )?.["name"]
+                              )?.["id"]
                         }
                         onChange={(e) =>
                           handelSelectVariantChange(e, item?.arrs)
@@ -635,13 +660,14 @@ function DetailOne(props) {
                           content={item2?.name}
                         >
                           <span
-                            className={`${(item2?.id ===
+                            className={`${
+                              (item2?.id ===
                               selectedVariant?.find(
                                 (v) => v.variation_value_id === item2.id
                               )?.["variation_value_id"]
-                              ? "active "
-                              : "") + (item2?.disabled ? "disabled" : "")
-                              }`}
+                                ? "active "
+                                : "") + (item2?.disabled ? "disabled" : "")
+                            }`}
                             style={{
                               backgroundImage: `url(${item2?.type_value})`,
                             }}
@@ -659,7 +685,7 @@ function DetailOne(props) {
 
         {/* <div className="product product-7 text-center w-100">
                 <figure className="product-media">
-                    <span className="product-label label-out">Stocking</span>
+                    <span className="product-label label-out">in stock</span>
                 </figure>
             </div> */}
 
@@ -672,7 +698,7 @@ function DetailOne(props) {
         </div>
         {/* ) : (
         <div className="details-filter-row details-row-size">
-          <span className="product-label-out">Stocking</span>
+          <span className="product-label-out">in stock</span>
         </div>
       )} */}
 
@@ -755,15 +781,15 @@ function DetailOne(props) {
             )}
             {product?.product_single_variation?.product_variation_details
               ?.lead_img && (
-                <li>
-                  <img
-                    src={
-                      product?.product_single_variation?.product_variation_details
-                        ?.lead_img
-                    }
-                  />
-                </li>
-              )}
+              <li>
+                <img
+                  src={
+                    product?.product_single_variation?.product_variation_details
+                      ?.lead_img
+                  }
+                />
+              </li>
+            )}
           </ul>
         </div>
         <div className="sticky-bar d-none">
