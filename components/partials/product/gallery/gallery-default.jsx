@@ -60,7 +60,7 @@ function GalleryDefault(props) {
                     <figure className="product-main-image product-main-image-figure" index="0">
                         {
                             product?.in_stock || product?.in_stock === 1 ?
-                                <span className="product-label label-out">in stock</span>
+                                <span className="product-label label-out">In Stock</span>
                                 : ""
                         }
 

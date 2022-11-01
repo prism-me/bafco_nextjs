@@ -158,7 +158,7 @@ function QuickViewModalTwo(props) {
 
                       {product.stock === 1 ? (
                         <span className="product-label label-out">
-                          in stock
+                          In Stock
                         </span>
                       ) : (
                         ""
