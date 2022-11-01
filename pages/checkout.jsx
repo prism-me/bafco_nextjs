@@ -1167,7 +1167,7 @@ function Checkout(props) {
                             value="pay2"
                             readOnly
                           />{" "}
-                          Instalments with Postpay
+                          Installments with Postpay
                         </label>
                       </h4>
                       {xauthtokenUser !== null ? (
@@ -1195,8 +1195,8 @@ function Checkout(props) {
                                 : "d-none"
                             }`}
                           >
-                            Postpay is available for order amount up to AED
-                            10,000.00{" "}
+                            Installment payment is only applicable for order
+                            amount up to AED 10,000.00{" "}
                           </p>
                         </>
                       ) : (
@@ -1226,8 +1226,8 @@ function Checkout(props) {
                                   : "d-none"
                               }`}
                             >
-                              Postpay is available for order amount up to AED
-                              10,000.00{" "}
+                              Installment payment is only applicable for order
+                              amount up to AED 10,000.00{" "}
                             </p>
                           )}
                         </>
