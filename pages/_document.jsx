@@ -69,6 +69,8 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P3QZ4C"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <Main />
           <script src="js/jquery.min.js"></script>
           <NextScript />
