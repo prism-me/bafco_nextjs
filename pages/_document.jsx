@@ -26,7 +26,7 @@ export default class MyDocument extends Document {
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-5P3QZ4C');
+              })(window,document,'script','dataLayer','GTM-WK7BJT8');
             `,
             }}
           />
@@ -87,9 +87,11 @@ export default class MyDocument extends Document {
           />
 
           <noscript dangerouslySetInnerHTML={{
-            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P3QZ4C"
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK7BJT8"
            height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}></noscript>
-           
+
+
+
           <Main />
           <script src="js/jquery.min.js"></script>
           <NextScript />
@@ -98,3 +100,6 @@ export default class MyDocument extends Document {
     );
   }
 }
+
+
+
