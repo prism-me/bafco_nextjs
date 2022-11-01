@@ -16,9 +16,22 @@ export default class MyDocument extends Document {
             type="text/css"
             href="css/fonts-molla.min.css"
           />
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1644415-3"></script>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'UA-1644415-3');
+            `,
+            }}
+          />
 
           {/* <!-- Google Tag Manager --> */}
-          <script
+          {/* <script
             data-partytown-config
             dangerouslySetInnerHTML={{
               __html: `
@@ -26,10 +39,10 @@ export default class MyDocument extends Document {
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-5P3QZ4C');
+              })(window,document,'script','dataLayer','GTM-WK7BJT8');
             `,
             }}
-          />
+          /> */}
 
           {/* <link
             rel="stylesheet"
@@ -69,6 +82,29 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
+
+
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.postpayAsyncInit = function()
+            {postpay.init({
+              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+              sandbox: true,
+              theme: "light",
+              locale: "en",
+            })}
+            `,
+            }}
+          />
+
+          {/* <noscript dangerouslySetInnerHTML={{
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK7BJT8"
+           height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}></noscript> */}
+
+
+
           <Main />
           <script src="js/jquery.min.js"></script>
           <NextScript />
@@ -77,3 +113,6 @@ export default class MyDocument extends Document {
     );
   }
 }
+
+
+
