@@ -16,9 +16,22 @@ export default class MyDocument extends Document {
             type="text/css"
             href="css/fonts-molla.min.css"
           />
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1644415-3"></script>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'UA-1644415-3');
+            `,
+            }}
+          />
 
           {/* <!-- Google Tag Manager --> */}
-          <script
+          {/* <script
             data-partytown-config
             dangerouslySetInnerHTML={{
               __html: `
@@ -29,7 +42,7 @@ export default class MyDocument extends Document {
               })(window,document,'script','dataLayer','GTM-WK7BJT8');
             `,
             }}
-          />
+          /> */}
 
           {/* <link
             rel="stylesheet"
@@ -86,9 +99,9 @@ export default class MyDocument extends Document {
             }}
           />
 
-          <noscript dangerouslySetInnerHTML={{
+          {/* <noscript dangerouslySetInnerHTML={{
             __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK7BJT8"
-           height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}></noscript>
+           height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}></noscript> */}
 
 
 
