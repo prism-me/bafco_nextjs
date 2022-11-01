@@ -1173,7 +1173,9 @@ function Checkout(props) {
                       {xauthtokenUser !== null ? (
                         <div
                           className={`postpay-widget ${
-                            showPostPay2 === true ? "active2" : "disable2"
+                            showPostPay2 === true && cartTotal?.total <= 10000
+                              ? "active2"
+                              : "disable2"
                           }`}
                           data-type="payment-summary"
                           data-amount={
@@ -1202,7 +1204,6 @@ function Checkout(props) {
                         ></div>
                       )}
                     </div>
-                    {console.log("discountedPrice::", discountedPrice)}
                     {loading ? (
                       <div
                         className="loader"
@@ -1215,7 +1216,7 @@ function Checkout(props) {
                           height: "sm" ? "6em" : "md" ? "10em" : "10em",
                         }}
                       />
-                    ) : cartTotal?.total <= 10000 ? (
+                    ) : (
                       <button
                         type="button"
                         onClick={handlePlaceOrderSubmit}
@@ -1226,35 +1227,9 @@ function Checkout(props) {
                           Proceed to Checkout
                         </span>
                       </button>
-                    ) : (
-                      <>
-                        <p
-                          className="mb-3"
-                          style={{
-                            color: "#008482",
-                            fontWeight: "bold",
-                            fontSize: "13px",
-                          }}
-                        >
-                          Your Order Limit is upto AED 10,000
-                        </p>
-                        <button
-                          type="button"
-                          // onClick={handlePlaceOrderSubmit}
-                          className="btn btn-outline-primary-2 btn-order btn-block"
-                          disabled
-                          style={{ cursor: "no-drop" }}
-                        >
-                          <span className="btn-text">Place Order</span>
-                          <span className="btn-hover-text">
-                            Proceed to Checkout
-                          </span>
-                        </button>
-                      </>
                     )}
                   </div>
                 </aside>
-
                 {isOpenThankyouModel && (
                   <Modal
                     isOpen={isOpenThankyouModel}
