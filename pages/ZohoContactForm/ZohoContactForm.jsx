@@ -64,7 +64,7 @@ function ZohoContactForm() {
                     Name<span style={{ color: "red" }}>*</span>
                   </label>
                 </div>
-                <div class="zcwf_col_fld">
+                <div class="zcwf_col_fld p-0">
                   <input
                     type="text"
                     id="Last_Name"
@@ -86,7 +86,7 @@ function ZohoContactForm() {
                     Email<span style={{ color: "red" }}>*</span>
                   </label>
                 </div>
-                <div class="zcwf_col_fld">
+                <div class="zcwf_col_fld p-0">
                   <input
                     type="email"
                     // ftype="email"
@@ -109,7 +109,7 @@ function ZohoContactForm() {
                     Phone Number<span style={{ color: "red" }}>*</span>
                   </label>
                 </div>
-                <div class="zcwf_col_fld">
+                <div class="zcwf_col_fld p-0">
                   <input
                     type="text"
                     id="Mobile"
