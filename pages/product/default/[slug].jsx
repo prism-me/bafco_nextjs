@@ -92,7 +92,7 @@ function ProductDefault() {
 
                         {
                             product?.stock === 1 ?
-                                <span className="product-label label-out">in stock</span>
+                                <span className="product-label label-out">In Stock</span>
                                 : ""
                         }
                         <OwlCarousel adClass="product-gallery-carousel owl-full owl-nav-dark cols-1 cols-md-2 cols-lg-3" options={mainSlider9}>

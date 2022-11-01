@@ -118,7 +118,7 @@ function Wishlist ( props ) {
                                                     }
                                                 </td>
                                                 <td className="stock-col">
-                                                    <span className={ `${product.stock == 0 ? 'out-of-stock' : 'in-stock'}` } >{ product.stock == 0 ? 'Out of stock' : 'In stock' }</span>
+                                                    <span className={ `${product.stock == 0 ? 'out-of-stock' : 'in-stock'}` } >{ product.stock == 0 ? 'Out of stock' : 'In Stock' }</span>
                                                 </td>
                                                 <td className="action-col">
                                                     <div className="dropdown">

@@ -385,7 +385,7 @@ function ShopGrid() {
                         value={sortBy}
                       >
                         <option value="all">All</option>
-                        <option value="stocking">in stock</option>
+                        <option value="stocking">In Stock</option>
                         <option value="low_to_high">Price : Low To High</option>
                         <option value="high_to_low">Price : High To Low</option>
                       </select>
