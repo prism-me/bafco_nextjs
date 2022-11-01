@@ -69,8 +69,27 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
-          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P3QZ4C"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.postpayAsyncInit = function()
+            {postpay.init({
+              merchantId: "id_40ac05065d574a72b8485a6d521626b8",
+              sandbox: true,
+              theme: "light",
+              locale: "en",
+            })}
+            `,
+            }}
+          />
+
+          <noscript dangerouslySetInnerHTML={{
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5P3QZ4C"
+           height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}></noscript>
+           
           <Main />
           <script src="js/jquery.min.js"></script>
           <NextScript />
