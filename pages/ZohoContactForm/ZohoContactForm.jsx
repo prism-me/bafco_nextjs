@@ -3,7 +3,7 @@ function ZohoContactForm() {
     <>
       <div
         id="crmWebToEntityForm"
-        class="zcwf_lblLeft crmWebToEntityForm"
+        className="zcwf_lblLeft crmWebToEntityForm"
         style={{
           backgroundColor: "transparent",
           color: "black",
@@ -48,23 +48,23 @@ function ZohoContactForm() {
           />
 
           <div
-            class="zcwf_title"
+            className="zcwf_title"
             style={{ maxWidth: "600px", color: "black", display: "none" }}
           >
             Website Form
           </div>
           <div className="row">
             <div className="col-sm-4">
-              <div class="zcwf_row">
+              <div className="zcwf_row">
                 <div
-                  class="zcwf_col_lab"
+                  className="zcwf_col_lab"
                   style={{ fontSize: "12px", fontFamily: "'Arial'" }}
                 >
                   <label for="Last_Name">
                     Name<span style={{ color: "red" }}>*</span>
                   </label>
                 </div>
-                <div class="zcwf_col_fld p-0">
+                <div className="zcwf_col_fld p-0">
                   <input
                     type="text"
                     id="Last_Name"
@@ -72,21 +72,21 @@ function ZohoContactForm() {
                     maxlength="80"
                     required
                   />
-                  <div class="zcwf_col_help"></div>
+                  <div className="zcwf_col_help"></div>
                 </div>
               </div>
             </div>
             <div className="col-sm-4">
-              <div class="zcwf_row">
+              <div className="zcwf_row">
                 <div
-                  class="zcwf_col_lab"
+                  className="zcwf_col_lab"
                   style={{ fontSize: "12px", fontFamily: "'Arial'" }}
                 >
                   <label for="Email">
                     Email<span style={{ color: "red" }}>*</span>
                   </label>
                 </div>
-                <div class="zcwf_col_fld p-0">
+                <div className="zcwf_col_fld p-0">
                   <input
                     type="email"
                     // ftype="email"
@@ -95,21 +95,21 @@ function ZohoContactForm() {
                     maxlength="100"
                     required
                   />
-                  <div class="zcwf_col_help"></div>
+                  <div className="zcwf_col_help"></div>
                 </div>
               </div>
             </div>
             <div className="col-sm-4">
-              <div class="zcwf_row">
+              <div className="zcwf_row">
                 <div
-                  class="zcwf_col_lab"
+                  className="zcwf_col_lab"
                   style={{ fontSize: "12px", fontFamily: "'Arial'" }}
                 >
                   <label for="Mobile">
                     Phone Number<span style={{ color: "red" }}>*</span>
                   </label>
                 </div>
-                <div class="zcwf_col_fld p-0">
+                <div className="zcwf_col_fld p-0">
                   <input
                     type="text"
                     id="Mobile"
@@ -117,33 +117,33 @@ function ZohoContactForm() {
                     maxlength="30"
                     required
                   />
-                  <div class="zcwf_col_help"></div>
+                  <div className="zcwf_col_help"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="zcwf_row">
+          <div className="zcwf_row">
             <div
-              class="zcwf_col_lab"
+              className="zcwf_col_lab"
               style={{ fontSize: "12px", fontFamily: "'Arial'" }}
             >
               <label for="LEADCF6">Subject</label>
             </div>
-            <div class="zcwf_col_fld">
+            <div className="zcwf_col_fld">
               <input type="text" id="LEADCF6" name="LEADCF6" maxlength="255" />
-              <div class="zcwf_col_help"></div>
+              <div className="zcwf_col_help"></div>
             </div>
           </div>
-          <div class="zcwf_row wfrm_fld_dpNn">
+          <div className="zcwf_row wfrm_fld_dpNn">
             <div
-              class="zcwf_col_lab"
+              className="zcwf_col_lab"
               style={{ fontSize: "12px", fontFamily: "'Arial'" }}
             >
               <label for="Lead_Source">Lead Source</label>
             </div>
-            <div class="zcwf_col_fld">
+            <div className="zcwf_col_fld">
               <select
-                class="zcwf_col_fld_slt"
+                className="zcwf_col_fld_slt"
                 id="Lead_Source"
                 name="Lead Source"
               >
@@ -189,43 +189,43 @@ function ZohoContactForm() {
                 <option value="Whats&#x20;App">Whats App</option>
                 <option value="Yahoo">Yahoo</option>
               </select>
-              <div class="zcwf_col_help"></div>
+              <div className="zcwf_col_help"></div>
             </div>
           </div>
-          <div class="zcwf_row">
+          <div className="zcwf_row">
             <div
-              class="zcwf_col_lab"
+              className="zcwf_col_lab"
               style={{ fontSize: "12px", fontFamily: "'Arial'" }}
             >
               <label for="Description">Message</label>
             </div>
-            <div class="zcwf_col_fld">
+            <div className="zcwf_col_fld">
               <textarea
                 id="Description"
                 name="Description"
                 cols="30"
                 rows="4"
               ></textarea>
-              <div class="zcwf_col_help"></div>
+              <div className="zcwf_col_help"></div>
             </div>
           </div>
-          <div class="zcwf_row">
+          <div className="zcwf_row">
             <div
-              class="zcwf_col_lab"
+              className="zcwf_col_lab"
               style={{ fontSize: "12px", fontFamily: "'Arial'" }}
             >
               Upload a File
             </div>
-            <div class="zcwf_col_fld">
-              <div class="clearB">
+            <div className="zcwf_col_fld">
+              <div className="clearB">
                 <input
                   type="file"
-                  class="zcwf_file"
+                  className="zcwf_file"
                   name="theFile"
                   id="theFile5418603000000737066"
                   multiple
                 />
-                <div class="zcwf_col_help" style={{ display: "none" }}>
+                <div className="zcwf_col_help" style={{ display: "none" }}>
                   <span
                     title="Click to upload"
                     style={{
@@ -246,8 +246,11 @@ function ZohoContactForm() {
                   >
                     ?
                   </span>
-                  <div class="zcwf_tooltip_over" style={{ display: "none" }}>
-                    <span class="zcwf_tooltip_ctn">Click to upload</span>
+                  <div
+                    className="zcwf_tooltip_over"
+                    style={{ display: "none" }}
+                  >
+                    <span className="zcwf_tooltip_ctn">Click to upload</span>
                   </div>
                 </div>
               </div>
@@ -258,20 +261,20 @@ function ZohoContactForm() {
               </p>
             </div>
           </div>
-          <div class="zcwf_row">
-            <div class="zcwf_col_lab"></div>
-            <div class="zcwf_col_fld">
+          <div className="zcwf_row">
+            <div className="zcwf_col_lab"></div>
+            <div className="zcwf_col_fld">
               <center>
                 <input
                   type="submit"
                   id="formsubmit"
-                  class="formsubmit zcwf_button"
+                  className="formsubmit zcwf_button"
                   value="Submit"
                   title="Submit"
                 />
                 <input
                   type="reset"
-                  class="zcwf_button"
+                  className="zcwf_button"
                   name="reset"
                   value="Reset"
                   title="Reset"
