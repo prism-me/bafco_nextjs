@@ -5,7 +5,7 @@ module.exports = {
     trailingSlash: true,
     env: {
         PUBLIC_URL: process.env.NODE_ENV === 'production' ? '/' : '/',
-        APP_URL: process.env.NODE_ENV === 'production' ? 'https://bafco-next.herokuapp.com/' : 'https://bafco-next.herokuapp.com/'
+        APP_URL: process.env.NODE_ENV === 'production' ? 'https://www.bafco.com/' : 'https://www.bafco.com/'
         // APP_URL: process.env.NODE_ENV === 'production' ? 'https://d-themes.com/react/molla/' : 'http://localhost/'
     },
     i18n: {

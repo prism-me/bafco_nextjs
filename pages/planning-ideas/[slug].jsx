@@ -314,13 +314,13 @@ function PlaningIdeasInner(props) {
                 <div className="shareBtnWrape">
                   <div className="shareBtn">
                     <FacebookShareButton
-                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
+                      url={`https://www.bafco.com/planning-ideas/${slug}`}
                       quote={`
                       ${planDetail?.title}
                       \n
                       Check out our latest plans here:
                                 \n
-                                https://bafco-next.herokuapp.com/planning-ideas`}
+                                https://www.bafco.com/planning-ideas`}
                       hashtag={"#BAFCO"}
                     >
                       <FacebookIcon size={36} />
@@ -328,12 +328,12 @@ function PlaningIdeasInner(props) {
                   </div>
                   <div className="shareBtn">
                     <LinkedinShareButton
-                      url={`https://bafco-next.herokuapp.com/planning-ideas`}
+                      url={`https://www.bafco.com/planning-ideas`}
                       title={"BAFCO"}
-                      source={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
+                      source={`https://www.bafco.com/planning-ideas/${slug}`}
                       summary={`Check out our latest plans here:
                                 \n
-                                https://bafco-next.herokuapp.com/planning-ideas
+                                https://www.bafco.com/planning-ideas
                                 `}
                     >
                       <LinkedinIcon size={36} />
@@ -342,10 +342,10 @@ function PlaningIdeasInner(props) {
                   <div className="shareBtn">
                     <PinterestShareButton
                       media={featuredImg?.img}
-                      url={`https://bafco-next.herokuapp.com/planning-ideas/${slug}`}
+                      url={`https://www.bafco.com/planning-ideas/${slug}`}
                       description={`Check out our latest plans here:
                               \n
-                              https://bafco-next.herokuapp.com/planning-ideas
+                              https://www.bafco.com/planning-ideas
                               `}
                     >
                       <PinterestIcon size={36} />
