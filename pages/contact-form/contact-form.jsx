@@ -155,7 +155,7 @@ function ContactForm({ type }) {
                     }}
                   />
                 ) : (
-                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2">
+                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-3">
                     <span>Send</span>
                     <i className="icon-long-arrow-right"></i>
                   </button>

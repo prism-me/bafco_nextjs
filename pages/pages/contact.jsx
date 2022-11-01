@@ -7,7 +7,7 @@ import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
 import Files from "react-files";
 import { API } from "~/http/API";
 import Helmet from "react-helmet";
-
+import ZohoContactForm from "../ZohoContactForm/ZohoContactForm";
 
 const axios = require("axios");
 
@@ -76,7 +76,9 @@ function Contact() {
     } else if (updatedData.email === "") {
       toast.error("Please enter your Email");
       return;
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(updatedData.email)) {
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(updatedData.email)
+    ) {
       alert("Invalid email address.");
       return;
     } else if (updatedData.name === "") {
@@ -121,7 +123,10 @@ function Contact() {
     <div className="main">
       <Helmet>
         <title>{contactusdata?.meta?.meta_title}</title>
-        <meta name="description" content={`${contactusdata?.meta?.meta_description}`} />
+        <meta
+          name="description"
+          content={`${contactusdata?.meta?.meta_description}`}
+        />
       </Helmet>
       <PageHeader
         title={contactusdata?.banner?.heading}
@@ -200,8 +205,8 @@ function Contact() {
                   __html: contactusdata?.getInTouch?.description,
                 }}
               />
-
-              <form className="contact-form mb-2">
+              <ZohoContactForm />
+              {/* <form className="contact-form mb-2">
                 <div className="row">
                   <div className="col-sm-4">
                     <label htmlFor="cname" className="sr-only">
@@ -269,26 +274,9 @@ function Contact() {
                   onChange={handleInit}
                 ></textarea>
 
-                {/* <div className="files mb-3">
-                  <Files
-                    className="files-dropzone"
-                    onChange={onFilesChange}
-                    onError={onFilesError}
-                    accepts={["image/png", ".pdf", "audio/*"]}
-                    multiple="true"
-                    maxFileSize={10000000}
-                    minFileSize={0}
-                    clickable
-                  >
-                    <img src="images/icons/Uploadsvg.png" />
-                    Drop files here or click to upload
-                  </Files>
-                </div> */}
-
                 <div className="files mb-0 p-2">
                   <input
                     type="file"
-                    // accept="image/*,.pdf"
                     style={{ display: "none" }}
                     id="contained-button-file"
                     onChange={changeHandler}
@@ -346,7 +334,7 @@ function Contact() {
                     </button>
                   )}
                 </div>
-              </form>
+              </form> */}
             </div>
           </div>
 

@@ -1195,8 +1195,8 @@ function Checkout(props) {
                                 : "d-none"
                             }`}
                           >
-                            Installment payment is only applicable for order
-                            amount up to AED 10,000.00{" "}
+                            Installments are applicable only for orders up to
+                            AED 10,000.00{" "}
                           </p>
                         </>
                       ) : (
@@ -1226,8 +1226,8 @@ function Checkout(props) {
                                   : "d-none"
                               }`}
                             >
-                              Installment payment is only applicable for order
-                              amount up to AED 10,000.00{" "}
+                              Installments are applicable only for orders up to
+                              AED 10,000.00{" "}
                             </p>
                           )}
                         </>
