@@ -1167,41 +1167,70 @@ function Checkout(props) {
                             value="pay2"
                             readOnly
                           />{" "}
-                          Instalments with Postpay
+                          Installments with Postpay
                         </label>
                       </h4>
                       {xauthtokenUser !== null ? (
-                        <div
-                          className={`postpay-widget ${
-                            showPostPay2 === true && cartTotal?.total <= 10000
-                              ? "active2"
-                              : "disable2"
-                          }`}
-                          data-type="payment-summary"
-                          data-amount={
-                            localStorage.getItem("decimal_amount") -
-                            discountedPrice * 100
-                          }
-                          data-currency="AED"
-                          data-num-instalments="3"
-                          data-country="AE"
-                          data-locale="en"
-                        ></div>
+                        <>
+                          <div
+                            className={`postpay-widget ${
+                              showPostPay2 === true && cartTotal?.total <= 10000
+                                ? "active2"
+                                : "disable2"
+                            }`}
+                            data-type="payment-summary"
+                            data-amount={
+                              localStorage.getItem("decimal_amount") -
+                              discountedPrice * 100
+                            }
+                            data-currency="AED"
+                            data-num-instalments="3"
+                            data-country="AE"
+                            data-locale="en"
+                          ></div>
+                          <p
+                            className={`text-secondary ${
+                              showPostPay2 === true && cartTotal?.total > 10000
+                                ? "d-block"
+                                : "d-none"
+                            }`}
+                          >
+                            Installments are applicable only for orders up to
+                            AED 10,000.00{" "}
+                          </p>
+                        </>
                       ) : (
-                        <div
-                          className={`postpay-widget ${
-                            showPostPay2 === true ? "active2" : "disable2"
-                          }`}
-                          data-type="payment-summary"
-                          data-amount={
-                            localStorage.getItem("decimal_amount") -
-                            discountedPrice * 100
-                          }
-                          data-currency="AED"
-                          data-num-instalments="3"
-                          data-country="AE"
-                          data-locale="en"
-                        ></div>
+                        <>
+                          <div
+                            className={`postpay-widget ${
+                              showPostPay2 === true && cartTotal?.total <= 10000
+                                ? "active2"
+                                : "disable2"
+                            }`}
+                            data-type="payment-summary"
+                            data-amount={
+                              localStorage.getItem("decimal_amount") -
+                              discountedPrice * 100
+                            }
+                            data-currency="AED"
+                            data-num-instalments="3"
+                            data-country="AE"
+                            data-locale="en"
+                          ></div>
+                          {cartTotal?.total > 10000 && (
+                            <p
+                              className={`text-secondary ${
+                                showPostPay2 === true &&
+                                cartTotal?.total > 10000
+                                  ? "d-block"
+                                  : "d-none"
+                              }`}
+                            >
+                              Installments are applicable only for orders up to
+                              AED 10,000.00{" "}
+                            </p>
+                          )}
+                        </>
                       )}
                     </div>
                     {loading ? (
@@ -1219,8 +1248,16 @@ function Checkout(props) {
                     ) : (
                       <button
                         type="button"
-                        onClick={handlePlaceOrderSubmit}
+                        onClick={
+                          cartTotal?.total <= 10000
+                            ? false
+                            : handlePlaceOrderSubmit
+                        }
                         className="btn btn-outline-primary-2 btn-order btn-block"
+                        disabled={cartTotal?.total <= 10000 ? false : true}
+                        style={{
+                          cursor: `${cartTotal?.total > 10000 && "no-drop"}`,
+                        }}
                       >
                         <span className="btn-text">Place Order</span>
                         <span className="btn-hover-text">
