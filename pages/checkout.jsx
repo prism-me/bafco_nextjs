@@ -1217,19 +1217,16 @@ function Checkout(props) {
                             data-country="AE"
                             data-locale="en"
                           ></div>
-                          {cartTotal?.total > 10000 && (
-                            <p
-                              className={`text-secondary ${
-                                showPostPay2 === true &&
-                                cartTotal?.total > 10000
-                                  ? "d-block"
-                                  : "d-none"
-                              }`}
-                            >
-                              Installments are applicable only for orders up to
-                              AED 10,000.00{" "}
-                            </p>
-                          )}
+                          <p
+                            className={`text-secondary ${
+                              showPostPay2 === true && cartTotal?.total > 10000
+                                ? "d-block"
+                                : "d-none"
+                            }`}
+                          >
+                            Installments are applicable only for orders up to
+                            AED 10,000.00{" "}
+                          </p>
                         </>
                       )}
                     </div>
@@ -1250,8 +1247,8 @@ function Checkout(props) {
                         type="button"
                         onClick={
                           cartTotal?.total <= 10000
-                            ? false
-                            : handlePlaceOrderSubmit
+                            ? handlePlaceOrderSubmit
+                            : false
                         }
                         className="btn btn-outline-primary-2 btn-order btn-block"
                         disabled={cartTotal?.total <= 10000 ? false : true}
