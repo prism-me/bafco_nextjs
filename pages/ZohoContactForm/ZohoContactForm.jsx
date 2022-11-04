@@ -71,6 +71,7 @@ function ZohoContactForm() {
                     name="Last Name"
                     maxlength="80"
                     required
+                    placeholder="Full Name *"
                   />
                   <div className="zcwf_col_help"></div>
                 </div>
@@ -94,6 +95,7 @@ function ZohoContactForm() {
                     name="Email"
                     maxlength="100"
                     required
+                    placeholder="E-mail *"
                   />
                   <div className="zcwf_col_help"></div>
                 </div>
@@ -116,6 +118,7 @@ function ZohoContactForm() {
                     name="Mobile"
                     maxlength="30"
                     required
+                    placeholder="Phone Number *"
                   />
                   <div className="zcwf_col_help"></div>
                 </div>
@@ -129,8 +132,14 @@ function ZohoContactForm() {
             >
               <label for="LEADCF6">Subject</label>
             </div>
-            <div className="zcwf_col_fld">
-              <input type="text" id="LEADCF6" name="LEADCF6" maxlength="255" />
+            <div className="zcwf_col_fld p-0">
+              <input
+                type="text"
+                id="LEADCF6"
+                name="LEADCF6"
+                maxlength="255"
+                placeholder="Subject"
+              />
               <div className="zcwf_col_help"></div>
             </div>
           </div>
@@ -199,12 +208,14 @@ function ZohoContactForm() {
             >
               <label for="Description">Message</label>
             </div>
-            <div className="zcwf_col_fld">
+            <div className="zcwf_col_fld p-0">
               <textarea
                 id="Description"
                 name="Description"
                 cols="30"
                 rows="4"
+                placeholder="Message"
+                style={{ resize: "none" }}
               ></textarea>
               <div className="zcwf_col_help"></div>
             </div>
