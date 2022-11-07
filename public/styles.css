@@ -1,0 +1,37 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  color: #666666;
+}
+
+.content {
+}
+
+.linestyle {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.content h1 {
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.btn-submit {
+  border-radius: 0;
+  background-color: #008482;
+  border-color: #008482;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  width: 50%;
+  margin: auto;
+  margin-top: 2rem;
+  display: block;
+}
+#webinar_register_container img {
+  display: none;
+}

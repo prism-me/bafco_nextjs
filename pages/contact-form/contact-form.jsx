@@ -80,7 +80,7 @@ function ContactForm() {
                     type="text"
                     style={{ display: "none" }}
                     name="returnURL"
-                    value="https://www.bafco.com/pages/contact/"
+                    value="https://www.bafco.com/thankyou.html"
                   />
 
                   <div

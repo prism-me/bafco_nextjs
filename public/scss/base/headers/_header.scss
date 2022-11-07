@@ -1211,7 +1211,7 @@
   right: 0;
   width: auto;
   position: absolute;
-  top: 10%;
+  top: 100%;
   min-width: 450px;
   z-index: 99;
   // display: none;
@@ -1225,6 +1225,10 @@
 
   .product-price {
     font-size: 12px;
+  }
+
+  @media (max-width: 991px) {
+    top: 10%;
   }
 }
 
