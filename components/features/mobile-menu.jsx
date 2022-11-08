@@ -11,6 +11,7 @@ function MobileMenu(props) {
   const [categoryList, setCategoryList] = useState();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [cattab, setCatTab] = useState(false);
 
   useEffect(() => {
     setCategoryList(props?.categoryData);
@@ -81,9 +82,10 @@ function MobileMenu(props) {
           <button className="btn btn-primary" type="submit">
             <i className="icon-search"></i>
           </button>
-          {searchTerm?.length > 2 ?
-            <div className="live-search-list">
-              {(products?.products?.length > 0 || products?.category?.length > 0) ? (
+          {searchTerm?.length > 2 ? (
+            <div className={`live-search-list ${cattab == true && "mblcat"}`}>
+              {products?.products?.length > 0 ||
+              products?.category?.length > 0 ? (
                 <div className="autocomplete-suggestions">
                   {products?.products?.map((product, index) => (
                     <ALink
@@ -91,26 +93,37 @@ function MobileMenu(props) {
                       className="autocomplete-suggestion"
                       key={`search-result-${index}`}
                     >
-                      <img src={product?.featured_image} alt={product?.name} />{product?.name}
+                      <img src={product?.featured_image} alt={product?.name} />
+                      {product?.name}
                     </ALink>
                   ))}
-                  {products?.category?.map((product, index) => (
-                    product?.parent_catetory?.length === 0 ?
+                  {products?.category?.map((product, index) =>
+                    product?.parent_catetory?.length === 0 ? (
                       <ALink
                         href={`/collections/${product?.route}`}
                         className="autocomplete-suggestion"
                         key={`search-result-${index}`}
                       >
-                        <img src={product?.featured_image} alt={product?.name} />{product?.name}
-                      </ALink> :
+                        <img
+                          src={product?.featured_image}
+                          alt={product?.name}
+                        />
+                        {product?.name}
+                      </ALink>
+                    ) : (
                       <ALink
                         href={`/collections/${product?.parent_catetory[0]?.route}/${product?.route}`}
                         className="autocomplete-suggestion"
                         key={`search-result-${index}`}
                       >
-                        <img src={product?.featured_image} alt={product?.name} />{product?.name}
+                        <img
+                          src={product?.featured_image}
+                          alt={product?.name}
+                        />
+                        {product?.name}
                       </ALink>
-                  ))}
+                    )
+                  )}
                 </div>
               ) : (
                 <p
@@ -124,20 +137,24 @@ function MobileMenu(props) {
                 </p>
               )}
             </div>
-            : (
-              ""
-            )
-          }
-
+          ) : (
+            ""
+          )}
         </form>
 
         <Tabs defaultIndex={0} selectedTabClassName="show">
           <TabList className="nav nav-pills-mobile" role="tablist">
-            <Tab className="nav-item text-center">
+            <Tab
+              className="nav-item text-center"
+              onClick={() => setCatTab(false)}
+            >
               <span className="nav-link">Menu</span>
             </Tab>
 
-            <Tab className="nav-item text-center">
+            <Tab
+              className="nav-item text-center"
+              onClick={() => setCatTab(true)}
+            >
               <span className="nav-link">Categories</span>
             </Tab>
           </TabList>

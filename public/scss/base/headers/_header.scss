@@ -1232,6 +1232,12 @@
   }
 }
 
+.mblcat {
+  @media (max-width: 991px) {
+    top: 20% !important;
+  }
+}
+
 .autocomplete-suggestions {
   box-shadow: 0 10px 20px 5px rgba(0, 0, 0, 0.05);
   color: #8d8d8d;
