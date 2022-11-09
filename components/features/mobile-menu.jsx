@@ -11,7 +11,6 @@ function MobileMenu(props) {
   const [categoryList, setCategoryList] = useState();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [cattab, setCatTab] = useState(false);
 
   useEffect(() => {
     setCategoryList(props?.categoryData);
@@ -86,7 +85,7 @@ function MobileMenu(props) {
             <i className="icon-search"></i>
           </button>
           {searchTerm?.length > 2 ? (
-            <div className={`live-search-list ${cattab == true && "mblcat"}`}>
+            <div className="live-search-list">
               {products?.products?.length > 0 ||
               products?.category?.length > 0 ? (
                 <div className="autocomplete-suggestions">
@@ -147,17 +146,11 @@ function MobileMenu(props) {
 
         <Tabs defaultIndex={0} selectedTabClassName="show">
           <TabList className="nav nav-pills-mobile" role="tablist">
-            <Tab
-              className="nav-item text-center"
-              onClick={() => setCatTab(false)}
-            >
+            <Tab className="nav-item text-center">
               <span className="nav-link">Menu</span>
             </Tab>
 
-            <Tab
-              className="nav-item text-center"
-              onClick={() => setCatTab(true)}
-            >
+            <Tab className="nav-item text-center">
               <span className="nav-link">Categories</span>
             </Tab>
           </TabList>
