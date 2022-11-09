@@ -1212,6 +1212,7 @@
   width: auto;
   position: absolute;
   top: 100%;
+  bottom: 0;
   min-width: 450px;
   z-index: 99;
   // display: none;
@@ -1227,16 +1228,16 @@
     font-size: 12px;
   }
 
-  @media (max-width: 991px) {
-    top: 10%;
-  }
+  // @media (max-width: 991px) {
+  //   top: 10%;
+  // }
 }
 
-.mblcat {
-  @media (max-width: 991px) {
-    top: 20% !important;
-  }
-}
+// .mblcat {
+//   @media (max-width: 991px) {
+//     top: 20% !important;
+//   }
+// }
 
 .autocomplete-suggestions {
   box-shadow: 0 10px 20px 5px rgba(0, 0, 0, 0.05);

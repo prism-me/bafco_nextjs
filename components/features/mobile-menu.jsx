@@ -58,8 +58,11 @@ function MobileMenu(props) {
         <span className="mobile-menu-close" onClick={hideMobileMenu}>
           <i className="icon-close"></i>
         </span>
-
-        <form onSubmit={(e) => e.preventDefault()} className="mobile-search">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="mobile-search"
+          style={{ position: "relative" }}
+        >
           <label
             htmlFor="mobile-search"
             value={searchTerm}
