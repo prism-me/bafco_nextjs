@@ -7,6 +7,7 @@ import { API } from "~/http/API";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
 import CountryRegionData from "../../utils/countrydata.json";
+import OrderCancelPopUp from "./OrderCancelPopUp";
 
 let userProfileData = {
   name: "",
@@ -603,6 +604,53 @@ function MyAccount(props) {
     }
   }
 
+  const [cancelMessage, setCancelMessage] = useState("");
+  const [orderCancelNumber, setOrderCancelNumber] = useState("");
+  const [showReasonModal, setShowReasonModal] = useState(false);
+
+  const handleCencelOrderChange = (e) => {
+    let updatedmsg = e.target.value;
+    setCancelMessage(updatedmsg);
+  };
+
+  const [disableButton, setDisableButton] = useState(false);
+  const handleOrderCancel = (id, status) => {
+    let UserId = localStorage.getItem("UserData");
+
+    if (status === "cancel") {
+      let formData = {
+        order_number: id,
+        status: status,
+        message: cancelMessage,
+      };
+
+      let token = localStorage.getItem("authtoken") || "";
+      API.post(`/auth/cancel-order`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(response?.data);
+          }
+        })
+        .then(() => {
+          API.get(`/user-order-detail/${UserId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => {
+              setOrderList(response?.data);
+              setDisableButton(true);
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <div className="main">
       <PageHeader
@@ -754,10 +802,10 @@ function MyAccount(props) {
                                             ? "Order Placed"
                                             : order?.status ===
                                               "ORDERDISPATCHED"
-                                              ? "Order Dispatched"
-                                              : order?.status === "ORDERDELIVERED"
-                                                ? "Order Delivered"
-                                                : "Order Canceled"}
+                                            ? "Order Dispatched"
+                                            : order?.status === "ORDERDELIVERED"
+                                            ? "Order Delivered"
+                                            : "Order Canceled"}
                                         </span>
                                       </td>
                                       <td className="td_product">
@@ -789,6 +837,29 @@ function MyAccount(props) {
                                         >
                                           Track shipment
                                         </a>
+                                        <button
+                                          className="track_order"
+                                          style={{
+                                            background: "#ee3124",
+                                            cursor: `${
+                                              disableButton === true &&
+                                              "not-allowed"
+                                            }`,
+                                          }}
+                                          onClick={() => {
+                                            setShowReasonModal(true);
+                                            setOrderCancelNumber(
+                                              order?.order_number
+                                            );
+                                          }}
+                                          disabled={
+                                            disableButton === true
+                                              ? true
+                                              : false
+                                          }
+                                        >
+                                          Cancel
+                                        </button>
                                       </td>
                                     </tr>
                                   ))}
@@ -797,6 +868,18 @@ function MyAccount(props) {
                             </div>
                           </div>
                         )}
+
+                        <OrderCancelPopUp
+                          show={showReasonModal}
+                          onHide={() => {
+                            setShowReasonModal(false);
+                          }}
+                          messgae={cancelMessage}
+                          onChange={handleCencelOrderChange}
+                          handleConfirm={handleOrderCancel}
+                          orderNumber={orderCancelNumber}
+                        />
+
                         {openOrderDetail && (
                           <Modal
                             isOpen={openOrderDetail}
@@ -893,15 +976,15 @@ function MyAccount(props) {
                                       </div>
                                       <div className="col-lg-3 col-md-6 col-sm-6 col-12">
                                         {singleOrderDetails?.status ===
-                                          "ORDERPLACED"
+                                        "ORDERPLACED"
                                           ? "Order Placed"
                                           : singleOrderDetails?.status ===
                                             "ORDERDISPATCHED"
-                                            ? "Order Dispatched"
-                                            : singleOrderDetails?.status ===
-                                              "ORDERDELIVERED"
-                                              ? "Order Delivered"
-                                              : "Order Canceled"}
+                                          ? "Order Dispatched"
+                                          : singleOrderDetails?.status ===
+                                            "ORDERDELIVERED"
+                                          ? "Order Delivered"
+                                          : "Order Canceled"}
                                       </div>
                                     </div>
                                     <div className="row"></div>
@@ -1072,8 +1155,8 @@ function MyAccount(props) {
                                                   ? true
                                                   : isdefault
                                               }
-                                            // onChange={(e) => handleChangeSetDefault(e, index, address.id)}
-                                            // onChange={() => { setIsDefault(!isdefault) }}
+                                              // onChange={(e) => handleChangeSetDefault(e, index, address.id)}
+                                              // onChange={() => { setIsDefault(!isdefault) }}
                                             />
                                             <span className="slider round"></span>
                                           </label>
@@ -1405,13 +1488,13 @@ function MyAccount(props) {
                                             width: "sm"
                                               ? "6em"
                                               : "md"
-                                                ? "10em"
-                                                : "10em",
+                                              ? "10em"
+                                              : "10em",
                                             height: "sm"
                                               ? "6em"
                                               : "md"
-                                                ? "10em"
-                                                : "10em",
+                                              ? "10em"
+                                              : "10em",
                                           }}
                                         />
                                       ) : (
