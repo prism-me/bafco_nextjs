@@ -839,7 +839,13 @@ function MyAccount(props) {
                                         </a>
                                         <button
                                           className="track_order"
-                                          style={{ background: "#ee3124" }}
+                                          style={{
+                                            background: "#ee3124",
+                                            cursor: `${
+                                              disableButton === true &&
+                                              "not-allowed"
+                                            }`,
+                                          }}
                                           onClick={() => {
                                             setShowReasonModal(true);
                                             setOrderCancelNumber(
