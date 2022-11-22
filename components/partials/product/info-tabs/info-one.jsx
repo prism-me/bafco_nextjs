@@ -226,7 +226,7 @@ function InfoOne(props) {
                             <div id="stamped-main-widget"
                                 data-product-id={product?.product?.id}
                                 data-name={product?.product?.name}
-                                data-url={`https://bafco-next.herokuapp.com${router?.asPath}`}
+                                data-url={`https://www.bafco.com${router?.asPath}`}
                                 data-image-url={product?.product?.featured_image}
                                 data-description={product?.product?.short_description}
                                 data-product-sku="2">
