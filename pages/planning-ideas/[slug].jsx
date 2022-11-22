@@ -28,6 +28,7 @@ function PlaningIdeasInner(props) {
     name: "",
     email: "",
     password: "",
+    user_type: "user",
   };
   const [userFormData, setUserFormData] = useState({ ...userForm });
   const [loading, setLoading] = useState(false);

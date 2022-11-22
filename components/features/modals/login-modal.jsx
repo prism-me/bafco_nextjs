@@ -39,7 +39,6 @@ function LoginModal(props) {
   // console.log("VerificationPAge :: ", props)
 
   useEffect(() => {
-
     setOpen(props.LoginModal);
     return () => {
       if (timer) clearTimeout(timer);
@@ -47,13 +46,13 @@ function LoginModal(props) {
   });
 
   const handleChange = () => {
-    console.log("onChangeCheckbox :: ", !isRememberChecked)
+    console.log("onChangeCheckbox :: ", !isRememberChecked);
     setIsRememberChecked(!isRememberChecked);
-  }
+  };
 
   const handleChangeIsAgree = () => {
-    setIsAgree(!isAgree)
-  }
+    setIsAgree(!isAgree);
+  };
 
   function closeModal() {
     document
@@ -109,7 +108,9 @@ function LoginModal(props) {
     if (userFormData?.email === "") {
       toast.error("Please Enter Email.");
       return false;
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userFormData?.email)) {
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userFormData?.email)
+    ) {
       alert("Invalid email address.");
       return;
     }
@@ -124,7 +125,7 @@ function LoginModal(props) {
     formdata.append("name", userFormData?.name);
     formdata.append("email", userFormData?.email);
     formdata.append("password", userFormData?.password);
-    formdata.append("user_type", "User");
+    formdata.append("user_type", "user");
     formdata.append("redirect_url", "https://www.bafco.com/");
     setLoading(true);
     API.post(`/auth/register`, formdata, {
@@ -149,15 +150,15 @@ function LoginModal(props) {
         setLoading(false);
         console.log(error);
       });
-
   };
 
   const handleLoginSubmit = async () => {
-
     if (userFormData?.email === "") {
       toast.error("Please Enter Email.");
       return false;
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userFormData?.email)) {
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(userFormData?.email)
+    ) {
       alert("Invalid email address.");
       return;
     }
@@ -172,6 +173,7 @@ function LoginModal(props) {
     let formdata = {
       email: userFormData.email,
       password: userFormData.password,
+      user_type: "user",
     };
     setLoading(true);
     API.post(`/auth/login`, formdata)
@@ -197,11 +199,12 @@ function LoginModal(props) {
   };
 
   const handleForgotePasswordSubmit = async () => {
-
     if (forgotPasswordemail === "") {
       toast.error("Please Enter Email.");
       return false;
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(forgotPasswordemail)) {
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(forgotPasswordemail)
+    ) {
       alert("Invalid email address.");
       return;
     }
@@ -312,13 +315,13 @@ function LoginModal(props) {
                                       width: "sm"
                                         ? "6em"
                                         : "md"
-                                          ? "10em"
-                                          : "10em",
+                                        ? "10em"
+                                        : "10em",
                                       height: "sm"
                                         ? "6em"
                                         : "md"
-                                          ? "10em"
-                                          : "10em",
+                                        ? "10em"
+                                        : "10em",
                                     }}
                                   />
                                 ) : (
@@ -407,13 +410,13 @@ function LoginModal(props) {
                                       width: "sm"
                                         ? "6em"
                                         : "md"
-                                          ? "10em"
-                                          : "10em",
+                                        ? "10em"
+                                        : "10em",
                                       height: "sm"
                                         ? "6em"
                                         : "md"
-                                          ? "10em"
-                                          : "10em",
+                                        ? "10em"
+                                        : "10em",
                                     }}
                                   />
                                 ) : (
