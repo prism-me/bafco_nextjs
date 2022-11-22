@@ -803,6 +803,9 @@ function MyAccount(props) {
                                             ? "Order Dispatched"
                                             : order?.status === "ORDERDELIVERED"
                                             ? "Order Delivered"
+                                            : order?.status ===
+                                              "ORDERCANCELLLATIONREQUEST"
+                                            ? "Order Cancellation Request"
                                             : "Order Canceled"}
                                         </span>
                                       </td>
@@ -844,20 +847,25 @@ function MyAccount(props) {
                                           >
                                             Track shipment
                                           </a>
-                                          <button
-                                            className="track_order"
-                                            style={{
-                                              background: "#ee3124",
-                                            }}
-                                            onClick={() => {
-                                              setShowReasonModal(true);
-                                              setOrderCancelNumber(
-                                                order?.order_number
-                                              );
-                                            }}
-                                          >
-                                            Cancel
-                                          </button>
+                                          {order?.status ===
+                                          "ORDERCANCELLED" ? (
+                                            ""
+                                          ) : (
+                                            <button
+                                              className="track_order"
+                                              style={{
+                                                background: "#ee3124",
+                                              }}
+                                              onClick={() => {
+                                                setShowReasonModal(true);
+                                                setOrderCancelNumber(
+                                                  order?.order_number
+                                                );
+                                              }}
+                                            >
+                                              Cancel
+                                            </button>
+                                          )}
                                         </td>
                                       )}
                                     </tr>
