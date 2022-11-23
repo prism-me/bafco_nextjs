@@ -16,7 +16,10 @@ export default class MyDocument extends Document {
             type="text/css"
             href="css/fonts-molla.min.css"
           />
-          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1644415-3"></script>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-1644415-3"
+          ></script>
           <script
             data-partytown-config
             dangerouslySetInnerHTML={{
@@ -69,7 +72,10 @@ export default class MyDocument extends Document {
           />
           <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
 
-          <script type="text/javascript" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+          <script
+            type="text/javascript"
+            src="https://cdn1.stamped.io/files/widget.min.js"
+          ></script>
           <script
             type="text/javascript"
             data-partytown-config
@@ -80,10 +86,24 @@ export default class MyDocument extends Document {
             });`,
             }}
           />
+
+          <script
+            type="text/javascript"
+            src="https://bafc-cmpzourl.maillist-manage.com/js/optin.min.js"
+            onLoad="setupSF('sf3z8febd0b22be43b8e6e9b7815f99efab7b93169edfdb9cd68cfe97046d57a569d','ZCFORMVIEW',false,'light',false,'0')"
+          ></script>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+              function
+              runOnFormSubmit_sf3z8febd0b22be43b8e6e9b7815f99efab7b93169edfdb9cd68cfe97046d57a569d(
+              th )
+            `,
+            }}
+          />
         </Head>
         <body>
-
-
           <script
             data-partytown-config
             dangerouslySetInnerHTML={{
@@ -103,8 +123,6 @@ export default class MyDocument extends Document {
             __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK7BJT8"
            height="0" width="0" style="display:none;visibility:hidden"></iframe>`}}></noscript> */}
 
-
-
           <Main />
           <script src="js/jquery.min.js"></script>
           <NextScript />
@@ -113,6 +131,3 @@ export default class MyDocument extends Document {
     );
   }
 }
-
-
-
