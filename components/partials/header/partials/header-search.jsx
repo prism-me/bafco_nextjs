@@ -17,7 +17,7 @@ function HeaderSearch() {
         .querySelector("body")
         .removeEventListener("click", closeSearchForm);
     };
-  }, []);
+  }, [router.asPath]);
 
   useEffect(() => {
     if (searchTerm?.length > 2) setLoading(true);
@@ -41,7 +41,7 @@ function HeaderSearch() {
       document
         .querySelector(".header-search.show-results")
         .classList.remove("show-results");
-  }, [router.pathname]);
+  }, [router.asPath]);
 
   function closeSearchForm(e) {
     document.querySelector(".header .header-search").classList.remove("show");
@@ -104,26 +104,40 @@ function HeaderSearch() {
                             className="autocomplete-suggestion"
                             key={`search-result-${index}`}
                           >
-                            <img src={product?.featured_image} alt={product?.name} />{product?.name}
+                            <img
+                              src={product?.featured_image}
+                              alt={product?.name}
+                            />
+                            {product?.name}
                           </ALink>
                         ))}
-                        {categories?.map((product, index) => (
-                          product?.parent_catetory?.length === 0 ?
+                        {categories?.map((product, index) =>
+                          product?.parent_catetory?.length === 0 ? (
                             <ALink
                               href={`/collections/${product?.route}`}
                               className="autocomplete-suggestion"
                               key={`search-result-${index}`}
                             >
-                              <img src={product?.featured_image} alt={product?.name} />{product?.name}
-                            </ALink> :
+                              <img
+                                src={product?.featured_image}
+                                alt={product?.name}
+                              />
+                              {product?.name}
+                            </ALink>
+                          ) : (
                             <ALink
                               href={`/collections/${product?.parent_catetory[0]?.route}/${product?.route}`}
                               className="autocomplete-suggestion"
                               key={`search-result-${index}`}
                             >
-                              <img src={product?.featured_image} alt={product?.name} />{product?.name}
+                              <img
+                                src={product?.featured_image}
+                                alt={product?.name}
+                              />
+                              {product?.name}
                             </ALink>
-                        ))}
+                          )
+                        )}
                       </>
                     ) : (
                       <p
