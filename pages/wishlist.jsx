@@ -107,7 +107,7 @@ function Wishlist(props) {
                       <div className="product">
                         <figure className="product-media">
                           <ALink
-                            href={`/collections/${product?.productData[0]?.product_category?.parent_category?.route}/${product?.productData[0]?.product_category?.route}/${product?.productData[0]?.route}`}
+                            href={`/collections/${product?.productData[0]?.product_category?.parent_category?.route}/${product?.productData[0]?.product_category?.route}/${product?.productData[0]?.route}?variationId=${product?.variation[0].id}`}
                             className="product-image"
                           >
                             <img
@@ -116,10 +116,9 @@ function Wishlist(props) {
                             />
                           </ALink>
                         </figure>
-
                         <h4 className="product-title">
                           <ALink
-                            href={`/collections/${product?.productData[0]?.product_category?.parent_category?.route}/${product?.productData[0]?.product_category?.route}/${product?.productData[0]?.route}`}
+                            href={`/collections/${product?.productData[0]?.product_category?.parent_category?.route}/${product?.productData[0]?.product_category?.route}/${product?.productData[0]?.route}?variationId=${product?.variation[0].id}`}
                           >
                             {product?.productData[0]?.name}
                           </ALink>
