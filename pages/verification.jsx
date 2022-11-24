@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import { API } from "~/http/API";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { actions as globalAction } from "~/store/global";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Verification = (props) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const VerificationPage = useSelector(
+    (state) => state.globalReducer.verificationshow
+  );
   const [verificationCode, setVerifiCationCode] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -14,7 +20,6 @@ const Verification = (props) => {
     setVerifiCationCode(e.target.value);
   };
 
-  console.log("props ::", props);
   const handleSubmit = () => {
     let formdata = { code: verificationCode };
     setLoading(true);
@@ -28,7 +33,8 @@ const Verification = (props) => {
           setLoading(false);
           toast.success(response?.data?.success);
           // router.push("/account");
-          props.verificationPageHide(false);
+          dispatch({ ...globalAction.verificationPageHide(false) });
+          // props.verificationPageHide(false);
           props.hidePopup(false);
         }
       })
@@ -38,8 +44,8 @@ const Verification = (props) => {
       });
   };
 
-  if (props.VerificationPage === false) {
-    return window.history.back();
+  if (VerificationPage === false) {
+    window.history.back();
   }
 
   return (
@@ -96,10 +102,4 @@ const Verification = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    VerificationPage: state.globalReducer.verificationshow,
-  };
-};
-
-export default connect(mapStateToProps, { ...globalAction })(Verification);
+export default Verification;

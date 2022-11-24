@@ -1,61 +1,69 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Modal from 'react-modal';
+import React from "react";
+import { connect } from "react-redux";
+import Modal from "react-modal";
 
-import { actions } from '~/store/demo';
+import { actions } from "~/store/demo";
 
 const customStyles = {
-    content: {
-        top: '50%',
-        transform: 'translateY(-50%)'
-    },
-    overlay: {
-        backgroundColor: 'rgba(77,77,77,0.6)',
-        zIndex: '9000'
-    }
+  content: {
+    top: "50%",
+    transform: "translateY(-50%)",
+  },
+  overlay: {
+    backgroundColor: "rgba(77,77,77,0.6)",
+    zIndex: "9000",
+  },
 };
 
-Modal.setAppElement( 'body' );
+Modal.setAppElement("body");
 
-function VideoModal ( props ) {
-    const { showModal } = props;
+function VideoModal(props) {
+  const { showModal } = props;
 
-    const closeHandler = () => {
+  const closeHandler = () => {
+    document
+      .querySelector("#video-modal")
+      .classList.remove("ReactModal__Content--after-open");
 
-        document.querySelector( "#video-modal" ).classList.remove( "ReactModal__Content--after-open" );
-
-        if ( document.querySelector( ".ReactModal__Overlay" ) ) {
-            document.querySelector( ".ReactModal__Overlay" ).style.opacity = '0';
-        }
-
-        setTimeout( () => {
-            props.hideVideo();
-        }, 350 );
+    if (document.querySelector(".ReactModal__Overlay")) {
+      document.querySelector(".ReactModal__Overlay").style.opacity = "0";
     }
 
-    return (
-        <Modal
-            isOpen={ showModal }
-            onRequestClose={ closeHandler }
-            style={ customStyles }
-            contentLabel="Video Modal"
-            className="video-modal p-3"
-            shouldReturnFocusAfterClose={ false }
-            id="video-modal"
-        >
-            {console.log("props :: ", props)}
-            <button type="button" className="close" onClick={ closeHandler }>
-                <span aria-hidden="true"><i className="icon-close"></i></span>
-            </button>
-            <iframe className="mfp-iframe modal-content" src="https://bafco.b-cdn.net/videos/2020CIFF.mp4" frameBorder="0" allowFullScreen="" title="youtube"></iframe>
-        </Modal>
-    )
+    setTimeout(() => {
+      props.hideVideo();
+    }, 350);
+  };
+
+  return (
+    <Modal
+      isOpen={showModal}
+      onRequestClose={closeHandler}
+      style={customStyles}
+      contentLabel="Video Modal"
+      className="video-modal p-3"
+      shouldReturnFocusAfterClose={false}
+      id="video-modal"
+    >
+      <button type="button" className="close" onClick={closeHandler}>
+        <span aria-hidden="true">
+          <i className="icon-close"></i>
+        </span>
+      </button>
+      <iframe
+        className="mfp-iframe modal-content"
+        src="https://bafco.b-cdn.net/videos/2020CIFF.mp4"
+        frameBorder="0"
+        allowFullScreen=""
+        title="youtube"
+      ></iframe>
+    </Modal>
+  );
 }
 
-export const mapStateToProps = ( state ) => {
-    return {
-        showModal: state.demo.videoShow
-    }
-}
+export const mapStateToProps = (state) => {
+  return {
+    showModal: state.demo.videoShow,
+  };
+};
 
-export default connect( mapStateToProps, actions )( VideoModal );
+export default connect(mapStateToProps, actions)(VideoModal);
