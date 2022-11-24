@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { actions as globalAction } from "~/store/global";
 
-function Verification(props) {
+const Verification = (props) => {
   const router = useRouter();
   const [verificationCode, setVerifiCationCode] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,6 +14,7 @@ function Verification(props) {
     setVerifiCationCode(e.target.value);
   };
 
+  console.log("props ::", props);
   const handleSubmit = () => {
     let formdata = { code: verificationCode };
     setLoading(true);
@@ -26,7 +27,7 @@ function Verification(props) {
           localStorage.setItem("authtoken", response?.headers?.x_auth_token);
           setLoading(false);
           toast.success(response?.data?.success);
-          // router.push('/account');
+          // router.push("/account");
           props.verificationPageHide(false);
           props.hidePopup(false);
         }
@@ -93,11 +94,10 @@ function Verification(props) {
       </div>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
-    LoginModal: state.globalReducer.hidePopup,
     VerificationPage: state.globalReducer.verificationshow,
   };
 };

@@ -32,30 +32,6 @@ export default class MyDocument extends Document {
             `,
             }}
           />
-
-          {/* <!-- Google Tag Manager --> */}
-          {/* <script
-            data-partytown-config
-            dangerouslySetInnerHTML={{
-              __html: `
-              (function(w,d,s,l,i){w[l] = w[l] || [];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-WK7BJT8');
-            `,
-            }}
-          /> */}
-
-          {/* <link
-            rel="stylesheet"
-            type="text/css"
-            href="vendor/line-awesome/css/line-awesome.min.css"
-          /> */}
-          {/* <script
-            type="text/javascript"
-            src="https://cdn1.stamped.io/files/widget.min.js"
-          ></script> */}
           <script
             data-partytown-config
             dangerouslySetInnerHTML={{
