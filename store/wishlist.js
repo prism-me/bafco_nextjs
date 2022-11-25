@@ -33,7 +33,7 @@ const wishlistReducer = (state = initialState, action) => {
           headers: { Authorization: `Bearer ${authtoken}` },
         })
           .then((response) => {
-            console.log("wishlists :: ", response.data);
+            console.log("wishlistsData :: ", response.data);
           })
           .catch((err) => {
             console.log(err);
@@ -46,7 +46,8 @@ const wishlistReducer = (state = initialState, action) => {
         (item) => item.product_id === action.payload.product.product_id
       );
 
-      if (findIndex == -1) {
+      // console.log("findIndex ::", findIndex);
+      if (findIndex) {
         return {
           data: [...state.data, action.payload.product],
         };
@@ -55,7 +56,9 @@ const wishlistReducer = (state = initialState, action) => {
     case actionTypes.removeFromWishlist:
       return {
         data: state.data.filter(
-          (item) => item.product_id !== action.payload.product.product_id
+          (item) =>
+            item.product_variation_id !==
+            action.payload.product.product_variation_id
         ),
       };
 

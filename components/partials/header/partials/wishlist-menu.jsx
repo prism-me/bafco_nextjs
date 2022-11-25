@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { actions as globalAction } from "~/store/global";
+import { useSelector } from "react-redux";
 
 function WishlistMenu(props) {
-  const { wishlist } = props;
   const [authtoken, setAuthtoken] = useState("");
+
+  const wishlist = useSelector((state) => state.wishlist.data);
 
   useEffect(() => {
     setAuthtoken(localStorage.getItem("authtoken"));
   }, [authtoken]);
+
+  // console.log("wishlists :: ", wishlist);
 
   return (
     <div className="wishlist">
@@ -23,10 +25,4 @@ function WishlistMenu(props) {
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    wishlist: state.wishlist.data,
-  };
-}
-
-export default connect(mapStateToProps, { ...globalAction })(WishlistMenu);
+export default WishlistMenu;

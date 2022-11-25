@@ -199,6 +199,7 @@ function DetailOne(props) {
             product?.product_single_variation?.variation_value_details[0]
               ?.product_variation_id,
         };
+        // console.log("data ::", data);
         props.addToWishlist(data);
       }
     } else {
