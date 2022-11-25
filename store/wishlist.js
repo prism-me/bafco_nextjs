@@ -43,7 +43,9 @@ const wishlistReducer = (state = initialState, action) => {
       }
 
       let findIndex = state.data.findIndex(
-        (item) => item.product_id === action.payload.product.product_id
+        (item) =>
+          item.product_variation_id ===
+          action.payload.product.product_variation_id
       );
 
       // console.log("findIndex ::", findIndex);
