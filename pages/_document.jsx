@@ -72,8 +72,7 @@ export default class MyDocument extends Document {
             data-partytown-config
             dangerouslySetInnerHTML={{
               __html: `
-              function
-              runOnFormSubmit_sf3z8febd0b22be43b8e6e9b7815f99efab7b93169edfdb9cd68cfe97046d57a569d(
+              function runOnFormSubmit_sf3z8febd0b22be43b8e6e9b7815f99efab7b93169edfdb9cd68cfe97046d57a569d(
               th )
             `,
             }}

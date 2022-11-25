@@ -91,7 +91,7 @@ function MyAccount(props) {
           if (response?.data?.length > 0) {
             setIsGuestUserCartListOpen(true);
           }
-          console.log("guest-cart ::", response);
+          // console.log("guest-cart ::", response);
         })
         .catch((err) => {
           console.log(err);
@@ -112,7 +112,7 @@ function MyAccount(props) {
       headers: { Authorization: `Bearer ${xauthtoken}` },
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response?.status === 200) {
           localStorage.removeItem("GuestUserData");
           // toast.success(response?.data)
@@ -140,7 +140,7 @@ function MyAccount(props) {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      console.log(response?.data);
+      // console.log(response?.data);
       setSingleOrderDetails(response?.data);
     });
   }, [singleOrderID]);
@@ -216,7 +216,7 @@ function MyAccount(props) {
 
   const handleEditAddress = (e, id) => {
     e.preventDefault();
-    console.log("editAddressID ::", id);
+    // console.log("editAddressID ::", id);
     setEditAddressID(id);
     setOpen(true);
     setIsEdit(true);
@@ -270,7 +270,7 @@ function MyAccount(props) {
         },
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response?.status === 200) {
             setLoading(false);
             toast.success(response?.data?.message);
@@ -525,7 +525,7 @@ function MyAccount(props) {
         },
       })
         .then((response) => {
-          console.log("reset ::", response);
+          // console.log("reset ::", response);
           if (response?.status === 200) {
             setLoading(false);
             toast.success(response?.data?.message);

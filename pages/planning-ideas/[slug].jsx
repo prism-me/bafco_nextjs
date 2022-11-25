@@ -44,7 +44,7 @@ function PlaningIdeasInner(props) {
     setLoading(true);
     API.post(`/auth/login`, formdata)
       .then((response) => {
-        console.log("response :: ", response);
+        // console.log("response :: ", response);
         if (response?.status === 200) {
           setLoading(false);
           window.location.reload(false);

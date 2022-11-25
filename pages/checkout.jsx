@@ -456,7 +456,7 @@ function Checkout(props) {
       setLoading(true);
       API.post(`/authCheckout`, formdata)
         .then((response) => {
-          console.log("Success :: ", response);
+          // console.log("Success :: ", response);
           if (response?.data?.error) {
             setLoading(false);
             setError(response?.data?.error?.detail);

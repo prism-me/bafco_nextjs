@@ -46,7 +46,7 @@ function DetailOne(props) {
       )
     );
 
-    console.log("setVariationTypeGroup :: ", variationTypeGroup);
+    // console.log("setVariationTypeGroup :: ", variationTypeGroup);
 
     setVariationGroup(
       product?.dropDown?.reduce(
@@ -56,7 +56,7 @@ function DetailOne(props) {
       )
     );
 
-    console.log("setVariationGroup :: ", variationGroup);
+    // console.log("setVariationGroup :: ", variationGroup);
 
     let currentProductVariation =
       product?.product_single_variation?.variation_value_details.map((item) => {
@@ -71,7 +71,7 @@ function DetailOne(props) {
 
     setSelectedVariant(currentProductVariation);
 
-    console.log("setSelectedVariant :: ", selectedVariant);
+    // console.log("setSelectedVariant :: ", selectedVariant);
 
     let comb = [];
 
@@ -91,7 +91,7 @@ function DetailOne(props) {
     }, 0);
     setvariantCombGroup(comb);
 
-    console.log("setvariantCombGroup :: ", variantCombGroup);
+    // console.log("setvariantCombGroup :: ", variantCombGroup);
   }, [product]);
 
   useEffect(() => {
@@ -160,8 +160,8 @@ function DetailOne(props) {
 
     const storeitemId = e.target.value;
 
-    console.log("item :: ", item);
-    console.log("storeitemId :: ", storeitemId);
+    // console.log("item :: ", item);
+    // console.log("storeitemId :: ", storeitemId);
 
     if (!e.target.value) {
       const newState = selectedVariant.map((obj) => {
@@ -214,7 +214,7 @@ function DetailOne(props) {
       });
 
       setSelectedVariant(newState);
-      console.log("newState :: ", newState);
+      // console.log("newState :: ", newState);
 
       let comb = [];
 
@@ -223,7 +223,7 @@ function DetailOne(props) {
         return acc;
       });
 
-      console.log("comb :: ", comb);
+      // console.log("comb :: ", comb);
 
       let resultNewComb = comb.reduce(function (result, item) {
         var key = Object.keys(item)[0];
@@ -231,7 +231,7 @@ function DetailOne(props) {
         return result;
       }, {});
 
-      console.log("resultNewComb :: ", resultNewComb);
+      // console.log("resultNewComb :: ", resultNewComb);
 
       let getVariationId = variantCombGroup.filter(function (entry) {
         return Object.keys(resultNewComb).every(function (key) {
@@ -239,7 +239,7 @@ function DetailOne(props) {
         });
       });
 
-      console.log("getVariationId :: ", getVariationId);
+      // console.log("getVariationId :: ", getVariationId);
 
       // props.handelselectedVariation(found[0]?.product_variation_id);
       props.handelselectedVariation(getVariationId[0].variation_id);

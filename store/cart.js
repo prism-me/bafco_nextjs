@@ -48,7 +48,7 @@ const cartReducer = (state = initialState, action) => {
             } else {
 
                 if (UserDetail !== null) {
-                    console.log("action?.payload?.product?.qty :: ", action.payload)
+                    // console.log("action?.payload?.product?.qty :: ", action.payload)
                     let productData = {
                         user_id: UserDetail,
                         product_id: action?.payload?.product?.product_id,

@@ -46,7 +46,7 @@ function LoginModal(props) {
   });
 
   const handleChange = () => {
-    console.log("onChangeCheckbox :: ", !isRememberChecked);
+    // console.log("onChangeCheckbox :: ", !isRememberChecked);
     setIsRememberChecked(!isRememberChecked);
   };
 

@@ -55,7 +55,7 @@ function ShopSidebarOne(props) {
     }
 
     function onAttrClick(e, attr, value) {
-        console.log('onAttr :: ', attr, value, priceRange);
+        // console.log('onAttr :: ', attr, value, priceRange);
         setBrand(value);
         setFilterByValue(priceRange, value)
         // if (getUrlForAttrs(attr, value)) {

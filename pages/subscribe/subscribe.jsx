@@ -16,7 +16,7 @@ function Subscribe() {
               style={{
                 backgroundColor: "rgb(36, 50, 121)",
                 zIndex: "2",
-                fontFamily: "Arial",
+                fontFamily: "Montserrat, sans-serif",
                 borderWidth: "1px",
                 borderStyle: "solid",
                 borderColor: "rgb(235, 235, 235)",
@@ -42,12 +42,12 @@ function Subscribe() {
                     display: "block",
                     boxSizing: "border-box",
                     fontSize: "16px",
-                    fontFamily: "Tahoma",
+                    fontFamily: "Montserrat, sans-serif",
                   }}
                   id="SIGNUP_HEADING"
                 >
                   <br />
-                  <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
+                  <span style={{ fontSize: "2.5rem", fontWeight: "600" }}>
                     KEEP IN TOUCH
                   </span>
                   <br />
@@ -71,8 +71,8 @@ function Subscribe() {
                   >
                     <table
                       width="100%"
-                      cellspacing="0"
-                      cellpadding="0"
+                      cellSpacing="0"
+                      cellPadding="0"
                       border="0"
                     >
                       <tbody>
@@ -89,7 +89,7 @@ function Subscribe() {
                               id="signupSuccessMsg"
                               style={{
                                 color: "rgb(73, 140, 132)",
-                                fontFamily: "sans-serif",
+                                fontFamily: "Montserrat, sans-serif",
                                 fontSize: "14px",
                                 wordBreak: "break-word",
                               }}
@@ -155,7 +155,7 @@ function Subscribe() {
                         padding: "25px 10px",
                         color: "rgb(136, 136, 136)",
                         textAlign: "left",
-                        fontFamily: "Arial",
+                        fontFamily: "Montserrat, sans-serif",
                         backgroundColor: "rgb(255, 255, 255)",
                         boxSizing: "border-box",
                       }}
@@ -189,7 +189,7 @@ function Subscribe() {
                         padding: "5px 10px",
                         color: "rgb(136, 136, 136)",
                         textAlign: "left",
-                        fontFamily: "Arial",
+                        fontFamily: "Montserrat, sans-serif",
                         backgroundColor: "rgb(255, 255, 255)",
                         boxSizing: "border-box",
                       }}
@@ -210,7 +210,7 @@ function Subscribe() {
                     className="SIGNUP_FLD"
                   >
                     <input
-                      type="button"
+                      type="submit"
                       style={{
                         textAlign: "center",
                         width: "100%",
@@ -330,7 +330,7 @@ function Subscribe() {
         <input type="hidden" id="signupFormType" value="QuickForm_Horizontal" />
         <div
           id="zcOptinOverLay"
-          oncontextmenu="return false"
+          onContextMenu="return false"
           style={{
             display: "none",
             textAlign: "center",

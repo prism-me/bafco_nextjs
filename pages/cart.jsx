@@ -145,7 +145,7 @@ function Cart(props) {
         headers: { Authorization: `Bearer ${authtoken}` },
       })
         .then((response) => {
-          console.log("response", response);
+          // console.log("response", response);
           localStorage.setItem(
             "decimal_amount",
             response?.data?.original?.decimal_amount
