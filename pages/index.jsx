@@ -159,7 +159,7 @@ function Home() {
 
     API.get(`/top-selling-products`)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setProductList(response?.data);
       })
       .catch((err) => {
