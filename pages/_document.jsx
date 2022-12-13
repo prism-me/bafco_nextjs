@@ -79,7 +79,7 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
-          <script
+          {/* <script
             data-partytown-config
             dangerouslySetInnerHTML={{
               __html: `
@@ -92,7 +92,7 @@ export default class MyDocument extends Document {
             })}
             `,
             }}
-          />
+          /> */}
 
           {/* <noscript dangerouslySetInnerHTML={{
             __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK7BJT8"
