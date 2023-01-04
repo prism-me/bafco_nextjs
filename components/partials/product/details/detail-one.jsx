@@ -72,15 +72,17 @@ function DetailOne(props) {
     // console.log("setVariationGroup :: ", variationGroup);
 
     let currentProductVariation =
-      product?.product_single_variation?.variation_value_details.map((item) => {
-        let productVariation = {
-          name: item?.variation_values?.name,
-          variation_value_id: item?.variation_values?.id,
-          type: item?.variation_values?.variant?.name,
-          product_variation_id: item?.product_variation_id,
-        };
-        return productVariation;
-      });
+      product?.product_single_variation?.variation_value_details?.map(
+        (item) => {
+          let productVariation = {
+            name: item?.variation_values?.name,
+            variation_value_id: item?.variation_values?.id,
+            type: item?.variation_values?.variant?.name,
+            product_variation_id: item?.product_variation_id,
+          };
+          return productVariation;
+        }
+      );
 
     // let newObj = {}
     // currentProductVariation?.forEach((item) => {
@@ -189,7 +191,7 @@ function DetailOne(props) {
 
   function onWishlistClick(e) {
     e.preventDefault();
-    if (!isInWishlist(props.wishlist, product)) {
+    if (!isInWishlist(props?.wishlist, product)) {
       if (authtoken === "" || authtoken === null || authtoken === undefined) {
         props.showPopup(true);
       } else {
@@ -221,7 +223,7 @@ function DetailOne(props) {
       qty: qty,
     };
 
-    props.addToCart(data);
+    props?.addToCart(data);
   }
 
   // function onCartClick(e, index = 0) {
@@ -250,7 +252,7 @@ function DetailOne(props) {
 
     //  } else
     if (!e.target.value) {
-      const newState = selectedVariant.map((obj) => {
+      const newState = selectedVariant?.map((obj) => {
         if (obj?.type === item?.variant?.name) {
           return {
             name: item?.name,
@@ -267,7 +269,7 @@ function DetailOne(props) {
       let comb = [];
 
       newState?.map((acc) => {
-        comb?.push({ [acc.type]: acc?.name });
+        comb?.push({ [acc?.type]: acc?.name });
         return acc;
       });
 
@@ -277,25 +279,25 @@ function DetailOne(props) {
         return result;
       }, {});
 
-      let getVariationId = variantCombGroup.filter(function (entry) {
+      let getVariationId = variantCombGroup?.filter(function (entry) {
         return Object.keys(resultNewComb).every(function (key) {
           return entry[key] === resultNewComb[key];
         });
       });
 
-      if (getVariationId.length !== 0) {
-        props.handelselectedVariation(getVariationId[0].variation_id);
+      if (getVariationId?.length !== 0) {
+        props?.handelselectedVariation(getVariationId[0]?.variation_id);
       } else {
         setVariationPopupeOpen(true);
       }
     } else {
       const found = item?.find((v) => v?.id == e.target.value);
 
-      if (selectedVariant.find((v) => v?.type == found.variant.name)) {
+      if (selectedVariant?.find((v) => v?.type == found.variant?.name)) {
         // console.log("selected");
       } else {
-        selectedVariant.push({
-          name: found.name,
+        selectedVariant?.push({
+          name: found?.name,
           variation_value_id: found?.variation_id,
           type: found?.variant.name,
           product_variation_id: found?.product_variation_id,
@@ -304,8 +306,8 @@ function DetailOne(props) {
 
       // console.log("selected :: ", selectedVariant);
 
-      const newState = selectedVariant.map((obj) => {
-        if (obj.type === found.variant.name) {
+      const newState = selectedVariant?.map((obj) => {
+        if (obj?.type === found?.variant.name) {
           return {
             name: found?.name,
             type: found?.variant?.name,
@@ -319,8 +321,8 @@ function DetailOne(props) {
 
       let comb = [];
 
-      newState.map((acc) => {
-        comb.push({ [acc?.type]: acc?.name });
+      newState?.map((acc) => {
+        comb?.push({ [acc?.type]: acc?.name });
         return acc;
       });
 
@@ -775,7 +777,7 @@ function DetailOne(props) {
               (item, index) => (
                 <li key={index}>
                   {/* <Tooltip className="stocking_massage" content={item?.url?.split('.')[0]}> */}
-                  <img src={item.avatar} />
+                  <img src={item?.avatar} />
                   {/* </Tooltip> */}
                 </li>
               )
@@ -908,8 +910,8 @@ function DetailOne(props) {
 
 const mapStateToProps = (state) => {
   return {
-    cartlist: state.cartlist.data,
-    wishlist: state.wishlist.data,
+    cartlist: state?.cartlist?.data,
+    wishlist: state?.wishlist?.data,
   };
 };
 
