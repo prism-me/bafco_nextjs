@@ -4,21 +4,12 @@ import FabricGrid from "./fabric-grid";
 import FabricModal from "~/components/features/modals/fabric-modal";
 
 function FabricListOne(props) {
-  const { loading, products = [], perPage, matId } = props;
+  const { loading, products = [], matId } = props;
   const router = useRouter();
   const query = Object.keys(router.query);
 
-  const [fakeArray, setFakeArray] = useState([]);
   const [gridClass, setGridClass] = useState("col-6");
   const type = "4cols";
-
-  useEffect(() => {
-    let temp = [];
-    for (let i = 0; i < perPage; i++) {
-      temp.push(i);
-    }
-    setFakeArray(temp);
-  }, [perPage]);
 
   useEffect(() => {
     if (type === "list" || type === "2cols") setGridClass("col-6");
@@ -75,13 +66,7 @@ function FabricListOne(props) {
         <p className="no-results">No products matching your selection.</p>
       ) : (
         <div className="row">
-          {loading ? (
-            fakeArray?.map((item, index) => (
-              <div className={gridClass} key={index}>
-                <div className="skel-pro"></div>
-              </div>
-            ))
-          ) : query[0] == "color" ? (
+          {query[0] == "color" ? (
             uniqueColorsTitle?.length > 0 ? (
               uniqueColorsTitle?.map((x, ind) => (
                 <>

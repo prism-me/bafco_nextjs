@@ -3,35 +3,20 @@ import React, { useState, useEffect, useCallback } from "react";
 import StickyBox from "react-sticky-box";
 import ALink from "~/components/features/alink";
 import FabricListOne from "~/pages/fabric-finishes/list/fabric-list-one";
-// import Pagination from "~/components/features/pagination";
 import FabricSidebarOne from "~/pages/fabric-finishes/sidebar/fabric-sidebar-one";
-// import { GET_PRODUCTS } from "~/server/queries";
-// import { scrollToPageContent } from "~/utils";
 import FabricTopBar from "./FabricTopBar";
 import { API } from "~/http/API";
 import Helmet from "react-helmet";
 
 function FabricGrid() {
   const router = useRouter();
-  //   const type = router.query.type;
-  const type = "4cols";
   const query = router.query;
-  // const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
-  // const [{ loading, error }] = useLazyQuery(GET_PRODUCTS);
-  const [firstLoading, setFirstLoading] = useState(false);
-  const [perPage, setPerPage] = useState(5);
-  const [pageTitle, setPageTitle] = useState("4cols");
-  const [toggle, setToggle] = useState(false);
-  // const products = data && data.products.data;
-  // const totalCount = data && data.products.totalCount;
 
   // finishes List data start
 
   const [fabricList, setFabricList] = useState();
   const [filterList, setFilterList] = useState();
-  // const [selectedCategory, setSelectedCategory] = useState("");
   const [categoryList, setCategoryList] = useState("");
-  // const [matId, setMatId] = useState("");
 
   // the parentState will be set by its child slider component
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -104,76 +89,6 @@ function FabricGrid() {
 
   // filters data End
 
-  useEffect(() => {
-    window.addEventListener("resize", resizeHandle);
-    resizeHandle();
-    return () => {
-      window.removeEventListener("resize", resizeHandle);
-    };
-  }, []);
-
-  function resizeHandle() {
-    if (document.querySelector("body").offsetWidth < 992) setToggle(true);
-    else setToggle(false);
-  }
-
-  // useEffect(() => {
-  //   getProducts({
-  //     variables: {
-  //       color: query.color ? query.color.split(",") : [],
-  //       size: query.size ? query.size.split(",") : [],
-  //       brand: query.brand ? query.brand.split(",") : [],
-  //       minPrice: parseInt(query.minPrice),
-  //       maxPrice: parseInt(query.maxPrice),
-  //       category: query.category,
-  //       sortBy: query.sortBy ? query.sortBy : "default",
-  //       page: query.page ? parseInt(query.page) : 1,
-  //       perPage: perPage,
-  //       list: true,
-  //     },
-  //   });
-
-  //   scrollToPageContent();
-  // }, [query, perPage]);
-
-  // useEffect(() => {
-  //   if (products) setFirstLoading(true);
-  // }, [products]);
-
-  useEffect(() => {
-    if (type == "list") {
-      setPageTitle("List");
-      setPerPage(5);
-    } else if (type == "2cols") {
-      setPageTitle("Grid 2 Columns");
-      setPerPage(6);
-    } else if (type == "3cols") {
-      setPageTitle("Grid 3 Columns");
-      setPerPage(9);
-    } else if (type == "4cols") {
-      setPageTitle("Grid 4 Columns");
-      setPerPage(12);
-    }
-  }, [type]);
-
-  function toggleSidebar() {
-    if (
-      document.querySelector("body").classList.contains("sidebar-filter-active")
-    ) {
-      document.querySelector("body").classList.remove("sidebar-filter-active");
-    } else {
-      document.querySelector("body").classList.add("sidebar-filter-active");
-    }
-  }
-
-  function hideSidebar() {
-    document.querySelector("body").classList.remove("sidebar-filter-active");
-  }
-
-  // if (error) {
-  //   return <div></div>;
-  // }
-
   return (
     <main className="main shop fabric-finishes-page">
       <Helmet>
@@ -197,54 +112,23 @@ function FabricGrid() {
             categoryList={categoryList}
             selectedCategory={selectedCategory}
             wrappersetSelectedCategory={wrappersetSelectedCategory}
-            // setMatId={setMatId}
             wrappersetMatId={wrappersetMatId}
           />
           <div className="row skeleton-body">
-            <div className={`col-lg-9 skel-shop-products `}>
-              <FabricListOne
-                products={fabricList}
-                perPage={perPage}
-                // loading={loading}
-                matId={matId}
-              ></FabricListOne>
-
-              {/* {totalCount > perPage ? (
-                <Pagination perPage={perPage} total={totalCount}></Pagination>
-              ) : (
-                ""
-              )} */}
-            </div>
-
-            <aside
-              className={`col-lg-3 skel-shop-sidebar order-lg-first skeleton-body `}
-            >
-              <div className="skel-widget"></div>
-              <div className="skel-widget"></div>
-              <div className="skel-widget"></div>
-              <div className="skel-widget"></div>
-              <StickyBox className="sticky-content" offsetTop={70}>
+            <div className="col-lg-3 order-lg-first">
+              <StickyBox offsetTop={75} offsetBottom={20}>
                 <FabricSidebarOne
-                  toggle={toggle}
                   filterData={filterList}
                   matId={matId}
                 ></FabricSidebarOne>
               </StickyBox>
-              {toggle ? (
-                <button
-                  className="sidebar-fixed-toggler"
-                  onClick={toggleSidebar}
-                >
-                  <i className="icon-cog"></i>
-                </button>
-              ) : (
-                ""
-              )}
-              <div
-                className="sidebar-filter-overlay"
-                onClick={hideSidebar}
-              ></div>
-            </aside>
+            </div>
+            <div className={`col-lg-9 skel-shop-products`}>
+              <FabricListOne
+                products={fabricList}
+                matId={matId}
+              ></FabricListOne>
+            </div>
           </div>
         </div>
       </div>

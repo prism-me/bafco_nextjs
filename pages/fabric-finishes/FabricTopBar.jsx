@@ -1,18 +1,13 @@
-// import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { useEffect } from "react";
-// import ALink from "~/components/features/alink";
 import { saveAs } from "file-saver";
 import { useState } from "react";
 
 function FabricTopBar(props) {
-  // const router = useRouter();
-  // const type = router.query.type;
   const {
     categoryList,
     selectedCategory,
     wrappersetSelectedCategory,
-    // setMatId,
     wrappersetMatId,
   } = props;
 
