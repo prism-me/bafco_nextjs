@@ -10,6 +10,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Jost:400,500,600,700,800,900"
           />
+          <meta name="facebook-domain-verification" content="nb70ua69x3coo6ctouracnqbi3v980" />
           <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
           <link
             rel="stylesheet"
@@ -32,6 +33,23 @@ export default class MyDocument extends Document {
             `,
             }}
           />
+
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+
+                    })(window,document,'script','dataLayer','GTM-WK7BJT8'); `
+            }}
+          />
+
           <script
             data-partytown-config
             dangerouslySetInnerHTML={{
@@ -64,6 +82,12 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK7BJT8" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+            }}
+          />
+
           {/* <script
             data-partytown-config
             dangerouslySetInnerHTML={{
