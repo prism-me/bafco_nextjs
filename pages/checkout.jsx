@@ -79,6 +79,7 @@ function Checkout(props) {
 
   {
     console.log("payment success ::", router?.query?.status);
+    // console.log("payment success id ::", router?.query?.reference);
   }
   useEffect(() => {
     if (router?.query?.status == "success") {
@@ -604,6 +605,20 @@ function Checkout(props) {
           }}
         />
         <script async src="https://cdn.postpay.io/v1/js/postpay.js"></script>
+
+        {/* Event snippet for Purchase conversion page  */}
+
+        {/* {router?.query?.reference && (
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: ` gtag('event', 'conversion', {
+      'send_to': 'AW-333577971/XUf4CMm9uIkYEPP9h58B',
+      'transaction_id': ${router?.query?.reference}
+  });`,
+            }}
+          />
+        )} */}
       </Helmet>
 
       <PageHeader
