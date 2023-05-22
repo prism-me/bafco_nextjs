@@ -16,7 +16,34 @@ export default class MyDocument extends Document {
             type="text/css"
             href="css/fonts-molla.min.css"
           />
+          {/******  Google tag (gtag.js)  *******/}
           <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=AW-333577971"
+          ></script>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'AW-333577971');`,
+            }}
+          />
+
+          {/****** Event snippet for Purchase conversion page ******/}
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: ` gtag('event', 'conversion', {
+                'send_to': 'AW-333577971/XUf4CMm9uIkYEPP9h58B',
+                'transaction_id': ''
+            });`,
+            }}
+          />
+
+          {/* <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=UA-1644415-3"
           ></script>
@@ -31,7 +58,8 @@ export default class MyDocument extends Document {
               gtag('config', 'UA-1644415-3');
             `,
             }}
-          />
+          /> */}
+
           <script
             data-partytown-config
             dangerouslySetInnerHTML={{

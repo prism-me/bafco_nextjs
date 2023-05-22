@@ -77,6 +77,9 @@ function Checkout(props) {
 
   let timer;
 
+  {
+    console.log("payment success ::", router?.query?.status);
+  }
   useEffect(() => {
     if (router?.query?.status == "success") {
       setIsOpenThankyouModel(true);
