@@ -612,6 +612,7 @@ function DetailOne(props) {
         <div className="row">
           {/* {console.log("variationValues :: ", variationValues)}
           {console.log("selectedVariant :: ", selectedVariant)} */}
+          {console.log("variationValues ::", variationValues)}
           {variationValues !== null &&
             variationValues?.map((item, index) => (
               <div className="col-sm-12 col-xs-12 col-lg-6" key={index}>
