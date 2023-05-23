@@ -22,6 +22,7 @@ import {
 } from "~/utils/data";
 import Modal from "react-modal";
 import { Helmet } from "react-helmet";
+import Head from "next/head";
 import Subscribe from "./subscribe/subscribe";
 
 const postsdata = [
@@ -150,6 +151,10 @@ function Home() {
   useEffect(() => {
     API.get(`/home`)
       .then((response) => {
+        console.log(
+          "🚀 ~ file: index.jsx:153 ~ .then ~ response:",
+          response.data
+        );
         setHomedata(response.data.pages.content);
         setBlogList(response.data.blogs);
       })
@@ -169,13 +174,22 @@ function Home() {
 
   return (
     <div className="main home-page skeleton-body">
-      <Helmet>
+      <Head>
         <title>{homedata?.meta?.meta_title}</title>
         <meta
           name="description"
           content={`${homedata?.meta?.meta_description}`}
+          data-react-helmet="true"
         />
-      </Helmet>
+      </Head>
+      {/* <Helmet>
+        <title>{homedata?.meta?.meta_title}</title>
+        <meta
+          name="description"
+          content={`${homedata?.meta?.meta_description}`}
+          data-react-helmet="true"
+        />
+      </Helmet> */}
       <div className="intro-slider-container">
         <OwlCarousel
           adclassName="owl-simple owl-light owl-nav-inside"

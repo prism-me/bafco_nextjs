@@ -4,7 +4,7 @@ import SlideToggle from "react-slide-toggle";
 import ALink from "~/components/features/alink";
 
 function FabricSidebarOne(props) {
-  const { toggle = false, filterData = [], matId } = props;
+  const { filterData = [], matId } = props;
   const router = useRouter();
   const query = useRouter().query;
 
@@ -34,125 +34,115 @@ function FabricSidebarOne(props) {
     ?.filter((x) => x?.name == "Finishes")[0]
     ?.child_value?.filter((item) => item?.value?.material_id == matId)
     ?.map((item) => {
-      var findItem = uniqueFinishes.find((x) => x?.name === item?.name);
-      if (!findItem) uniqueFinishes.push(item);
+      var findItem = uniqueFinishes?.find((x) => x?.name === item?.name);
+      if (!findItem) uniqueFinishes?.push(item);
     });
 
   return (
     <>
-      <aside
-        className={`${toggle ? "sidebar-filter" : "sidebar"} sidebar-shop`}
-      >
-        <div className={toggle ? "sidebar-filter-wrapper" : ""}>
-          <SlideToggle collapsed={true}>
-            {({ onToggle, setCollapsibleElement, toggleState }) => (
-              <div className="widget widget-collapsible">
-                <h3 className="widget-title mb-2">
-                  <a
-                    href="#colour"
-                    className={`${
-                      toggleState.toLowerCase() == "collapsed"
-                        ? "collapsed"
-                        : ""
-                    }`}
-                    onClick={(e) => {
-                      onToggle(e);
-                      e.preventDefault();
-                    }}
-                  >
-                    Color Range
-                  </a>
-                </h3>
-                <div ref={setCollapsibleElement}>
-                  <div className="widget-body pt-0">
-                    <div className="filter-colors">
-                      {uniqueColors?.length > 0
-                        ? uniqueColors?.map((item, index) => (
-                            <ALink
-                              className={`${
-                                query?.color == item?.value?.color_code
-                                  ? "selected"
-                                  : ""
-                              }`}
-                              href={{
-                                pathname: router.pathname,
-                                query: {
-                                  color: item?.value?.color_code,
-                                },
-                              }}
-                              style={{
-                                backgroundColor: item?.value?.color_code,
-                              }}
-                              key={index}
-                              scroll={false}
-                            >
-                              <span className="sr-only">Color Name</span>
-                            </ALink>
-                          ))
-                        : "No Color Range Found !!!"}
-                    </div>
-                  </div>
+      <SlideToggle collapsed={true}>
+        {({ onToggle, setCollapsibleElement, toggleState }) => (
+          <div className="widget widget-collapsible mb-2">
+            <h3 className="widget-title mb-2">
+              <a
+                href="#colour"
+                className={`${
+                  toggleState.toLowerCase() == "collapsed" ? "collapsed" : ""
+                }`}
+                onClick={(e) => {
+                  onToggle(e);
+                  e.preventDefault();
+                }}
+              >
+                Color Range
+              </a>
+            </h3>
+            <div ref={setCollapsibleElement}>
+              <div className="widget-body pt-0">
+                <div className="filter-colors">
+                  {uniqueColors?.length > 0
+                    ? uniqueColors?.map((item, index) => (
+                        <ALink
+                          className={`${
+                            query?.color == item?.value?.color_code
+                              ? "selected"
+                              : ""
+                          }`}
+                          href={{
+                            pathname: router.pathname,
+                            query: {
+                              color: item?.value?.color_code,
+                            },
+                          }}
+                          style={{
+                            backgroundColor: item?.value?.color_code,
+                          }}
+                          key={index}
+                          scroll={false}
+                        >
+                          <span className="sr-only">Color Name</span>
+                        </ALink>
+                      ))
+                    : "No Color Range Found !!!"}
                 </div>
               </div>
-            )}
-          </SlideToggle>
+            </div>
+          </div>
+        )}
+      </SlideToggle>
 
-          <SlideToggle collapsed={false}>
-            {({ onToggle, setCollapsibleElement, toggleState }) => (
-              <div className="widget widget-collapsible">
-                <h3 className="widget-title mb-2">
-                  <a
-                    href="#finishes"
-                    className={`${
-                      toggleState.toLowerCase() == "collapsed"
-                        ? "collapsed"
-                        : ""
-                    }`}
-                    onClick={(e) => {
-                      onToggle(e);
-                      e.preventDefault();
-                    }}
-                  >
-                    Finishes
-                  </a>
-                </h3>
-                <div ref={setCollapsibleElement}>
-                  <div className="widget-body pt-0">
-                    <div className="filter-items">
-                      {uniqueFinishes?.length > 0
-                        ? uniqueFinishes?.map((item, index) => (
-                            <div className="filter-item" key={index}>
-                              <div className="custom-control custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  className="custom-control-input"
-                                  id={`finishes-${index + 1}`}
-                                  value={item?.id}
-                                  onChange={(e) =>
-                                    onAttrClick(e, "finishes", item?.id)
-                                  }
-                                  checked={
-                                    query?.finishes == item?.id ? true : false
-                                  }
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor={`finishes-${index + 1}`}
-                                >
-                                  {item?.name}
-                                </label>
-                              </div>
-                            </div>
-                          ))
-                        : "No Finishes Found !!!"}
-                    </div>
-                  </div>
+      <SlideToggle collapsed={false}>
+        {({ onToggle, setCollapsibleElement, toggleState }) => (
+          <div className="widget widget-collapsible">
+            <h3 className="widget-title mb-2">
+              <a
+                href="#finishes"
+                className={`${
+                  toggleState.toLowerCase() == "collapsed" ? "collapsed" : ""
+                }`}
+                onClick={(e) => {
+                  onToggle(e);
+                  e.preventDefault();
+                }}
+              >
+                Finishes
+              </a>
+            </h3>
+            <div ref={setCollapsibleElement}>
+              <div className="widget-body pt-0">
+                <div className="filter-items">
+                  {uniqueFinishes?.length > 0
+                    ? uniqueFinishes?.map((item, index) => (
+                        <div className="filter-item" key={index}>
+                          <div className="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input"
+                              id={`finishes-${index + 1}`}
+                              value={item?.id}
+                              onChange={(e) =>
+                                onAttrClick(e, "finishes", item?.id)
+                              }
+                              checked={
+                                query?.finishes == item?.id ? true : false
+                              }
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor={`finishes-${index + 1}`}
+                            >
+                              {item?.name}
+                            </label>
+                          </div>
+                        </div>
+                      ))
+                    : "No Finishes Found !!!"}
                 </div>
               </div>
-            )}
-          </SlideToggle>
-        </div>
-      </aside>
+            </div>
+          </div>
+        )}
+      </SlideToggle>
     </>
   );
 }

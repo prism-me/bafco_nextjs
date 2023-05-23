@@ -4,10 +4,8 @@ import ALink from "~/components/features/alink";
 import PageHeader from "~/components/features/page-header";
 import { toast } from "react-toastify";
 import { Tab, Tabs, TabPanel, TabList } from "react-tabs";
-import Files from "react-files";
 import { API } from "~/http/API";
 import Helmet from "react-helmet";
-import ZohoContactForm from "../ZohoContactForm/ZohoContactForm";
 
 const axios = require("axios");
 
@@ -48,16 +46,6 @@ function Contact() {
   const handleInit = (e) => {
     let formdata = { ...contactFormData };
     formdata[e.target.name] = e.target.value;
-    setcontactFormData(formdata);
-  };
-
-  const onFilesError = (error, file) => {
-    console.log("error code " + error.code + ": " + error.message);
-  };
-
-  const onFilesChange = (files) => {
-    let formdata = { ...contactFormData };
-    formdata.attachment = files[0].name;
     setcontactFormData(formdata);
   };
 
@@ -205,8 +193,7 @@ function Contact() {
                   __html: contactusdata?.getInTouch?.description,
                 }}
               />
-              <ZohoContactForm />
-              {/* <form className="contact-form mb-2">
+              <form className="contact-form mb-2">
                 <div className="row">
                   <div className="col-sm-4">
                     <label htmlFor="cname" className="sr-only">
@@ -334,7 +321,7 @@ function Contact() {
                     </button>
                   )}
                 </div>
-              </form> */}
+              </form>
             </div>
           </div>
 

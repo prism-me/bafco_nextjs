@@ -64,7 +64,7 @@ function DetailOne(props) {
     setVariationGroup(
       product?.dropDown?.reduce(
         (acc, curr) =>
-          acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
+          acc.find((v) => v?.name === curr?.name) ? acc : [...acc, curr],
         []
       )
     );
@@ -72,15 +72,17 @@ function DetailOne(props) {
     // console.log("setVariationGroup :: ", variationGroup);
 
     let currentProductVariation =
-      product?.product_single_variation?.variation_value_details.map((item) => {
-        let productVariation = {
-          name: item.variation_values.name,
-          variation_value_id: item.variation_values.id,
-          type: item.variation_values.variant.name,
-          product_variation_id: item.product_variation_id,
-        };
-        return productVariation;
-      });
+      product?.product_single_variation?.variation_value_details?.map(
+        (item) => {
+          let productVariation = {
+            name: item?.variation_values?.name,
+            variation_value_id: item?.variation_values?.id,
+            type: item?.variation_values?.variant?.name,
+            product_variation_id: item?.product_variation_id,
+          };
+          return productVariation;
+        }
+      );
 
     // let newObj = {}
     // currentProductVariation?.forEach((item) => {
@@ -114,7 +116,7 @@ function DetailOne(props) {
 
     let newvaria = product?.dropDown?.reduce(
       (acc, curr) =>
-        acc.find((v) => v.name === curr.name) ? acc : [...acc, curr],
+        acc.find((v) => v?.name === curr?.name) ? acc : [...acc, curr],
       []
     );
 
@@ -160,19 +162,19 @@ function DetailOne(props) {
 
     let comb = [];
 
-    product?.dropDown.reduce((acc, item) => {
-      let ifExist = comb.find(
-        (f) => f.variation_id === item.product_variation_id
+    product?.dropDown?.reduce((acc, item) => {
+      let ifExist = comb?.find(
+        (f) => f?.variation_id === item?.product_variation_id
       );
       if (ifExist) {
-        ifExist[item.variant.name] = item.name;
+        ifExist[item?.variant?.name] = item?.name;
       } else {
         comb.push({
-          [item.variant.name]: item.name,
-          variation_id: item.product_variation_id,
+          [item?.variant?.name]: item?.name,
+          variation_id: item?.product_variation_id,
         });
       }
-      return item.product_variation_id;
+      return item?.product_variation_id;
     }, 0);
     setvariantCombGroup(comb);
 
@@ -189,7 +191,7 @@ function DetailOne(props) {
 
   function onWishlistClick(e) {
     e.preventDefault();
-    if (!isInWishlist(props.wishlist, product)) {
+    if (!isInWishlist(props?.wishlist, product)) {
       if (authtoken === "" || authtoken === null || authtoken === undefined) {
         props.showPopup(true);
       } else {
@@ -221,7 +223,7 @@ function DetailOne(props) {
       qty: qty,
     };
 
-    props.addToCart(data);
+    props?.addToCart(data);
   }
 
   // function onCartClick(e, index = 0) {
@@ -250,7 +252,7 @@ function DetailOne(props) {
 
     //  } else
     if (!e.target.value) {
-      const newState = selectedVariant.map((obj) => {
+      const newState = selectedVariant?.map((obj) => {
         if (obj?.type === item?.variant?.name) {
           return {
             name: item?.name,
@@ -266,51 +268,51 @@ function DetailOne(props) {
 
       let comb = [];
 
-      newState.map((acc) => {
-        comb.push({ [acc.type]: acc.name });
+      newState?.map((acc) => {
+        comb?.push({ [acc?.type]: acc?.name });
         return acc;
       });
 
-      let resultNewComb = comb.reduce(function (result, item) {
+      let resultNewComb = comb?.reduce(function (result, item) {
         var key = Object.keys(item)[0];
         result[key] = item[key];
         return result;
       }, {});
 
-      let getVariationId = variantCombGroup.filter(function (entry) {
+      let getVariationId = variantCombGroup?.filter(function (entry) {
         return Object.keys(resultNewComb).every(function (key) {
           return entry[key] === resultNewComb[key];
         });
       });
 
-      if (getVariationId.length !== 0) {
-        props.handelselectedVariation(getVariationId[0].variation_id);
+      if (getVariationId?.length !== 0) {
+        props?.handelselectedVariation(getVariationId[0]?.variation_id);
       } else {
         setVariationPopupeOpen(true);
       }
     } else {
-      const found = item?.find((v) => v.id == e.target.value);
+      const found = item?.find((v) => v?.id == e.target.value);
 
-      if (selectedVariant.find((v) => v.type == found.variant.name)) {
+      if (selectedVariant?.find((v) => v?.type == found.variant?.name)) {
         // console.log("selected");
       } else {
-        selectedVariant.push({
-          name: found.name,
-          variation_value_id: found.variation_id,
-          type: found.variant.name,
-          product_variation_id: found.product_variation_id,
+        selectedVariant?.push({
+          name: found?.name,
+          variation_value_id: found?.variation_id,
+          type: found?.variant.name,
+          product_variation_id: found?.product_variation_id,
         });
       }
 
       // console.log("selected :: ", selectedVariant);
 
-      const newState = selectedVariant.map((obj) => {
-        if (obj.type === found.variant.name) {
+      const newState = selectedVariant?.map((obj) => {
+        if (obj?.type === found?.variant.name) {
           return {
-            name: found.name,
-            type: found.variant.name,
-            variation_value_id: found.id,
-            product_variation_id: found.product_variation_id,
+            name: found?.name,
+            type: found?.variant?.name,
+            variation_value_id: found?.id,
+            product_variation_id: found?.product_variation_id,
           };
         }
         return obj;
@@ -319,25 +321,25 @@ function DetailOne(props) {
 
       let comb = [];
 
-      newState.map((acc) => {
-        comb.push({ [acc.type]: acc.name });
+      newState?.map((acc) => {
+        comb?.push({ [acc?.type]: acc?.name });
         return acc;
       });
 
-      let resultNewComb = comb.reduce(function (result, item) {
+      let resultNewComb = comb?.reduce(function (result, item) {
         var key = Object.keys(item)[0];
         result[key] = item[key];
         return result;
       }, {});
 
-      let getVariationId = variantCombGroup.filter(function (entry) {
+      let getVariationId = variantCombGroup?.filter(function (entry) {
         return Object.keys(resultNewComb).every(function (key) {
           return entry[key] === resultNewComb[key];
         });
       });
 
       if (getVariationId.length !== 0) {
-        props.handelselectedVariation(getVariationId[0].variation_id);
+        props.handelselectedVariation(getVariationId[0]?.variation_id);
       } else {
         setVariationPopupeOpen(true);
       }
@@ -610,6 +612,7 @@ function DetailOne(props) {
         <div className="row">
           {/* {console.log("variationValues :: ", variationValues)}
           {console.log("selectedVariant :: ", selectedVariant)} */}
+          {console.log("variationValues ::", variationValues)}
           {variationValues !== null &&
             variationValues?.map((item, index) => (
               <div className="col-sm-12 col-xs-12 col-lg-6" key={index}>
@@ -626,7 +629,7 @@ function DetailOne(props) {
                             (v) =>
                               v?.name ===
                               selectedVariant?.find(
-                                (x) => x.type === item?.newName
+                                (x) => x?.type === item?.newName
                               )?.["name"]
                           )?.["id"] === ""
                             ? ""
@@ -634,7 +637,7 @@ function DetailOne(props) {
                                 (v) =>
                                   v?.name ===
                                   selectedVariant?.find(
-                                    (x) => x.type === item?.newName
+                                    (x) => x?.type === item?.newName
                                   )?.["name"]
                               )?.["id"]
                         }
@@ -664,7 +667,7 @@ function DetailOne(props) {
                             className={`${
                               (item2?.id ===
                               selectedVariant?.find(
-                                (v) => v.variation_value_id === item2.id
+                                (v) => v?.variation_value_id === item2?.id
                               )?.["variation_value_id"]
                                 ? "active "
                                 : "") + (item2?.disabled ? "disabled" : "")
@@ -775,7 +778,7 @@ function DetailOne(props) {
               (item, index) => (
                 <li key={index}>
                   {/* <Tooltip className="stocking_massage" content={item?.url?.split('.')[0]}> */}
-                  <img src={item.avatar} />
+                  <img src={item?.avatar} />
                   {/* </Tooltip> */}
                 </li>
               )
@@ -908,8 +911,8 @@ function DetailOne(props) {
 
 const mapStateToProps = (state) => {
   return {
-    cartlist: state.cartlist.data,
-    wishlist: state.wishlist.data,
+    cartlist: state?.cartlist?.data,
+    wishlist: state?.wishlist?.data,
   };
 };
 

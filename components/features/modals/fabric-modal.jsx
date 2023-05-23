@@ -1,10 +1,7 @@
 import Modal from "react-modal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import React, { useState, useEffect } from "react";
-import { GET_PRODUCTS } from "~/server/queries";
-import { useLazyQuery } from "@apollo/react-hooks";
 import { API } from "~/http/API";
-import withApollo from "~/server/apollo";
 import ALink from "~/components/features/alink";
 import { saveAs } from "file-saver";
 
@@ -18,8 +15,6 @@ const customStyles = {
 Modal.setAppElement("body");
 
 function FabricModal(props) {
-  const [{ loading }] = useLazyQuery(GET_PRODUCTS);
-
   const { productId } = props;
 
   const [ModalData, setModalData] = useState();
@@ -57,97 +52,79 @@ function FabricModal(props) {
       >
         <div className="modal-content">
           <div className="quickView-content skeleton-body">
-            <div
-              className={`row skel-pro-single skel-quickview mb-0 ${
-                loading ? "" : "loaded"
-              }`}
-            >
+            <div className={`row skel-pro-single skel-quickview mb-0 loaded`}>
               <div className="col-lg-6 p-0">
-                {!loading ? (
-                  <>
-                    <div className="fabricImgWrape">
-                      <figure>
-                        <LazyLoadImage
-                          alt="Thumbnail"
-                          src={ModalData?.detailData?.featured_img}
-                          width="100%"
-                          height={100}
-                          className="d-block"
-                        />
-                      </figure>
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
+                <div className="fabricImgWrape">
+                  <figure>
+                    <LazyLoadImage
+                      alt="Thumbnail"
+                      src={ModalData?.detailData?.featured_img}
+                      width="100%"
+                      height={100}
+                      className="d-block"
+                    />
+                  </figure>
+                </div>
               </div>
               <div className="col-lg-6 quickview-desc pl-lg-4 pr-0 mt-3 mt-lg-0">
                 <div className="product-summary pr-4">
-                  {!loading ? (
-                    <>
-                      <div className="mb-5">
-                        {ModalData?.detailData?.values?.name && (
-                          <h3 className="mb-3">
-                            {ModalData?.detailData?.values?.name}
-                          </h3>
-                        )}
+                  <div className="mb-5">
+                    {ModalData?.detailData?.values?.name && (
+                      <h3 className="mb-3">
+                        {ModalData?.detailData?.values?.name}
+                      </h3>
+                    )}
 
-                        {ModalData?.material?.name && (
-                          <>
-                            <p className="title">Material</p>
-                            <p className="subtitle">
-                              {ModalData?.material?.name}
-                            </p>
-                          </>
-                        )}
+                    {ModalData?.material?.name && (
+                      <>
+                        <p className="title">Material</p>
+                        <p className="subtitle">{ModalData?.material?.name}</p>
+                      </>
+                    )}
 
-                        {ModalData?.detailData?.title && (
-                          <>
-                            <p className="title">Collection</p>
-                            <p className="subtitle">
-                              {ModalData?.detailData?.title}
-                            </p>
-                          </>
-                        )}
+                    {ModalData?.detailData?.title && (
+                      <>
+                        <p className="title">Collection</p>
+                        <p className="subtitle">
+                          {ModalData?.detailData?.title}
+                        </p>
+                      </>
+                    )}
 
-                        {ModalData?.detailData?.color_code && (
-                          <>
-                            <p className="title">Color</p>
-                            <ALink
-                              href="#"
-                              style={{
-                                backgroundColor: `${ModalData?.detailData?.color_code}`,
-                              }}
-                              scroll={false}
-                              className="colorStyle"
-                            >
-                              <span className="sr-only">Color Name</span>
-                            </ALink>
-                          </>
-                        )}
+                    {ModalData?.detailData?.color_code && (
+                      <>
+                        <p className="title">Color</p>
+                        <ALink
+                          href="#"
+                          style={{
+                            backgroundColor: `${ModalData?.detailData?.color_code}`,
+                          }}
+                          scroll={false}
+                          className="colorStyle"
+                        >
+                          <span className="sr-only">Color Name</span>
+                        </ALink>
+                      </>
+                    )}
 
-                        {ModalData?.detailData?.values?.parent?.name && (
-                          <>
-                            <p className="title">Finish</p>
-                            <p className="subtitle">
-                              {ModalData?.detailData?.values?.parent?.name}
-                            </p>
-                          </>
-                        )}
-                      </div>
-                      <button
-                        className="btn btn-sm btn-minwidth btn-outline-primary-2"
-                        onClick={() =>
-                          downloadImg(ModalData?.detailData?.featured_img)
-                        }
-                      >
-                        <span>Download</span>
-                        <i className="icon-arrow-down"></i>
-                      </button>
-                    </>
-                  ) : (
-                    ""
-                  )}
+                    {ModalData?.detailData?.values?.parent?.name && (
+                      <>
+                        <p className="title">Finish</p>
+                        <p className="subtitle">
+                          {ModalData?.detailData?.values?.parent?.name}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <button
+                    className="btn btn-sm btn-minwidth btn-outline-primary-2"
+                    onClick={() =>
+                      downloadImg(ModalData?.detailData?.featured_img)
+                    }
+                  >
+                    <span>Download</span>
+                    <i className="icon-arrow-down"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -167,4 +144,4 @@ function FabricModal(props) {
   );
 }
 
-export default withApollo({ ssr: typeof window == "undefined" })(FabricModal);
+export default FabricModal;

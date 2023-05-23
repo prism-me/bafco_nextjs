@@ -10,13 +10,33 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Jost:400,500,600,700,800,900"
           />
+          <meta
+            name="facebook-domain-verification"
+            content="nb70ua69x3coo6ctouracnqbi3v980"
+          />
           <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
           <link
             rel="stylesheet"
             type="text/css"
             href="css/fonts-molla.min.css"
           />
+          {/******  Google tag (gtag.js)  *******/}
           <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=AW-333577971"
+          ></script>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'AW-333577971');`,
+            }}
+          />
+
+          {/* <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=UA-1644415-3"
           ></script>
@@ -31,7 +51,8 @@ export default class MyDocument extends Document {
               gtag('config', 'UA-1644415-3');
             `,
             }}
-          />
+          /> */}
+
           <script
             data-partytown-config
             dangerouslySetInnerHTML={{
@@ -64,6 +85,12 @@ export default class MyDocument extends Document {
           />
         </Head>
         <body>
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WK7BJT8" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            }}
+          />
+
           {/* <script
             data-partytown-config
             dangerouslySetInnerHTML={{
