@@ -10,6 +10,12 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Jost:400,500,600,700,800,900"
           />
+          <title>BAFCO | Office Furniture Dubai and Abu Dhabi since 1991</title>
+          <meta
+            name="description"
+            content="BAFCO | Office Furniture in Dubai | Abu Dhabi | Sharjah | UAE — Leading the way in the Office Furniture industry since 1991. Dealer of KANO & Vantione."
+            data-react-helmet="true"
+          />
           <meta
             name="facebook-domain-verification"
             content="nb70ua69x3coo6ctouracnqbi3v980"
