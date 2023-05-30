@@ -83,7 +83,7 @@ function Contact() {
       toast.error("Please enter your Subject");
       return;
     } else {
-      // setLoading(true);
+      setLoading(true);
 
       // if (!selectedFile) {
       //   setInvalidImage({ ...invalidImage, msg: "Please select image." });
@@ -92,24 +92,22 @@ function Contact() {
       const formContactData = new FormData();
       formContactData.append("image", selectedFile);
       formContactData.append("contactData[]", JSON.stringify(updatedData));
-      for (var entries of formContactData.entries()) {
-        console.log(entries[0], ": data :", entries[1]);
-      }
-      // API.post(`/form-submit`, JSON.stringify(updatedData), {
-      //   headers: {
-      //     "Content-Type": `multipart/form-data; boundary=${formContactData._boundary}`,
-      //   },
-      // })
-      //   .then((response) => {
-      //     setLoading(false);
-      //     toast.success(response?.data);
-      //     setcontactFormData({ ...contactFormData });
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     setLoading(false);
-      //     toast.error("Something went wrong!");
-      //   });
+
+      API.post(`/form-submit`, formContactData, {
+        headers: {
+          "Content-Type": `multipart/form-data; boundary=${formContactData._boundary}`,
+        },
+      })
+        .then((response) => {
+          setLoading(false);
+          toast.success(response?.data);
+          setcontactFormData({ ...contactFormData });
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+          toast.error("Something went wrong!");
+        });
     }
   };
 
