@@ -115,7 +115,7 @@ function ProductInner() {
       (photoIndex +
         product?.single_product_details?.product?.album.length -
         1) %
-      product?.single_product_details?.product?.album.length
+        product?.single_product_details?.product?.album.length
     );
   }
 
@@ -138,8 +138,13 @@ function ProductInner() {
   return (
     <div className="main">
       <Helmet>
-        <title>{product?.single_product_details?.product?.seo?.meta_title}</title>
-        <meta name="description" content={`${product?.single_product_details?.product?.seo?.meta_description}`} />
+        <title>
+          {product?.single_product_details?.product?.seo?.meta_title}
+        </title>
+        <meta
+          name="description"
+          content={`${product?.single_product_details?.product?.seo?.meta_description}`}
+        />
         <script
           type="text/javascript"
           src="https://cdn1.stamped.io/files/widget.min.js"
@@ -160,7 +165,7 @@ function ProductInner() {
         subTitle=""
         backgroundImage={
           product?.single_product_details?.product?.banner_img !== "" &&
-            product?.single_product_details?.product?.banner_img !== null
+          product?.single_product_details?.product?.banner_img !== null
             ? product?.single_product_details?.product?.banner_img
             : `images/banners/cat_banner.png`
         }
@@ -271,7 +276,7 @@ function ProductInner() {
                   nextSrc={
                     product?.single_product_details?.product?.album[
                       (photoIndex + 1) %
-                      product?.single_product_details?.product?.album?.length
+                        product?.single_product_details?.product?.album?.length
                     ].avatar
                   }
                   prevSrc={
@@ -280,7 +285,7 @@ function ProductInner() {
                         product?.single_product_details?.product?.album
                           ?.length -
                         1) %
-                      product?.single_product_details?.product?.album?.length
+                        product?.single_product_details?.product?.album?.length
                     ].avatar
                   }
                   onCloseRequest={closeLightBox}
