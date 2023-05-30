@@ -81,9 +81,9 @@ function Contact() {
     } else {
       setLoading(true);
 
-      if (!selectedFile) {
-        setInvalidImage({ ...invalidImage, msg: "Please select image." });
-      }
+      // if (!selectedFile) {
+      //   setInvalidImage({ ...invalidImage, msg: "Please select image." });
+      // }
 
       const formContactData = new FormData();
       formContactData.append("image", selectedFile);
@@ -279,7 +279,7 @@ function Contact() {
                         padding: "0",
                       }}
                     >
-                      <img src="images/icons/Uploadsvg.png" className="mr-3" />{" "}
+                      <img src="images/icons/Uploadsvg.png" className="mr-3" />
                       Drop files here or click to upload
                     </span>
                   </label>
