@@ -1,6 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { API } from "~/http/API";
 
-function ContactForm() {
+function ContactForm({ type }) {
+  const defaultState = {
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    type: `${type}`,
+  };
+
+  const [formValues, setFormValues] = useState(defaultState);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let updatedData = { ...formValues };
+    setLoading(true);
+    API.post("/enquiries", updatedData)
+      .then((response) => {
+        if (response.status === 200 || response.status === 201) {
+          setLoading(false);
+          toast.success("Data has been Submitted Successfully!");
+          setFormValues({ ...defaultState });
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        alert("Something went wrong.");
+        console.log(err);
+      });
+  };
+  const handleChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div className="contactform">
       <div className="formwrapper">
@@ -34,13 +71,97 @@ function ContactForm() {
               </p>
             </div>
             <div className="col-lg-6 col-sm-6 col-xs-12">
-              <div
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    placeholder="Full Name *"
+                    name="name"
+                    required
+                    value={formValues.name}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    placeholder="E-mail *"
+                    name="email"
+                    required
+                    value={formValues.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="subject"
+                    placeholder="Subject"
+                    name="subject"
+                    required
+                    value={formValues.subject}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <textarea
+                    className="form-control"
+                    id="message"
+                    rows="3"
+                    placeholder="Message"
+                    style={{ resize: "none" }}
+                    name="message"
+                    required
+                    value={formValues.message}
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
+                {/* <div className="form-group form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="exampleCheck1"
+                  />
+                  <label className="form-check-label ml-3" for="exampleCheck1">
+                    Signup for Our Nwesletter
+                  </label>
+                </div>
+                <div className="form-group form-check">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="exampleCheck1"
+                  />
+                  <label className="form-check-label ml-3" for="exampleCheck1">
+                    I have read and accept the Privacy Policy
+                  </label>
+                </div> */}
+                {loading ? (
+                  <button
+                    className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-3"
+                    disabled
+                  >
+                    <span>Sending ...</span>
+                    <i className="icon-long-arrow-right"></i>
+                  </button>
+                ) : (
+                  <button className="btn btn-sm btn-minwidth btn-outline-primary-2 mt-3">
+                    <span>Send</span>
+                    <i className="icon-long-arrow-right"></i>
+                  </button>
+                )}
+              </form>
+              {/* <div
                 id="crmWebToEntityForm"
                 className="zcwf_lblLeft crmWebToEntityForm"
                 style={{
                   backgroundColor: "transparent",
                   color: "black",
-                  // maxWidth: "420px",
                   maxWidth: "100%",
                 }}
               >
@@ -48,7 +169,6 @@ function ContactForm() {
                   name="viewport"
                   content="width=device-width, initial-scale=1.0"
                 />
-                {/* <META HTTP-EQUIV="content-type" CONTENT="text/html;charset=UTF-8" /> */}
                 <form
                   action="https://crm.zoho.com/crm/WebToLeadForm"
                   name={`WebToLeads5418603000000737066`}
@@ -347,7 +467,7 @@ function ContactForm() {
                     </div>
                   </div>
                 </form>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
