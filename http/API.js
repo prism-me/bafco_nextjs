@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "~/store";
 
-const apiURL = "https://endpoint.bafco.com/v1/api/auth/login/";
+const apiURL = "https://endpoint.bafco.com/v1/api/";
 export const API = axios.create({
   baseURL: apiURL,
   timeout: 90000,
