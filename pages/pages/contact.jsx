@@ -17,24 +17,12 @@ const contactForm = {
   subject: "",
   message: "",
   phone: "",
-  attachment: "",
+  attachment: [],
   form_type: "contact_form",
 };
 
 function Contact() {
   const [contactusdata, setContactusdata] = useState();
-  const [contactFormData, setcontactFormData] = useState({ ...contactForm });
-  const [loading, setLoading] = useState(false);
-
-  const [selectedFile, setSelectedFile] = useState();
-  const [isSelected, setIsSelected] = useState(false);
-  const [invalidImage, setInvalidImage] = useState({ msg: "" });
-
-  const changeHandler = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setIsSelected(true);
-  };
-
   useEffect(() => {
     API.get(`/contact-us`)
       .then((response) => {
@@ -42,6 +30,31 @@ function Contact() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  // contact form
+  const [contactFormData, setcontactFormData] = useState({ ...contactForm });
+  const [loading, setLoading] = useState(false);
+
+  // Create a reference to the hidden file input element
+  const hiddenFileInput = React.useRef(null);
+
+  // Programatically click the hidden file input element
+  // when the Button component is clicked
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+  const [uploadFile, setUploadFie] = useState([]);
+
+  const handleChange = (event) => {
+    let downloadFile = [...event.target.files];
+
+    let updatedFiles = downloadFile.map((x) => ({
+      image: x,
+    }));
+
+    setUploadFie(updatedFiles);
+  };
 
   const handleInit = (e) => {
     let formdata = { ...contactFormData };
@@ -51,60 +64,57 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let updatedData = { ...contactFormData };
 
-    if (
-      updatedData.email === "" &&
-      updatedData.name === "" &&
-      updatedData.phone === "" &&
-      updatedData.subject === ""
-    ) {
-      toast.error("Please enter your Data");
-      return;
-    } else if (updatedData.email === "") {
+    if (contactFormData.email === "") {
       toast.error("Please enter your Email");
       return;
     } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(updatedData.email)
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(contactFormData.email)
     ) {
       alert("Invalid email address.");
       return;
-    } else if (updatedData.name === "") {
+    } else if (contactFormData.name === "") {
       toast.error("Please enter your Name");
       return;
-    } else if (updatedData.phone === "") {
+    } else if (contactFormData.phone === "") {
       toast.error("Please enter your Phone number");
       return;
-    } else if (updatedData.subject === "") {
+    } else if (contactFormData.subject === "") {
       toast.error("Please enter your Subject");
       return;
-    } else {
-      setLoading(true);
-
-      if (!selectedFile) {
-        setInvalidImage({ ...invalidImage, msg: "Please select image." });
-      }
-
-      const formContactData = new FormData();
-      formContactData.append("image", selectedFile);
-      formContactData.append("contactData[]", JSON.stringify(updatedData));
-
-      API.post(`/form-submit`, formContactData, {
-        headers: {
-          "Content-Type": `multipart/form-data; boundary=${formContactData._boundary}`,
-        },
-      })
-        .then((response) => {
-          setLoading(false);
-          toast.success(response?.data);
-          setcontactFormData({ ...contactFormData });
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-          toast.error("Something went wrong!");
-        });
+    } else if (uploadFile.length == 0) {
+      toast.error("Please Upload Image");
+      return;
+    } else if (uploadFile.length == 1) {
+      toast.error("Please Upload More than One Images");
+      return;
     }
+
+    let updatedData = { ...contactFormData };
+
+    let imagesFormData = new FormData();
+
+    uploadFile.forEach((x) => {
+      imagesFormData.append("attachment[]", x.image);
+    });
+    imagesFormData.append("contactData", JSON.stringify(updatedData));
+
+    setLoading(true);
+    API.post(`/form-submit`, imagesFormData, {
+      headers: {
+        "Content-Type": `multipart/form-data; boundary=${imagesFormData._boundary}`,
+      },
+    })
+      .then((response) => {
+        setLoading(false);
+        toast.success(response?.data);
+        setcontactFormData({ ...contactFormData });
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        toast.error("Something went wrong!");
+      });
   };
 
   return (
@@ -261,42 +271,46 @@ function Contact() {
                   onChange={handleInit}
                 ></textarea>
 
-                <div className="files mb-0 p-2">
+                <div className="files mb-2">
+                  <button
+                    type="button"
+                    onClick={handleClick}
+                    className="main-btn btn-border"
+                    style={{
+                      color: "#666",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img src="images/icons/Uploadsvg.png" className="mr-3" />
+                    Drop files here or click to upload
+                  </button>
+
                   <input
                     type="file"
+                    multiple
+                    accept="image/*"
+                    ref={hiddenFileInput}
+                    onChange={handleChange}
                     style={{ display: "none" }}
-                    id="contained-button-file"
-                    onChange={changeHandler}
+                    name="attachment"
                   />
-                  <label htmlFor="contained-button-file">
-                    <span
-                      className="btn"
-                      style={{
-                        background: "transparent",
-                        color: "#666",
-                        boxShadow: "none",
-                        borderRadius: "0",
-                        padding: "0",
-                      }}
-                    >
-                      <img src="images/icons/Uploadsvg.png" className="mr-3" />{" "}
-                      Drop files here or click to upload
-                    </span>
-                  </label>
-                  {isSelected ? (
-                    <div>
-                      <p>{selectedFile.name}</p>
-                    </div>
+                  <p style={{ color: "#666" }} className="mb-1 mt-2">
+                    Files:
+                  </p>
+                  {uploadFile?.length > 0 ? (
+                    <ul>
+                      {uploadFile?.map((x, i) => (
+                        <li key={i}>
+                          <p style={{ color: "#666" }}>{x?.image?.name}</p>
+                        </li>
+                      ))}
+                    </ul>
                   ) : (
-                    ""
-                  )}
-                  {!isSelected && (
-                    <p className="text-danger">
-                      <small>{invalidImage.msg}</small>
-                    </p>
+                    <p style={{ color: "#666" }}>None selected</p>
                   )}
                 </div>
-
                 <div className="text-center">
                   {loading ? (
                     <div
