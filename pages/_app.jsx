@@ -35,6 +35,10 @@ const WrappedApp = ({ Component, pageProps }) => {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="keywords" content="BAFCO Store" />
           <meta
+            name="google-site-verification"
+            content="E5gEeDrt3-JbzpUleRnmRGQRpVZss_kYbBgmzXPVuOc"
+          />
+          <meta
             name="description"
             content="BAFCO Store | Office Furniture, Home Office Furniture Online in the UAE"
           />
