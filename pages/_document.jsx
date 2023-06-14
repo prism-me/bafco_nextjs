@@ -26,8 +26,16 @@ export default class MyDocument extends Document {
             type="text/css"
             href="css/fonts-molla.min.css"
           />
-          {/******  Google tag (gtag.js)  *******/}
+
           <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-WK7BJT8');`,
+            }}
+          />
+
+          {/******  Google tag (gtag.js)  *******/}
+          {/* <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=AW-333577971"
           ></script>
@@ -40,7 +48,7 @@ export default class MyDocument extends Document {
           
             gtag('config', 'AW-333577971');`,
             }}
-          />
+          /> */}
 
           {/* <script
             async

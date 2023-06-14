@@ -176,9 +176,14 @@ function Home() {
     <div className="main home-page skeleton-body">
       <Head>
         <title>{homedata?.meta?.meta_title}</title>
-        <meta
+        {/* <meta
           name="description"
           content={`${homedata?.meta?.meta_description}`}
+          data-react-helmet="true"
+        /> */}
+        <meta
+          name="google-site-verification"
+          content="E5gEeDrt3-JbzpUleRnmRGQRpVZss_kYbBgmzXPVuOc"
           data-react-helmet="true"
         />
       </Head>
