@@ -17,6 +17,11 @@ export default class MyDocument extends Document {
             data-react-helmet="true"
           />
           <meta
+            name="google-site-verification"
+            content="E5gEeDrt3-JbzpUleRnmRGQRpVZss_kYbBgmzXPVuOc"
+            data-react-helmet="true"
+          />
+          <meta
             name="facebook-domain-verification"
             content="nb70ua69x3coo6ctouracnqbi3v980"
           />

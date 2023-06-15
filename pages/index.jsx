@@ -181,11 +181,11 @@ function Home() {
           content={`${homedata?.meta?.meta_description}`}
           data-react-helmet="true"
         /> */}
-        <meta
+        {/* <meta
           name="google-site-verification"
           content="E5gEeDrt3-JbzpUleRnmRGQRpVZss_kYbBgmzXPVuOc"
           data-react-helmet="true"
-        />
+        /> */}
       </Head>
       {/* <Helmet>
         <title>{homedata?.meta?.meta_title}</title>
