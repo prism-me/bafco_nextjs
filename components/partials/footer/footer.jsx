@@ -285,7 +285,7 @@ function Footer(props) {
           <div className="social-icons social-icons-color">
             <p>
               Designed and Managed by{" "}
-              <ALink href="https://www.prism-me.com/">Prism</ALink>
+              <ALink href="https://www.prism-me.com/">Prism Digital</ALink>
             </p>
             {/* <span className="social-label">Social Media</span>
 
